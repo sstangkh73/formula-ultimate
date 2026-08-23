@@ -53,6 +53,17 @@ class RepositoryContractTests(unittest.TestCase):
             plan = log_dir / f"{match.group('prefix')}-plan.md"
             self.assertTrue(plan.is_file(), f"Missing plan for {result.name}")
 
+    def test_every_completed_plan_has_a_matching_result(self) -> None:
+        log_dir = ROOT / "docs" / "work_logs"
+        plan_pattern = re.compile(r"^(?P<prefix>.+)-plan\.md$")
+        for plan in log_dir.glob("*-plan.md"):
+            if "Status: Completed" not in plan.read_text(encoding="utf-8"):
+                continue
+            match = plan_pattern.match(plan.name)
+            self.assertIsNotNone(match)
+            result = log_dir / f"{match.group('prefix')}-result.md"
+            self.assertTrue(result.is_file(), f"Missing result for {plan.name}")
+
 
 if __name__ == "__main__":
     unittest.main()

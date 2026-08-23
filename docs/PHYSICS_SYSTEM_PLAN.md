@@ -49,6 +49,42 @@ vehicle validation.
 - Component placement, inertia, and centre of mass
 - Mesh-ready geometry and manufacturability heuristics
 
+#### Agent-designed component geometry
+
+Level 2 is not limited to arranging catalog components. Agents may generate the
+actual geometry and internal topology of components, including structures,
+cooling paths, housings, rotors, couplings, ducts, and other parts expressible
+by the versioned geometry language.
+
+The agent does not get to declare that its own geometry is light, strong, cool,
+or efficient. Promotion follows a trusted evaluation boundary:
+
+```text
+Functional requirement and interface ports
+  -> agent-generated parametric CAD / B-rep / implicit geometry
+  -> geometry validity and interface checks
+  -> assigned material and manufacturing process
+  -> independent mass, volume, inertia, and surface extraction
+  -> reduced thermal/flow/structural screening
+  -> selected CFD / FEA / detailed electromagnetic or mechanical analysis
+  -> uncertainty-aware reduced-order component model
+  -> Level-0/Level-1 vehicle and race evaluation
+  -> telemetry and failures returned to the next design generation
+```
+
+This preserves genuine geometric invention while preventing a generator from
+self-reporting impossible properties. A generated component is an immutable,
+content-addressed artifact containing source representation, generator version,
+seed, materials, interfaces, meshing settings, solver settings, and results.
+
+Geometry promotion gates should include watertightness or valid solid topology,
+minimum feature size, bounded envelope, interface alignment, collision,
+material assignment, manufacturability assumptions, mesh convergence, solver
+convergence, safety factors, and disagreement between surrogate and
+authoritative analysis. Novel-looking geometry is not treated as new technology
+unless its functional advantage survives these gates and comparison with known
+baselines.
+
 ### Level 3: High Fidelity
 
 - CFD, FEA, detailed tyre, cooling, and structural analysis
@@ -219,6 +255,9 @@ Fitness is calculated only after the independent audit accepts the run.
 - Detect algebraic-loop non-convergence with bounded iterations and a recorded
   failure reason.
 - Perform timestep-convergence tests before choosing a production timestep.
+- Treat the forward-only zero-speed boundary as a unilateral constraint and
+  record its impulse separately from unconstrained road-load force; never hide
+  a prevented reverse-motion step as ordinary acceleration.
 
 ## 9. Failure Taxonomy
 
@@ -263,5 +302,7 @@ Physics code must not calculate evolutionary fitness.
 7. Typed graph validation and compilation.
 8. Topology mutation/search with equal-budget experiments.
 9. Timestep convergence and Level-0/Level-1 promotion study.
+10. Versioned geometry language and trusted 3D property-extraction pipeline.
+11. Agent-generated component geometry with multi-fidelity promotion gates.
 
 Each milestone requires its own pre-work plan and post-work result record.

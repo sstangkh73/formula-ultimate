@@ -11,9 +11,10 @@ aerodynamics, structures, or control co-design.
 
 ## Current Status
 
-The repository currently contains the research charter, physics-system plan,
-design-language boundary, validation strategy, work protocol, and package
-skeleton. It does **not** yet contain a validated vehicle simulator.
+The repository contains the research charter, physics-system plan,
+design-language boundary, validation strategy, work protocol, package skeleton,
+and a deterministic Level-0 longitudinal reference kernel. The kernel is an
+analytical test foundation; it is **not** yet a validated race-car simulator.
 
 ## Repository Map
 
@@ -45,6 +46,7 @@ record containing reproducible test evidence. Read
 Run the current repository checks with:
 
 ```powershell
+python -m pip install -e .
 python -m unittest discover -s tests -v
 ```
 
