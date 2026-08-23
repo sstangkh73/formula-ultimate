@@ -19,6 +19,8 @@ runs/
 *.case
 
 # Local tools and editors
+.tools/
+/cadquery-contrib-master/
 .idea/
 .vscode/
 .agents/

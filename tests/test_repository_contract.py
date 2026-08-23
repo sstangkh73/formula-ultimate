@@ -14,8 +14,10 @@ class RepositoryContractTests(unittest.TestCase):
         excluded_parts = {
             ".agents",
             ".git",
+            ".tools",
             ".venv",
             "artifacts",
+            "cadquery-contrib-master",
             "runs",
         }
         english_documents = sorted(
