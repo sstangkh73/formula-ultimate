@@ -3,16 +3,33 @@
 ## Rule
 
 Every discrete work item has two Markdown records sharing the same date,
-sequence number, and slug:
+sequence number, and slug in each language:
 
 ```text
 docs/work_logs/YYYY-MM-DD_NNN_<slug>-plan.md
+docs/work_logs/YYYY-MM-DD_NNN_<slug>-plan.th.md
 docs/work_logs/YYYY-MM-DD_NNN_<slug>-result.md
+docs/work_logs/YYYY-MM-DD_NNN_<slug>-result.th.md
 ```
+
+## Bilingual Markdown Rule
+
+Every maintained English Markdown file has a separate Thai companion in the
+same directory:
+
+```text
+document.md -> document.th.md
+```
+
+Create and update both in the same work item. The Thai file identifies the
+English source filename and preserves technical identifiers, equations,
+commands, paths, units, numeric evidence, statuses, claims, and limitations.
+The files remain separate; do not append the complete translation to the
+English document.
 
 ## Before Work: Plan Record
 
-Create the plan before task-specific changes. Include:
+Create both language versions of the plan before task-specific changes. Include:
 
 - objective;
 - scope and non-goals;
@@ -36,7 +53,8 @@ implementation or task-specific mutation happens before the plan exists.
 
 ## After Work: Result Record
 
-Before the final commit, create the matching result record containing:
+Before the final commit, create the matching English and Thai result records
+containing:
 
 - status (`Completed`, `Partial`, or `Stopped`);
 - summary of completed work;
@@ -65,8 +83,8 @@ run as evidence for changed code.
 
 ## Commit Boundary
 
-Normally the plan, implementation, tests, and matching result record are one
-reviewable commit. The commit hash cannot be embedded in that same commit;
-Git history is the authoritative link. For experiment artifacts, the result
-record must still capture the simulator/configuration commit used to generate
+Normally both plans, implementation, tests, and both matching result records are
+one reviewable commit. The commit hash cannot be embedded in that same commit;
+Git history is the authoritative link. For experiment artifacts, both result
+records must still capture the simulator/configuration commit used to generate
 them.

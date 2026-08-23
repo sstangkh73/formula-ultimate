@@ -10,6 +10,43 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class RepositoryContractTests(unittest.TestCase):
+    def test_every_english_markdown_has_a_thai_companion(self) -> None:
+        excluded_parts = {
+            ".agents",
+            ".git",
+            ".venv",
+            "artifacts",
+            "runs",
+        }
+        english_documents = sorted(
+            path
+            for path in ROOT.rglob("*.md")
+            if not path.name.endswith(".th.md")
+            and not any(part in excluded_parts for part in path.parts)
+            and not any(part.endswith(".egg-info") for part in path.parts)
+        )
+        self.assertTrue(english_documents, "No maintained Markdown files found")
+
+        for english in english_documents:
+            thai = english.with_name(f"{english.stem}.th.md")
+            relative_english = english.relative_to(ROOT)
+            with self.subTest(english=str(relative_english)):
+                self.assertTrue(
+                    thai.is_file(),
+                    f"Missing Thai companion for {relative_english}",
+                )
+                thai_text = thai.read_text(encoding="utf-8")
+                self.assertGreater(
+                    len(thai_text.strip()),
+                    100,
+                    f"Thai companion is unexpectedly empty: {thai.relative_to(ROOT)}",
+                )
+                self.assertIn(
+                    f"`{english.name}`",
+                    thai_text,
+                    f"Thai companion must identify source {english.name}",
+                )
+
     def test_required_governance_and_physics_documents_exist(self) -> None:
         required = {
             "AGENTS.md",

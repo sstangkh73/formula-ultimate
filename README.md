@@ -1,5 +1,7 @@
 # Formula Ultimate
 
+[ฉบับภาษาไทย](README.th.md)
+
 Formula Ultimate is a research platform for studying open-ended engineering
 discovery under explicit physical, safety, resource, and race constraints.
 
@@ -39,8 +41,10 @@ tests/                          Unit, invariant, integration, and regression tes
 
 ## Development Workflow
 
-Every work item starts with a Markdown plan and ends with a Markdown result
-record containing reproducible test evidence. Read
+Every work item starts with separate English and Thai Markdown plans and ends
+with separate English and Thai result records containing equivalent,
+reproducible test evidence. Every maintained English Markdown document has a
+sibling `.th.md` file. Read
 [`docs/WORK_PROTOCOL.md`](docs/WORK_PROTOCOL.md) before making changes.
 
 Run the current repository checks with:
