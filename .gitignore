@@ -1,0 +1,26 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+
+# Generated experiments and heavy simulation artifacts
+artifacts/
+runs/
+*.vtk
+*.vtu
+*.case
+
+# Local tools and editors
+.idea/
+.vscode/
+.agents/
+Thumbs.db
+.DS_Store
