@@ -10,6 +10,22 @@ from .circuit import (
     isa_air_density_kg_per_m3,
     load_circuit_catalog,
 )
+from .corridor import (
+    CircuitCorridor,
+    ClosureResidual,
+    CorridorAssessment,
+    CorridorEvidence,
+    CorridorInputError,
+    CorridorSegment,
+    CorridorStation,
+    SegmentEnvelopeAssessment,
+    VehicleEnvelope,
+    assess_vehicle_corridor,
+    closure_residual,
+    corridor_from_mapping,
+    integrate_corridor,
+    load_corridors,
+)
 
 __all__ = [
     "CircuitInputError",
@@ -20,4 +36,18 @@ __all__ = [
     "SourceEvidence",
     "isa_air_density_kg_per_m3",
     "load_circuit_catalog",
+    "CircuitCorridor",
+    "ClosureResidual",
+    "CorridorAssessment",
+    "CorridorEvidence",
+    "CorridorInputError",
+    "CorridorSegment",
+    "CorridorStation",
+    "SegmentEnvelopeAssessment",
+    "VehicleEnvelope",
+    "assess_vehicle_corridor",
+    "closure_residual",
+    "corridor_from_mapping",
+    "integrate_corridor",
+    "load_corridors",
 ]

@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "description": "Analytical fixtures for the Level-0 corridor contract; not real-circuit geometry",
+  "corridors": [
+    {
+      "schema_version": "1.0",
+      "corridor_id": "synthetic_full_circle_pass",
+      "circuit_id": "synthetic_test_course",
+      "layout_reference": "Analytical full circle, radius 20 m",
+      "start_x_m": 0.0,
+      "start_y_m": 0.0,
+      "start_z_m": 0.0,
+      "start_heading_rad": 0.0,
+      "closed_loop": true,
+      "evidence": {
+        "evidence_class": "synthetic_validation",
+        "source_id": "fixture-full-circle-v1",
+        "source_title": "Formula Ultimate analytical full-circle fixture",
+        "source_url": "urn:formula-ultimate:fixture:full-circle:v1",
+        "coordinate_reference_system": "local Cartesian ENU metres",
+        "horizontal_uncertainty_m": 0.0,
+        "vertical_uncertainty_m": 0.0
+      },
+      "segments": [
+        {
+          "segment_id": "circle",
+          "length_m": 125.66370614359172,
+          "curvature_1pm": 0.05,
+          "grade_rad": 0.0,
+          "bank_rad": 0.1,
+          "width_left_m": 4.0,
+          "width_right_m": 4.0
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "corridor_id": "synthetic_overhang_reject",
+      "circuit_id": "synthetic_test_course",
+      "layout_reference": "Analytical tight arc exposing outside-corner sweep",
+      "start_x_m": 0.0,
+      "start_y_m": 0.0,
+      "start_z_m": 0.0,
+      "start_heading_rad": 0.0,
+      "closed_loop": false,
+      "evidence": {
+        "evidence_class": "synthetic_validation",
+        "source_id": "fixture-overhang-v1",
+        "source_title": "Formula Ultimate analytical overhang rejection fixture",
+        "source_url": "urn:formula-ultimate:fixture:overhang:v1",
+        "coordinate_reference_system": "local Cartesian ENU metres",
+        "horizontal_uncertainty_m": 0.0,
+        "vertical_uncertainty_m": 0.0
+      },
+      "segments": [
+        {
+          "segment_id": "tight_left",
+          "length_m": 7.853981633974483,
+          "curvature_1pm": 0.2,
+          "grade_rad": 0.02,
+          "bank_rad": 0.08,
+          "width_left_m": 1.5,
+          "width_right_m": 1.5
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "corridor_id": "synthetic_steering_reject",
+      "circuit_id": "synthetic_test_course",
+      "layout_reference": "Analytical arc tighter than vehicle steering limit",
+      "start_x_m": 0.0,
+      "start_y_m": 0.0,
+      "start_z_m": 0.0,
+      "start_heading_rad": 0.0,
+      "closed_loop": false,
+      "evidence": {
+        "evidence_class": "synthetic_validation",
+        "source_id": "fixture-steering-v1",
+        "source_title": "Formula Ultimate analytical steering rejection fixture",
+        "source_url": "urn:formula-ultimate:fixture:steering:v1",
+        "coordinate_reference_system": "local Cartesian ENU metres",
+        "horizontal_uncertainty_m": 0.0,
+        "vertical_uncertainty_m": 0.0
+      },
+      "segments": [
+        {
+          "segment_id": "very_tight_left",
+          "length_m": 4.71238898038469,
+          "curvature_1pm": 0.3333333333333333,
+          "grade_rad": 0.0,
+          "bank_rad": 0.0,
+          "width_left_m": 6.0,
+          "width_right_m": 6.0
+        }
+      ]
+    }
+  ]
+}
