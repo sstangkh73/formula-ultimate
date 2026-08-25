@@ -1,7 +1,9 @@
 # Level-0 Real-Circuit Physics Model
 
-Status: Implemented screening baseline  
-Catalogue: `config/circuits/real_circuits_v1.json`  
+Status: Implemented screening baseline
+
+Catalogue: `config/circuits/real_circuits_v1.json`
+
 Thai companion: `CIRCUIT_MODEL.th.md`
 
 ## Purpose

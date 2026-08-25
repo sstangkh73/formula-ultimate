@@ -1,6 +1,7 @@
 # ผล Work 008: Physics Profile ของสนามจริงสิบสนาม
 
-ไฟล์ต้นฉบับภาษาอังกฤษ: `2026-08-25_008_real-circuit-physics-result.md`  
+ไฟล์ต้นฉบับภาษาอังกฤษ: `2026-08-25_008_real-circuit-physics-result.md`
+
 สถานะ: Completed
 
 ## ผลลัพธ์

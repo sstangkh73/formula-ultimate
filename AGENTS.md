@@ -24,6 +24,28 @@ After the work and before its final commit:
 Plans and result records are append-oriented evidence. Do not rewrite an older
 record to make a later outcome look planned; create a new numbered work item.
 
+## Mandatory Validated-Commit Protocol
+
+Every work item that reaches `Completed` must be committed immediately after
+its declared validation passes. A work item is not complete until the commit
+succeeds.
+
+1. Stage only the explicit files belonging to the work item. Never use blanket
+   staging such as `git add -A` in a mixed worktree.
+2. Inspect the staged scope and run `git diff --cached --check` before commit.
+3. Run validation gates with fail-fast control flow or as separate commands. A
+   failed command must stop the commit; a later successful command must never
+   mask its exit status.
+4. Create one descriptive commit for the completed work item unless an explicit
+   plan justifies multiple commits.
+5. Verify the new commit and report its short hash in the result or final handoff.
+6. Preserve unrelated user changes. Do not amend, rewrite, squash, push, or
+   publish history unless the user explicitly requests that separate action.
+
+If validation, a commit hook, or Git configuration prevents the commit, leave
+the plan `In progress` or mark it `Stopped` as appropriate and report the exact
+blocker. Do not claim the work item is complete.
+
 ## Mandatory Bilingual Markdown Protocol
 
 - Every maintained English Markdown file `name.md` must have a separate Thai

@@ -1,6 +1,7 @@
 # Real-Circuit Source Report — Catalogue v1
 
-Status: Evidence baseline captured on 2026-08-25  
+Status: Evidence baseline captured on 2026-08-25
+
 English source for Thai companion: `REAL_CIRCUIT_SOURCE_REPORT.th.md`
 
 ## Selection rationale

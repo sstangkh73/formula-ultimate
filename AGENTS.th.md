@@ -25,6 +25,26 @@
 Plan และ result record เป็นหลักฐานแบบ append-oriented ห้ามแก้บันทึกเก่าเพื่อ
 ทำให้ผลที่เกิดภายหลังดูเหมือนถูกวางแผนไว้ ให้สร้าง work item หมายเลขใหม่
 
+## Validated-Commit Protocol แบบบังคับ
+
+ทุก work item ที่ถึงสถานะ `Completed` ต้องถูก commit ทันทีหลัง validation ที่
+ประกาศไว้ผ่าน งานยังไม่เสร็จจนกว่า commit จะสำเร็จ
+
+1. Stage เฉพาะไฟล์ที่ระบุชัดว่าเป็นของ work item ห้ามใช้ blanket staging เช่น
+   `git add -A` ใน mixed worktree
+2. ตรวจขอบเขตที่ stage และเรียก `git diff --cached --check` ก่อน commit
+3. เรียก validation gate แบบ fail-fast หรือแยกคำสั่ง failure ต้องหยุด commit
+   ทันที และห้ามให้คำสั่งที่สำเร็จภายหลังกลบ exit status ของคำสั่งที่ล้มเหลว
+4. สร้าง descriptive commit หนึ่งรายการต่อ work item ที่เสร็จ เว้นแต่ plan
+   ระบุเหตุผลชัดเจนว่าต้องมีหลาย commit
+5. ตรวจ commit ใหม่และรายงาน short hash ใน result หรือ final handoff
+6. รักษาการเปลี่ยนแปลงอื่นของผู้ใช้ ห้าม amend, rewrite, squash, push หรือ
+   publish history เว้นแต่ผู้ใช้สั่ง action นั้นแยกต่างหากอย่างชัดเจน
+
+หาก validation, commit hook หรือ Git configuration ขวาง commit ให้คง plan เป็น
+`In progress` หรือเปลี่ยนเป็น `Stopped` ตามความเหมาะสม พร้อมรายงาน blocker ที่
+แน่นอน ห้ามอ้างว่า work item เสร็จแล้ว
+
 ## Bilingual Markdown Protocol แบบบังคับ
 
 - Markdown ภาษาอังกฤษ `name.md` ทุกไฟล์ที่ดูแลต้องมีไฟล์ภาษาไทยแยกชื่อ
