@@ -34,6 +34,21 @@ from .tyre import (
     TyreNumericalError,
     resolve_tyre_force,
 )
+from .energy_graph import (
+    CompiledConnection,
+    CompiledEnergyGraph,
+    EnergyComponent,
+    EnergyConnection,
+    EnergyGraph,
+    EnergyGraphInputError,
+    EnergyPort,
+    compile_energy_graph,
+    converter_component,
+    sink_component,
+    source_component,
+    transmission_component,
+    tyre_component,
+)
 
 __all__ = [
     "CircuitInputError",
@@ -64,4 +79,17 @@ __all__ = [
     "TyreInputError",
     "TyreNumericalError",
     "resolve_tyre_force",
+    "CompiledConnection",
+    "CompiledEnergyGraph",
+    "EnergyComponent",
+    "EnergyConnection",
+    "EnergyGraph",
+    "EnergyGraphInputError",
+    "EnergyPort",
+    "compile_energy_graph",
+    "converter_component",
+    "sink_component",
+    "source_component",
+    "transmission_component",
+    "tyre_component",
 ]
