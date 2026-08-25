@@ -26,6 +26,14 @@ from .corridor import (
     integrate_corridor,
     load_corridors,
 )
+from .tyre import (
+    TyreContactParameters,
+    TyreForceRequest,
+    TyreForceResult,
+    TyreInputError,
+    TyreNumericalError,
+    resolve_tyre_force,
+)
 
 __all__ = [
     "CircuitInputError",
@@ -50,4 +58,10 @@ __all__ = [
     "corridor_from_mapping",
     "integrate_corridor",
     "load_corridors",
+    "TyreContactParameters",
+    "TyreForceRequest",
+    "TyreForceResult",
+    "TyreInputError",
+    "TyreNumericalError",
+    "resolve_tyre_force",
 ]

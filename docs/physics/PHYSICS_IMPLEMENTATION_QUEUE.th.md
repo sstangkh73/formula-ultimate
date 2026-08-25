@@ -16,7 +16,7 @@ validation ใหม่ แล้วจึง complete และ commit งา�
 | Work | สถานะ | สิ่งส่งมอบ | Gate การเสร็จงาน |
 |---:|---|---|---|
 | 010 | Completed | 3D circuit corridor แบบมี version และ whole-vehicle swept-envelope admission | ปฏิเสธกรณี static-fit/swept-fail และ steering-fail; real geometry ที่หลักฐานไม่พอยังคง indeterminate |
-| 011 | Queued | ขอบเขตแรง tyre-road longitudinal/lateral และ saturation | ทดสอบ friction circle/ellipse analytical; เห็นทั้ง requested และ saturated force |
+| 011 | Completed | ขอบเขตแรง tyre-road longitudinal/lateral และ saturation | ทดสอบ friction circle/ellipse analytical; เห็นทั้ง requested และ saturated force |
 | 012 | Queued | Typed energy และ powertrain component graph | Port ของ source, converter, transmission และ tyre compile deterministic พร้อม contract SI/sign |
 | 013 | Queued | Independent energy-conservation audit | Chain lossless/lossy ปิด balance ใน scaled tolerance; hidden หรือ double-counted energy ทำให้ run invalid |
 | 014 | Queued | Lumped thermal, cooling, derating และ failure physics | Reference heating/cooldown ผ่าน; ห้าม clip อุณหภูมิเงียบ ๆ |
