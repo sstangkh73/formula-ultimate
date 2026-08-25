@@ -1,0 +1,469 @@
+{
+  "schema_version": "1.0",
+  "catalog_id": "real_f1_diversity_set_v1",
+  "accessed_on": "2026-08-25",
+  "score_scale": "ordinal 0.00, 0.25, 0.50, 0.75, 1.00; derived research inputs, not measurements",
+  "circuits": [
+    {
+      "circuit_id": "monaco_2026",
+      "name": "Circuit de Monaco",
+      "country": "Monaco",
+      "layout_reference": "2026 Formula 1 Grand Prix layout",
+      "circuit_type": "temporary street",
+      "direction": "clockwise",
+      "lap_length_m": 3337,
+      "race_laps": 78,
+      "race_distance_m": 260286,
+      "turns": 19,
+      "reference_altitude_m": null,
+      "published_width": {"minimum_m": 7.0, "maximum_m": null, "source_id": "monaco_width_mexicogp"},
+      "unresolved_width_reason": null,
+      "design_pressure": {
+        "straight_speed": 0.25,
+        "low_speed_agility": 1.0,
+        "high_speed_cornering": 0.25,
+        "braking": 0.75,
+        "traction": 1.0,
+        "elevation": 0.5,
+        "thermal_cooling": 0.5,
+        "confinement": 1.0
+      },
+      "design_strengths": ["compact low-speed agility", "traction and precise placement", "low-drag priority is reduced"],
+      "design_weaknesses": ["published streets are as narrow as 7 m", "walls make dimensional mistakes terminal", "static width alone cannot prove hairpin swept-path feasibility"],
+      "sources": [
+        {
+          "source_id": "monaco_f1_2026",
+          "publisher": "Formula 1",
+          "title": "Circuit guide: Circuit de Monaco 2026",
+          "url": "https://www.formula1.com/en/latest/article/circuit-guide-everything-you-need-to-know-about-the-circuit-de-monaco.vFsmfGHr6RWyLFtxi58wi",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "turns", "layout_reference", "design_pressure"]
+        },
+        {
+          "source_id": "monaco_width_mexicogp",
+          "publisher": "Mexico Grand Prix",
+          "title": "Asi afecta el tamano de los autos a la Formula 1",
+          "url": "https://www.mexicogp.mx/noticia/asi-afecta-el-tamano-de-los-autos-a-la-formula-1/?IDM=LANG_EN",
+          "accessed_on": "2026-08-25",
+          "quality": "official-event-organizer",
+          "supports": ["published_width.minimum_m", "design_weaknesses"]
+        }
+      ]
+    },
+    {
+      "circuit_id": "monza_2026",
+      "name": "Autodromo Nazionale Monza",
+      "country": "Italy",
+      "layout_reference": "current 5.793 km Formula 1 road course",
+      "circuit_type": "permanent",
+      "direction": "clockwise",
+      "lap_length_m": 5793,
+      "race_laps": 53,
+      "race_distance_m": 306720,
+      "turns": 11,
+      "reference_altitude_m": null,
+      "published_width": {"minimum_m": 10.0, "maximum_m": 12.0, "source_id": "monza_operator"},
+      "unresolved_width_reason": null,
+      "design_pressure": {
+        "straight_speed": 1.0,
+        "low_speed_agility": 0.25,
+        "high_speed_cornering": 0.5,
+        "braking": 1.0,
+        "traction": 0.75,
+        "elevation": 0.25,
+        "thermal_cooling": 0.5,
+        "confinement": 0.25
+      },
+      "design_strengths": ["top speed and low drag", "energy deployment on long full-throttle sections", "high-speed braking stability"],
+      "design_weaknesses": ["large stops into tight chicanes", "traction and kerb response after low-speed corners", "low-downforce setup reduces corner margin"],
+      "sources": [
+        {
+          "source_id": "monza_f1",
+          "publisher": "Formula 1",
+          "title": "Italian Grand Prix - Autodromo Nazionale Monza",
+          "url": "https://www.formula1.com/en/information/italy-autodromo-nazionalemonza.FiJN1jnQlRLeHqOxIt13m",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "design_pressure"]
+        },
+        {
+          "source_id": "monza_operator",
+          "publisher": "Autodromo Nazionale Monza",
+          "title": "The layout of the Monza track",
+          "url": "https://www.monzanet.it/en/circuit/",
+          "accessed_on": "2026-08-25",
+          "quality": "official-circuit-operator",
+          "supports": ["published_width", "direction", "lap_length_m"]
+        }
+      ]
+    },
+    {
+      "circuit_id": "spa_2026",
+      "name": "Circuit de Spa-Francorchamps",
+      "country": "Belgium",
+      "layout_reference": "2026 Formula 1 Grand Prix layout",
+      "circuit_type": "permanent",
+      "direction": "clockwise",
+      "lap_length_m": 7004,
+      "race_laps": 44,
+      "race_distance_m": 308052,
+      "turns": 19,
+      "reference_altitude_m": null,
+      "published_width": null,
+      "unresolved_width_reason": "No current operator-published minimum track width was located; a surveyed corridor is required before admission.",
+      "design_pressure": {
+        "straight_speed": 1.0,
+        "low_speed_agility": 0.5,
+        "high_speed_cornering": 1.0,
+        "braking": 0.75,
+        "traction": 0.75,
+        "elevation": 1.0,
+        "thermal_cooling": 0.5,
+        "confinement": 0.25
+      },
+      "design_strengths": ["high-speed aero efficiency", "stable load through fast corners", "multi-sector setup adaptability"],
+      "design_weaknesses": ["straight-line speed versus middle-sector downforce conflict", "large elevation and grip variation", "long lap magnifies energy and reliability errors"],
+      "sources": [
+        {
+          "source_id": "spa_f1_2026",
+          "publisher": "Formula 1",
+          "title": "Circuit guide: Circuit de Spa-Francorchamps",
+          "url": "https://www.formula1.com/en/latest/article/circuit-guide-everything-you-need-to-know-about-the-circuit-de-spa-francorchamps.pC5N3J3W9LEj8REFvU6FX",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "turns", "design_pressure"]
+        }
+      ]
+    },
+    {
+      "circuit_id": "singapore_2025",
+      "name": "Marina Bay Street Circuit",
+      "country": "Singapore",
+      "layout_reference": "2025 temporary 19-turn Formula 1 layout",
+      "circuit_type": "temporary street",
+      "direction": "counterclockwise",
+      "lap_length_m": 4940,
+      "race_laps": 62,
+      "race_distance_m": 306143,
+      "turns": 19,
+      "reference_altitude_m": null,
+      "published_width": null,
+      "unresolved_width_reason": "The organizer publishes 10-15 m only for the superseded 2008 layout; current-layout minimum width requires new evidence.",
+      "design_pressure": {
+        "straight_speed": 0.5,
+        "low_speed_agility": 1.0,
+        "high_speed_cornering": 0.25,
+        "braking": 0.75,
+        "traction": 1.0,
+        "elevation": 0.25,
+        "thermal_cooling": 1.0,
+        "confinement": 1.0
+      },
+      "design_strengths": ["low-speed rotation and rear grip", "repeated traction events", "thermal resilience and cooling"],
+      "design_weaknesses": ["walls, bumps and blind corners", "rear tyre thermal stress", "current minimum-width evidence is unresolved"],
+      "sources": [
+        {
+          "source_id": "singapore_fia_2025",
+          "publisher": "Federation Internationale de l'Automobile",
+          "title": "Official Formula 1 2025 Circuit Characteristics",
+          "url": "https://www.fia.com/sites/default/files/spg2025_0062_f1_mediakit_2025_eng_a4_250623_view.pdf",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "turns"]
+        },
+        {
+          "source_id": "singapore_f1_traits_2025",
+          "publisher": "Formula 1",
+          "title": "Need to know: 2025 Singapore Grand Prix",
+          "url": "https://www.formula1.com/en/latest/article/need-to-know-the-most-important-facts-stats-and-trivia-ahead-of-the-2025-singapore.468A8YSelm8nsKywLuGTf",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["design_pressure", "design_strengths", "design_weaknesses"]
+        },
+        {
+          "source_id": "singapore_2008_width",
+          "publisher": "Singapore Grand Prix",
+          "title": "Live demonstration of the 2008 Formula 1 Singapore Grand Prix lighting system",
+          "url": "https://singaporegp.sg/en/news/2008/live-demonstration-of-the-2008-formula-1a-singtel-singapore-grand-prix-lighting-system/",
+          "accessed_on": "2026-08-25",
+          "quality": "official-event-organizer",
+          "supports": ["unresolved_width_reason", "historical_layout_width_only"]
+        }
+      ]
+    },
+    {
+      "circuit_id": "suzuka_2026",
+      "name": "Suzuka International Racing Course",
+      "country": "Japan",
+      "layout_reference": "2026 5.807 km four-wheel course",
+      "circuit_type": "permanent",
+      "direction": "clockwise",
+      "lap_length_m": 5807,
+      "race_laps": 53,
+      "race_distance_m": 307471,
+      "turns": 18,
+      "reference_altitude_m": null,
+      "published_width": {"minimum_m": 10.0, "maximum_m": 16.0, "source_id": "suzuka_operator"},
+      "unresolved_width_reason": null,
+      "design_pressure": {
+        "straight_speed": 0.75,
+        "low_speed_agility": 0.5,
+        "high_speed_cornering": 1.0,
+        "braking": 0.5,
+        "traction": 0.75,
+        "elevation": 0.75,
+        "thermal_cooling": 0.5,
+        "confinement": 0.25
+      },
+      "design_strengths": ["high-speed direction changes", "aerodynamic balance", "precision across mixed corner types"],
+      "design_weaknesses": ["load sensitivity through the S curves", "stability at Degner and 130R", "compromise between hairpin traction and fast-corner response"],
+      "sources": [
+        {
+          "source_id": "suzuka_f1_2026",
+          "publisher": "Formula 1",
+          "title": "Circuit guide: Suzuka Circuit",
+          "url": "https://www.formula1.com/en/latest/article/circuit-guide-everything-you-need-to-know-about-the-suzuka-circuit.2BbgsRdkeux78UBGbmYiZV",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "turns", "design_pressure"]
+        },
+        {
+          "source_id": "suzuka_operator",
+          "publisher": "Suzuka Circuit",
+          "title": "Suzuka Circuit Course Guide",
+          "url": "https://www.suzukacircuit.jp/eng/course_s/",
+          "accessed_on": "2026-08-25",
+          "quality": "official-circuit-operator",
+          "supports": ["published_width", "lap_length_m", "turns"]
+        }
+      ]
+    },
+    {
+      "circuit_id": "silverstone_2026",
+      "name": "Silverstone Circuit",
+      "country": "United Kingdom",
+      "layout_reference": "2026 Formula 1 Grand Prix layout",
+      "circuit_type": "permanent",
+      "direction": "clockwise",
+      "lap_length_m": 5891,
+      "race_laps": 52,
+      "race_distance_m": 306198,
+      "turns": 18,
+      "reference_altitude_m": null,
+      "published_width": null,
+      "unresolved_width_reason": "No current operator-published minimum track width was located; a surveyed corridor is required before admission.",
+      "design_pressure": {
+        "straight_speed": 0.75,
+        "low_speed_agility": 0.5,
+        "high_speed_cornering": 1.0,
+        "braking": 0.5,
+        "traction": 0.5,
+        "elevation": 0.25,
+        "thermal_cooling": 0.5,
+        "confinement": 0.25
+      },
+      "design_strengths": ["sustained high-speed cornering", "fast direction-change control", "active aero trade-off across straights and corners"],
+      "design_weaknesses": ["aero-platform instability is heavily exposed", "tyre load accumulates in fast sequences", "minimum-width evidence remains unresolved"],
+      "sources": [
+        {
+          "source_id": "silverstone_f1_2026",
+          "publisher": "Formula 1",
+          "title": "Circuit guide: Silverstone 2026",
+          "url": "https://www.formula1.com/en/latest/article/circuit-guide-everything-you-need-to-know-about-silverstone-2026.5Sl0O8g393enBWVIkjRzOr",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "turns", "design_pressure"]
+        }
+      ]
+    },
+    {
+      "circuit_id": "hungaroring_2026",
+      "name": "Hungaroring",
+      "country": "Hungary",
+      "layout_reference": "2026 Formula 1 Grand Prix layout",
+      "circuit_type": "permanent",
+      "direction": "clockwise",
+      "lap_length_m": 4381,
+      "race_laps": 70,
+      "race_distance_m": 306630,
+      "turns": 14,
+      "reference_altitude_m": null,
+      "published_width": null,
+      "unresolved_width_reason": "No current operator-published minimum track width was located; a surveyed corridor is required before admission.",
+      "design_pressure": {
+        "straight_speed": 0.25,
+        "low_speed_agility": 1.0,
+        "high_speed_cornering": 0.75,
+        "braking": 0.5,
+        "traction": 1.0,
+        "elevation": 0.5,
+        "thermal_cooling": 0.75,
+        "confinement": 0.5
+      },
+      "design_strengths": ["high-downforce chassis efficiency", "linked-corner rhythm", "traction and rotation"],
+      "design_weaknesses": ["few straights limit recovery from poor corner exits", "hot conditions stress cooling and tyres", "minimum-width evidence remains unresolved"],
+      "sources": [
+        {
+          "source_id": "hungaroring_f1_2026",
+          "publisher": "Formula 1",
+          "title": "Circuit guide: Hungaroring",
+          "url": "https://www.formula1.com/en/latest/article/circuit-guide-everything-you-need-to-know-about-the-hungaroring.4ddtLbzLWLRjli7Y793jqh",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "turns", "design_pressure"]
+        }
+      ]
+    },
+    {
+      "circuit_id": "mexico_city_2025",
+      "name": "Autodromo Hermanos Rodriguez",
+      "country": "Mexico",
+      "layout_reference": "current 4.304 km Formula 1 layout",
+      "circuit_type": "permanent",
+      "direction": "clockwise",
+      "lap_length_m": 4304,
+      "race_laps": 71,
+      "race_distance_m": 305354,
+      "turns": 17,
+      "reference_altitude_m": 2285,
+      "published_width": null,
+      "unresolved_width_reason": "No current operator-published minimum track width was located; stadium and corner corridor geometry require survey evidence.",
+      "design_pressure": {
+        "straight_speed": 0.75,
+        "low_speed_agility": 0.75,
+        "high_speed_cornering": 0.5,
+        "braking": 0.75,
+        "traction": 1.0,
+        "elevation": 0.25,
+        "thermal_cooling": 1.0,
+        "confinement": 0.5
+      },
+      "design_strengths": ["low-density-air drag reduction", "long-straight energy deployment", "traction through slow stadium corners"],
+      "design_weaknesses": ["2,285 m altitude reduces cooling mass flow and aerodynamic force", "turbo and electrical thermal management", "minimum-width evidence remains unresolved"],
+      "sources": [
+        {
+          "source_id": "mexico_f1",
+          "publisher": "Formula 1",
+          "title": "Mexico City Grand Prix - Autodromo Hermanos Rodriguez",
+          "url": "https://www.formula1.com/en/information/mexico-autodromo-hermanos-rodriguez-mexico-city.1K2WPfBcI8kTXjcTHcbsBM",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "design_pressure"]
+        },
+        {
+          "source_id": "mexico_f1_altitude",
+          "publisher": "Formula 1",
+          "title": "Mexico City Grand Prix tickets - racing at altitude",
+          "url": "https://ticketing.formula1.com/tickets/en/mexico/general-admission-f1-ciudad-de-mexico-waitlist",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["reference_altitude_m", "lap_length_m", "design_weaknesses"]
+        }
+      ]
+    },
+    {
+      "circuit_id": "bahrain_2025",
+      "name": "Bahrain International Circuit",
+      "country": "Bahrain",
+      "layout_reference": "5.412 km Formula 1 Grand Prix circuit",
+      "circuit_type": "permanent",
+      "direction": "clockwise",
+      "lap_length_m": 5412,
+      "race_laps": 57,
+      "race_distance_m": 308238,
+      "turns": 15,
+      "reference_altitude_m": null,
+      "published_width": null,
+      "unresolved_width_reason": "The operator publishes 14-15 m for the Inner Track, not the Formula 1 Grand Prix Track; Grand Prix minimum width remains unresolved.",
+      "design_pressure": {
+        "straight_speed": 0.75,
+        "low_speed_agility": 0.75,
+        "high_speed_cornering": 0.5,
+        "braking": 1.0,
+        "traction": 1.0,
+        "elevation": 0.5,
+        "thermal_cooling": 1.0,
+        "confinement": 0.25
+      },
+      "design_strengths": ["braking and traction performance", "energy deployment between major stops", "multiple long straights reward power-system control"],
+      "design_weaknesses": ["wind and temperature variation", "rear traction and tyre degradation", "downhill off-camber Turn 10 exposes lock-up behavior"],
+      "sources": [
+        {
+          "source_id": "bahrain_f1",
+          "publisher": "Formula 1",
+          "title": "Bahrain Grand Prix - Bahrain International Circuit",
+          "url": "https://www.formula1.com/en/information/bahrain-international-circuit.2CaIdaOTCgQ3Yfnb37NmSS",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "turns", "design_pressure"]
+        },
+        {
+          "source_id": "bahrain_operator",
+          "publisher": "Bahrain International Circuit",
+          "title": "Track Hire",
+          "url": "https://www.bahraingp.com/corporate-sales/track-hire/",
+          "accessed_on": "2026-08-25",
+          "quality": "official-circuit-operator",
+          "supports": ["unresolved_width_reason", "non_applicable_inner_track_width"]
+        }
+      ]
+    },
+    {
+      "circuit_id": "sao_paulo_2025",
+      "name": "Autodromo Jose Carlos Pace (Interlagos)",
+      "country": "Brazil",
+      "layout_reference": "current 4.309 km Formula 1 layout",
+      "circuit_type": "permanent",
+      "direction": "counterclockwise",
+      "lap_length_m": 4309,
+      "race_laps": 71,
+      "race_distance_m": 305879,
+      "turns": 15,
+      "reference_altitude_m": null,
+      "published_width": {"minimum_m": 12.0, "maximum_m": 15.0, "source_id": "sao_paulo_operator"},
+      "unresolved_width_reason": null,
+      "design_pressure": {
+        "straight_speed": 0.75,
+        "low_speed_agility": 0.75,
+        "high_speed_cornering": 0.75,
+        "braking": 0.75,
+        "traction": 1.0,
+        "elevation": 0.75,
+        "thermal_cooling": 0.75,
+        "confinement": 0.5
+      },
+      "design_strengths": ["balanced performance across banking, infield and uphill acceleration", "traction onto the final climb", "wet-condition adaptability"],
+      "design_weaknesses": ["camber and elevation changes disturb balance", "bumps and weather vary grip", "short lap punishes traffic and energy-control mistakes"],
+      "sources": [
+        {
+          "source_id": "sao_paulo_f1",
+          "publisher": "Formula 1",
+          "title": "Brazilian Grand Prix - Autodromo Jose Carlos Pace",
+          "url": "https://www.formula1.com/en/information/brazil-autodromo-jose-carlos-pace-sao-paulo.5z2RfrmiTTfEP6Wnxv1yIW",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["lap_length_m", "race_laps", "race_distance_m", "design_pressure"]
+        },
+        {
+          "source_id": "sao_paulo_f1_traits",
+          "publisher": "Formula 1",
+          "title": "Need to know: Brazil",
+          "url": "https://www.formula1.com/en/latest/article/need-to-know-brazil.2txdrfSt3S8ekYIGkS6QOK",
+          "accessed_on": "2026-08-25",
+          "quality": "official-championship",
+          "supports": ["design_strengths", "design_weaknesses"]
+        },
+        {
+          "source_id": "sao_paulo_operator",
+          "publisher": "City of Sao Paulo - Autodromo de Interlagos",
+          "title": "Circuito",
+          "url": "https://autodromodeinterlagos.prefeitura.sp.gov.br/circuito",
+          "accessed_on": "2026-08-25",
+          "quality": "official-circuit-operator",
+          "supports": ["published_width", "lap_length_m", "elevation_description"]
+        }
+      ]
+    }
+  ]
+}
