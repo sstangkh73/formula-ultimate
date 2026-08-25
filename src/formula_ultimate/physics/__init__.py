@@ -49,6 +49,15 @@ from .energy_graph import (
     transmission_component,
     tyre_component,
 )
+from .energy_audit import (
+    ComponentEnergyAudit,
+    ComponentEnergyBalance,
+    ConnectionEnergyTransfer,
+    EnergyAuditInputError,
+    EnergyAuditResult,
+    EnergyAuditTolerance,
+    audit_energy_conservation,
+)
 
 __all__ = [
     "CircuitInputError",
@@ -92,4 +101,11 @@ __all__ = [
     "source_component",
     "transmission_component",
     "tyre_component",
+    "ComponentEnergyAudit",
+    "ComponentEnergyBalance",
+    "ConnectionEnergyTransfer",
+    "EnergyAuditInputError",
+    "EnergyAuditResult",
+    "EnergyAuditTolerance",
+    "audit_energy_conservation",
 ]
