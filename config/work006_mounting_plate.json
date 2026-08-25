@@ -1,0 +1,48 @@
+{
+  "experiment_id": "work006_mounting_plate_lightening_v1",
+  "grammar_version": "mounting_plate_v1",
+  "seed": 6001,
+  "material": {
+    "name": "Aluminium constant-density assumption",
+    "density_kg_per_m3": 2700.0
+  },
+  "common_spec": {
+    "length_m": 0.2,
+    "width_m": 0.12,
+    "thickness_m": 0.008,
+    "corner_radius_m": 0.01,
+    "mounting_hole_diameter_m": 0.008,
+    "mounting_spacing_x_m": 0.16,
+    "mounting_spacing_y_m": 0.08
+  },
+  "valid_candidates": [
+    {
+      "candidate_id": "solid_reference",
+      "lightening_radius_m": 0.0
+    },
+    {
+      "candidate_id": "relief_25mm",
+      "lightening_radius_m": 0.025
+    },
+    {
+      "candidate_id": "relief_40mm",
+      "lightening_radius_m": 0.04
+    }
+  ],
+  "invalid_candidate": {
+    "candidate_id": "invalid_relief_55mm",
+    "lightening_radius_m": 0.055,
+    "expected_error_contains": "minimum outer-edge ligament"
+  },
+  "level0_controls": {
+    "base_vehicle_mass_kg": 300.0,
+    "tractive_force_n": 1200.0,
+    "duration_s": 5.0,
+    "time_step_s": 0.05
+  },
+  "tolerances": {
+    "volume_absolute_m3": 1e-10,
+    "volume_relative": 1e-6,
+    "bounds_absolute_m": 1e-7
+  }
+}
