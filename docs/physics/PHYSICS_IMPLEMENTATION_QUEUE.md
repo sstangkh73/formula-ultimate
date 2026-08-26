@@ -20,7 +20,7 @@ verified.
 | 011 | Completed | Tyre-road longitudinal/lateral force and saturation boundary | Analytical friction-circle/ellipse tests; requested and saturated forces both observable |
 | 012 | Completed | Typed energy and powertrain component graph | Source, converter, transmission, and tyre ports compile deterministically with SI/sign contracts |
 | 013 | Completed | Independent energy-conservation audit | Lossless/lossy reference chains close within scaled tolerance; hidden or double-counted energy invalidates run |
-| 014 | Queued | Lumped thermal, cooling, derating, and failure physics | Heating/cooldown references pass; temperature is never silently clipped |
+| 014 | Completed | Lumped thermal, cooling, derating, and failure physics | Heating/cooldown references pass; temperature is never silently clipped |
 | 015 | Queued | Deterministic full-race completion loop | Finish, depletion, timeout, invalidity, and failure outcomes replay identically across circuit profiles |
 | 016 | Queued | Lateral/yaw dynamics, load transfer, and combined tyre force | Reference steady-state and transient cases converge and conserve declared balances |
 | 017 | Queued | Aerodynamic force, balance, and cooling-flow model | Drag/downforce/moment maps validate across speed, ride height, yaw, and active state envelopes |

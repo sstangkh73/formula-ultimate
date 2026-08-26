@@ -19,7 +19,7 @@ validation ใหม่ แล้วจึง complete และ commit งา�
 | 011 | Completed | ขอบเขตแรง tyre-road longitudinal/lateral และ saturation | ทดสอบ friction circle/ellipse analytical; เห็นทั้ง requested และ saturated force |
 | 012 | Completed | Typed energy และ powertrain component graph | Port ของ source, converter, transmission และ tyre compile deterministic พร้อม contract SI/sign |
 | 013 | Completed | Independent energy-conservation audit | Chain lossless/lossy ปิด balance ใน scaled tolerance; hidden หรือ double-counted energy ทำให้ run invalid |
-| 014 | Queued | Lumped thermal, cooling, derating และ failure physics | Reference heating/cooldown ผ่าน; ห้าม clip อุณหภูมิเงียบ ๆ |
+| 014 | Completed | Lumped thermal, cooling, derating และ failure physics | Reference heating/cooldown ผ่าน; ห้าม clip อุณหภูมิเงียบ ๆ |
 | 015 | Queued | Deterministic full-race completion loop | ผล finish, depletion, timeout, invalidity และ failure replay เหมือนกันข้าม circuit profile |
 | 016 | Queued | Lateral/yaw dynamics, load transfer และ combined tyre force | กรณี steady-state/transient อ้างอิง converge และรักษา balance ที่ประกาศ |
 | 017 | Queued | Aerodynamic force, balance และ cooling-flow model | Map drag/downforce/moment validate ข้าม speed, ride height, yaw และ active-state envelope |

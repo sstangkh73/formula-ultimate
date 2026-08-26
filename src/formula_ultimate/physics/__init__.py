@@ -58,6 +58,16 @@ from .energy_audit import (
     EnergyAuditTolerance,
     audit_energy_conservation,
 )
+from .thermal import (
+    ThermalInputError,
+    ThermalNumericalError,
+    ThermalParameters,
+    ThermalState,
+    ThermalStepInput,
+    ThermalStepResult,
+    step_thermal_state,
+    thermal_derating_factor,
+)
 
 __all__ = [
     "CircuitInputError",
@@ -108,4 +118,12 @@ __all__ = [
     "EnergyAuditResult",
     "EnergyAuditTolerance",
     "audit_energy_conservation",
+    "ThermalInputError",
+    "ThermalNumericalError",
+    "ThermalParameters",
+    "ThermalState",
+    "ThermalStepInput",
+    "ThermalStepResult",
+    "step_thermal_state",
+    "thermal_derating_factor",
 ]
