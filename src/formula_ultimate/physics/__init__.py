@@ -68,6 +68,16 @@ from .thermal import (
     step_thermal_state,
     thermal_derating_factor,
 )
+from .race import (
+    RaceControl,
+    RaceInputError,
+    RaceReplayMetadata,
+    RaceResult,
+    RaceState,
+    RaceStepTelemetry,
+    RaceVehicle,
+    run_full_race,
+)
 
 __all__ = [
     "CircuitInputError",
@@ -126,4 +136,12 @@ __all__ = [
     "ThermalStepResult",
     "step_thermal_state",
     "thermal_derating_factor",
+    "RaceControl",
+    "RaceInputError",
+    "RaceReplayMetadata",
+    "RaceResult",
+    "RaceState",
+    "RaceStepTelemetry",
+    "RaceVehicle",
+    "run_full_race",
 ]
