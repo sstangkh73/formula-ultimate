@@ -78,6 +78,21 @@ from .race import (
     RaceVehicle,
     run_full_race,
 )
+from .lateral import (
+    LateralInputError,
+    NormalLoadResiduals,
+    NormalLoadSolution,
+    PlanarBalanceResiduals,
+    PlanarContact,
+    PlanarContactResult,
+    PlanarSolverControl,
+    PlanarState,
+    PlanarStepResult,
+    PlanarVehicle,
+    PlanarVehicleParameters,
+    solve_quasi_static_normal_loads,
+    step_planar_dynamics,
+)
 
 __all__ = [
     "CircuitInputError",
@@ -144,4 +159,17 @@ __all__ = [
     "RaceStepTelemetry",
     "RaceVehicle",
     "run_full_race",
+    "LateralInputError",
+    "NormalLoadResiduals",
+    "NormalLoadSolution",
+    "PlanarBalanceResiduals",
+    "PlanarContact",
+    "PlanarContactResult",
+    "PlanarSolverControl",
+    "PlanarState",
+    "PlanarStepResult",
+    "PlanarVehicle",
+    "PlanarVehicleParameters",
+    "solve_quasi_static_normal_loads",
+    "step_planar_dynamics",
 ]
