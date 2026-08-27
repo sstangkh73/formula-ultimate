@@ -22,7 +22,7 @@ validation ใหม่ แล้วจึง complete และ commit งา�
 | 014 | Completed | Lumped thermal, cooling, derating และ failure physics | Reference heating/cooldown ผ่าน; ห้าม clip อุณหภูมิเงียบ ๆ |
 | 015 | Completed | Deterministic full-race completion loop | ผล finish, depletion, timeout, invalidity และ failure replay เหมือนกันข้าม circuit profile |
 | 016 | Completed | Lateral/yaw dynamics, load transfer และ combined tyre force | กรณี steady-state/transient อ้างอิง converge และรักษา balance ที่ประกาศ |
-| 017 | Queued | Aerodynamic force, balance และ cooling-flow model | Map drag/downforce/moment validate ข้าม speed, ride height, yaw และ active-state envelope |
+| 017 | Completed | Aerodynamic force, balance และ cooling-flow model | Map drag/downforce/moment validate ข้าม speed, ride height, yaw และ active-state envelope |
 | 018 | Queued | Suspension, mechanical braking และ regenerative braking | Wheel load, travel, brake energy, regen limit และ failure event ถูกคิดทางฟิสิกส์ |
 | 019 | Queued | Reliability, traffic, weather, degradation และ race strategy | Digital race หลายรอบ/หลาย event จบด้วย strategy control deterministic และ failure พร้อม uncertainty |
 

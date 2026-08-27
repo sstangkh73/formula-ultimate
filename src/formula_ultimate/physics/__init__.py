@@ -93,6 +93,20 @@ from .lateral import (
     solve_quasi_static_normal_loads,
     step_planar_dynamics,
 )
+from .aerodynamics import (
+    AerodynamicCoefficientMap,
+    AerodynamicCoefficientSample,
+    AerodynamicEvidence,
+    AerodynamicInputError,
+    AerodynamicInterpolationEvidence,
+    AerodynamicOperatingPoint,
+    AerodynamicReference,
+    AerodynamicResiduals,
+    AerodynamicResult,
+    AerodynamicStateGrid,
+    AxisBracket,
+    evaluate_aerodynamics,
+)
 
 __all__ = [
     "CircuitInputError",
@@ -172,4 +186,16 @@ __all__ = [
     "PlanarVehicleParameters",
     "solve_quasi_static_normal_loads",
     "step_planar_dynamics",
+    "AerodynamicCoefficientMap",
+    "AerodynamicCoefficientSample",
+    "AerodynamicEvidence",
+    "AerodynamicInputError",
+    "AerodynamicInterpolationEvidence",
+    "AerodynamicOperatingPoint",
+    "AerodynamicReference",
+    "AerodynamicResiduals",
+    "AerodynamicResult",
+    "AerodynamicStateGrid",
+    "AxisBracket",
+    "evaluate_aerodynamics",
 ]
