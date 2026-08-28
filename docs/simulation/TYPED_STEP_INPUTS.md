@@ -23,7 +23,8 @@ or `missing` with a reason and no numeric values.
 
 `WeatherStepEvidence` declares source, air and track temperature in kelvin,
 pressure in pascals, relative humidity in `[0,1]`, 3D wind velocity in `m/s`,
-and precipitation mass flux in `kg/(m^2*s)`. Status is `observed` with every
+and precipitation mass flux in `kg/(m^2*s)`. Wind is explicitly `local_enu`;
+Work 024 rotates it into vehicle body axes. Status is `observed` with every
 field present or `missing` with no numeric defaults.
 
 `TrafficStepEvidence` distinguishes:

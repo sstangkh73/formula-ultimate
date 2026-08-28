@@ -45,6 +45,21 @@ from .step_inputs import (
     WeatherStepEvidence,
     resolve_step_inputs,
 )
+from .aero_load_coupling import (
+    AeroLoadBalanceResiduals,
+    AeroLoadCouplingError,
+    AeroLoadCouplingResult,
+    AerodynamicChassisWrench,
+    AerodynamicCoolingEvidence,
+    AerodynamicMapAdapter,
+    AerodynamicQueryEvidence,
+    AerodynamicReferenceOrigin,
+    ContactNormalLoad,
+    NormalLoadCouplingAdapter,
+    couple_wrench_to_normal_loads,
+    moist_air_density_kg_per_m3,
+    translate_aerodynamic_result,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -86,4 +101,17 @@ __all__ = [
     "TrafficStepEvidence",
     "WeatherStepEvidence",
     "resolve_step_inputs",
+    "AeroLoadBalanceResiduals",
+    "AeroLoadCouplingError",
+    "AeroLoadCouplingResult",
+    "AerodynamicChassisWrench",
+    "AerodynamicCoolingEvidence",
+    "AerodynamicMapAdapter",
+    "AerodynamicQueryEvidence",
+    "AerodynamicReferenceOrigin",
+    "ContactNormalLoad",
+    "NormalLoadCouplingAdapter",
+    "couple_wrench_to_normal_loads",
+    "moist_air_density_kg_per_m3",
+    "translate_aerodynamic_result",
 ]

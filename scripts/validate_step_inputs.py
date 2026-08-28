@@ -56,7 +56,7 @@ def ready(profile) -> CircuitInputScenario:
     return CircuitInputScenario(
         profile, 10.0,
         SpatialStepEvidence(circuit_id, "available", "analytical-fixture", "segment-1", 0.01, 0.02, 0.03, 5.0, 5.0, 0.1),
-        WeatherStepEvidence(circuit_id, "observed", "analytical-fixture", 300.0, 100_000.0, 0.5, (1.0, 2.0, 0.0), 0.0, 310.0),
+        WeatherStepEvidence(circuit_id, "observed", "analytical-fixture", 300.0, 100_000.0, 0.5, (1.0, 2.0, 0.0), "local_enu", 0.0, 310.0),
         TrafficStepEvidence(circuit_id, "isolated_control", "analytical-control", 0),
     )
 

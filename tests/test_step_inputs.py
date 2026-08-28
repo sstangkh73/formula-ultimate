@@ -34,7 +34,7 @@ def ready_scenario(profile):
     cid = profile.circuit_id
     return CircuitInputScenario(profile, 10,
         SpatialStepEvidence(cid, "available", "fixture", "s1", .01, .02, .03, 5, 5, .1),
-        WeatherStepEvidence(cid, "observed", "fixture", 300, 100000, .5, (1,2,0), 0, 310),
+        WeatherStepEvidence(cid, "observed", "fixture", 300, 100000, .5, (1,2,0), "local_enu", 0, 310),
         TrafficStepEvidence(cid, "isolated_control", "fixture-control", 0))
 
 class StepInputTests(unittest.TestCase):
@@ -105,6 +105,9 @@ class StepInputTests(unittest.TestCase):
         with self.assertRaises(StepInputError): CircuitInputScenario(PROFILES[0], -1,
             missing_scenario(PROFILES[0]).spatial, missing_scenario(PROFILES[0]).weather,
             missing_scenario(PROFILES[0]).traffic)
+        with self.assertRaisesRegex(StepInputError, "coordinate_frame"):
+            WeatherStepEvidence(PROFILES[0].circuit_id, "observed", "fixture",
+                300, 100000, .5, (0,0,0), "vehicle_body", 0, 310)
 
     def test_unknown_traffic_differs_from_explicit_isolated_control(self):
         missing = missing_scenario(PROFILES[0]).traffic

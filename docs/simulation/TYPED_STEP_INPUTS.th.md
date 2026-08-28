@@ -22,7 +22,8 @@ uncertainty หน่วย metre Status เป็น `available` พร้อ�
 
 `WeatherStepEvidence` ประกาศ source, อุณหภูมิอากาศ/ผิวสนามหน่วย kelvin, pressure
 หน่วย pascal, relative humidity ใน `[0,1]`, 3D wind velocity หน่วย `m/s` และ
-precipitation mass flux หน่วย `kg/(m^2*s)` Status เป็น `observed` พร้อม field ครบ
+precipitation mass flux หน่วย `kg/(m^2*s)` Wind ประกาศ `local_enu` ชัดและ Work
+024 rotate เข้า vehicle body axis Status เป็น `observed` พร้อม field ครบ
 หรือ `missing` โดยไม่มี numeric default
 
 `TrafficStepEvidence` แยก:

@@ -84,6 +84,7 @@ class WeatherStepEvidence:
     pressure_pa: float | None = None
     relative_humidity: float | None = None
     wind_velocity_mps: tuple[float, float, float] | None = None
+    wind_coordinate_frame: str | None = None
     precipitation_kg_per_m2_s: float | None = None
     track_temperature_k: float | None = None
     reason: str | None = None
@@ -95,12 +96,16 @@ class WeatherStepEvidence:
         scalars = (self.air_temperature_k, self.pressure_pa, self.relative_humidity,
                    self.precipitation_kg_per_m2_s, self.track_temperature_k)
         if self.status == "missing":
-            if not self.reason or any(value is not None for value in scalars) or self.wind_velocity_mps is not None:
+            if (not self.reason or any(value is not None for value in scalars)
+                    or self.wind_velocity_mps is not None
+                    or self.wind_coordinate_frame is not None):
                 raise StepInputError("missing weather requires reason and no neutral defaults")
             return
         _text("weather source_id", self.source_id)
         if any(value is None for value in scalars) or self.wind_velocity_mps is None:
             raise StepInputError("observed weather requires every field")
+        if self.wind_coordinate_frame != "local_enu":
+            raise StepInputError("observed wind_coordinate_frame must be local_enu")
         for name in ("air_temperature_k", "pressure_pa", "relative_humidity",
                      "precipitation_kg_per_m2_s", "track_temperature_k"):
             _finite(name, getattr(self, name))
