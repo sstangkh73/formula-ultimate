@@ -67,6 +67,17 @@ from .contact_coupling import (
     ContactLimitCouplingAdapter, ContactSubsystemSnapshot, CoupledContactForce,
     couple_contacts,
 )
+from .motion_coupling import (
+    MOTION_ADAPTER_VERSION,
+    MotionConfiguration,
+    MotionCorridorEvidence,
+    MotionCorridorReference,
+    MotionCouplingError,
+    MotionIntegrationEvidence,
+    MotionStepResult,
+    VehicleMotionCouplingAdapter,
+    integrate_coupled_motion,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -126,4 +137,13 @@ __all__ = [
     "ContactForceMoment", "ContactHealthInput", "ContactHealthInputs",
     "ContactLimitCouplingAdapter", "ContactSubsystemSnapshot", "CoupledContactForce",
     "couple_contacts",
+    "MOTION_ADAPTER_VERSION",
+    "MotionConfiguration",
+    "MotionCorridorEvidence",
+    "MotionCorridorReference",
+    "MotionCouplingError",
+    "MotionIntegrationEvidence",
+    "MotionStepResult",
+    "VehicleMotionCouplingAdapter",
+    "integrate_coupled_motion",
 ]
