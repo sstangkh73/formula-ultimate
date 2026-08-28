@@ -33,6 +33,18 @@ from .transaction import (
     TransactionFailure,
     execute_coupled_step,
 )
+from .step_inputs import (
+    CircuitEnvironmentInputAdapter,
+    CircuitInputScenario,
+    EnvironmentStepInputs,
+    SpatialStepEvidence,
+    StepInputError,
+    StepInputResolution,
+    StrategyStepCommand,
+    TrafficStepEvidence,
+    WeatherStepEvidence,
+    resolve_step_inputs,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -64,4 +76,14 @@ __all__ = [
     "RuntimeSignal",
     "TransactionFailure",
     "execute_coupled_step",
+    "CircuitEnvironmentInputAdapter",
+    "CircuitInputScenario",
+    "EnvironmentStepInputs",
+    "SpatialStepEvidence",
+    "StepInputError",
+    "StepInputResolution",
+    "StrategyStepCommand",
+    "TrafficStepEvidence",
+    "WeatherStepEvidence",
+    "resolve_step_inputs",
 ]
