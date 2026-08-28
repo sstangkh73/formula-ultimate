@@ -107,6 +107,18 @@ from .aerodynamics import (
     AxisBracket,
     evaluate_aerodynamics,
 )
+from .suspension_braking import (
+    BrakeParameters,
+    RegenerationParameters,
+    SuspensionBrakeInputError,
+    SuspensionBrakeModule,
+    SuspensionBrakeResiduals,
+    SuspensionBrakeState,
+    SuspensionBrakeStepInput,
+    SuspensionBrakeStepResult,
+    SuspensionParameters,
+    evaluate_suspension_brake_step,
+)
 
 __all__ = [
     "CircuitInputError",
@@ -198,4 +210,14 @@ __all__ = [
     "AerodynamicStateGrid",
     "AxisBracket",
     "evaluate_aerodynamics",
+    "BrakeParameters",
+    "RegenerationParameters",
+    "SuspensionBrakeInputError",
+    "SuspensionBrakeModule",
+    "SuspensionBrakeResiduals",
+    "SuspensionBrakeState",
+    "SuspensionBrakeStepInput",
+    "SuspensionBrakeStepResult",
+    "SuspensionParameters",
+    "evaluate_suspension_brake_step",
 ]
