@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "architecture_id": "coupled-level0-reference-v1",
+  "initial_signals": [
+    "manifest.circuit_profile",
+    "manifest.current_state",
+    "manifest.strategy_command"
+  ],
+  "modules": [
+    {
+      "module_id": "input_bridge",
+      "stage": "inputs",
+      "model_version": "work021-input-contract-v1",
+      "consumes": [
+        "manifest.circuit_profile",
+        "manifest.current_state",
+        "manifest.strategy_command"
+      ],
+      "produces": [
+        "circuit.segment_inputs",
+        "control.step_command",
+        "environment.step_inputs",
+        "state.current"
+      ]
+    },
+    {
+      "module_id": "aerodynamic_map",
+      "stage": "aerodynamics",
+      "model_version": "work017-aerodynamic-map-v1",
+      "consumes": [
+        "environment.step_inputs",
+        "state.current"
+      ],
+      "produces": [
+        "aero.cooling_evidence",
+        "aero.force_moment"
+      ]
+    },
+    {
+      "module_id": "normal_load_solver",
+      "stage": "load_balance",
+      "model_version": "work016-planar-v1",
+      "consumes": [
+        "aero.force_moment",
+        "state.current"
+      ],
+      "produces": [
+        "chassis.balance_residuals",
+        "chassis.normal_loads"
+      ]
+    },
+    {
+      "module_id": "contact_limit_solver",
+      "stage": "contact_limits",
+      "model_version": "work011-work018-contact-v1",
+      "consumes": [
+        "chassis.normal_loads",
+        "control.step_command",
+        "state.current"
+      ],
+      "produces": [
+        "contact.energy_transfers",
+        "contact.force_moment",
+        "contact.health_inputs"
+      ]
+    },
+    {
+      "module_id": "vehicle_motion_solver",
+      "stage": "motion",
+      "model_version": "work002-work016-motion-v1",
+      "consumes": [
+        "aero.force_moment",
+        "contact.force_moment",
+        "state.current"
+      ],
+      "produces": [
+        "motion.residuals",
+        "state.motion_candidate"
+      ]
+    },
+    {
+      "module_id": "energy_graph_audit",
+      "stage": "energy_audit",
+      "model_version": "work012-work013-energy-v1",
+      "consumes": [
+        "contact.energy_transfers",
+        "state.current"
+      ],
+      "produces": [
+        "energy.residuals",
+        "state.energy_candidate"
+      ]
+    },
+    {
+      "module_id": "health_event_solver",
+      "stage": "health",
+      "model_version": "work014-work019-health-v1",
+      "consumes": [
+        "aero.cooling_evidence",
+        "contact.health_inputs",
+        "state.current",
+        "state.energy_candidate"
+      ],
+      "produces": [
+        "health.event_candidates",
+        "health.residuals",
+        "state.health_candidate"
+      ]
+    },
+    {
+      "module_id": "race_progress_solver",
+      "stage": "race_progress",
+      "model_version": "work015-work019-race-v1",
+      "consumes": [
+        "chassis.balance_residuals",
+        "circuit.segment_inputs",
+        "energy.residuals",
+        "health.event_candidates",
+        "health.residuals",
+        "motion.residuals",
+        "state.energy_candidate",
+        "state.health_candidate",
+        "state.motion_candidate"
+      ],
+      "produces": [
+        "race.event_candidates",
+        "race.residuals",
+        "state.next"
+      ]
+    }
+  ]
+}
