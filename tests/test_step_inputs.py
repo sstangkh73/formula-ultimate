@@ -69,7 +69,7 @@ class StepInputTests(unittest.TestCase):
         )
 
     def test_ready_adapter_emits_exact_typed_four_signal_set(self):
-        scenario = ready_scenario(PROFILES[0]); current = state()
+        scenario = ready_scenario(PROFILES[0]); current = replace(state(),race_distance_m=scenario.race_distance_m)
         view = AdapterReadView("input_bridge", current, (
             RuntimeSignal("manifest.circuit_profile", scenario),
             RuntimeSignal("manifest.current_state", current),
@@ -87,6 +87,15 @@ class StepInputTests(unittest.TestCase):
         output = CircuitEnvironmentInputAdapter().execute(view)
         self.assertEqual("invalid", output.status); self.assertEqual((), output.signals)
         self.assertIn("spatial", output.reason)
+
+    def test_scenario_distance_mismatch_returns_no_writes(self):
+        scenario=ready_scenario(PROFILES[0]); current=state()
+        view=AdapterReadView("input_bridge",current,(
+            RuntimeSignal("manifest.circuit_profile",scenario),RuntimeSignal("manifest.current_state",current),
+            RuntimeSignal("manifest.strategy_command",strategy()),))
+        output=CircuitEnvironmentInputAdapter().execute(view)
+        self.assertEqual("invalid",output.status); self.assertEqual((),output.signals)
+        self.assertIn("race distance",output.reason)
 
     def test_cross_circuit_evidence_is_rejected(self):
         with self.assertRaisesRegex(StepInputError, "must match"):

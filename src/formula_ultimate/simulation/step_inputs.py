@@ -219,6 +219,8 @@ class CircuitEnvironmentInputAdapter:
         strategy = view.read("manifest.strategy_command")
         if not isinstance(scenario, CircuitInputScenario) or not isinstance(state, SharedVehicleState) or not isinstance(strategy, StrategyStepCommand):
             return AdapterOutput(self.module_id, "invalid", (), reason="input bridge payload types are invalid")
+        if not math.isclose(scenario.race_distance_m, state.race_distance_m, rel_tol=0.0, abs_tol=1.0e-9):
+            return AdapterOutput(self.module_id, "invalid", (), reason="scenario race distance differs from shared state")
         resolution = resolve_step_inputs(scenario, strategy)
         if resolution.status != "ready":
             return AdapterOutput(self.module_id, "invalid", (), reason=f"missing evidence: {resolution.missing_evidence!r}")

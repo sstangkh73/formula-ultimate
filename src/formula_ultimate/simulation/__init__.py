@@ -95,6 +95,20 @@ from .energy_health_coupling import (
     evaluate_central_energy,
     evaluate_central_health,
 )
+from .whole_race import (
+    RACE_PROGRESS_ADAPTER_VERSION,
+    CoupledRaceReplayMetadata,
+    CoupledRaceStepTelemetry,
+    RaceProgressAdapter,
+    RaceProgressConfiguration,
+    RaceProgressEvidence,
+    RaceProgressStepResult,
+    WholeRaceConfiguration,
+    WholeRaceError,
+    WholeRaceResult,
+    merge_race_progress,
+    run_whole_race,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -179,4 +193,16 @@ __all__ = [
     "EnergyHealthCouplingError",
     "evaluate_central_energy",
     "evaluate_central_health",
+    "RACE_PROGRESS_ADAPTER_VERSION",
+    "CoupledRaceReplayMetadata",
+    "CoupledRaceStepTelemetry",
+    "RaceProgressAdapter",
+    "RaceProgressConfiguration",
+    "RaceProgressEvidence",
+    "RaceProgressStepResult",
+    "WholeRaceConfiguration",
+    "WholeRaceError",
+    "WholeRaceResult",
+    "merge_race_progress",
+    "run_whole_race",
 ]

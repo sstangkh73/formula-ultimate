@@ -63,6 +63,13 @@ def ready(profile) -> CircuitInputScenario:
 
 def adapter_output(scenario):
     current = state()
+    current = SharedVehicleState(
+        current.time_s, scenario.race_distance_m, current.position_m,
+        current.velocity_mps, current.yaw_rad, current.yaw_rate_rad_per_s,
+        current.primary_energy_j, current.recovered_energy_j,
+        current.completed_laps, current.contacts, current.components,
+        current.status,
+    )
     view = AdapterReadView("input_bridge", current, (
         RuntimeSignal("manifest.circuit_profile", scenario),
         RuntimeSignal("manifest.current_state", current),

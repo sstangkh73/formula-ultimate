@@ -256,9 +256,9 @@ def evaluate_central_energy(
     depletion_duration = None
     if demand_rate > recovery_rate:
         crossing = start_available / (demand_rate - recovery_rate)
-        if crossing < duration - 1.0e-15:
+        if crossing <= duration + 1.0e-15:
             depletion_duration = max(0.0, crossing)
-            duration = depletion_duration
+            duration = min(duration, depletion_duration)
     scaled = _scale_contact_transfers(transfers, duration)
     drive_wheel = scaled.total_drive_wheel_energy_j
     recovered_added = scaled.total_recovered_storage_energy_j
@@ -615,10 +615,12 @@ class CentralHealthEventAdapter:
             return AdapterOutput(self.module_id,"invalid",(),reason=str(exc))
         if result.status!="ok":
             own_events=tuple(x for x in result.events if x.source_module_id==self.module_id)
-            return AdapterOutput(self.module_id,"invalid",(),residuals=result.residuals,events=own_events,reason=result.reason)
+            own_residuals=tuple(x for x in result.residuals if x.residual_id.startswith("health."))
+            return AdapterOutput(self.module_id,"invalid",(),residuals=own_residuals,events=own_events,reason=result.reason)
         own_events=tuple(x for x in result.events if x.source_module_id==self.module_id)
+        own_residuals=tuple(x for x in result.residuals if x.residual_id.startswith("health."))
         return AdapterOutput(self.module_id,"ok",(
             RuntimeSignal("health.event_candidates",result.evidence),
             RuntimeSignal("health.residuals",result.evidence),
             RuntimeSignal("state.health_candidate",result.candidate_state),
-        ),residuals=result.residuals,events=own_events)
+        ),residuals=own_residuals,events=own_events)
