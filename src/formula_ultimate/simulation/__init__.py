@@ -60,6 +60,13 @@ from .aero_load_coupling import (
     moist_air_density_kg_per_m3,
     translate_aerodynamic_result,
 )
+from .contact_coupling import (
+    CONTACT_ADAPTER_VERSION, ContactCouplingConfig, ContactCouplingError,
+    ContactCouplingSpec, ContactEnergyTransfer, ContactEnergyTransfers,
+    ContactForceMoment, ContactHealthInput, ContactHealthInputs,
+    ContactLimitCouplingAdapter, ContactSubsystemSnapshot, CoupledContactForce,
+    couple_contacts,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -114,4 +121,9 @@ __all__ = [
     "couple_wrench_to_normal_loads",
     "moist_air_density_kg_per_m3",
     "translate_aerodynamic_result",
+    "CONTACT_ADAPTER_VERSION", "ContactCouplingConfig", "ContactCouplingError",
+    "ContactCouplingSpec", "ContactEnergyTransfer", "ContactEnergyTransfers",
+    "ContactForceMoment", "ContactHealthInput", "ContactHealthInputs",
+    "ContactLimitCouplingAdapter", "ContactSubsystemSnapshot", "CoupledContactForce",
+    "couple_contacts",
 ]
