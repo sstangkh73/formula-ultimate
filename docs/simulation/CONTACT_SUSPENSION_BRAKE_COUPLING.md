@@ -45,6 +45,13 @@ The adapter emits exactly `contact.force_moment`, `contact.energy_transfers`,
 and `contact.health_inputs`. Residuals cover suspension force, brake torque, and
 brake energy for every contact.
 
+Work 027 extends the energy evidence with applied positive drive-wheel work and
+requested/executed duration. If one contact reaches a positive failure time
+first, all contacts are deterministically rerun to that common duration.
+Persistent suspension velocity, brake temperature, recovered contact-store
+energy, and latched failure flags are carried by `ContactRuntimeState`; an
+external subsystem snapshot must match that shared state exactly.
+
 The validator uses an arbitrary three-contact topology. Its low-load front
 contact leaves force unserved without redistribution. Combined braking/steering
 shows per-contact wheel energy exactly matching applied longitudinal force times
@@ -52,8 +59,8 @@ effective radius, angular speed, and duration. Replay is exact.
 
 ## Limitations
 
-The tyre is a friction ellipse, suspension is lumped, allocation is declared
-rather than optimized, and configured subsystem state is not yet centrally
-committed. Work 026 must integrate the summed contact/aero wrench into one
-longitudinal/lateral/yaw/race-distance state. Level-0 success is not physical
-validation or real-race evidence.
+The tyre is a friction ellipse, suspension is lumped, and allocation is declared
+rather than optimized. Work 027 centrally commits the persistent contact state,
+but a central event earlier than the contact calculation retains the terminal
+start contact state rather than inventing interpolation. Level-0 success is not
+physical validation or real-race evidence.

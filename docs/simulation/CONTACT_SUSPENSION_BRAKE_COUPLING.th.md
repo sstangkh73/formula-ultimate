@@ -41,6 +41,13 @@ Adapter emit ตรง `contact.force_moment`, `contact.energy_transfers` แล
 `contact.health_inputs` Residual ครอบคลุม suspension force, brake torque และ brake
 energy ทุก contact
 
+Work 027 ขยาย energy evidence ให้มี applied positive drive-wheel work พร้อม
+requested/executed duration หาก contact หนึ่งถึง positive failure time ก่อน ระบบ
+rerun contact ทุกตัวแบบ deterministic ถึงระยะเวลาร่วมเดียวกัน Persistent
+suspension velocity, brake temperature, recovered contact-store energy และ
+latched failure flag ถูกเก็บใน `ContactRuntimeState`; external subsystem snapshot
+ต้องตรง shared state นี้แบบ exact
+
 Validator ใช้ arbitrary three-contact topology Front contact load ต่ำจึงเหลือ
 force unserved โดยไม่ redistribute Combined braking/steering แสดงว่า wheel energy
 ต่อ contact ตรง applied longitudinal force คูณ effective radius, angular speed และ
@@ -48,7 +55,8 @@ duration พร้อม replay ตรง
 
 ## ข้อจำกัด
 
-Tyre เป็น friction ellipse, suspension เป็น lumped, allocation ถูกประกาศไม่ใช่
-optimized และ subsystem state ที่ configure ยังไม่ central commit Work 026 ต้อง
-integrate summed contact/aero wrench เป็น longitudinal/lateral/yaw/race-distance
-state เดียว Level-0 success ไม่ใช่ physical validation หรือ real-race evidence
+Tyre เป็น friction ellipse, suspension เป็น lumped และ allocation ถูกประกาศไม่ใช่
+optimized Work 027 central commit persistent contact state แต่หาก central event
+เกิดก่อน contact calculation ระบบจะรักษา terminal start contact state แทนการ
+สร้าง interpolation Level-0 success ไม่ใช่ physical validation หรือ real-race
+evidence

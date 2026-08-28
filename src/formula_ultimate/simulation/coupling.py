@@ -447,6 +447,11 @@ class ContactRuntimeState:
     lateral_force_n: float
     suspension_travel_m: float
     angular_speed_rad_per_s: float
+    suspension_velocity_m_per_s: float = 0.0
+    brake_temperature_k: float = 300.0
+    stored_recovered_energy_j: float = 0.0
+    suspension_failed: bool = False
+    brake_failed: bool = False
 
     def __post_init__(self) -> None:
         _nonblank("contact_id", self.contact_id)
@@ -456,8 +461,15 @@ class ContactRuntimeState:
             "lateral_force_n",
             "suspension_travel_m",
             "angular_speed_rad_per_s",
+            "suspension_velocity_m_per_s",
         ):
             _finite(name, getattr(self, name))
+        _positive("brake_temperature_k", self.brake_temperature_k)
+        _nonnegative("stored_recovered_energy_j", self.stored_recovered_energy_j)
+        if not isinstance(self.suspension_failed, bool) or not isinstance(
+            self.brake_failed, bool
+        ):
+            raise CouplingContractError("contact failure flags must be boolean")
 
 
 @dataclass(frozen=True, slots=True)

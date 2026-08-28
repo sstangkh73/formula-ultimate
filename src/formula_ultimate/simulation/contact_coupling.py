@@ -78,12 +78,16 @@ class ContactEnergyTransfer:
     contact_id:str; wheel_energy_removed_j:float; recovered_storage_energy_j:float
     regenerative_conversion_loss_j:float; mechanical_brake_heat_j:float
     unserved_brake_torque_n_m:float; storage_capacity_margin_j:float
+    drive_wheel_energy_j:float=0.0
 
 @dataclass(frozen=True,slots=True)
 class ContactEnergyTransfers:
     contacts:tuple[ContactEnergyTransfer,...]; total_wheel_energy_removed_j:float
     total_recovered_storage_energy_j:float; total_conversion_loss_j:float
     total_mechanical_brake_heat_j:float
+    total_drive_wheel_energy_j:float=0.0
+    requested_duration_s:float=0.0
+    executed_duration_s:float=0.0
 
 @dataclass(frozen=True,slots=True)
 class ContactHealthInput:
@@ -94,7 +98,14 @@ class ContactHealthInput:
 class ContactHealthInputs:
     contacts:tuple[ContactHealthInput,...]
 
-def couple_contacts(*,config:ContactCouplingConfig,normal_loads:tuple[ContactNormalLoad,...],
+def subsystem_snapshots_from_shared_state(
+        shared_state:SharedVehicleState)->tuple[ContactSubsystemSnapshot,...]:
+    return tuple(ContactSubsystemSnapshot(item.contact_id,SuspensionBrakeState(
+        shared_state.time_s,item.suspension_travel_m,item.suspension_velocity_m_per_s,
+        item.brake_temperature_k,item.stored_recovered_energy_j,
+        item.suspension_failed,item.brake_failed)) for item in shared_state.contacts)
+
+def _couple_contacts_once(*,config:ContactCouplingConfig,normal_loads:tuple[ContactNormalLoad,...],
         command:StrategyStepCommand,shared_state:SharedVehicleState,
         subsystem_states:tuple[ContactSubsystemSnapshot,...]):
     if command.throttle_fraction>0 and command.brake_fraction>0: raise ContactCouplingError("simultaneous throttle and brake are undefined")
@@ -107,6 +118,11 @@ def couple_contacts(*,config:ContactCouplingConfig,normal_loads:tuple[ContactNor
     for spec in config.specs:
         contact_state=runtime[spec.contact_id]; subsystem_state=states[spec.contact_id]
         if subsystem_state.time_s != shared_state.time_s: raise ContactCouplingError("subsystem state time must equal shared-state time")
+        shared_subsystem=SuspensionBrakeState(shared_state.time_s,
+            contact_state.suspension_travel_m,contact_state.suspension_velocity_m_per_s,
+            contact_state.brake_temperature_k,contact_state.stored_recovered_energy_j,
+            contact_state.suspension_failed,contact_state.brake_failed)
+        if subsystem_state != shared_subsystem: raise ContactCouplingError("subsystem snapshot must equal persistent shared contact state")
         if contact_state.angular_speed_rad_per_s < 0: raise ContactCouplingError("negative wheel speed requires an explicit reverse model")
         brake_request=config.total_maximum_brake_torque_n_m*command.brake_fraction*spec.brake_allocation_fraction
         regen=spec.subsystem.regeneration
@@ -137,23 +153,44 @@ def couple_contacts(*,config:ContactCouplingConfig,normal_loads:tuple[ContactNor
         forces.append(CoupledContactForce(spec.contact_id,spec.x_position_m,spec.y_position_m,steer,loads[spec.contact_id],requested_fx,requested_fy,body_fx,body_fy,yaw,tyre.residual_longitudinal_force_n,tyre.residual_lateral_force_n,tyre))
         final_brake_torque=result.applied_total_brake_torque_n_m or 0
         original_unserved_brake=max(0,brake_request-final_brake_torque)
-        energy.append(ContactEnergyTransfer(spec.contact_id,result.wheel_energy_removed_j or 0,result.recovered_storage_energy_j or 0,result.regenerative_conversion_loss_j or 0,result.mechanical_brake_heat_j or 0,original_unserved_brake,result.residuals.storage_capacity_margin_j if result.residuals else 0))
+        drive_wheel_energy=max(0.0,tyre.applied_longitudinal_force_n)*spec.subsystem.brake.effective_radius_m*contact_state.angular_speed_rad_per_s*result.executed_duration_s
+        energy.append(ContactEnergyTransfer(spec.contact_id,result.wheel_energy_removed_j or 0,result.recovered_storage_energy_j or 0,result.regenerative_conversion_loss_j or 0,result.mechanical_brake_heat_j or 0,original_unserved_brake,result.residuals.storage_capacity_margin_j if result.residuals else 0,drive_wheel_energy))
         health.append(ContactHealthInput(spec.contact_id,result.end_state,result.failure_mode,result.failure_time_s,result))
         if result.residuals:
             residuals.extend((ResidualEntry(f"{spec.contact_id}.suspension-force","force",result.residuals.suspension_force_n,"N",1e-6,1e-10,max(1,loads[spec.contact_id])),ResidualEntry(f"{spec.contact_id}.brake-torque","moment",result.residuals.brake_torque_n_m,"N*m",1e-9,1e-10,max(1,brake_request)),ResidualEntry(f"{spec.contact_id}.brake-energy","energy",result.residuals.brake_energy_j,"J",1e-6,1e-10,max(1,result.wheel_energy_removed_j or 0))))
     force_signal=ContactForceMoment(tuple(forces),math.fsum(x.applied_body_longitudinal_force_n for x in forces),math.fsum(x.applied_body_lateral_force_n for x in forces),math.fsum(x.applied_yaw_moment_n_m for x in forces))
-    energy_signal=ContactEnergyTransfers(tuple(energy),math.fsum(x.wheel_energy_removed_j for x in energy),math.fsum(x.recovered_storage_energy_j for x in energy),math.fsum(x.regenerative_conversion_loss_j for x in energy),math.fsum(x.mechanical_brake_heat_j for x in energy))
+    executed_duration=min((x.suspension_result.executed_duration_s for x in health),default=config.duration_s)
+    energy_signal=ContactEnergyTransfers(tuple(energy),math.fsum(x.wheel_energy_removed_j for x in energy),math.fsum(x.recovered_storage_energy_j for x in energy),math.fsum(x.regenerative_conversion_loss_j for x in energy),math.fsum(x.mechanical_brake_heat_j for x in energy),math.fsum(x.drive_wheel_energy_j for x in energy),config.duration_s,executed_duration)
     return force_signal,energy_signal,ContactHealthInputs(tuple(health)),tuple(residuals)
+
+def couple_contacts(*,config:ContactCouplingConfig,normal_loads:tuple[ContactNormalLoad,...],
+        command:StrategyStepCommand,shared_state:SharedVehicleState,
+        subsystem_states:tuple[ContactSubsystemSnapshot,...]):
+    first=_couple_contacts_once(config=config,normal_loads=normal_loads,command=command,
+        shared_state=shared_state,subsystem_states=subsystem_states)
+    failure_durations=tuple(item.failure_time_s-shared_state.time_s
+        for item in first[2].contacts if item.failure_time_s is not None
+        and item.failure_time_s>shared_state.time_s)
+    if not failure_durations: return first
+    earliest=min(failure_durations)
+    if earliest >= config.duration_s-1e-15: return first
+    shortened=replace(config,duration_s=earliest)
+    rerun=_couple_contacts_once(config=shortened,normal_loads=normal_loads,
+        command=command,shared_state=shared_state,subsystem_states=subsystem_states)
+    energy=replace(rerun[1],requested_duration_s=config.duration_s,
+        executed_duration_s=earliest)
+    return rerun[0],energy,rerun[2],rerun[3]
 
 @dataclass(frozen=True,slots=True)
 class ContactLimitCouplingAdapter:
-    config:ContactCouplingConfig; subsystem_states:tuple[ContactSubsystemSnapshot,...]
+    config:ContactCouplingConfig; subsystem_states:tuple[ContactSubsystemSnapshot,...]=()
     module_id:str=field(default="contact_limit_solver",init=False)
     model_version:str=field(default=CONTACT_ADAPTER_VERSION,init=False)
     def execute(self,view:AdapterReadView)->AdapterOutput:
         loads=view.read("chassis.normal_loads"); command=view.read("control.step_command"); state=view.read("state.current")
         if not isinstance(loads,tuple) or not all(isinstance(x,ContactNormalLoad) for x in loads) or not isinstance(command,StrategyStepCommand) or not isinstance(state,SharedVehicleState): return AdapterOutput(self.module_id,"invalid",(),reason="contact adapter payload types are invalid")
-        try: force,energy,health,residuals=couple_contacts(config=self.config,normal_loads=loads,command=command,shared_state=state,subsystem_states=self.subsystem_states)
+        snapshots=self.subsystem_states or subsystem_snapshots_from_shared_state(state)
+        try: force,energy,health,residuals=couple_contacts(config=self.config,normal_loads=loads,command=command,shared_state=state,subsystem_states=snapshots)
         except (ArithmeticError,ValueError) as exc: return AdapterOutput(self.module_id,"invalid",(),reason=str(exc))
         if any(not x.passed for x in residuals): return AdapterOutput(self.module_id,"invalid",(),reason="contact residual failed",residuals=residuals)
         return AdapterOutput(self.module_id,"ok",(RuntimeSignal("contact.energy_transfers",energy),RuntimeSignal("contact.force_moment",force),RuntimeSignal("contact.health_inputs",health)),residuals=residuals)

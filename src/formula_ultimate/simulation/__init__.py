@@ -65,7 +65,7 @@ from .contact_coupling import (
     ContactCouplingSpec, ContactEnergyTransfer, ContactEnergyTransfers,
     ContactForceMoment, ContactHealthInput, ContactHealthInputs,
     ContactLimitCouplingAdapter, ContactSubsystemSnapshot, CoupledContactForce,
-    couple_contacts,
+    couple_contacts, subsystem_snapshots_from_shared_state,
 )
 from .motion_coupling import (
     MOTION_ADAPTER_VERSION,
@@ -77,6 +77,23 @@ from .motion_coupling import (
     MotionStepResult,
     VehicleMotionCouplingAdapter,
     integrate_coupled_motion,
+)
+from .energy_health_coupling import (
+    ENERGY_ADAPTER_VERSION,
+    HEALTH_ADAPTER_VERSION,
+    CentralEnergyAuditAdapter,
+    CentralEnergyConfiguration,
+    CentralEnergyEvidence,
+    CentralEnergyStepResult,
+    CentralHealthConfiguration,
+    CentralHealthEventAdapter,
+    CentralHealthEvidence,
+    CentralHealthStepResult,
+    ComponentHealthConfiguration,
+    ComponentHealthEvidence,
+    EnergyHealthCouplingError,
+    evaluate_central_energy,
+    evaluate_central_health,
 )
 
 __all__ = [
@@ -137,6 +154,7 @@ __all__ = [
     "ContactForceMoment", "ContactHealthInput", "ContactHealthInputs",
     "ContactLimitCouplingAdapter", "ContactSubsystemSnapshot", "CoupledContactForce",
     "couple_contacts",
+    "subsystem_snapshots_from_shared_state",
     "MOTION_ADAPTER_VERSION",
     "MotionConfiguration",
     "MotionCorridorEvidence",
@@ -146,4 +164,19 @@ __all__ = [
     "MotionStepResult",
     "VehicleMotionCouplingAdapter",
     "integrate_coupled_motion",
+    "ENERGY_ADAPTER_VERSION",
+    "HEALTH_ADAPTER_VERSION",
+    "CentralEnergyAuditAdapter",
+    "CentralEnergyConfiguration",
+    "CentralEnergyEvidence",
+    "CentralEnergyStepResult",
+    "CentralHealthConfiguration",
+    "CentralHealthEventAdapter",
+    "CentralHealthEvidence",
+    "CentralHealthStepResult",
+    "ComponentHealthConfiguration",
+    "ComponentHealthEvidence",
+    "EnergyHealthCouplingError",
+    "evaluate_central_energy",
+    "evaluate_central_health",
 ]

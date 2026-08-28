@@ -36,6 +36,8 @@ class ContactCouplingTests(unittest.TestCase):
         self.assertEqual(first,second); force=first[0]
         self.assertAlmostEqual(2000,force.total_body_longitudinal_force_n)
         self.assertTrue(all(x.requested_local_longitudinal_force_n==500 for x in force.contacts))
+        self.assertGreater(first[1].total_drive_wheel_energy_j,0)
+        self.assertAlmostEqual(sum(x.drive_wheel_energy_j for x in first[1].contacts),first[1].total_drive_wheel_energy_j)
 
     def test_zero_recovery_uses_mechanical_heat(self):
         specs=four(); _,energy,_,_=couple_contacts(config=config(specs),normal_loads=loads(specs),command=StrategyStepCommand(0,1,0,0),shared_state=shared(specs),subsystem_states=snapshots(specs))
@@ -92,8 +94,16 @@ class ContactCouplingTests(unittest.TestCase):
 
     def test_physical_suspension_failure_is_retained_not_invalid(self):
         specs=four(); states=list(snapshots(specs)); states[0]=replace(states[0],state=replace(states[0].state,suspension_velocity_m_per_s=100))
-        _,_,health,_=couple_contacts(config=config(specs,duration=.01),normal_loads=loads(specs),command=StrategyStepCommand(0,0,0,0),shared_state=shared(specs),subsystem_states=tuple(states))
+        current=shared(specs); current=replace(current,contacts=(replace(current.contacts[0],suspension_velocity_m_per_s=100),*current.contacts[1:]))
+        _,energy,health,_=couple_contacts(config=config(specs,duration=.01),normal_loads=loads(specs),command=StrategyStepCommand(0,0,0,0),shared_state=current,subsystem_states=tuple(states))
         self.assertEqual("suspension_travel",health.contacts[0].failure_mode)
+        self.assertLess(energy.executed_duration_s,energy.requested_duration_s)
+        self.assertTrue(all(x.end_state.time_s==health.contacts[0].failure_time_s for x in health.contacts))
+
+    def test_external_subsystem_snapshot_must_match_persistent_shared_state(self):
+        specs=four(); states=list(snapshots(specs)); states[0]=replace(states[0],state=replace(states[0].state,brake_temperature_k=301))
+        with self.assertRaisesRegex(ContactCouplingError,"persistent shared"):
+            couple_contacts(config=config(specs),normal_loads=loads(specs),command=StrategyStepCommand(0,0,0,0),shared_state=shared(specs),subsystem_states=tuple(states))
 
     def test_adapter_emits_exact_outputs_and_invalid_has_zero_writes(self):
         specs=four(); current=shared(specs); adapter=ContactLimitCouplingAdapter(config(specs),snapshots(specs))
