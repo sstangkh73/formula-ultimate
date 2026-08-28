@@ -1,6 +1,6 @@
 # Physics Implementation Queue — Work 010–019
 
-Status: Active sequential queue
+Status: Completed sequential queue
 
 Thai companion: `PHYSICS_IMPLEMENTATION_QUEUE.th.md`
 
@@ -25,7 +25,7 @@ verified.
 | 016 | Completed | Lateral/yaw dynamics, load transfer, and combined tyre force | Reference steady-state and transient cases converge and conserve declared balances |
 | 017 | Completed | Aerodynamic force, balance, and cooling-flow model | Drag/downforce/moment maps validate across speed, ride height, yaw, and active state envelopes |
 | 018 | Completed | Suspension, mechanical braking, and regenerative braking | Wheel loads, travel, brake energy, regen limits, and failure events remain physically accounted |
-| 019 | Queued | Reliability, traffic, weather, degradation, and race strategy | Multi-lap/multi-event digital race completes with deterministic strategy controls and uncertainty-aware failures |
+| 019 | Completed | Reliability, traffic, weather, degradation, and race strategy | Multi-lap/multi-event digital race completes with deterministic strategy controls and uncertainty-aware failures |
 
 ## Shared definition of done
 
