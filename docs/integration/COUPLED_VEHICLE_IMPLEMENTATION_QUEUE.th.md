@@ -15,7 +15,7 @@ complete
 | Work | สถานะ | สิ่งส่งมอบ | Completion gate |
 |---:|---|---|---|
 | 021 | Completed | Unified experiment manifest, shared state แบบ topology-neutral, deterministic coupling architecture compiler, residual ledger และ event arbitration | Reference architecture compile/fingerprint ตรงกันเมื่อ permute; invalid dependency/state/residual/tie แสดงชัดเจน |
-| 022 | Queued | Atomic coupled-step transaction และ adapter execution protocol | Adapter อ่าน immutable start state เดียว เขียนเฉพาะ output ที่ประกาศ และ commit next state ครบหนึ่งชุดหรือคืน invalidity โดยไม่มี partial mutation |
+| 022 | Completed | Atomic coupled-step transaction และ adapter execution protocol | Adapter อ่าน immutable start state เดียว เขียนเฉพาะ output ที่ประกาศ และ commit next state ครบหนึ่งชุดหรือคืน invalidity โดยไม่มี partial mutation |
 | 023 | Queued | Circuit, environment, weather, traffic และ strategy input adapter | Profile สิบสนามสร้าง typed step input deterministic; spatial/weather evidence ที่หายแสดงชัดและห้ามกลายเป็น neutral เงียบ |
 | 024 | Queued | Coupling aerodynamic force/cooling เข้ากับ chassis force-moment และ normal load | Aero force/moment เปลี่ยน shared chassis/contact load พร้อม force/moment residual ปิด และ map query ที่ไม่รองรับทำให้ step invalid |
 | 025 | Queued | Coupling tyre, suspension, mechanical braking และ regeneration ราย contact | Contact set จำนวนใดก็ได้แชร์ normal load, combined tyre capacity, travel, brake torque/heat และ central recovery request โดยไม่ redistribute เงียบ |

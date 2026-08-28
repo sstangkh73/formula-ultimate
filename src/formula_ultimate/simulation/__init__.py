@@ -21,6 +21,18 @@ from .coupling import (
     compile_coupling_architecture,
     load_coupling_architecture,
 )
+from .transaction import (
+    AdapterOutput,
+    AdapterReadView,
+    AdapterTrace,
+    CoupledAdapter,
+    CoupledStepResult,
+    CoupledTransactionError,
+    FunctionCoupledAdapter,
+    RuntimeSignal,
+    TransactionFailure,
+    execute_coupled_step,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -42,4 +54,14 @@ __all__ = [
     "arbitrate_event_candidates",
     "compile_coupling_architecture",
     "load_coupling_architecture",
+    "AdapterOutput",
+    "AdapterReadView",
+    "AdapterTrace",
+    "CoupledAdapter",
+    "CoupledStepResult",
+    "CoupledTransactionError",
+    "FunctionCoupledAdapter",
+    "RuntimeSignal",
+    "TransactionFailure",
+    "execute_coupled_step",
 ]
