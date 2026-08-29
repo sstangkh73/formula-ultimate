@@ -11,6 +11,8 @@ from formula_ultimate.structural import (
     imperfect_mesh,
     response_is_strictly_monotonic,
     secant_amplification,
+    shaped_imperfect_mesh,
+    smooth_cubic_crookedness,
 )
 
 
@@ -43,6 +45,18 @@ class NonlinearImperfectColumnTests(unittest.TestCase):
         for load in (-1.0, 100.0, 101.0):
             with self.assertRaises(StructuralEvidenceError):
                 secant_amplification(load, 100.0)
+
+    def test_independent_cubic_shape_and_unknown_shape_rejection(self) -> None:
+        self.assertEqual(0.0, smooth_cubic_crookedness(0.0, 0.2))
+        self.assertEqual(0.5, smooth_cubic_crookedness(0.1, 0.2))
+        self.assertEqual(1.0, smooth_cubic_crookedness(0.2, 0.2))
+        mesh = MeshData(
+            nodes={1: (0.0, 0.0, 0.0), 2: (0.2, 0.0, 0.0), 3: (0.2, 0.01, 0.0), 4: (0.2, 0.0, 0.01)},
+            tetrahedra={1: (1, 2, 3, 4)},
+            triangles={2: (2, 3, 4)},
+        )
+        with self.assertRaises(StructuralEvidenceError):
+            shaped_imperfect_mesh(mesh, length_m=0.2, tip_amplitude_m=0.001, shape_id="undeclared")
 
     def test_monotonicity_rejects_flat_or_reversed_response(self) -> None:
         good = [ResponsePoint(0.25, 1.3, 1.3, 1.333), ResponsePoint(0.5, 2.0, 2.0, 2.0)]

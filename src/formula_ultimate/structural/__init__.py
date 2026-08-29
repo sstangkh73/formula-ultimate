@@ -18,6 +18,8 @@ from .nonlinear_column import (
     imperfect_mesh,
     response_is_strictly_monotonic,
     secant_amplification,
+    shaped_imperfect_mesh,
+    smooth_cubic_crookedness,
 )
 
 __all__ = [
@@ -36,4 +38,6 @@ __all__ = [
     "imperfect_mesh",
     "response_is_strictly_monotonic",
     "secant_amplification",
+    "shaped_imperfect_mesh",
+    "smooth_cubic_crookedness",
 ]

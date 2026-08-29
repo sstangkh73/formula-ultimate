@@ -18,6 +18,17 @@ def cantilever_first_mode(x_m: float, length_m: float) -> float:
     return 1.0 - math.cos(math.pi * x_m / (2.0 * length_m))
 
 
+def smooth_cubic_crookedness(x_m: float, length_m: float) -> float:
+    """Return a normalized smoothstep crookedness with zero slope at both ends."""
+
+    if not math.isfinite(x_m) or not math.isfinite(length_m) or length_m <= 0.0:
+        raise StructuralEvidenceError("shape coordinates must be finite and length positive")
+    if x_m < 0.0 or x_m > length_m:
+        raise StructuralEvidenceError("shape coordinate lies outside the column")
+    xi = x_m / length_m
+    return 3.0 * xi**2 - 2.0 * xi**3
+
+
 def secant_amplification(load_n: float, critical_load_n: float) -> float:
     """Return the elastic precritical secant amplification 1/(1-P/Pcr)."""
 
@@ -41,6 +52,28 @@ def imperfect_mesh(
             xyz[1],
             xyz[2] + tip_amplitude_m * cantilever_first_mode(xyz[0], length_m),
         )
+        for node, xyz in mesh.nodes.items()
+    }
+    return MeshData(nodes=nodes, tetrahedra=mesh.tetrahedra, triangles=mesh.triangles)
+
+
+def shaped_imperfect_mesh(
+    mesh: MeshData, *, length_m: float, tip_amplitude_m: float, shape_id: str
+) -> MeshData:
+    """Apply one declared normalized imperfection shape; reject unknown identities."""
+
+    shapes = {
+        "cantilever_eigenmode": cantilever_first_mode,
+        "smoothstep_cubic": smooth_cubic_crookedness,
+    }
+    try:
+        shape = shapes[shape_id]
+    except KeyError as exc:
+        raise StructuralEvidenceError(f"unknown imperfection shape: {shape_id}") from exc
+    if not math.isfinite(tip_amplitude_m) or tip_amplitude_m < 0.0:
+        raise StructuralEvidenceError("tip imperfection must be finite and non-negative")
+    nodes = {
+        node: (xyz[0], xyz[1], xyz[2] + tip_amplitude_m * shape(xyz[0], length_m))
         for node, xyz in mesh.nodes.items()
     }
     return MeshData(nodes=nodes, tetrahedra=mesh.tetrahedra, triangles=mesh.triangles)

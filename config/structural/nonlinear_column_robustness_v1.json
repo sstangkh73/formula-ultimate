@@ -1,0 +1,32 @@
+{
+  "protocol_id": "nonlinear_column_robustness_v1",
+  "geometry": {
+    "length_m": 0.2,
+    "width_m": 0.01,
+    "height_m": 0.01,
+    "effective_length_factor": 2.0
+  },
+  "material": {
+    "material_id": "synthetic_linear_elastic_aluminium_like",
+    "youngs_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.3,
+    "density_kg_per_m3": 2700.0,
+    "provenance": "synthetic verification fixture; not a material allowables record"
+  },
+  "work037_source_commit": "36cffb04eb1cb47a4dc95cfdda30311799349cdd",
+  "mesh_levels": [
+    {"mesh_id": "coarse_1p5mm", "characteristic_size_m": 0.0015, "work037_critical_load_n": 3852.795},
+    {"mesh_id": "medium_1p25mm", "characteristic_size_m": 0.00125, "work037_critical_load_n": 3776.375},
+    {"mesh_id": "fine_1mm", "characteristic_size_m": 0.001, "work037_critical_load_n": 3715.16}
+  ],
+  "imperfection_shapes": ["cantilever_eigenmode", "smoothstep_cubic"],
+  "tip_amplitude_m": 0.0001,
+  "absolute_load_fractions_of_fine_pcr": [0.5, 0.7, 0.85],
+  "tolerances": {
+    "boundary_coordinate_absolute_m": 1e-9,
+    "reaction_error_relative": 1e-5,
+    "eigenmode_secant_error_relative": 0.15,
+    "last_two_mesh_change_relative": 0.05,
+    "fine_mesh_shape_difference_relative": 0.1
+  }
+}
