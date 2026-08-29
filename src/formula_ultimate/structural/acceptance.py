@@ -243,6 +243,72 @@ class BendingSpec:
 
 
 @dataclass(frozen=True, slots=True)
+class TorsionSpec:
+    protocol_id: str
+    experiment_id: str
+    specimen_id: str
+    claim_level: str
+    length_m: float
+    radius_m: float
+    material_id: str
+    youngs_modulus_pa: float
+    poisson_ratio: float
+    density_kg_per_m3: float
+    material_provenance: str
+    torque_nm: float
+    gauge_x_min_m: float
+    gauge_x_max_m: float
+
+    def __post_init__(self) -> None:
+        if any(not value.strip() for value in (self.protocol_id, self.experiment_id, self.specimen_id, self.claim_level, self.material_id, self.material_provenance)):
+            raise StructuralEvidenceError("identity and provenance must not be empty")
+        for name, value in (("length_m", self.length_m), ("radius_m", self.radius_m), ("youngs_modulus_pa", self.youngs_modulus_pa), ("density_kg_per_m3", self.density_kg_per_m3)):
+            _finite_positive(name, value)
+        if not math.isfinite(self.poisson_ratio) or not (-1.0 < self.poisson_ratio < 0.5):
+            raise StructuralEvidenceError("poisson_ratio must be finite and in (-1, 0.5)")
+        if not math.isfinite(self.torque_nm) or self.torque_nm == 0.0:
+            raise StructuralEvidenceError("torque_nm must be finite and non-zero")
+        if not (0.0 < self.gauge_x_min_m < self.gauge_x_max_m < self.length_m):
+            raise StructuralEvidenceError("stress gauge must be strictly inside the shaft")
+
+    @classmethod
+    def from_mapping(cls, value: Mapping[str, Any]) -> "TorsionSpec":
+        try:
+            geometry, material, load, gauge = value["geometry"], value["material"], value["load"], value["stress_gauge"]
+            if load["axis"] != "positive_x" or load["distribution"] != "consistent_linear_triangle_tangential_traction":
+                raise StructuralEvidenceError("unexpected torsion load contract")
+            return cls(str(value["protocol_id"]), str(value["experiment_id"]), str(value["specimen_id"]), str(value["claim_level"]), float(geometry["length_m"]), float(geometry["radius_m"]), str(material["material_id"]), float(material["youngs_modulus_pa"]), float(material["poisson_ratio"]), float(material["density_kg_per_m3"]), str(material["provenance"]), float(load["torque_nm"]), float(gauge["x_min_m"]), float(gauge["x_max_m"]))
+        except (KeyError, TypeError, ValueError) as exc:
+            if isinstance(exc, StructuralEvidenceError):
+                raise
+            raise StructuralEvidenceError(f"malformed torsion specification: {exc}") from exc
+
+    @property
+    def shear_modulus_pa(self) -> float:
+        return self.youngs_modulus_pa / (2.0 * (1.0 + self.poisson_ratio))
+
+    @property
+    def polar_second_moment_m4(self) -> float:
+        return math.pi * self.radius_m**4 / 2.0
+
+    @property
+    def volume_m3(self) -> float:
+        return math.pi * self.radius_m**2 * self.length_m
+
+    @property
+    def analytical_twist_rad(self) -> float:
+        return self.torque_nm * self.length_m / (self.polar_second_moment_m4 * self.shear_modulus_pa)
+
+    @property
+    def analytical_energy_j(self) -> float:
+        return 0.5 * self.torque_nm * self.analytical_twist_rad
+
+    def analytical_shear_pa(self, *, y_m: float, z_m: float) -> tuple[float, float]:
+        yr, zr = y_m - self.radius_m, z_m - self.radius_m
+        return (-self.torque_nm * zr / self.polar_second_moment_m4, self.torque_nm * yr / self.polar_second_moment_m4)
+
+
+@dataclass(frozen=True, slots=True)
 class MeshData:
     nodes: dict[int, tuple[float, float, float]]
     tetrahedra: dict[int, tuple[int, int, int, int]]
@@ -534,6 +600,68 @@ def build_bending_calculix_input(
         "",
     ))
     return "\n".join(lines), nodal_loads, fixed, loaded
+
+
+def build_torsion_calculix_input(
+    *, spec: TorsionSpec, mesh: MeshData, boundary_tolerance_m: float, restrained: bool = True
+) -> tuple[str, dict[int, tuple[float, float, float]], dict[int, float], tuple[int, ...], tuple[int, ...]]:
+    """Build a shaft deck with a consistent finite-surface pure torque."""
+    fixed = tuple(sorted(node for node, xyz in mesh.nodes.items() if abs(xyz[0]) <= boundary_tolerance_m))
+    loaded = tuple(sorted(node for node, xyz in mesh.nodes.items() if abs(xyz[0] - spec.length_m) <= boundary_tolerance_m))
+    if not fixed or not loaded or set(fixed) & set(loaded):
+        raise StructuralEvidenceError("fixed/loaded boundary node identity is invalid")
+    loaded_set = set(loaded)
+    raw = {node: [0.0, 0.0, 0.0] for node in loaded}
+    weights = {node: 0.0 for node in loaded}
+    face_area = 0.0
+    for triangle in mesh.triangles.values():
+        if not set(triangle) <= loaded_set:
+            continue
+        area = _triangle_area(*(mesh.nodes[node] for node in triangle))
+        face_area += area
+        tractions = {
+            node: (0.0, -(mesh.nodes[node][2] - spec.radius_m), mesh.nodes[node][1] - spec.radius_m)
+            for node in triangle
+        }
+        for node in triangle:
+            others = [other for other in triangle if other != node]
+            for axis in range(3):
+                raw[node][axis] += area / 12.0 * (
+                    2.0 * tractions[node][axis] + tractions[others[0]][axis] + tractions[others[1]][axis]
+                )
+            weights[node] += area / 3.0
+    if face_area <= 0.0 or not all(weight > 0.0 for weight in weights.values()):
+        raise StructuralEvidenceError("loaded circular face evidence is incomplete")
+    raw_moment = math.fsum(
+        (mesh.nodes[node][1] - spec.radius_m) * force[2]
+        - (mesh.nodes[node][2] - spec.radius_m) * force[1]
+        for node, force in raw.items()
+    )
+    if not math.isfinite(raw_moment) or raw_moment <= 0.0:
+        raise StructuralEvidenceError("tangential traction produced invalid torque")
+    scale = spec.torque_nm / raw_moment
+    loads = {node: tuple(scale * value for value in force) for node, force in raw.items()}
+    total_force = tuple(math.fsum(force[axis] for force in loads.values()) for axis in range(3))
+    force_scale = abs(spec.torque_nm) / spec.radius_m
+    if math.sqrt(math.fsum(value * value for value in total_force)) / force_scale > 1.0e-8:
+        raise StructuralEvidenceError("tangential traction is not a pure-torque load")
+
+    lines = ["*HEADING", f"{spec.experiment_id} {spec.specimen_id}", "*NODE, NSET=NALL"]
+    lines.extend(f"{node}, {xyz[0]:.12g}, {xyz[1]:.12g}, {xyz[2]:.12g}" for node, xyz in sorted(mesh.nodes.items()))
+    lines.append("*ELEMENT, TYPE=C3D4, ELSET=EALL")
+    lines.extend(f"{element}, {', '.join(str(node) for node in connectivity)}" for element, connectivity in sorted(mesh.tetrahedra.items()))
+    lines.extend(_nset_lines("FIXED", fixed))
+    lines.extend(_nset_lines("LOADED", loaded))
+    lines.extend((f"*MATERIAL, NAME={spec.material_id}", "*ELASTIC", f"{spec.youngs_modulus_pa:.17g}, {spec.poisson_ratio:.17g}", "*DENSITY", f"{spec.density_kg_per_m3:.17g}", f"*SOLID SECTION, ELSET=EALL, MATERIAL={spec.material_id}"))
+    if restrained:
+        lines.extend(("*BOUNDARY", "FIXED, 1, 3, 0.0"))
+    lines.extend(("*STEP", "*STATIC", "*CLOAD"))
+    for node, force in sorted(loads.items()):
+        for dof in (2, 3):
+            if force[dof - 1] != 0.0:
+                lines.append(f"{node}, {dof}, {force[dof - 1]:.17g}")
+    lines.extend(("*NODE PRINT, NSET=LOADED", "U", "*NODE PRINT, NSET=FIXED, TOTALS=YES", "RF", "*EL PRINT, ELSET=EALL", "S, E", "*NODE FILE", "U, RF", "*EL FILE", "S, E", "*END STEP", ""))
+    return "\n".join(lines), loads, weights, fixed, loaded
 
 
 _FLOAT = r"[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[Ee][-+]?\d+)?"
