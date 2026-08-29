@@ -114,6 +114,135 @@ class TensionSpec:
 
 
 @dataclass(frozen=True, slots=True)
+class BendingSpec:
+    protocol_id: str
+    experiment_id: str
+    specimen_id: str
+    claim_level: str
+    length_m: float
+    width_m: float
+    height_m: float
+    material_id: str
+    youngs_modulus_pa: float
+    poisson_ratio: float
+    density_kg_per_m3: float
+    material_provenance: str
+    force_magnitude_n: float
+    gauge_x_min_m: float
+    gauge_x_max_m: float
+
+    def __post_init__(self) -> None:
+        text_values = (
+            self.protocol_id,
+            self.experiment_id,
+            self.specimen_id,
+            self.claim_level,
+            self.material_id,
+            self.material_provenance,
+        )
+        if any(not item.strip() for item in text_values):
+            raise StructuralEvidenceError("identity and provenance must not be empty")
+        for name, value in (
+            ("length_m", self.length_m),
+            ("width_m", self.width_m),
+            ("height_m", self.height_m),
+            ("youngs_modulus_pa", self.youngs_modulus_pa),
+            ("density_kg_per_m3", self.density_kg_per_m3),
+            ("force_magnitude_n", self.force_magnitude_n),
+        ):
+            _finite_positive(name, value)
+        if not math.isfinite(self.poisson_ratio) or not (-1.0 < self.poisson_ratio < 0.5):
+            raise StructuralEvidenceError("poisson_ratio must be finite and in (-1, 0.5)")
+        if not (
+            math.isfinite(self.gauge_x_min_m)
+            and math.isfinite(self.gauge_x_max_m)
+            and 0.0 < self.gauge_x_min_m < self.gauge_x_max_m < self.length_m
+        ):
+            raise StructuralEvidenceError("stress gauge must be finite and strictly inside the beam")
+        if self.length_m / self.height_m < 10.0:
+            raise StructuralEvidenceError("Euler-Bernoulli fixture requires L/h >= 10")
+
+    @classmethod
+    def from_mapping(cls, value: Mapping[str, Any]) -> "BendingSpec":
+        try:
+            geometry = value["geometry"]
+            material = value["material"]
+            load = value["load"]
+            gauge = value["stress_gauge"]
+            if load["axis"] != "negative_z":
+                raise StructuralEvidenceError("only the declared negative_z load axis is admitted")
+            if load["distribution"] != "surface_triangle_tributary_area_weighted_nodal_loads":
+                raise StructuralEvidenceError("unexpected load distribution policy")
+            return cls(
+                protocol_id=str(value["protocol_id"]),
+                experiment_id=str(value["experiment_id"]),
+                specimen_id=str(value["specimen_id"]),
+                claim_level=str(value["claim_level"]),
+                length_m=float(geometry["length_m"]),
+                width_m=float(geometry["width_m"]),
+                height_m=float(geometry["height_m"]),
+                material_id=str(material["material_id"]),
+                youngs_modulus_pa=float(material["youngs_modulus_pa"]),
+                poisson_ratio=float(material["poisson_ratio"]),
+                density_kg_per_m3=float(material["density_kg_per_m3"]),
+                material_provenance=str(material["provenance"]),
+                force_magnitude_n=float(load["force_magnitude_n"]),
+                gauge_x_min_m=float(gauge["x_min_m"]),
+                gauge_x_max_m=float(gauge["x_max_m"]),
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            if isinstance(exc, StructuralEvidenceError):
+                raise
+            raise StructuralEvidenceError(f"malformed bending specification: {exc}") from exc
+
+    @property
+    def area_m2(self) -> float:
+        return self.width_m * self.height_m
+
+    @property
+    def volume_m3(self) -> float:
+        return self.length_m * self.area_m2
+
+    @property
+    def second_moment_m4(self) -> float:
+        return self.width_m * self.height_m**3 / 12.0
+
+    @property
+    def analytical_tip_displacement_m(self) -> float:
+        return (
+            self.force_magnitude_n
+            * self.length_m**3
+            / (3.0 * self.youngs_modulus_pa * self.second_moment_m4)
+        )
+
+    @property
+    def analytical_root_moment_nm(self) -> float:
+        return self.force_magnitude_n * self.length_m
+
+    @property
+    def analytical_root_outer_stress_pa(self) -> float:
+        return (
+            self.analytical_root_moment_nm
+            * (self.height_m / 2.0)
+            / self.second_moment_m4
+        )
+
+    @property
+    def analytical_energy_j(self) -> float:
+        return 0.5 * self.force_magnitude_n * self.analytical_tip_displacement_m
+
+    def analytical_sxx_pa(self, *, x_m: float, z_m: float) -> float:
+        if not (0.0 <= x_m <= self.length_m and 0.0 <= z_m <= self.height_m):
+            raise StructuralEvidenceError("stress reference point lies outside the beam")
+        return (
+            self.force_magnitude_n
+            * (self.length_m - x_m)
+            * (z_m - self.height_m / 2.0)
+            / self.second_moment_m4
+        )
+
+
+@dataclass(frozen=True, slots=True)
 class MeshData:
     nodes: dict[int, tuple[float, float, float]]
     tetrahedra: dict[int, tuple[int, int, int, int]]
@@ -206,6 +335,17 @@ def _triangle_area(
     return 0.5 * math.sqrt(sum(value * value for value in cross))
 
 
+def _nset_lines(name: str, nodes: tuple[int, ...]) -> list[str]:
+    if not nodes:
+        raise StructuralEvidenceError(f"node set {name} must not be empty")
+    lines = [f"*NSET, NSET={name}"]
+    lines.extend(
+        ", ".join(str(node) for node in nodes[index : index + 16])
+        for index in range(0, len(nodes), 16)
+    )
+    return lines
+
+
 def build_calculix_input(
     *, spec: TensionSpec, mesh: MeshData, boundary_tolerance_m: float
 ) -> tuple[str, dict[int, float], tuple[int, ...], tuple[int, ...]]:
@@ -267,8 +407,8 @@ def build_calculix_input(
         f"{element_id}, {', '.join(str(node) for node in connectivity)}"
         for element_id, connectivity in sorted(mesh.tetrahedra.items())
     )
-    lines.extend(("*NSET, NSET=FIXED", ", ".join(str(node) for node in fixed)))
-    lines.extend(("*NSET, NSET=LOADED", ", ".join(str(node) for node in loaded)))
+    lines.extend(_nset_lines("FIXED", fixed))
+    lines.extend(_nset_lines("LOADED", loaded))
     lines.extend((
         f"*MATERIAL, NAME={spec.material_id}",
         "*ELASTIC",
@@ -283,6 +423,102 @@ def build_calculix_input(
         "*CLOAD",
     ))
     lines.extend(f"{node}, 1, {load:.17g}" for node, load in sorted(nodal_loads.items()))
+    lines.extend((
+        "*NODE PRINT, NSET=LOADED",
+        "U",
+        "*NODE PRINT, NSET=FIXED, TOTALS=YES",
+        "RF",
+        "*EL PRINT, ELSET=EALL",
+        "S, E",
+        "*NODE FILE",
+        "U, RF",
+        "*EL FILE",
+        "S, E",
+        "*END STEP",
+        "",
+    ))
+    return "\n".join(lines), nodal_loads, fixed, loaded
+
+
+def build_bending_calculix_input(
+    *, spec: BendingSpec, mesh: MeshData, boundary_tolerance_m: float
+) -> tuple[str, dict[int, float], tuple[int, ...], tuple[int, ...]]:
+    """Build a cantilever C3D4 deck with tributary-area transverse loads."""
+
+    fixed = tuple(sorted(
+        node_id for node_id, xyz in mesh.nodes.items()
+        if abs(xyz[0]) <= boundary_tolerance_m
+    ))
+    loaded = tuple(sorted(
+        node_id for node_id, xyz in mesh.nodes.items()
+        if abs(xyz[0] - spec.length_m) <= boundary_tolerance_m
+    ))
+    if not fixed or not loaded or set(fixed) & set(loaded):
+        raise StructuralEvidenceError("fixed/loaded boundary node identity is invalid")
+    loaded_set = set(loaded)
+    tributary: dict[int, float] = {node_id: 0.0 for node_id in loaded}
+    face_area = 0.0
+    face_count = 0
+    for connectivity in mesh.triangles.values():
+        if set(connectivity) <= loaded_set:
+            area = _triangle_area(*(mesh.nodes[node] for node in connectivity))
+            if not math.isfinite(area) or area <= 0.0:
+                raise StructuralEvidenceError("loaded surface has an invalid triangle")
+            face_area += area
+            face_count += 1
+            for node in connectivity:
+                tributary[node] += area / 3.0
+    if face_count == 0 or not math.isclose(
+        face_area, spec.area_m2, rel_tol=1.0e-8, abs_tol=1.0e-14
+    ):
+        raise StructuralEvidenceError(
+            f"loaded face area {face_area} differs from declared {spec.area_m2}"
+        )
+    nodal_loads = {
+        node: -spec.force_magnitude_n * area / face_area
+        for node, area in tributary.items()
+        if area > 0.0
+    }
+    if set(nodal_loads) != loaded_set:
+        raise StructuralEvidenceError("some loaded-face nodes have zero tributary area")
+    if not math.isclose(
+        math.fsum(nodal_loads.values()),
+        -spec.force_magnitude_n,
+        rel_tol=1.0e-12,
+        abs_tol=1.0e-12,
+    ):
+        raise StructuralEvidenceError("distributed transverse loads do not close")
+
+    lines = [
+        "*HEADING",
+        f"{spec.experiment_id} {spec.specimen_id}",
+        "*NODE, NSET=NALL",
+    ]
+    lines.extend(
+        f"{node_id}, {xyz[0]:.17g}, {xyz[1]:.17g}, {xyz[2]:.17g}"
+        for node_id, xyz in sorted(mesh.nodes.items())
+    )
+    lines.append("*ELEMENT, TYPE=C3D4, ELSET=EALL")
+    lines.extend(
+        f"{element_id}, {', '.join(str(node) for node in connectivity)}"
+        for element_id, connectivity in sorted(mesh.tetrahedra.items())
+    )
+    lines.extend(_nset_lines("FIXED", fixed))
+    lines.extend(_nset_lines("LOADED", loaded))
+    lines.extend((
+        f"*MATERIAL, NAME={spec.material_id}",
+        "*ELASTIC",
+        f"{spec.youngs_modulus_pa:.17g}, {spec.poisson_ratio:.17g}",
+        "*DENSITY",
+        f"{spec.density_kg_per_m3:.17g}",
+        f"*SOLID SECTION, ELSET=EALL, MATERIAL={spec.material_id}",
+        "*BOUNDARY",
+        "FIXED, 1, 3, 0.0",
+        "*STEP",
+        "*STATIC",
+        "*CLOAD",
+    ))
+    lines.extend(f"{node}, 3, {load:.17g}" for node, load in sorted(nodal_loads.items()))
     lines.extend((
         "*NODE PRINT, NSET=LOADED",
         "U",
@@ -337,6 +573,14 @@ def parse_calculix_dat(path: Path) -> dict[str, Any]:
     strain_marker = "strains (elem, integ.pnt.,exx,eyy,ezz,exy,exz,eyz) for set EALL"
     if stress_marker not in text:
         raise StructuralEvidenceError("CalculiX stress table is missing")
+    total_reaction_block = text.split(reaction_end, 1)[1].split(stress_marker, 1)[0]
+    total_reaction_rows = re.findall(
+        rf"^\s*({_FLOAT})\s+({_FLOAT})\s+({_FLOAT})\s*$",
+        total_reaction_block,
+        flags=re.MULTILINE,
+    )
+    if len(total_reaction_rows) != 1:
+        raise StructuralEvidenceError("CalculiX total reaction row is missing or ambiguous")
     if strain_marker not in text:
         raise StructuralEvidenceError("CalculiX strain table is missing")
     stress_block = text.split(stress_marker, 1)[1].split(strain_marker, 1)[0]
@@ -352,19 +596,31 @@ def parse_calculix_dat(path: Path) -> dict[str, Any]:
         for row in displacement_rows
     }
     reactions = {int(row[0]): tuple(float(v) for v in row[1:4]) for row in reaction_rows}
-    stresses = {int(row[0]): float(row[2]) for row in stress_rows}
+    total_reaction = tuple(float(value) for value in total_reaction_rows[0])
+    stress_tensors = {
+        int(row[0]): tuple(float(value) for value in row[2:8])
+        for row in stress_rows
+    }
     if len(displacements) != len(displacement_rows):
         raise StructuralEvidenceError("CalculiX displacement node IDs are duplicated")
     if len(reactions) != len(reaction_rows):
         raise StructuralEvidenceError("CalculiX reaction node IDs are duplicated")
-    if len(stresses) != len(stress_rows):
+    if len(stress_tensors) != len(stress_rows):
         raise StructuralEvidenceError("CalculiX stress element IDs are duplicated")
-    values = [value for vector in (*displacements.values(), *reactions.values()) for value in vector]
-    values.extend(stresses.values())
+    values = [
+        value
+        for vector in (*displacements.values(), *reactions.values(), total_reaction)
+        for value in vector
+    ]
+    values.extend(value for tensor in stress_tensors.values() for value in tensor)
     if not all(math.isfinite(value) for value in values):
         raise StructuralEvidenceError("CalculiX parsed evidence contains a non-finite value")
     return {
         "displacements": displacements,
         "reactions": reactions,
-        "axial_stress_by_element_pa": stresses,
+        "total_reaction": total_reaction,
+        "stress_tensor_by_element_pa": stress_tensors,
+        "axial_stress_by_element_pa": {
+            element: tensor[0] for element, tensor in stress_tensors.items()
+        },
     }

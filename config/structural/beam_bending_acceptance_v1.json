@@ -1,0 +1,55 @@
+{
+  "protocol_id": "beam_bending_acceptance_v1",
+  "experiment_id": "work035_linear_beam_bending_acceptance_v1",
+  "specimen_id": "cantilever_rectangular_v1",
+  "claim_level": "local linear-elastic beam-bending solver-route verification only",
+  "geometry": {
+    "length_m": 0.12,
+    "width_m": 0.012,
+    "height_m": 0.012
+  },
+  "material": {
+    "material_id": "synthetic_isotropic_linear_elastic_v1",
+    "youngs_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.3,
+    "density_kg_per_m3": 2700.0,
+    "provenance": "synthetic analytical verification fixture; not a material certificate"
+  },
+  "load": {
+    "force_magnitude_n": 5.0,
+    "axis": "negative_z",
+    "distribution": "surface_triangle_tributary_area_weighted_nodal_loads"
+  },
+  "stress_gauge": {
+    "x_min_m": 0.024,
+    "x_max_m": 0.096,
+    "metric": "tetrahedron-volume-weighted signed normalized RMS Sxx error at element centroids"
+  },
+  "mesh_levels": [
+    {
+      "mesh_id": "coarse_1p4mm",
+      "characteristic_size_m": 0.0014
+    },
+    {
+      "mesh_id": "medium_1p2mm",
+      "characteristic_size_m": 0.0012
+    },
+    {
+      "mesh_id": "fine_1mm",
+      "characteristic_size_m": 0.001
+    }
+  ],
+  "tolerances": {
+    "boundary_coordinate_absolute_m": 1e-9,
+    "load_resultant_relative": 1e-12,
+    "force_closure_relative": 1e-6,
+    "moment_closure_relative": 1e-5,
+    "tip_displacement_analytical_relative": 0.1,
+    "stress_field_normalized_rms": 0.15,
+    "stress_field_signed_correlation_minimum": 0.95,
+    "energy_analytical_relative": 0.1,
+    "last_two_displacement_relative": 0.05,
+    "last_two_stress_error_absolute_change": 0.05,
+    "last_two_energy_relative": 0.05
+  }
+}

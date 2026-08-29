@@ -143,7 +143,12 @@ class CalculixParserTests(unittest.TestCase):
             path.write_text(content, encoding="ascii")
             parsed = parse_calculix_dat(path)
         self.assertEqual({10: 10_000_000.0}, parsed["axial_stress_by_element_pa"])
+        self.assertEqual(
+            {10: (10_000_000.0, 0.0, 0.0, 0.0, 0.0, 0.0)},
+            parsed["stress_tensor_by_element_pa"],
+        )
         self.assertEqual((-10.0, 0.0, 0.0), parsed["reactions"][1])
+        self.assertEqual((-10.0, 0.0, 0.0), parsed["total_reaction"])
 
     def test_missing_evidence_table_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
