@@ -21,6 +21,13 @@ from .nonlinear_column import (
     shaped_imperfect_mesh,
     smooth_cubic_crookedness,
 )
+from .element_verification import (
+    ElementMeshData,
+    build_element_column_input,
+    imperfect_element_mesh,
+    parse_element_column_dat,
+    parse_element_msh2,
+)
 
 __all__ = [
     "BendingSpec",
@@ -40,4 +47,9 @@ __all__ = [
     "secant_amplification",
     "shaped_imperfect_mesh",
     "smooth_cubic_crookedness",
+    "ElementMeshData",
+    "build_element_column_input",
+    "imperfect_element_mesh",
+    "parse_element_column_dat",
+    "parse_element_msh2",
 ]

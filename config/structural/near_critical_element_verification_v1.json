@@ -1,0 +1,42 @@
+{
+  "protocol_id": "near_critical_element_verification_v1",
+  "geometry": {
+    "length_m": 0.2,
+    "width_m": 0.01,
+    "height_m": 0.01,
+    "effective_length_factor": 2.0
+  },
+  "material": {
+    "material_id": "synthetic_linear_elastic_aluminium_like",
+    "youngs_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.3,
+    "density_kg_per_m3": 2700.0,
+    "provenance": "synthetic verification fixture; not a material allowables record"
+  },
+  "reference_compression_n": 100.0,
+  "tip_imperfection_m": 0.0001,
+  "absolute_compression_loads_n": [1857.58, 2600.612, 3157.886],
+  "mesh_cases": [
+    {"mesh_id": "c3d4_1mm", "order": 1, "characteristic_size_m": 0.001},
+    {"mesh_id": "c3d4_0p8mm", "order": 1, "characteristic_size_m": 0.0008},
+    {"mesh_id": "c3d4_0p65mm", "order": 1, "characteristic_size_m": 0.00065},
+    {"mesh_id": "c3d10_1p4mm", "order": 2, "characteristic_size_m": 0.0014}
+  ],
+  "mesh_only_pilot": {
+    "c3d4_0p65mm_nodes": 65835,
+    "c3d10_1p4mm_nodes": 57426,
+    "relative_node_count_difference": 0.127728411938938,
+    "maximum_relative_node_count_difference": 0.25,
+    "solver_results_observed_before_freeze": false
+  },
+  "tolerances": {
+    "boundary_coordinate_absolute_m": 1e-9,
+    "reaction_error_relative": 1e-5,
+    "analytical_eigenvalue_error_relative": 0.15,
+    "mode_pair_split_relative": 0.05,
+    "mode_transverse_axial_minimum": 10.0,
+    "secant_error_relative": 0.15,
+    "last_two_c3d4_amplification_change_relative": 0.05,
+    "refined_c3d4_c3d10_amplification_difference_relative": 0.05
+  }
+}
