@@ -23,7 +23,7 @@ completion.
 | 026 | Completed | Coupled longitudinal, lateral, yaw, and race-distance state integration | One motion state advances from summed contact/aero forces and moments; analytical references, timestep refinement, and corridor failures remain observable |
 | 027 | Completed | Central energy, thermal, cooling, degradation, damage, and reliability state coupling | Typed transfers close through the independent audit; recovery, heat, derating, damage, seeded failure, and earliest event truncate the same step |
 | 028 | Completed | Deterministic whole-race coupled orchestrator and replay telemetry | One fixed-topology reference executes all coupled stages until finish/depletion/failure/timeout/invalid with exact same-seed replay and complete provenance |
-| 029 | Queued | Ten-circuit fixed-topology baseline campaign and fair compute controls | At least one defensible reference family completes all ten profiles under pinned energy, component opportunity, evaluation budget, seeds, and holdout policy |
+| 029 | Completed | Ten-circuit fixed-topology baseline campaign and fair compute controls | At least one defensible reference family completes all ten profiles under pinned energy, component opportunity, evaluation budget, seeds, and holdout policy |
 | 030 | Queued | Integration falsification, numerical refinement, cross-model promotion gate, and release review | Deliberate coupling defects fail; convergence/uncertainty evidence is recorded; unsupported candidates cannot be promoted or called discovered |
 
 ## Dependency path

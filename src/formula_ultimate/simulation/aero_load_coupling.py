@@ -249,8 +249,8 @@ class AerodynamicMapAdapter:
         if not isinstance(environment, EnvironmentStepInputs) or not isinstance(state, SharedVehicleState):
             return AdapterOutput(self.module_id, "invalid", (), reason="aerodynamic adapter payload types are invalid")
         weather = environment.weather
-        if weather.status != "observed" or weather.wind_coordinate_frame != "local_enu":
-            return AdapterOutput(self.module_id, "invalid", (), reason="observed local_enu weather is required")
+        if weather.status not in {"observed", "synthetic_control"} or weather.wind_coordinate_frame != "local_enu":
+            return AdapterOutput(self.module_id, "invalid", (), reason="declared local_enu weather is required")
         vx = state.velocity_mps[0] - weather.wind_velocity_mps[0]
         vy = state.velocity_mps[1] - weather.wind_velocity_mps[1]
         vz = state.velocity_mps[2] - weather.wind_velocity_mps[2]

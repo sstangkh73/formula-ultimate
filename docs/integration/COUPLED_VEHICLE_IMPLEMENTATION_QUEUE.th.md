@@ -22,7 +22,7 @@ complete
 | 026 | Completed | Coupled longitudinal, lateral, yaw และ race-distance state integration | Motion state เดียว advance จากผลรวม contact/aero force/moment; analytical reference, timestep refinement และ corridor failure สังเกตได้ |
 | 027 | Completed | Coupling central energy, thermal, cooling, degradation, damage และ reliability state | Typed transfer ปิดผ่าน independent audit; recovery, heat, derating, damage, seeded failure และ earliest event ตัด step เดียวกัน |
 | 028 | Completed | Deterministic whole-race coupled orchestrator และ replay telemetry | Fixed-topology reference หนึ่งคัน execute coupled stage ทั้งหมดจน finish/depletion/failure/timeout/invalid พร้อม same-seed replay exact และ provenance ครบ |
-| 029 | Queued | Ten-circuit fixed-topology baseline campaign และ fair compute control | Reference family ที่ป้องกันได้อย่างน้อยหนึ่งแบบจบสิบสนามภายใต้ pinned energy, component opportunity, evaluation budget, seed และ holdout policy |
+| 029 | Completed | Ten-circuit fixed-topology baseline campaign และ fair compute control | Reference family ที่ป้องกันได้อย่างน้อยหนึ่งแบบจบสิบสนามภายใต้ pinned energy, component opportunity, evaluation budget, seed และ holdout policy |
 | 030 | Queued | Integration falsification, numerical refinement, cross-model promotion gate และ release review | Coupling defect ที่จงใจใส่ต้อง fail; บันทึก convergence/uncertainty evidence; candidate ที่หลักฐานไม่พอ promote หรือเรียก discovered ไม่ได้ |
 
 ## เส้นทาง Dependency

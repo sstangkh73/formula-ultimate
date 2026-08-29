@@ -34,7 +34,7 @@ def ready_scenario(profile):
     cid = profile.circuit_id
     return CircuitInputScenario(profile, 10,
         SpatialStepEvidence(cid, "available", "fixture", "s1", .01, .02, .03, 5, 5, .1),
-        WeatherStepEvidence(cid, "observed", "fixture", 300, 100000, .5, (1,2,0), "local_enu", 0, 310),
+        WeatherStepEvidence(cid, "synthetic_control", "fixture", 300, 100000, .5, (1,2,0), "local_enu", 0, 310),
         TrafficStepEvidence(cid, "isolated_control", "fixture-control", 0))
 
 class StepInputTests(unittest.TestCase):
@@ -123,5 +123,19 @@ class StepInputTests(unittest.TestCase):
         isolated = ready_scenario(PROFILES[0]).traffic
         self.assertEqual("missing", missing.mode); self.assertIsNone(missing.nearby_vehicle_count)
         self.assertEqual("isolated_control", isolated.mode); self.assertEqual(0, isolated.nearby_vehicle_count)
+
+    def test_synthetic_weather_is_ready_but_distinct_from_observation(self):
+        synthetic = ready_scenario(PROFILES[0])
+        observed = replace(
+            synthetic,
+            weather=replace(synthetic.weather, status="observed"),
+        )
+        observed_result = resolve_step_inputs(observed, strategy())
+        synthetic_result = resolve_step_inputs(synthetic, strategy())
+        self.assertEqual("ready", synthetic_result.status)
+        self.assertNotEqual(
+            observed_result.fingerprint_sha256,
+            synthetic_result.fingerprint_sha256,
+        )
 
 if __name__ == "__main__": unittest.main()

@@ -4,10 +4,14 @@
 
 ## Boundary
 
-Work 024 เชื่อม observed weather แบบ `local_enu` และ shared motion state เข้ากับ
+Work 024 เชื่อม declared weather แบบ `local_enu` และ shared motion state เข้ากับ
 aerodynamic map จาก Work 017, translate wrench มาที่ centre of mass และ project
 normal load บน contact topology ใดก็ได้ที่ไม่ rank-deficient พร้อม emit signal set
 ตรงของ `aerodynamic_map` และ `normal_load_solver`
+
+declared weather เป็น `observed` หรือ `synthetic_control` ได้ โดยใช้ numerical
+path ร่วมกัน แต่ typed status และ scenario fingerprint รักษา evidence class ไว้
+synthetic control ไม่กลายเป็นหลักฐานสนามจริง
 
 ยังเป็น Level 0; synthetic coefficient และ analytical weather ไม่ใช่ CFD,
 measurement, calibration, safety หรือ physical validation

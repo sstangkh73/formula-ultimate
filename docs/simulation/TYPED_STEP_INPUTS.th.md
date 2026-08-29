@@ -23,8 +23,9 @@ uncertainty หน่วย metre Status เป็น `available` พร้อ�
 `WeatherStepEvidence` ประกาศ source, อุณหภูมิอากาศ/ผิวสนามหน่วย kelvin, pressure
 หน่วย pascal, relative humidity ใน `[0,1]`, 3D wind velocity หน่วย `m/s` และ
 precipitation mass flux หน่วย `kg/(m^2*s)` Wind ประกาศ `local_enu` ชัดและ Work
-024 rotate เข้า vehicle body axis Status เป็น `observed` พร้อม field ครบ
-หรือ `missing` โดยไม่มี numeric default
+024 rotate เข้า vehicle body axis Status เป็น `observed` หรือ
+`synthetic_control` พร้อม field ครบ หรือ `missing` โดยไม่มี numeric default
+synthetic control ไม่ใช่ observation หรือหลักฐานสนามจริง
 
 `TrafficStepEvidence` แยก:
 
@@ -90,10 +91,10 @@ condition ไม่ได้
 
 ## Analytical fixture
 
-Complete analytical fixture หนึ่งชุดให้ geometry, observed weather และ traffic
-แบบ `isolated_control` อย่างชัดเจน จึง resolve `ready` และ emit typed signal สี่ตัว
-Fixture นี้ validate contract เท่านั้น ไม่ถูกนำไปอ้างเป็น geometry/weather ของ
-สนามจริง
+Complete analytical fixture หนึ่งชุดให้ geometry, weather แบบ
+`synthetic_control` และ traffic แบบ `isolated_control` อย่างชัดเจน จึง resolve
+`ready` และ emit typed signal สี่ตัว Fixture นี้ validate contract เท่านั้น ไม่ถูก
+นำไปอ้างเป็น geometry/weather ของสนามจริง
 
 ## Falsification และข้อจำกัด
 

@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "work029-ten-circuit-fixed-topology-v1",
+  "architecture_id": "coupled-level0-reference-v4",
+  "evidence_grade": "profile-distance-analytical-proxy",
+  "real_circuit_admission": false,
+  "controls": {
+    "time_step_s": 1000.0,
+    "timeout_s": 40000.0,
+    "evaluation_budget_per_run": 64,
+    "design_evaluation_budget": 1,
+    "random_seeds": [17, 29, 43],
+    "calibration_circuit_ids": [
+      "monaco_2026",
+      "monza_2026",
+      "spa_2026",
+      "singapore_2025",
+      "suzuka_2026",
+      "silverstone_2026",
+      "hungaroring_2026"
+    ],
+    "holdout_circuit_ids": [
+      "mexico_city_2025",
+      "bahrain_2025",
+      "sao_paulo_2025"
+    ],
+    "proxy_environment": {
+      "source_id": "work029-declared-analytical-control",
+      "air_temperature_k": 300.0,
+      "pressure_pa": 101325.0,
+      "relative_humidity": 0.5,
+      "track_temperature_k": 300.0,
+      "wind_velocity_mps": [0.0, 0.0, 0.0],
+      "precipitation_kg_per_m2_s": 0.0,
+      "corridor_half_width_m": 50.0,
+      "horizontal_uncertainty_m": 0.0
+    }
+  },
+  "reference_families": [
+    {
+      "family_id": "fixed-four-steady-drag-v1",
+      "model_version": "work029-reference-family-v1",
+      "topology_id": "fixed-four-contact",
+      "component_library_version": "work025-027-reference-components-v1",
+      "strategy_id": "steady-drag-balance-v1",
+      "mass_kg": 1000.0,
+      "yaw_inertia_kg_m2": 1500.0,
+      "vehicle_width_m": 1.8,
+      "centre_of_mass_height_m": 0.4,
+      "initial_speed_mps": 10.0,
+      "initial_primary_energy_j": 50000000.0,
+      "recovered_capacity_j": 5000000.0,
+      "drive_efficiency": 0.9,
+      "auxiliary_power_w": 0.0,
+      "maximum_drive_force_n": 1000.0,
+      "maximum_brake_torque_n_m": 0.0,
+      "ride_height_m": 0.05,
+      "aerodynamic_reference_area_m2": 1.5,
+      "aerodynamic_reference_length_m": 1.0,
+      "drag_coefficient": 0.5,
+      "contacts": [
+        {"contact_id": "fl", "x_m": 1.0, "y_m": 0.8, "drive_fraction": 0.25, "brake_fraction": 0.25},
+        {"contact_id": "fr", "x_m": 1.0, "y_m": -0.8, "drive_fraction": 0.25, "brake_fraction": 0.25},
+        {"contact_id": "rl", "x_m": -1.0, "y_m": 0.8, "drive_fraction": 0.25, "brake_fraction": 0.25},
+        {"contact_id": "rr", "x_m": -1.0, "y_m": -0.8, "drive_fraction": 0.25, "brake_fraction": 0.25}
+      ]
+    }
+  ]
+}

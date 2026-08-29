@@ -109,6 +109,19 @@ from .whole_race import (
     merge_race_progress,
     run_whole_race,
 )
+from .baseline_campaign import (
+    BASELINE_CAMPAIGN_MODEL_VERSION,
+    BaselineCampaignControls,
+    BaselineCampaignError,
+    BaselineCampaignProtocol,
+    BaselineCampaignResult,
+    BaselineContactDefinition,
+    BaselineReferenceFamily,
+    BaselineRunRecord,
+    ProxyEnvironmentControl,
+    load_baseline_campaign_protocol,
+    run_baseline_campaign,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -205,4 +218,15 @@ __all__ = [
     "WholeRaceResult",
     "merge_race_progress",
     "run_whole_race",
+    "BASELINE_CAMPAIGN_MODEL_VERSION",
+    "BaselineCampaignControls",
+    "BaselineCampaignError",
+    "BaselineCampaignProtocol",
+    "BaselineCampaignResult",
+    "BaselineContactDefinition",
+    "BaselineReferenceFamily",
+    "BaselineRunRecord",
+    "ProxyEnvironmentControl",
+    "load_baseline_campaign_protocol",
+    "run_baseline_campaign",
 ]

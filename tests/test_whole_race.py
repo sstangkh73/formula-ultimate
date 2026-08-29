@@ -78,7 +78,7 @@ class ReferenceFixture:
         cid=PROFILE.circuit_id
         return CircuitInputScenario(PROFILE,state.race_distance_m,
             SpatialStepEvidence(cid,"available","analytical-fixture","straight",0,0,0,self.corridor_width,self.corridor_width,0),
-            WeatherStepEvidence(cid,"observed","analytical-fixture",300,101325,.5,(0,0,0),"local_enu",0,300),
+            WeatherStepEvidence(cid,"synthetic_control","analytical-fixture",300,101325,.5,(0,0,0),"local_enu",0,300),
             TrafficStepEvidence(cid,"isolated_control","analytical-fixture",0))
 
     def strategy(self,step,state): return StrategyStepCommand(0,0,0,0)

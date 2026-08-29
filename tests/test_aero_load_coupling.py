@@ -39,8 +39,8 @@ def shared(vehicle, velocity=(30.,0.,0.), yaw=0.):
         tuple(ContactRuntimeState(c.contact_id,c.baseline_normal_load_n,0,0,0,0) for c in vehicle.contacts),
         (ComponentHealthState("store",320,0,0,False),))
 
-def environment(cid="fixture"):
-    weather=WeatherStepEvidence(cid,"observed","fixture",300,101325,.5,(0,0,0),"local_enu",0,310)
+def environment(cid="fixture",status="observed"):
+    weather=WeatherStepEvidence(cid,status,"fixture",300,101325,.5,(0,0,0),"local_enu",0,310)
     traffic=TrafficStepEvidence(cid,"isolated_control","fixture",0)
     return EnvironmentStepInputs(weather,traffic)
 
@@ -59,6 +59,12 @@ class AeroLoadCouplingTests(unittest.TestCase):
         values={s.signal_id:s.value for s in first.signals}; wrench=values["aero.force_moment"]
         self.assertLess(wrench.force_body_n[0],0); self.assertLess(wrench.force_body_n[2],0)
         self.assertGreater(values["aero.cooling_evidence"].heat_rejection_w,0)
+
+    def test_aero_adapter_accepts_explicit_synthetic_weather(self):
+        adapter=AerodynamicMapAdapter(aero_map(),REFERENCE,AerodynamicReferenceOrigin((0,0,0)),.05,"nominal",350)
+        current=shared(vehicle4())
+        view=AdapterReadView("aerodynamic_map",current,(RuntimeSignal("environment.step_inputs",environment(status="synthetic_control")),RuntimeSignal("state.current",current)))
+        self.assertEqual("ok",adapter.execute(view).status)
 
     def test_local_enu_wind_is_rotated_to_body_axes(self):
         adapter=AerodynamicMapAdapter(aero_map(),REFERENCE,AerodynamicReferenceOrigin((0,0,0)),.05,"nominal",350)

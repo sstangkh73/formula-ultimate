@@ -91,8 +91,10 @@ class WeatherStepEvidence:
 
     def __post_init__(self) -> None:
         _text("weather circuit_id", self.circuit_id)
-        if self.status not in {"observed", "missing"}:
-            raise StepInputError("weather status must be observed or missing")
+        if self.status not in {"observed", "synthetic_control", "missing"}:
+            raise StepInputError(
+                "weather status must be observed, synthetic_control, or missing"
+            )
         scalars = (self.air_temperature_k, self.pressure_pa, self.relative_humidity,
                    self.precipitation_kg_per_m2_s, self.track_temperature_k)
         if self.status == "missing":
@@ -103,9 +105,9 @@ class WeatherStepEvidence:
             return
         _text("weather source_id", self.source_id)
         if any(value is None for value in scalars) or self.wind_velocity_mps is None:
-            raise StepInputError("observed weather requires every field")
+            raise StepInputError("declared weather requires every field")
         if self.wind_coordinate_frame != "local_enu":
-            raise StepInputError("observed wind_coordinate_frame must be local_enu")
+            raise StepInputError("declared wind_coordinate_frame must be local_enu")
         for name in ("air_temperature_k", "pressure_pa", "relative_humidity",
                      "precipitation_kg_per_m2_s", "track_temperature_k"):
             _finite(name, getattr(self, name))
@@ -118,7 +120,7 @@ class WeatherStepEvidence:
         for value in self.wind_velocity_mps:
             _finite("wind velocity", value)
         if self.reason is not None:
-            raise StepInputError("observed weather cannot have missing reason")
+            raise StepInputError("declared weather cannot have missing reason")
 
 
 @dataclass(frozen=True, slots=True)

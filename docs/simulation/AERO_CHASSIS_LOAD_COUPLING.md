@@ -4,10 +4,14 @@ Thai companion: `AERO_CHASSIS_LOAD_COUPLING.th.md`
 
 ## Boundary
 
-Work 024 connects observed `local_enu` weather and shared motion state to the
+Work 024 connects declared `local_enu` weather and shared motion state to the
 Work 017 aerodynamic map, translates its wrench to the centre of mass, and
 projects normal loads across any non-rank-deficient contact topology. It emits
 the exact `aerodynamic_map` and `normal_load_solver` signal sets.
+
+Declared weather may be `observed` or `synthetic_control`. The numerical path
+is shared, but the typed status and scenario fingerprint preserve the evidence
+class; a synthetic control never becomes real-circuit evidence.
 
 This remains Level 0. Synthetic coefficients and analytical weather are not CFD,
 measurement, calibration, safety, or physical validation.

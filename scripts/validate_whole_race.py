@@ -165,7 +165,7 @@ class _ReferenceFixture:
             ),
             WeatherStepEvidence(
                 circuit_id,
-                "observed",
+                "synthetic_control",
                 "analytical-fixture",
                 300.0,
                 101325.0,

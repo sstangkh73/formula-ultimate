@@ -24,8 +24,9 @@ or `missing` with a reason and no numeric values.
 `WeatherStepEvidence` declares source, air and track temperature in kelvin,
 pressure in pascals, relative humidity in `[0,1]`, 3D wind velocity in `m/s`,
 and precipitation mass flux in `kg/(m^2*s)`. Wind is explicitly `local_enu`;
-Work 024 rotates it into vehicle body axes. Status is `observed` with every
-field present or `missing` with no numeric defaults.
+Work 024 rotates it into vehicle body axes. Status is `observed` or
+`synthetic_control` with every field present, or `missing` with no numeric
+defaults. A synthetic control is not an observation or real-circuit evidence.
 
 `TrafficStepEvidence` distinguishes:
 
@@ -91,10 +92,10 @@ conditions.
 
 ## Analytical fixture
 
-One complete analytical fixture supplies explicit geometry, observed weather,
-and `isolated_control` traffic. It resolves `ready` and emits all four typed
-signals. It validates the contract only; its geometry/weather are not assigned
-to a real race claim.
+One complete analytical fixture supplies explicit geometry,
+`synthetic_control` weather, and `isolated_control` traffic. It resolves
+`ready` and emits all four typed signals. It validates the contract only; its
+geometry/weather are not assigned to a real race claim.
 
 ## Falsification and limitations
 
