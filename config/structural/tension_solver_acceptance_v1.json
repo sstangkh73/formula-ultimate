@@ -1,0 +1,48 @@
+{
+  "protocol_id": "tension_solver_acceptance_v1",
+  "experiment_id": "work034_linear_tension_acceptance_v1",
+  "specimen_id": "tension_bar_rectangular_v1",
+  "claim_level": "local linear-elastic solver-route verification only",
+  "geometry": {
+    "length_m": 0.1,
+    "width_m": 0.01,
+    "height_m": 0.01
+  },
+  "material": {
+    "material_id": "synthetic_isotropic_linear_elastic_v1",
+    "youngs_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.3,
+    "density_kg_per_m3": 2700.0,
+    "provenance": "synthetic analytical verification fixture; not a material certificate"
+  },
+  "load": {
+    "resultant_force_n": 1000.0,
+    "axis": "positive_x",
+    "distribution": "surface_triangle_tributary_area_weighted_nodal_loads"
+  },
+  "mesh_levels": [
+    {
+      "mesh_id": "coarse_10mm",
+      "characteristic_size_m": 0.01
+    },
+    {
+      "mesh_id": "medium_7p5mm",
+      "characteristic_size_m": 0.0075
+    },
+    {
+      "mesh_id": "fine_5mm",
+      "characteristic_size_m": 0.005
+    }
+  ],
+  "tolerances": {
+    "boundary_coordinate_absolute_m": 1e-9,
+    "load_resultant_relative": 1e-12,
+    "force_closure_relative": 1e-6,
+    "displacement_analytical_relative": 0.01,
+    "stress_analytical_relative": 0.02,
+    "energy_analytical_relative": 0.01,
+    "last_two_displacement_relative": 0.01,
+    "last_two_stress_relative": 0.02,
+    "last_two_energy_relative": 0.01
+  }
+}
