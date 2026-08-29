@@ -465,7 +465,8 @@ def build_calculix_input(
         "*NODE, NSET=NALL",
     ]
     lines.extend(
-        f"{node_id}, {xyz[0]:.17g}, {xyz[1]:.17g}, {xyz[2]:.17g}"
+        # Keep each CalculiX coordinate field below its free-field parser limit.
+        f"{node_id}, {xyz[0]:.12g}, {xyz[1]:.12g}, {xyz[2]:.12g}"
         for node_id, xyz in sorted(mesh.nodes.items())
     )
     lines.append("*ELEMENT, TYPE=C3D4, ELSET=EALL")

@@ -1,0 +1,32 @@
+{
+  "protocol_id": "nonlinear_imperfect_column_acceptance_v1",
+  "geometry": {
+    "length_m": 0.2,
+    "width_m": 0.01,
+    "height_m": 0.01,
+    "effective_length_factor": 2.0
+  },
+  "material": {
+    "material_id": "synthetic_linear_elastic_aluminium_like",
+    "youngs_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.3,
+    "density_kg_per_m3": 2700.0,
+    "provenance": "synthetic verification fixture; not a material allowables record"
+  },
+  "mesh": {
+    "mesh_id": "medium_1p25mm",
+    "characteristic_size_m": 0.00125,
+    "work037_critical_load_n": 3776.375,
+    "work037_source_commit": "36cffb04eb1cb47a4dc95cfdda30311799349cdd"
+  },
+  "imperfection_tip_amplitudes_m": [0.0001, 0.0002],
+  "load_fractions_of_mesh_pcr": [0.25, 0.5, 0.7, 0.85],
+  "tolerances": {
+    "boundary_coordinate_absolute_m": 1e-9,
+    "reaction_error_relative": 1e-5,
+    "secant_reference_error_relative": 0.15,
+    "cross_amplitude_spread_relative": 0.1,
+    "perfect_control_lateral_displacement_m": 2e-6,
+    "linear_control_minimum_secant_error_relative": 0.2
+  }
+}
