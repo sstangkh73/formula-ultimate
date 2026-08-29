@@ -1,0 +1,58 @@
+{
+  "protocol_id": "formula_ultimate_research_experiment_protocol_v1",
+  "experiment_id": "fu_candidate_001_geometry_evidence_v1",
+  "candidate_class": "bounded_component_geometry_specimen",
+  "candidate_id": "FU-C0001",
+  "grammar_version": "mounting_plate_v1",
+  "seed": 31001,
+  "hypothesis": "The declared candidate can traverse the exact 3D-to-STEP-to-FreeCAD-to-Level-0 evidence route without hidden repair or analytical substitution.",
+  "independent_variables": [
+    "candidate geometry declaration",
+    "protocol version",
+    "grammar version"
+  ],
+  "dependent_variables": [
+    "solid validity and count",
+    "STEP identity",
+    "CadQuery and FreeCAD mass properties",
+    "cross-tool residuals",
+    "FreeCAD-derived mass",
+    "Level 0 final speed and distance"
+  ],
+  "material": {
+    "name": "Aluminium constant-density assumption",
+    "density_kg_per_m3": 2700.0
+  },
+  "common_spec": {
+    "length_m": 0.2,
+    "width_m": 0.12,
+    "thickness_m": 0.008,
+    "corner_radius_m": 0.01,
+    "mounting_hole_diameter_m": 0.008,
+    "mounting_spacing_x_m": 0.16,
+    "mounting_spacing_y_m": 0.08
+  },
+  "candidate": {
+    "candidate_id": "FU-C0001",
+    "lightening_radius_m": 0.025
+  },
+  "level0_controls": {
+    "base_vehicle_mass_kg": 300.0,
+    "tractive_force_n": 1200.0,
+    "duration_s": 5.0,
+    "time_step_s": 0.05
+  },
+  "tolerances": {
+    "volume_absolute_m3": 1e-10,
+    "volume_relative": 1e-6,
+    "bounds_absolute_m": 1e-7
+  },
+  "pre_registered_failure_criteria": [
+    "declaration or identity mismatch",
+    "invalid or non-single-solid CadQuery geometry",
+    "missing or invalid STEP identity",
+    "FreeCAD import, validity, or single-solid failure",
+    "analytical, CadQuery, or FreeCAD tolerance failure",
+    "Level 0 evidence-contract failure"
+  ]
+}

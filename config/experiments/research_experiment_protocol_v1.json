@@ -1,0 +1,33 @@
+{
+  "protocol_id": "formula_ultimate_research_experiment_protocol_v1",
+  "protocol_version": 1,
+  "required_stage_sequence": [
+    "declaration_gate",
+    "cadquery_3d_generation",
+    "step_export_identity",
+    "freecad_import_measurement",
+    "level0_evidence_admission",
+    "falsification_review"
+  ],
+  "permitted_claim_level": "geometry-to-level0 pipeline coherence only",
+  "required_identity_fields": [
+    "protocol_id",
+    "experiment_id",
+    "candidate_id",
+    "grammar_version",
+    "seed"
+  ],
+  "required_review_fields": [
+    "supporting_evidence",
+    "contradicting_evidence",
+    "alternative_explanations",
+    "missing_evidence",
+    "confidence"
+  ],
+  "failure_policy": {
+    "silent_parameter_clipping": false,
+    "silent_geometry_repair": false,
+    "analytical_substitution_for_missing_freecad_evidence": false,
+    "failed_stages_are_observable": true
+  }
+}

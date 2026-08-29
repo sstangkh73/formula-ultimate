@@ -22,7 +22,10 @@ from formula_ultimate.components.grammar import (  # noqa: E402
 
 
 def _candidate_payload(config: dict[str, Any], candidate_id: str) -> dict[str, Any]:
-    candidates = [*config["valid_candidates"], config["invalid_candidate"]]
+    if "candidate" in config:
+        candidates = [config["candidate"]]
+    else:
+        candidates = [*config["valid_candidates"], config["invalid_candidate"]]
     candidate = next(
         (item for item in candidates if item["candidate_id"] == candidate_id),
         None,
