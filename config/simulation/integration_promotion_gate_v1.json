@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "gate_id": "work030-integration-promotion-gate-v1",
+  "falsification": {
+    "required_cases": {
+      "missing_adapter": "adapter_coverage",
+      "version_mismatch": "adapter_version_mismatch",
+      "duplicate_residual": "evidence_identity_duplicate",
+      "failed_residual": "residual_failure",
+      "undeclared_output": "adapter_exception",
+      "time_regression": "time_regression"
+    }
+  },
+  "refinement": {
+    "timesteps_s": [2000.0, 1000.0, 500.0],
+    "random_seed": 17,
+    "evaluation_budget_per_run": 128,
+    "maximum_relative_time_variation": 1e-12,
+    "maximum_relative_energy_variation": 1e-10,
+    "maximum_finish_residual_m": 1e-9
+  },
+  "promotion": {
+    "minimum_completed_profiles": 10,
+    "require_real_circuit_admission": true,
+    "require_independent_evidence": true,
+    "minimum_fidelity_level": "level1",
+    "required_evidence_types": [
+      "geometry-mass-inertia",
+      "surveyed-circuit-corridor",
+      "cross-model-aerodynamics",
+      "structural-safety",
+      "thermal-reliability",
+      "quantified-uncertainty"
+    ],
+    "automatic_discovery_claim": false
+  }
+}

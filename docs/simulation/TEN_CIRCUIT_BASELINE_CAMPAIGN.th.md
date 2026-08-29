@@ -62,12 +62,18 @@ run ทั้ง `30/30` (`10 profiles × 3 seeds`) finish พร้อม resid
 | Spa 2026 | calibration | 308052 | 30805.2 | 15.003032 | 31 | indeterminate |
 | Suzuka 2026 | calibration | 307471 | 30747.1 | 14.974735 | 31 | screen_passed |
 
-หลักฐาน campaign:
+หลักฐาน campaign ณ เวลาจบ Work 029:
 
 - architecture fingerprint: `abf3148cfba2063f8fdba23951239b2b0a4a899c391503d3e46db69fd203618d`
 - protocol fingerprint: `4c1c93a21c8ada5d8859eebbce1adb11f750787b2f522ba671f30be08ea6f2a6`
 - controls fingerprint: `9c6a168a90a1e8d7cf33f72f3410e8d193cfd4edffddf7a136c84a1bed0371c9`
 - result fingerprint: `44dc7f85fac097b8ecbb38c04ff14a595702e8e4a0b9134ba70403fc451bfa98`
+
+หลังจากนั้น Work 030 เพิ่มความเข้มงวดของ fingerprint field coverage และ bump
+evidence model ปัจจุบันเป็น `work029-baseline-campaign-v2` โดย numerical table
+ข้างบนไม่เปลี่ยน ส่วน current result fingerprint ที่ครอบ field ครบคือ
+`79a03587e6bbeb17101c89a59c7fe61053571f493a29fbe356322418726d2a9b` ค่า hash v1
+ยังเป็น historical evidence ของ commit Work 029 ไม่ใช่โมเดลปัจจุบัน
 
 ## การพยายามหักล้าง
 

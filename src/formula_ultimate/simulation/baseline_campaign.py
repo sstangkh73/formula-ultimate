@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field, is_dataclass
+from dataclasses import asdict, dataclass, field, is_dataclass, replace
 from datetime import date
 import hashlib
 import json
@@ -77,7 +77,7 @@ from .whole_race import (
 )
 
 
-BASELINE_CAMPAIGN_MODEL_VERSION = "work029-baseline-campaign-v1"
+BASELINE_CAMPAIGN_MODEL_VERSION = "work029-baseline-campaign-v2"
 
 
 class BaselineCampaignError(ValueError):
@@ -397,6 +397,110 @@ class BaselineCampaignResult:
     runs: tuple[BaselineRunRecord, ...]
     result_fingerprint_sha256: str
     claim_boundary: str
+
+
+def _run_record_identity_payload(record: BaselineRunRecord) -> dict[str, object]:
+    payload = asdict(record)
+    payload.pop("record_fingerprint_sha256")
+    return payload
+
+
+def _campaign_result_identity_payload(
+    result: BaselineCampaignResult,
+) -> dict[str, object]:
+    payload = asdict(result)
+    payload.pop("result_fingerprint_sha256")
+    return payload
+
+
+def verify_baseline_campaign_result(
+    result: BaselineCampaignResult,
+) -> tuple[bool, tuple[str, ...]]:
+    """Recompute run/result identities and aggregate invariants."""
+
+    reasons: list[str] = []
+    if any(
+        run.record_fingerprint_sha256 != _fingerprint(_run_record_identity_payload(run))
+        for run in result.runs
+    ):
+        reasons.append("run_fingerprint_mismatch")
+    if result.result_fingerprint_sha256 != _fingerprint(
+        _campaign_result_identity_payload(result)
+    ):
+        reasons.append("campaign_fingerprint_mismatch")
+    if result.expected_run_count != len(result.runs):
+        reasons.append("expected_run_count_mismatch")
+    run_keys = tuple(
+        (run.family_id, run.circuit_id, run.random_seed) for run in result.runs
+    )
+    if len(run_keys) != len(set(run_keys)):
+        reasons.append("duplicate_run_identity")
+    completed = sum(run.outcome == "finished" for run in result.runs)
+    if result.completed_run_count != completed:
+        reasons.append("completed_run_count_mismatch")
+    profile_ids = {run.circuit_id for run in result.runs}
+    if result.total_profile_count != len(profile_ids):
+        reasons.append("total_profile_count_mismatch")
+    completed_profiles = {
+        circuit_id
+        for circuit_id in profile_ids
+        if all(run.outcome == "finished" for run in result.runs if run.circuit_id == circuit_id)
+    }
+    if result.completed_profile_count != len(completed_profiles):
+        reasons.append("completed_profile_count_mismatch")
+    if profile_ids:
+        first_profile = min(profile_ids)
+        expected_family_seed = {
+            (run.family_id, run.random_seed)
+            for run in result.runs
+            if run.circuit_id == first_profile
+        }
+        if any(
+            {
+                (run.family_id, run.random_seed)
+                for run in result.runs
+                if run.circuit_id == circuit_id
+            }
+            != expected_family_seed
+            for circuit_id in profile_ids
+        ):
+            reasons.append("family_seed_matrix_incomplete")
+    if result.all_runs_finished != all(run.outcome == "finished" for run in result.runs):
+        reasons.append("all_runs_finished_mismatch")
+    if result.all_residuals_passed != all(run.all_residuals_passed for run in result.runs):
+        reasons.append("all_residuals_passed_mismatch")
+    if result.all_runs_within_budget != all(
+        run.attempted_steps <= run.evaluation_budget_per_run for run in result.runs
+    ):
+        reasons.append("all_runs_within_budget_mismatch")
+    partition_by_profile = {
+        circuit_id: {
+            run.partition for run in result.runs if run.circuit_id == circuit_id
+        }
+        for circuit_id in profile_ids
+    }
+    partition_complete = (
+        bool(profile_ids)
+        and all(len(values) == 1 for values in partition_by_profile.values())
+        and {next(iter(values)) for values in partition_by_profile.values()}
+        == {"calibration", "holdout"}
+    )
+    if result.partition_complete != partition_complete:
+        reasons.append("partition_complete_mismatch")
+    if result.real_circuit_admitted != all(
+        run.real_circuit_admitted for run in result.runs
+    ):
+        reasons.append("real_circuit_admission_mismatch")
+    for field_name in (
+        "campaign_id",
+        "protocol_fingerprint_sha256",
+        "controls_fingerprint_sha256",
+        "architecture_fingerprint_sha256",
+    ):
+        if any(getattr(run, field_name) != getattr(result, field_name) for run in result.runs):
+            reasons.append(f"run_{field_name}_mismatch")
+    unique = tuple(sorted(set(reasons)))
+    return not unique, unique
 
 
 def _parse_proxy_environment(raw: Mapping[str, Any]) -> ProxyEnvironmentControl:
@@ -922,32 +1026,7 @@ def run_baseline_campaign(
                     for step in race.telemetry
                     for residual in step.residuals
                 )
-                payload = {
-                    "campaign_id": protocol.campaign_id,
-                    "protocol": protocol.fingerprint_sha256,
-                    "controls": controls.fingerprint_sha256,
-                    "architecture": architecture.fingerprint_sha256,
-                    "family": family.family_id,
-                    "opportunity": family.opportunity_fingerprint_sha256,
-                    "circuit": profile.circuit_id,
-                    "partition": partitions[profile.circuit_id],
-                    "seed": seed,
-                    "evidence_grade": protocol.evidence_grade,
-                    "outcome": race.outcome,
-                    "final_time_s": race.final_state.time_s,
-                    "final_distance_m": race.final_state.race_distance_m,
-                    "finish_residual_m": race.finish_distance_residual_m,
-                    "primary_energy_used_j": (
-                        family.initial_primary_energy_j
-                        - race.final_state.primary_energy_j
-                    ),
-                    "attempted_steps": race.replay.attempted_step_count,
-                    "committed_steps": race.replay.committed_step_count,
-                    "all_residuals_passed": all_residuals,
-                    "race_replay": race.replay_fingerprint_sha256,
-                }
-                runs.append(
-                    BaselineRunRecord(
+                record = BaselineRunRecord(
                         protocol.campaign_id,
                         protocol.fingerprint_sha256,
                         controls.fingerprint_sha256,
@@ -973,7 +1052,14 @@ def run_baseline_campaign(
                         all_residuals,
                         len(race.replay.scenario_fingerprints),
                         race.replay_fingerprint_sha256,
-                        _fingerprint(payload),
+                        "",
+                    )
+                runs.append(
+                    replace(
+                        record,
+                        record_fingerprint_sha256=_fingerprint(
+                            _run_record_identity_payload(record)
+                        ),
                     )
                 )
     ordered_runs = tuple(
@@ -1006,20 +1092,11 @@ def run_baseline_campaign(
     partition_complete = set(partitions) == {
         profile.circuit_id for profile in ordered_profiles
     }
-    result_payload = {
-        "model_version": BASELINE_CAMPAIGN_MODEL_VERSION,
-        "campaign_id": protocol.campaign_id,
-        "protocol": protocol.fingerprint_sha256,
-        "controls": controls.fingerprint_sha256,
-        "architecture": architecture.fingerprint_sha256,
-        "expected": expected,
-        "all_finished": all_finished,
-        "residuals_passed": residuals_passed,
-        "within_budget": within_budget,
-        "partition_complete": partition_complete,
-        "runs": ordered_runs,
-    }
-    return BaselineCampaignResult(
+    claim_boundary = (
+        "Level-0 profile-distance analytical proxy only; synthetic local "
+        "environment is not measured circuit evidence or physical validation"
+    )
+    result = BaselineCampaignResult(
         BASELINE_CAMPAIGN_MODEL_VERSION,
         protocol.campaign_id,
         protocol.fingerprint_sha256,
@@ -1035,9 +1112,12 @@ def run_baseline_campaign(
         partition_complete,
         False,
         ordered_runs,
-        _fingerprint(result_payload),
-        (
-            "Level-0 profile-distance analytical proxy only; synthetic local "
-            "environment is not measured circuit evidence or physical validation"
+        "",
+        claim_boundary,
+    )
+    return replace(
+        result,
+        result_fingerprint_sha256=_fingerprint(
+            _campaign_result_identity_payload(result)
         ),
     )
