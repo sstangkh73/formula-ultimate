@@ -58,6 +58,16 @@ from .fatigue import (
     rainflow_cycles,
     reversal_history,
 )
+from .loaded_interface import (
+    CylindricalInterface,
+    LoadedInterfacePlateSpec,
+    MappedInterface,
+    build_loaded_interface_deck,
+    consistent_interface_load,
+    map_cylindrical_interfaces,
+    parse_loaded_interface_dat,
+    spec_from_mapping as loaded_interface_spec_from_mapping,
+)
 
 __all__ = [
     "BendingSpec",
@@ -106,4 +116,12 @@ __all__ = [
     "fatigue_material_from_mapping",
     "rainflow_cycles",
     "reversal_history",
+    "CylindricalInterface",
+    "LoadedInterfacePlateSpec",
+    "MappedInterface",
+    "build_loaded_interface_deck",
+    "consistent_interface_load",
+    "map_cylindrical_interfaces",
+    "parse_loaded_interface_dat",
+    "loaded_interface_spec_from_mapping",
 ]

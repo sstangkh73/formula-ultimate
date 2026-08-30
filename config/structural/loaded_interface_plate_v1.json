@@ -1,0 +1,42 @@
+{
+  "protocol_id": "loaded_interface_plate_v1",
+  "claim_level": "bonded cylindrical interface plate load path only",
+  "geometry": {
+    "length_m": 0.12,
+    "width_m": 0.08,
+    "thickness_m": 0.008,
+    "minimum_ligament_m": 0.01
+  },
+  "material": {
+    "material_id": "synthetic_linear_elastic_aluminium_like",
+    "youngs_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.3,
+    "density_kg_per_m3": 2700.0,
+    "provenance": "synthetic interface fixture; prohibited from design fitness"
+  },
+  "interfaces": [
+    {"interface_id": "load_port", "role": "loaded", "center_x_m": 0.09, "center_y_m": 0.0, "radius_m": 0.005},
+    {"interface_id": "support_upper", "role": "support", "center_x_m": 0.03, "center_y_m": 0.02, "radius_m": 0.005},
+    {"interface_id": "support_lower", "role": "support", "center_x_m": 0.03, "center_y_m": -0.02, "radius_m": 0.005}
+  ],
+  "load": {"force_n": [1000.0, 0.0, 0.0]},
+  "mesh_levels": [
+    {"mesh_id": "coarse_6mm", "characteristic_size_m": 0.006},
+    {"mesh_id": "medium_4mm", "characteristic_size_m": 0.004},
+    {"mesh_id": "fine_3mm", "characteristic_size_m": 0.003}
+  ],
+  "support_policies": {
+    "baseline": ["support_upper", "support_lower"],
+    "sensitivity": ["support_lower"]
+  },
+  "tolerances": {
+    "interface_radial_m": 0.000005,
+    "freecad_area_relative": 0.000001,
+    "force_residual_relative": 0.00001,
+    "moment_residual_relative": 0.00001,
+    "energy_residual_relative": 0.0001,
+    "last_two_compliance_relative": 0.05,
+    "last_two_resultant_relative": 0.05,
+    "maximum_transferability_change_relative": 0.10
+  }
+}
