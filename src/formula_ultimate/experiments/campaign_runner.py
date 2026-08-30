@@ -212,6 +212,16 @@ def _evaluation_from_mapping(raw: Mapping[str, Any]) -> CandidateEvaluation:
     return evaluation
 
 
+def decode_candidate_evidence(raw: Mapping[str, Any]) -> SearchCandidate:
+    """Decode and independently verify one serialized campaign candidate."""
+    return _candidate_from_mapping(raw)
+
+
+def decode_evaluation_evidence(raw: Mapping[str, Any]) -> CandidateEvaluation:
+    """Decode and independently verify one serialized campaign evaluation."""
+    return _evaluation_from_mapping(raw)
+
+
 class CampaignLedgerStore:
     """Cross-validates consumed opportunity and terminal result ledgers."""
 

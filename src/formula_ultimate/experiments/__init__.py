@@ -53,10 +53,23 @@ from .campaign_runner import (
     CampaignRunnerError,
     ChainedJsonlLedger,
     PromotionSelection,
+    decode_candidate_evidence,
+    decode_evaluation_evidence,
     execute_training_opportunities,
     execution_protocol_from_main,
     reconstruct_training_agent,
     select_training_promotions,
+)
+from .campaign_physics import (
+    CampaignPhysicsError,
+    adjudicate_seed_outcomes,
+    analyze_main_campaign,
+    evaluate_level0,
+    refine_candidate,
+    run_cad_witness,
+    run_refinement_benchmark,
+    training_evaluator_identity,
+    validate_campaign_environment,
 )
 
 __all__ = [
@@ -100,8 +113,19 @@ __all__ = [
     "CampaignRunnerError",
     "ChainedJsonlLedger",
     "PromotionSelection",
+    "decode_candidate_evidence",
+    "decode_evaluation_evidence",
     "execute_training_opportunities",
     "execution_protocol_from_main",
     "reconstruct_training_agent",
     "select_training_promotions",
+    "CampaignPhysicsError",
+    "adjudicate_seed_outcomes",
+    "analyze_main_campaign",
+    "evaluate_level0",
+    "refine_candidate",
+    "run_cad_witness",
+    "run_refinement_benchmark",
+    "training_evaluator_identity",
+    "validate_campaign_environment",
 ]
