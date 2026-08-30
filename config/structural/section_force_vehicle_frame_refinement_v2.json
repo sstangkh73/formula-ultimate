@@ -1,0 +1,36 @@
+{
+  "protocol_id": "section_force_vehicle_frame_refinement_v2",
+  "evaluator_identity": "project_frame6dof_plus_calculix_b31_section_force_v2",
+  "claim_level": "linear-elastic beam-network stress/deformation evidence for the bounded Work 047 grammar only",
+  "upstream_identity": {
+    "work050_source_commit": "98e9453041aec35d1532a77f88362f81afbde323",
+    "work050_protocol_sha256": "b538082990566ea836258e9fece8498e1510bf5532f500def0d66be746bc6d1d",
+    "work050_records_sha256": "b35beb7d8b08040c56ab26ec0633f4eb48d9f18ef3219b592cf5c2ffa62ed3bc",
+    "work050_result_ledger_sha256": "15d20e607ddc0e60d6f70e5dc027be680f392a1c55c1a744edf0f1fdd0cbb7bb",
+    "work050_budget_ledger_sha256": "1c27bbe2a5917dd1334a140be3e1550d6028b3391af438bbdd6aa87bceb79224"
+  },
+  "material": {
+    "material_id": "synthetic_linear_elastic_aluminium_like_v1",
+    "young_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.3,
+    "yield_stress_pa": 250000000.0,
+    "provenance": "synthetic solver-verification material; not a certified allowable"
+  },
+  "benchmark": {
+    "length_m": 1.0,
+    "square_side_m": 0.02,
+    "tip_force_n": 100.0
+  },
+  "subdivisions_per_branch": [4, 8, 16],
+  "promotion": {
+    "minimum_yield_margin": 1.1,
+    "maximum_displacement_m": 0.02
+  },
+  "tolerances": {
+    "analytical_relative": 0.05,
+    "calculix_cross_model_relative": 0.08,
+    "reaction_relative": 1e-5,
+    "last_two_refinement_relative": 0.05,
+    "absolute": 1e-10
+  }
+}

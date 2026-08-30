@@ -119,7 +119,7 @@ def _candidate_variables(protocol: Mapping[str, Any], values: Mapping[str, Any])
     return tuple(ready)
 
 
-def _mutate_assembly(base: Mapping[str, Any], variables: Mapping[str, float]) -> dict:
+def mutate_candidate_assembly(base: Mapping[str, Any], variables: Mapping[str, float]) -> dict:
     raw = json.loads(json.dumps(base))
     by_id = {item["component_id"]: item for item in raw["components"]}
     core_length = variables["core_length_scale"]
@@ -164,7 +164,7 @@ def evaluate_candidate(
         raise WholeVehicleSearchError("candidate treatment or seed is not registered")
     variables = dict(_candidate_variables(protocol, dict(candidate.variables)))
     try:
-        assembly = from_mapping(_mutate_assembly(base_assembly, variables))
+        assembly = from_mapping(mutate_candidate_assembly(base_assembly, variables))
         validate(assembly)
     except (KeyError, TypeError, ValueError) as exc:
         return _evaluation(candidate, "failed", "grammar_invalid", None, None, None, None, None, None, None, partition, evaluator_sha256)

@@ -30,4 +30,3 @@ The original runs using `*EL PRINT` gave CalculiX displacement errors of approxi
 ## Decision and limitation
 
 Work 052 cannot close `independent_refined_evaluation`. Changing the mesh series or substituting section-resultant-derived stress after seeing the failed result would violate the declared experiment. A successor must preregister the corrected observable, derive surface stress from section force/moment and section properties, retain external displacement corroboration, and rerun from the analytical benchmark.
-

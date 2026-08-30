@@ -74,6 +74,23 @@ from .gate_a_remediation import (
     support_topology,
     support_topology_signature,
 )
+from .vehicle_frame_refinement import (
+    FRAME_EVALUATOR_IDENTITY,
+    FrameElement,
+    FrameModel,
+    FrameSection,
+    FrameSolveResult,
+    VehicleFrameError,
+    analytical_cantilever,
+    benchmark_model,
+    build_calculix_b31_deck,
+    build_vehicle_frame,
+    loads_from_work048,
+    parse_calculix_b31_dat,
+    parse_calculix_section_forces_frd,
+    section_force_extreme_von_mises,
+    solve_frame,
+)
 
 __all__ = [
     "BendingSpec",
@@ -134,4 +151,19 @@ __all__ = [
     "evaluate_c3d10_refinement",
     "support_topology",
     "support_topology_signature",
+    "FRAME_EVALUATOR_IDENTITY",
+    "FrameElement",
+    "FrameModel",
+    "FrameSection",
+    "FrameSolveResult",
+    "VehicleFrameError",
+    "analytical_cantilever",
+    "benchmark_model",
+    "build_calculix_b31_deck",
+    "build_vehicle_frame",
+    "loads_from_work048",
+    "parse_calculix_b31_dat",
+    "parse_calculix_section_forces_frd",
+    "section_force_extreme_von_mises",
+    "solve_frame",
 ]
