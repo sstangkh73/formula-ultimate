@@ -1,0 +1,31 @@
+{
+  "protocol_id": "yield_plasticity_acceptance_v1",
+  "claim_level": "synthetic uniaxial bilinear solver acceptance only",
+  "geometry": {"length_m": 0.1, "width_m": 0.01, "height_m": 0.01},
+  "material": {
+    "material_id": "synthetic_bilinear_aluminium_like",
+    "law": "synthetic_rate_independent_isotropic_bilinear",
+    "youngs_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.3,
+    "density_kg_per_m3": 2700.0,
+    "yield_stress_pa": 250000000.0,
+    "tangent_modulus_pa": 1000000000.0,
+    "maximum_plastic_strain": 0.03,
+    "provenance": "synthetic verification law; prohibited from design fitness"
+  },
+  "load_factors_of_initial_yield": [0.8, 1.0, 1.08, 0.0, -0.8, 0.0],
+  "mesh_levels": [
+    {"mesh_id": "coarse_nx2", "nx": 2, "ny": 2, "nz": 2},
+    {"mesh_id": "fine_nx4", "nx": 4, "ny": 2, "nz": 2}
+  ],
+  "tolerances": {
+    "yield_onset_relative": 0.02,
+    "post_yield_tangent_relative": 0.05,
+    "peak_plastic_strain_relative": 0.05,
+    "residual_strain_relative": 0.05,
+    "reaction_residual_relative": 0.00001,
+    "energy_ledger_relative": 0.0001,
+    "below_yield_peeq_absolute": 1e-10,
+    "last_two_nominal_response_relative": 0.05
+  }
+}

@@ -28,6 +28,13 @@ from .element_verification import (
     parse_element_column_dat,
     parse_element_msh2,
 )
+from .plasticity import (
+    BilinearPlasticitySpec,
+    HexMesh,
+    build_plasticity_deck,
+    parse_plasticity_dat,
+    structured_hex_mesh,
+)
 
 __all__ = [
     "BendingSpec",
@@ -52,4 +59,9 @@ __all__ = [
     "imperfect_element_mesh",
     "parse_element_column_dat",
     "parse_element_msh2",
+    "BilinearPlasticitySpec",
+    "HexMesh",
+    "build_plasticity_deck",
+    "parse_plasticity_dat",
+    "structured_hex_mesh",
 ]
