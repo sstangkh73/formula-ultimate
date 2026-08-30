@@ -22,6 +22,20 @@ from .whole_vehicle_baseline import (
     evaluate_reference_matrix,
     validate_baseline_inputs,
 )
+from .whole_vehicle_search import (
+    SEARCH_AGENT_VERSION,
+    SEARCH_EVALUATOR_VERSION,
+    CandidateEvaluation,
+    DesignSearchAgentV0,
+    PromotionResult,
+    SearchCandidate,
+    WholeVehicleSearchError,
+    evaluate_candidate,
+    promote_candidates,
+    readiness_decision,
+    run_search_pilot,
+    validate_search_protocol,
+)
 
 __all__ = [
     "CadLevel0Result",
@@ -40,4 +54,16 @@ __all__ = [
     "evaluate_baseline",
     "evaluate_reference_matrix",
     "validate_baseline_inputs",
+    "SEARCH_AGENT_VERSION",
+    "SEARCH_EVALUATOR_VERSION",
+    "CandidateEvaluation",
+    "DesignSearchAgentV0",
+    "PromotionResult",
+    "SearchCandidate",
+    "WholeVehicleSearchError",
+    "evaluate_candidate",
+    "promote_candidates",
+    "readiness_decision",
+    "run_search_pilot",
+    "validate_search_protocol",
 ]

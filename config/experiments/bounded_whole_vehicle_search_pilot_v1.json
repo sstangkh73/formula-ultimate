@@ -1,0 +1,35 @@
+{
+  "protocol_id": "bounded_whole_vehicle_search_pilot_v1",
+  "agent_version": "DesignSearchAgentV0",
+  "evaluator_version": "bounded_geometry_mass_capacity_level0_v1",
+  "claim_level": "equal-attempt search mechanics pilot; no discovery or physical validation",
+  "upstream_identity": {
+    "work049_source_commit": "1a4444bc980a2df0c4d355ab1531065133b21b2c",
+    "baseline_protocol_sha256": "93ef09d276b7faead52fdbe5ac8ad40c59a2f818b701927624c2a536ca5e3987",
+    "reference_result_sha256": "12774be503f21212cd35cc10b48f1eb60ab5740005ab264dfa17b35f87eb1097",
+    "reference_matrix_sha256": "237b2454eb0d4d83c750177ce96964d3fdadbcf52e456687f47e2c43f28fb71c"
+  },
+  "treatments": ["GRID", "RANDOM", "EVOLUTION"],
+  "seeds": [101, 202, 303],
+  "attempted_evaluations_per_treatment_seed": 32,
+  "candidate_variables": {
+    "core_length_scale": {"minimum": 0.9, "maximum": 1.1},
+    "core_width_scale": {"minimum": 0.9, "maximum": 1.1},
+    "contact_radius_scale": {"minimum": 0.8, "maximum": 1.2},
+    "source_size_scale": {"minimum": 0.8, "maximum": 1.2},
+    "propulsor_size_scale": {"minimum": 0.8, "maximum": 1.2}
+  },
+  "grid_levels_per_variable": 4,
+  "evolution_initial_random": 8,
+  "evolution_mutation_sigma_fraction": 0.12,
+  "selection": {"objective": "minimum_finish_time_among_training_feasible", "promotions_per_treatment_seed": 1},
+  "refined_evaluator": {
+    "required_identity": "independent_whole_vehicle_stress_field_evaluator_v1",
+    "status": "unavailable",
+    "prohibition": "bounded capacity sensitivity cannot substitute for independent refinement"
+  },
+  "readiness_requirements": [
+    "exact_replay", "equal_budget", "same_evaluator", "holdout_pass",
+    "independent_refined_evaluation", "no_exploit", "complete_provenance"
+  ]
+}
