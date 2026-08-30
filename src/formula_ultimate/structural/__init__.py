@@ -68,6 +68,12 @@ from .loaded_interface import (
     parse_loaded_interface_dat,
     spec_from_mapping as loaded_interface_spec_from_mapping,
 )
+from .gate_a_remediation import (
+    classify_boundary_comparison,
+    evaluate_c3d10_refinement,
+    support_topology,
+    support_topology_signature,
+)
 
 __all__ = [
     "BendingSpec",
@@ -124,4 +130,8 @@ __all__ = [
     "map_cylindrical_interfaces",
     "parse_loaded_interface_dat",
     "loaded_interface_spec_from_mapping",
+    "classify_boundary_comparison",
+    "evaluate_c3d10_refinement",
+    "support_topology",
+    "support_topology_signature",
 ]

@@ -1,0 +1,25 @@
+{
+  "protocol_id": "gate_a_remediation_v1",
+  "claim_level": "narrow numerical evaluation-domain remediation only",
+  "element_remediation": {
+    "source_config": "config/structural/near_critical_element_verification_v1.json",
+    "additional_mesh_cases": [
+      {"mesh_id": "c3d10_1p8mm", "order": 2, "characteristic_size_m": 0.0018},
+      {"mesh_id": "c3d10_1p2mm", "order": 2, "characteristic_size_m": 0.0012}
+    ],
+    "refinement_mesh_ids": ["c3d10_1p8mm", "c3d10_1p4mm", "c3d10_1p2mm"],
+    "maximum_last_two_amplification_change_relative": 0.05,
+    "maximum_secant_error_relative": 0.05,
+    "maximum_eigenvalue_error_relative": 0.05,
+    "excluded_route": "C3D4 near-critical promotion where Work 041 cross-family difference exceeds 0.05"
+  },
+  "boundary_remediation": {
+    "source_config": "config/structural/loaded_interface_plate_v1.json",
+    "boundary_model_id": "bonded_cylindrical_surface_zero_displacement_v1",
+    "reference_supports": ["support_upper", "support_lower"],
+    "equivalent_encoding_supports": ["support_lower", "support_upper"],
+    "topology_mutation_supports": ["support_lower"],
+    "maximum_equivalent_compliance_change_relative": 1e-10,
+    "maximum_equivalent_resultant_change_relative": 1e-10
+  }
+}
