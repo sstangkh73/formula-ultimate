@@ -47,6 +47,17 @@ from .main_campaign_protocol import (
     summary_as_dict as main_campaign_summary_as_dict,
     validate_main_campaign_protocol,
 )
+from .campaign_runner import (
+    CampaignExecutionAuthorization,
+    CampaignLedgerStore,
+    CampaignRunnerError,
+    ChainedJsonlLedger,
+    PromotionSelection,
+    execute_training_opportunities,
+    execution_protocol_from_main,
+    reconstruct_training_agent,
+    select_training_promotions,
+)
 
 __all__ = [
     "CadLevel0Result",
@@ -84,4 +95,13 @@ __all__ = [
     "MainCampaignProtocolSummary",
     "main_campaign_summary_as_dict",
     "validate_main_campaign_protocol",
+    "CampaignExecutionAuthorization",
+    "CampaignLedgerStore",
+    "CampaignRunnerError",
+    "ChainedJsonlLedger",
+    "PromotionSelection",
+    "execute_training_opportunities",
+    "execution_protocol_from_main",
+    "reconstruct_training_agent",
+    "select_training_promotions",
 ]
