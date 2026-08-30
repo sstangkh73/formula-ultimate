@@ -1,0 +1,33 @@
+{
+  "protocol_id": "fracture_initiation_acceptance_v1",
+  "claim_level": "ideal LEFM center-crack initiation evaluator only",
+  "material": {
+    "material_id": "synthetic_lefm_screening_material",
+    "toughness_pa_sqrt_m": 15000000.0,
+    "yield_stress_pa": 250000000.0,
+    "youngs_modulus_pa": 70000000000.0,
+    "provenance": "synthetic LEFM arithmetic fixture; prohibited from design fitness",
+    "design_use_permitted": false
+  },
+  "coupon": {
+    "coupon_id": "ideal_center_crack_coupon_v1",
+    "length_m": 0.4,
+    "width_m": 0.2,
+    "thickness_m": 0.012,
+    "crack_model": "ideal_infinite_plate_center_crack_Y1",
+    "thickness_regime": "plane_strain_screened"
+  },
+  "crack_half_lengths_m": [0.003, 0.005, 0.008],
+  "load_factors_of_initiation": [0.8, 1.0, 1.2],
+  "representation_segments_per_half_crack": [8, 16, 32],
+  "domain": {
+    "maximum_full_crack_width_ratio": 0.1,
+    "maximum_plastic_zone_crack_ratio": 0.1
+  },
+  "tolerances": {
+    "initiation_load_relative": 0.05,
+    "last_two_parameter_relative": 0.05,
+    "reaction_residual_relative": 0.00001,
+    "energy_residual_relative": 0.0001
+  }
+}

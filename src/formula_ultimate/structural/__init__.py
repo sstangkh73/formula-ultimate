@@ -35,6 +35,16 @@ from .plasticity import (
     parse_plasticity_dat,
     structured_hex_mesh,
 )
+from .fracture import (
+    CrackedCoupon,
+    FractureEvaluation,
+    FractureMaterialRecord,
+    coupon_from_mapping,
+    crack_representation,
+    evaluate_fracture,
+    material_from_mapping,
+    validate_lefm_domain,
+)
 
 __all__ = [
     "BendingSpec",
@@ -64,4 +74,12 @@ __all__ = [
     "build_plasticity_deck",
     "parse_plasticity_dat",
     "structured_hex_mesh",
+    "CrackedCoupon",
+    "FractureEvaluation",
+    "FractureMaterialRecord",
+    "coupon_from_mapping",
+    "crack_representation",
+    "evaluate_fracture",
+    "material_from_mapping",
+    "validate_lefm_domain",
 ]
