@@ -1,0 +1,25 @@
+{
+  "protocol_id": "fatigue_damage_acceptance_v1",
+  "claim_level": "synthetic uniaxial stress-life Miner accounting only",
+  "material": {
+    "record_id": "synthetic_basquin_goodman_v1",
+    "curve": "synthetic_basquin_stress_life",
+    "mean_stress_rule": "goodman",
+    "reference_alternating_stress_pa": 200000000.0,
+    "reference_cycles": 1000.0,
+    "basquin_exponent": 5.0,
+    "minimum_corrected_stress_pa": 80000000.0,
+    "maximum_corrected_stress_pa": 300000000.0,
+    "ultimate_stress_pa": 500000000.0,
+    "life_scatter_factor": 2.0,
+    "provenance": "synthetic fatigue arithmetic fixture; prohibited from design fitness",
+    "design_use_permitted": false
+  },
+  "constant_amplitude": {"low_pa": -200000000.0, "high_pa": 200000000.0, "cycles": 1200},
+  "sequence_blocks": {
+    "high": {"low_pa": -240000000.0, "high_pa": 240000000.0, "cycles": 300},
+    "low": {"low_pa": -160000000.0, "high_pa": 160000000.0, "cycles": 1000}
+  },
+  "mean_stress_case": {"low_pa": 50000000.0, "high_pa": 250000000.0, "cycles": 100},
+  "tolerances": {"cycle_count_absolute": 0.0, "constant_damage_relative": 0.01}
+}

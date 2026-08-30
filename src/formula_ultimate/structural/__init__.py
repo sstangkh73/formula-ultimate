@@ -45,6 +45,19 @@ from .fracture import (
     material_from_mapping,
     validate_lefm_domain,
 )
+from .fatigue import (
+    DamageLedgerEntry,
+    FatigueDamageResult,
+    FatigueMaterialRecord,
+    RainflowCycle,
+    aggregate_cycles,
+    corrected_amplitude_goodman,
+    cycles_to_failure,
+    evaluate_damage_blocks,
+    fatigue_material_from_mapping,
+    rainflow_cycles,
+    reversal_history,
+)
 
 __all__ = [
     "BendingSpec",
@@ -82,4 +95,15 @@ __all__ = [
     "evaluate_fracture",
     "material_from_mapping",
     "validate_lefm_domain",
+    "DamageLedgerEntry",
+    "FatigueDamageResult",
+    "FatigueMaterialRecord",
+    "RainflowCycle",
+    "aggregate_cycles",
+    "corrected_amplitude_goodman",
+    "cycles_to_failure",
+    "evaluate_damage_blocks",
+    "fatigue_material_from_mapping",
+    "rainflow_cycles",
+    "reversal_history",
 ]
