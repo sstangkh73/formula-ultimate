@@ -1,0 +1,22 @@
+{
+  "protocol_id":"topology_neutral_vehicle_v1","grammar_version":"vehicle_assembly_primitives_v1","candidate_id":"fu-whole-0001","frame":"right_handed_si_x_forward_y_left_z_up","failure_contract":"structural_failure_coupling_v1",
+  "materials":{"light":{"density_kg_per_m3":2700.0,"provenance":"synthetic; prohibited from fitness"},"dense":{"density_kg_per_m3":5000.0,"provenance":"synthetic; prohibited from fitness"}},
+  "envelope":{"minimum_m":[-0.4,-0.2,0.0],"maximum_m":[0.4,0.2,0.3]},
+  "keep_outs":[{"keep_out_id":"protected","minimum_m":[-0.04,-0.04,0.23],"maximum_m":[0.04,0.04,0.28]}],
+  "components":[
+    {"component_id":"core","function_tags":["external_load_receiver"],"material_id":"light","primitive":{"type":"box","size_m":[0.4,0.2,0.1]},"translation_m":[0,0,0.15]},
+    {"component_id":"source","function_tags":["energy_source"],"material_id":"dense","primitive":{"type":"box","size_m":[0.1,0.1,0.1]},"translation_m":[-0.25,0,0.15]},
+    {"component_id":"propulsor","function_tags":["propulsion"],"material_id":"light","primitive":{"type":"box","size_m":[0.1,0.1,0.1]},"translation_m":[0.25,0,0.15]},
+    {"component_id":"contact_alpha","function_tags":["ground_contact"],"material_id":"light","primitive":{"type":"cylinder_z","radius_m":0.04,"height_m":0.1},"translation_m":[0,0.06,0.05]}
+  ],
+  "interfaces":[
+    {"interface_id":"source_out","component_id":"source","local_position_m":[0.05,0,0]},{"interface_id":"core_energy","component_id":"core","local_position_m":[-0.2,0,0]},
+    {"interface_id":"core_prop","component_id":"core","local_position_m":[0.2,0,0]},{"interface_id":"prop_in","component_id":"propulsor","local_position_m":[-0.05,0,0]},
+    {"interface_id":"core_support","component_id":"core","local_position_m":[0,0.06,-0.05]},{"interface_id":"contact_top","component_id":"contact_alpha","local_position_m":[0,0,0.05]},
+    {"interface_id":"ground_alpha","component_id":"contact_alpha","local_position_m":[0,0,-0.05]}
+  ],
+  "connections":[{"connection_id":"energy_core","interface_a":"source_out","interface_b":"core_energy"},{"connection_id":"core_propulsor","interface_a":"core_prop","interface_b":"prop_in"},{"connection_id":"core_contact","interface_a":"core_support","interface_b":"contact_top"}],
+  "contacts":[{"contact_id":"ground_contact_alpha","interface_id":"ground_alpha"}],
+  "energy_edges":[["source","core"],["core","propulsor"]],"external_load_components":["core"],
+  "tolerances":{"interface_position_m":1e-12,"ground_position_m":1e-12,"mass_property_relative":1e-6}
+}
