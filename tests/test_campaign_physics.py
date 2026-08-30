@@ -11,10 +11,12 @@ from formula_ultimate.experiments.campaign_physics import (
     analyze_main_campaign,
     downstream_fingerprint,
     evaluate_level0,
+    json_compatible,
     training_evaluator_identity,
     validate_campaign_environment,
 )
 from formula_ultimate.experiments.campaign_runner import execution_protocol_from_main
+from formula_ultimate.experiments.campaign_runner import ChainedJsonlLedger
 from formula_ultimate.experiments.whole_vehicle_search import CandidateEvaluation, DesignSearchAgentV0, canonical_sha256
 
 
@@ -105,6 +107,17 @@ class CampaignPhysicsTests(unittest.TestCase):
         self.assertEqual(downstream_fingerprint(rows), downstream_fingerprint(rows))
         self.assertNotEqual(downstream_fingerprint(rows), downstream_fingerprint(tuple(reversed(rows))))
         self.assertNotEqual(downstream_fingerprint(rows), downstream_fingerprint((rows[0], {**rows[1], "value": 3})))
+
+    def test_promotion_selection_is_canonical_after_append_and_reload(self):
+        selection = {"treatment": "GRID", "seed": 55999, "candidate_ids": ("candidate-a", "candidate-b"), "requested": 2, "selected": 2, "shortfall": 0, "selection_sha256": "f" * 64}
+        expected = json_compatible(selection)
+        with tempfile.TemporaryDirectory() as temporary:
+            ledger = ChainedJsonlLedger(Path(temporary) / "stage.jsonl", protocol_id="p", campaign_id="c", evidence_class="test", ledger_kind="stage")
+            ledger.initialize()
+            ledger.append({"record_type": "promotion_selection", "selection": expected})
+            stored = ledger.read_rows()[0].payload["selection"]
+        self.assertEqual(expected, stored)
+        self.assertNotEqual(stored, {**expected, "candidate_ids": ["candidate-a", "candidate-c"]})
 
 
 if __name__ == "__main__":

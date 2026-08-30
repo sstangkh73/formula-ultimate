@@ -81,8 +81,20 @@ def _require_commit(value: Any, name: str) -> None:
 
 
 def validate_main_campaign_protocol(protocol: Mapping[str, Any]) -> MainCampaignProtocolSummary:
-    _require(protocol.get("protocol_id") == "bounded_whole_vehicle_main_campaign_v1", "protocol identity mismatch")
-    _require(protocol.get("campaign_id") == "FU-BMC-001", "campaign identity mismatch")
+    protocol_id = protocol.get("protocol_id")
+    _require(protocol_id in {"bounded_whole_vehicle_main_campaign_v1", "bounded_whole_vehicle_main_campaign_v2"}, "protocol identity mismatch")
+    expected_campaign_id = "FU-BMC-001" if protocol_id.endswith("_v1") else "FU-BMC-002"
+    _require(protocol.get("campaign_id") == expected_campaign_id, "campaign identity mismatch")
+    if protocol_id.endswith("_v1"):
+        _require("supersedes" not in protocol, "v1 cannot carry successor remediation evidence")
+    else:
+        remediation = protocol.get("supersedes", {})
+        _require(remediation.get("protocol_id") == "bounded_whole_vehicle_main_campaign_v1" and remediation.get("campaign_id") == "FU-BMC-001", "v2 predecessor identity mismatch")
+        _require(remediation.get("stopped_work") == "057", "v2 stopped-work provenance mismatch")
+        _require(remediation.get("reason") == "canonicalize semantically equal tuple/list promotion selections after JSON append and replay", "v2 remediation scope mismatch")
+        for name in ("v1_budget_ledger_sha256", "v1_result_ledger_sha256", "v1_stage_ledger_sha256", "v1_failure_record_sha256"):
+            _require_sha256(remediation.get(name), name)
+        _require(remediation.get("scientific_rules_changed") is False and remediation.get("v1_observations_reused") is False, "v2 scientific or observation boundary mismatch")
     _require(protocol.get("status") == "preregistered_not_run", "campaign status must remain preregistered_not_run")
     _require_commit(protocol.get("frozen_source_commit"), "frozen_source_commit")
     claim = protocol.get("claim_level")

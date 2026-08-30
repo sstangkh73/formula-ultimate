@@ -1,0 +1,149 @@
+{
+  "protocol_id": "bounded_whole_vehicle_main_campaign_v2",
+  "campaign_id": "FU-BMC-002",
+  "status": "preregistered_not_run",
+  "frozen_source_commit": "b43c69fd9b52acf4888c9bb3abec8b4c179c8424",
+  "supersedes": {
+    "protocol_id": "bounded_whole_vehicle_main_campaign_v1",
+    "campaign_id": "FU-BMC-001",
+    "stopped_work": "057",
+    "reason": "canonicalize semantically equal tuple/list promotion selections after JSON append and replay",
+    "v1_budget_ledger_sha256": "53874fdfc878d0a23b0868797cf59556a08e5106d06fd5a3bfe339ccc8abf005",
+    "v1_result_ledger_sha256": "0c79ae667631a93c95f6872b8e79e65c0337636e2a3316dc31b3c0fd036bfeb9",
+    "v1_stage_ledger_sha256": "dcb6b2fd5918800402d3c01d4a5d5b060fc7bf03f16bc711f22d3b2b8aac8f0f",
+    "v1_failure_record_sha256": "faa7b387b33003c3f4321aabd50d631ad4186ec95898f400847cd4e8ccb31b41",
+    "scientific_rules_changed": false,
+    "v1_observations_reused": false
+  },
+  "claim_level": "comparative evidence inside the frozen bounded whole-vehicle grammar, load, synthetic-material, and evaluator domain only; no physical validation, safety, superiority, novelty, or discovery claim",
+  "upstream_identity": {
+    "work047_assembly_config_sha256": "305098ece49a499fa7b77108b251d152960cf8165beb774c5c0d6192265a859f",
+    "work048_protocol_sha256": "6369b11f173dc30abd62ce72d34809fe3122b428398a01b0df1aea1cdc11f193",
+    "work048_training_partition_sha256": "d19f8e33c1259e64632e6e89f9768fddeb8c6e54f4a204994e200037c6beba38",
+    "work048_holdout_partition_sha256": "5045fd461c740e4edc461a702dc96bf3e93fba0b4dbb0bbeeca8adcaf4d5cf41",
+    "work049_baseline_protocol_sha256": "93ef09d276b7faead52fdbe5ac8ad40c59a2f818b701927624c2a536ca5e3987",
+    "work049_reference_result_sha256": "12774be503f21212cd35cc10b48f1eb60ab5740005ab264dfa17b35f87eb1097",
+    "work049_reference_matrix_sha256": "237b2454eb0d4d83c750177ce96964d3fdadbcf52e456687f47e2c43f28fb71c",
+    "work053_evaluator_identity": "project_frame6dof_plus_calculix_b31_section_force_v2",
+    "work053_config_sha256": "a21cd3ad14f2b1c4e2e1b378101c2b1322fd17d41ba79ce2af20d85cfff26ed4",
+    "work053_replay_fingerprint_sha256": "e5b28abfa37224b8bc855d28f43626744401b79c03d084f1b6fb1953fe37020d",
+    "work053_calculix_sha256": "2ff89a72b6aac9c361cb716e44220dfcd01d2bb3e66abd6b6455b01b7250f350",
+    "work054_config_sha256": "927b7c9fa9194ba1ae6967297d011d07e23f0acb28489b42f85ff6954eac67d4",
+    "work054_adjudication_sha256": "c8a5e89fba6d96be5a5cfa063a51a1d2b0eb597c25f24784dbe85a4c062da953"
+  },
+  "hypotheses": {
+    "primary": {
+      "id": "H1_EVOLUTION_SUPPORTED_FINISHER_RATE",
+      "preferred": "Under equal attempted-evaluation opportunity, EVOLUTION has a higher paired-seed probability of producing at least one refined-supported finisher than RANDOM.",
+      "null": "The paired-seed refined-supported-finisher probability difference EVOLUTION minus RANDOM is zero.",
+      "falsification": "Report contradiction when the observed paired-seed rate difference is non-positive; never substitute attempt-level feasible rate for this seed-level endpoint."
+    },
+    "secondary": [
+      {"id": "H2_EVOLUTION_BEST_TIME", "statement": "On seeds where both treatments produce a refined-supported finisher, EVOLUTION has a lower seed-level best frozen-holdout time than RANDOM."},
+      {"id": "H3_GRID_CALIBRATION", "statement": "GRID provides a fixed discrete calibration treatment; comparisons with GRID are descriptive because its proposal distribution is not continuous."}
+    ]
+  },
+  "design": {
+    "treatments": ["GRID", "RANDOM", "EVOLUTION"],
+    "paired_seeds": [55001, 55002, 55003, 55004, 55005, 55006, 55007, 55008, 55009, 55010, 55011, 55012],
+    "excluded_seeds": {"pilot": [101, 202, 303], "burn_in": [55999]},
+    "attempted_evaluations_per_treatment_seed": 80,
+    "attempts_per_treatment": 960,
+    "total_attempted_evaluations": 2880,
+    "failure_consumes_attempt": true,
+    "same_candidate_bounds": true,
+    "same_training_evaluator": true,
+    "same_frozen_partitions": true,
+    "candidate_variables": {
+      "core_length_scale": {"minimum": 0.9, "maximum": 1.1},
+      "core_width_scale": {"minimum": 0.9, "maximum": 1.1},
+      "contact_radius_scale": {"minimum": 0.8, "maximum": 1.2},
+      "source_size_scale": {"minimum": 0.8, "maximum": 1.2},
+      "propulsor_size_scale": {"minimum": 0.8, "maximum": 1.2}
+    },
+    "grid": {"levels_per_variable": 4, "combination_capacity": 1024, "planned_unique_opportunities": 960, "wrap_or_repeat_allowed": false},
+    "random": {"distribution": "independent_uniform_within_declared_bounds"},
+    "evolution": {
+      "initial_random_attempts_per_seed": 20,
+      "mutation_sigma_fraction_of_range": 0.12,
+      "parent_rule": "best_training_feasible_else_best_observed",
+      "bound_handling": "declared_bound_clamp_and_record"
+    }
+  },
+  "stage_order": [
+    "declaration_and_identity",
+    "candidate_proposal",
+    "grammar_geometry_and_training_level0",
+    "seed_level_training_selection",
+    "frozen_holdout_level0",
+    "work053_refined_stress_deformation",
+    "finalist_step_freecad_witness",
+    "eligibility_and_analysis"
+  ],
+  "promotion": {
+    "training_feasible_candidates_per_treatment_seed": 2,
+    "maximum_promotions": 72,
+    "shortfall_policy": "record_zero_or_one_without_replacement_or_cross_seed_borrowing",
+    "ranking": ["minimum_training_finish_time", "candidate_id_ascending"],
+    "holdout_is_never_used_for_training_or_parent_selection": true,
+    "refined_evaluator": {
+      "required_identity": "project_frame6dof_plus_calculix_b31_section_force_v2",
+      "required_status": "passed_on_both_frozen_holdouts",
+      "thresholds_mutable_during_campaign": false
+    },
+    "final_witness": {"route": "3D_to_STEP_to_FreeCAD", "required_for_winner": true, "hidden_geometry_repair_allowed": false}
+  },
+  "outcomes": {
+    "inferential_unit": "paired_seed",
+    "attempts_are_independent_replicates": false,
+    "primary": ["refined_supported_finisher_present_per_treatment_seed", "best_frozen_holdout_time_s_per_treatment_seed"],
+    "secondary": ["failure_code_distribution", "training_feasible_rate", "refined_survival_rate", "mass_kg", "energy_j", "stress_margin", "maximum_displacement_m", "attempt_and_refined_compute_cost"],
+    "no_supported_finisher": {"presence": false, "best_time_s": null, "drop_from_rate_analysis": false, "drop_from_time_availability_report": false}
+  },
+  "analysis": {
+    "analysis_seed": 551337,
+    "primary_comparison": "EVOLUTION_minus_RANDOM",
+    "supported_finisher_rate": "paired_rate_difference_with_exact_mcnemar_and_95_percent_paired_bootstrap_interval",
+    "common_success_best_time": "paired_median_difference_with_exact_sign_flip_and_95_percent_paired_bootstrap_interval",
+    "grid_comparisons": "descriptive_with_same_seed_tables_and_intervals",
+    "multiple_outcomes": "report_all_preregistered_outcomes_without_selective_suppression",
+    "winner_rule": ["all_eligibility_gates_passed", "minimum_frozen_holdout_time_s", "candidate_id_ascending"],
+    "algorithm_superiority_requires_both": ["positive_primary_supported_finisher_rate_effect", "independent_replication_under_a_new_protocol"]
+  },
+  "failure_policy": {
+    "counted_outcomes": ["invalid_declaration", "invalid_geometry", "numerical_failure", "structural_failure", "energy_failure", "exploit_rejection", "holdout_failure", "refined_disagreement", "DNF"],
+    "silent_repair_allowed": false,
+    "neutral_numeric_substitution_allowed": false,
+    "cross_seed_budget_borrowing_allowed": false,
+    "failed_attempt_retry_allowed": false
+  },
+  "stop_go": {
+    "stop_before_admitted_run_if": [
+      "protocol_or_upstream_identity_mismatch",
+      "burn_in_changes_require_a_new_protocol_id",
+      "GRID_opportunities_repeat",
+      "treatment_opportunity_counts_differ",
+      "holdout_information_reaches_training",
+      "refined_evaluator_is_unavailable",
+      "ledger_or_replay_is_not_exact"
+    ],
+    "campaign_result_statuses": ["completed_with_supported_finishers", "completed_without_supported_finisher", "stopped_protocol_violation", "stopped_infrastructure_failure"]
+  },
+  "immutability": {
+    "changes_after_burn_in_require_new_protocol_id": true,
+    "changes_after_admitted_start_require_new_campaign_id": true,
+    "append_only_result_and_budget_ledgers": true,
+    "record_rng_checkpoint_and_ancestry": true
+  },
+  "prohibited_claims": [
+    "physical_validation",
+    "real_world_safety",
+    "manufacturability",
+    "race_superiority",
+    "algorithm_superiority_from_this_campaign_alone",
+    "novelty",
+    "engineering_discovery",
+    "arbitrary_topology_transfer",
+    "certified_material_allowable"
+  ]
+}

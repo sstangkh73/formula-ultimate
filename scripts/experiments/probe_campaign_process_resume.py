@@ -36,15 +36,17 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", choices=("reserve", "resume", "verify"), required=True)
     parser.add_argument("--artifact-root", type=Path, default=ROOT / "artifacts/work057/process_resume_probe")
+    parser.add_argument("--protocol", type=Path, default=ROOT / "config/experiments/bounded_whole_vehicle_main_campaign_v1.json")
     args = parser.parse_args()
-    protocol = read_json(ROOT / "config/experiments/bounded_whole_vehicle_main_campaign_v1.json")
+    protocol = read_json(args.protocol)
     ccx = Path(r"C:\Program Files\FreeCAD 1.1\bin\ccx.exe")
     cadquery = ROOT / ".tools/cadquery-mcp/Scripts/python.exe"
     freecad = Path(r"C:\Program Files\FreeCAD 1.1\bin\python.exe")
     environment = validate_campaign_environment(ROOT, protocol, ccx=ccx, cadquery_python=cadquery, freecad_python=freecad)
     execution = execution_protocol_from_main(protocol, seeds=(55999,))
-    budget = ChainedJsonlLedger(args.artifact_root / "budget_ledger.jsonl", protocol_id=protocol["protocol_id"], campaign_id="PROBE-FU-BMC-001", evidence_class="interruption_probe", ledger_kind="budget")
-    result = ChainedJsonlLedger(args.artifact_root / "result_ledger.jsonl", protocol_id=protocol["protocol_id"], campaign_id="PROBE-FU-BMC-001", evidence_class="interruption_probe", ledger_kind="result")
+    probe_campaign_id = f"PROBE-{protocol['campaign_id']}"
+    budget = ChainedJsonlLedger(args.artifact_root / "budget_ledger.jsonl", protocol_id=protocol["protocol_id"], campaign_id=probe_campaign_id, evidence_class="interruption_probe", ledger_kind="budget")
+    result = ChainedJsonlLedger(args.artifact_root / "result_ledger.jsonl", protocol_id=protocol["protocol_id"], campaign_id=probe_campaign_id, evidence_class="interruption_probe", ledger_kind="result")
     store = CampaignLedgerStore(budget, result)
     store.initialize()
     agent, pending = reconstruct_training_agent(store, execution, "GRID", 55999)
@@ -62,7 +64,7 @@ def main() -> int:
         })
         print(json.dumps({"status": "intentional_process_stop", "candidate_id": candidate_id, "pending": len(state["pending_candidate_ids"])}))
         return 75
-    authorization = CampaignExecutionAuthorization("WORK057-PROCESS-RESUME", "PROBE-FU-BMC-001", "interruption_probe", (55999,), False)
+    authorization = CampaignExecutionAuthorization("CAMPAIGN-PROCESS-RESUME", probe_campaign_id, "interruption_probe", (55999,), False)
     evaluator_sha = training_evaluator_identity(protocol, environment)
     completed = execute_training_opportunities(
         store, execution, "GRID", 55999,

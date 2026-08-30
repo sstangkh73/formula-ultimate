@@ -25,6 +25,7 @@ from formula_ultimate.experiments.campaign_physics import (  # noqa: E402
     downstream_fingerprint,
     evaluate_level0,
     file_sha256,
+    json_compatible,
     read_json,
     refine_candidate,
     run_cad_witness,
@@ -140,7 +141,7 @@ def main() -> int:
         protocol = read_json(args.protocol)
         environment = validate_campaign_environment(ROOT, protocol, ccx=args.ccx, cadquery_python=args.cadquery_python, freecad_python=args.freecad_python)
         if args.kind == "burn-in":
-            seeds, campaign_id, evidence_class = (55999,), "FU-BMC-001-BURNIN", "burn_in"
+            seeds, campaign_id, evidence_class = (55999,), f"{protocol['campaign_id']}-BURNIN", "burn_in"
             admitted = False
         else:
             seeds = tuple(protocol["design"]["paired_seeds"])
@@ -194,7 +195,7 @@ def main() -> int:
             raise CampaignPhysicsError("refinement benchmark did not pass")
 
         selections = select_training_promotions(training_results, execution["treatments"], seeds, per_treatment_seed=int(protocol["promotion"]["training_feasible_candidates_per_treatment_seed"]))
-        expected_selections = [asdict(item) for item in selections]
+        expected_selections = json_compatible([asdict(item) for item in selections])
         if not downstream["selections"]:
             if args.verify_only:
                 raise CampaignPhysicsError("promotion evidence is missing")

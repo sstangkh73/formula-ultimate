@@ -51,6 +51,11 @@ def write_json(path: Path, value: Mapping[str, Any]) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
 
 
+def json_compatible(value: Any) -> Any:
+    """Return the exact representation produced by a strict JSON round trip."""
+    return json.loads(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False))
+
+
 def file_sha256(path: Path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
