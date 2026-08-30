@@ -1,6 +1,6 @@
 # แผนงาน 060: Protocol v2 Admitted Main Campaign
 
-สถานะ: กำลังดำเนินการ แต่ execution ยังล็อกจนกว่า Work 059 acceptance จะ commit และ clean-tree replay ผ่าน
+สถานะ: หยุดก่อน execution — admission preflight ใช้ path hash ของ protocol v1 จึง reject valid v2 admission ก่อน ledger initialization
 
 ไฟล์ต้นฉบับภาษาอังกฤษ: `2026-08-31_060_v2-admitted-main-campaign-plan.md`
 

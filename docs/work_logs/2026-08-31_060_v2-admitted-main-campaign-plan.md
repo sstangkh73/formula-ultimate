@@ -1,6 +1,6 @@
 # Work 060 Plan: Protocol v2 Admitted Main Campaign
 
-Status: In progress; execution remains blocked until the Work 059 acceptance commit and clean-tree replay complete
+Status: Stopped before execution — admission preflight used a v1 protocol-file hash path and rejected the valid v2 admission before ledger initialization.
 
 Thai companion: `2026-08-31_060_v2-admitted-main-campaign-plan.th.md`
 
