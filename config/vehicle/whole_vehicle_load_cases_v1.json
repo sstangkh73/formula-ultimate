@@ -1,0 +1,53 @@
+{
+  "protocol_id": "whole_vehicle_load_cases_v1",
+  "adapter_version": "quasi_static_tree_wrench_v1",
+  "claim_level": "balanced quasi-static rigid-component cut loads with bounded failure-policy coupling only",
+  "assembly_identity": {
+    "protocol_id": "topology_neutral_vehicle_v1",
+    "config_sha256": "305098ece49a499fa7b77108b251d152960cf8165beb774c5c0d6192265a859f",
+    "declaration_sha256": "041057afd245bd4a10482837672d474b0e310ebbfc38fdca4c40408f1f441170",
+    "assembly_step_sha256": "f60bb686dfaca51c06bed8b1b086418c5f9ce2208d861b5b2ff18d8f845f18b9",
+    "mass_properties": {
+      "mass_kg": 30.657168026350796,
+      "centre_of_mass_m": [-0.01875580939197546, 0.0026561514589689347, 0.14557308090171844],
+      "inertia_kg_m2": [0.12214756112199837, 0.8039434564567454, 0.8490539916188957, -0.0015272870889071375, 0.002545478481511896, 0.00778252377477898]
+    }
+  },
+  "failure_identity": {
+    "protocol_id": "structural_failure_coupling_v1",
+    "config_sha256": "e0647cca22c35e18265743787e910e4f53ca9751d631fdd12c4d4368dfd8cd43"
+  },
+  "required_evidence": {
+    "dynamics": "level0_frozen_quasi_static_snapshot_v1",
+    "contact": "frozen_equivalent_support_wrench_v1",
+    "aerodynamics": "frozen_level0_wrench_v1",
+    "mass_state": "work047_fixed_mass_state_v1"
+  },
+  "partitions": {
+    "training": ["straight_acceleration", "braking", "steady_cornering", "combined_manoeuvre", "bump_extreme"],
+    "holdout": ["aero_extreme", "holdout_combined"],
+    "control": ["deliberate_overload"]
+  },
+  "connection_capacities": {
+    "energy_core": {"force_n": 250.0, "moment_nm": 40.0, "stored_elastic_energy_j": 2.0},
+    "core_propulsor": {"force_n": 150.0, "moment_nm": 30.0, "stored_elastic_energy_j": 2.0},
+    "core_contact": {"force_n": 900.0, "moment_nm": 80.0, "stored_elastic_energy_j": 8.0}
+  },
+  "tolerances": {
+    "force_residual_n": 1e-5,
+    "moment_residual_nm": 1e-5,
+    "mass_property_relative": 1e-6,
+    "yield_utilization": 0.8,
+    "failure_utilization": 1.0
+  },
+  "cases": [
+    {"case_id":"straight_acceleration","partition":"training","time_s":10.0,"acceleration_m_per_s2":[4,0,0],"gravity_m_per_s2":[0,0,-9.81],"aero_component_id":"core","aero_wrench_at_com":[-30,0,-10,0,2,0],"contact_wrench_at_com":[152.62867210540318,0,310.7468183385013,0,-2,0],"evidence":{"dynamics":"level0_frozen_quasi_static_snapshot_v1","contact":"frozen_equivalent_support_wrench_v1","aerodynamics":"frozen_level0_wrench_v1","mass_state":"work047_fixed_mass_state_v1"}},
+    {"case_id":"braking","partition":"training","time_s":20.0,"acceleration_m_per_s2":[-6,0,0],"gravity_m_per_s2":[0,0,-9.81],"aero_component_id":"core","aero_wrench_at_com":[-20,0,-5,0,-3,0],"contact_wrench_at_com":[-163.94300815810476,0,305.7468183385013,0,3,0],"evidence":{"dynamics":"level0_frozen_quasi_static_snapshot_v1","contact":"frozen_equivalent_support_wrench_v1","aerodynamics":"frozen_level0_wrench_v1","mass_state":"work047_fixed_mass_state_v1"}},
+    {"case_id":"steady_cornering","partition":"training","time_s":30.0,"acceleration_m_per_s2":[0,8,0],"gravity_m_per_s2":[0,0,-9.81],"aero_component_id":"core","aero_wrench_at_com":[-15,0,-20,4,0,2],"contact_wrench_at_com":[15,245.25734421080637,320.7468183385013,-4,0,-2],"evidence":{"dynamics":"level0_frozen_quasi_static_snapshot_v1","contact":"frozen_equivalent_support_wrench_v1","aerodynamics":"frozen_level0_wrench_v1","mass_state":"work047_fixed_mass_state_v1"}},
+    {"case_id":"combined_manoeuvre","partition":"training","time_s":40.0,"acceleration_m_per_s2":[-3,6,0],"gravity_m_per_s2":[0,0,-9.81],"aero_component_id":"core","aero_wrench_at_com":[-40,0,-30,5,8,3],"contact_wrench_at_com":[-51.97150407905238,183.94300815810476,330.7468183385013,-5,-8,-3],"evidence":{"dynamics":"level0_frozen_quasi_static_snapshot_v1","contact":"frozen_equivalent_support_wrench_v1","aerodynamics":"frozen_level0_wrench_v1","mass_state":"work047_fixed_mass_state_v1"}},
+    {"case_id":"bump_extreme","partition":"training","time_s":50.0,"acceleration_m_per_s2":[0,0,12],"gravity_m_per_s2":[0,0,-9.81],"aero_component_id":"core","aero_wrench_at_com":[-10,0,-5,0,0,0],"contact_wrench_at_com":[10,0,673.6328346547109,0,0,0],"evidence":{"dynamics":"level0_frozen_quasi_static_snapshot_v1","contact":"frozen_equivalent_support_wrench_v1","aerodynamics":"frozen_level0_wrench_v1","mass_state":"work047_fixed_mass_state_v1"}},
+    {"case_id":"aero_extreme","partition":"holdout","time_s":60.0,"acceleration_m_per_s2":[0,0,0],"gravity_m_per_s2":[0,0,-9.81],"aero_component_id":"core","aero_wrench_at_com":[-100,0,-150,0,25,0],"contact_wrench_at_com":[100,0,450.7468183385013,0,-25,0],"evidence":{"dynamics":"level0_frozen_quasi_static_snapshot_v1","contact":"frozen_equivalent_support_wrench_v1","aerodynamics":"frozen_level0_wrench_v1","mass_state":"work047_fixed_mass_state_v1"}},
+    {"case_id":"holdout_combined","partition":"holdout","time_s":70.0,"acceleration_m_per_s2":[2,-7,4],"gravity_m_per_s2":[0,0,-9.81],"aero_component_id":"core","aero_wrench_at_com":[-55,0,-40,-6,10,-4],"contact_wrench_at_com":[116.31433605270159,-214.60017618445556,463.3754904439045,6,-10,4],"evidence":{"dynamics":"level0_frozen_quasi_static_snapshot_v1","contact":"frozen_equivalent_support_wrench_v1","aerodynamics":"frozen_level0_wrench_v1","mass_state":"work047_fixed_mass_state_v1"}},
+    {"case_id":"deliberate_overload","partition":"control","time_s":80.0,"acceleration_m_per_s2":[0,0,30],"gravity_m_per_s2":[0,0,-9.81],"aero_component_id":"core","aero_wrench_at_com":[-10,0,-5,0,0,0],"contact_wrench_at_com":[10,0,1225.4618591290252,0,0,0],"evidence":{"dynamics":"level0_frozen_quasi_static_snapshot_v1","contact":"frozen_equivalent_support_wrench_v1","aerodynamics":"frozen_level0_wrench_v1","mass_state":"work047_fixed_mass_state_v1"}}
+  ]
+}

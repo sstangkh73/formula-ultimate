@@ -158,6 +158,16 @@ from .structural_failure_coupling import (
     initial_network_state,
     structural_result_fingerprint,
 )
+from .vehicle_load_cases import (
+    LOAD_CASE_ADAPTER_VERSION,
+    ConnectionLoad,
+    VehicleLoadCaseError,
+    VehicleLoadCaseResult,
+    canonical_sha256,
+    evaluate_all_load_cases,
+    evaluate_load_case,
+    validate_protocol as validate_vehicle_load_case_protocol,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -297,4 +307,12 @@ __all__ = [
     "evaluate_structural_failure_step",
     "initial_network_state",
     "structural_result_fingerprint",
+    "LOAD_CASE_ADAPTER_VERSION",
+    "ConnectionLoad",
+    "VehicleLoadCaseError",
+    "VehicleLoadCaseResult",
+    "canonical_sha256",
+    "evaluate_all_load_cases",
+    "evaluate_load_case",
+    "validate_vehicle_load_case_protocol",
 ]
