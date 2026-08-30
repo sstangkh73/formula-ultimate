@@ -2,6 +2,7 @@ from dataclasses import asdict
 import copy
 import json
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
 
@@ -11,9 +12,11 @@ from formula_ultimate.experiments.campaign_physics import (
     analyze_main_campaign,
     downstream_fingerprint,
     evaluate_level0,
+    file_sha256,
     json_compatible,
     training_evaluator_identity,
     validate_campaign_environment,
+    validate_campaign_admission,
 )
 from formula_ultimate.experiments.campaign_runner import execution_protocol_from_main
 from formula_ultimate.experiments.campaign_runner import ChainedJsonlLedger
@@ -118,6 +121,32 @@ class CampaignPhysicsTests(unittest.TestCase):
             stored = ledger.read_rows()[0].payload["selection"]
         self.assertEqual(expected, stored)
         self.assertNotEqual(stored, {**expected, "candidate_ids": ["candidate-a", "candidate-c"]})
+
+    def test_successor_admission_uses_exact_active_protocol_path(self):
+        protocol_path = ROOT / "config/experiments/bounded_whole_vehicle_main_campaign_v3.json"
+        protocol = json.loads(protocol_path.read_text(encoding="utf-8"))
+        environment = validate_campaign_environment(ROOT, protocol, ccx=CCX, cadquery_python=CADQUERY, freecad_python=FREECAD)
+        implementation = {
+            "campaign_runner_sha256": file_sha256(ROOT / "src/formula_ultimate/experiments/campaign_runner.py"),
+            "campaign_physics_sha256": file_sha256(ROOT / "src/formula_ultimate/experiments/campaign_physics.py"),
+            "campaign_command_sha256": file_sha256(ROOT / "scripts/experiments/run_bounded_main_campaign.py"),
+        }
+        admission = {
+            "decision": "burn_in_accepted_for_admitted_main_campaign",
+            "protocol_id": protocol["protocol_id"], "campaign_id": protocol["campaign_id"] + "-BURNIN",
+            "protocol_sha256": file_sha256(protocol_path),
+            "protocol_fingerprint_sha256": environment["protocol_summary"]["protocol_fingerprint_sha256"],
+            "upstream_identity": environment["upstream_identity"], "tool_identity": environment["tool_identity"],
+            "implementation_identity": implementation,
+            "repository_commit": subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True, check=True).stdout.strip(),
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "admission.json"
+            path.write_text(json.dumps(admission), encoding="utf-8")
+            accepted = validate_campaign_admission(ROOT, path, protocol_path, protocol, environment, implementation, require_clean_worktree=False)
+            self.assertEqual(admission, accepted)
+            with self.assertRaisesRegex(CampaignPhysicsError, "file identity"):
+                validate_campaign_admission(ROOT, path, ROOT / "config/experiments/bounded_whole_vehicle_main_campaign_v2.json", protocol, environment, implementation, require_clean_worktree=False)
 
 
 if __name__ == "__main__":

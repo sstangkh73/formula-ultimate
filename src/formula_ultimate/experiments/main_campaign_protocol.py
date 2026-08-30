@@ -82,12 +82,17 @@ def _require_commit(value: Any, name: str) -> None:
 
 def validate_main_campaign_protocol(protocol: Mapping[str, Any]) -> MainCampaignProtocolSummary:
     protocol_id = protocol.get("protocol_id")
-    _require(protocol_id in {"bounded_whole_vehicle_main_campaign_v1", "bounded_whole_vehicle_main_campaign_v2"}, "protocol identity mismatch")
-    expected_campaign_id = "FU-BMC-001" if protocol_id.endswith("_v1") else "FU-BMC-002"
+    identities = {
+        "bounded_whole_vehicle_main_campaign_v1": "FU-BMC-001",
+        "bounded_whole_vehicle_main_campaign_v2": "FU-BMC-002",
+        "bounded_whole_vehicle_main_campaign_v3": "FU-BMC-003",
+    }
+    _require(protocol_id in identities, "protocol identity mismatch")
+    expected_campaign_id = identities[protocol_id]
     _require(protocol.get("campaign_id") == expected_campaign_id, "campaign identity mismatch")
     if protocol_id.endswith("_v1"):
         _require("supersedes" not in protocol, "v1 cannot carry successor remediation evidence")
-    else:
+    elif protocol_id.endswith("_v2"):
         remediation = protocol.get("supersedes", {})
         _require(remediation.get("protocol_id") == "bounded_whole_vehicle_main_campaign_v1" and remediation.get("campaign_id") == "FU-BMC-001", "v2 predecessor identity mismatch")
         _require(remediation.get("stopped_work") == "057", "v2 stopped-work provenance mismatch")
@@ -95,6 +100,14 @@ def validate_main_campaign_protocol(protocol: Mapping[str, Any]) -> MainCampaign
         for name in ("v1_budget_ledger_sha256", "v1_result_ledger_sha256", "v1_stage_ledger_sha256", "v1_failure_record_sha256"):
             _require_sha256(remediation.get(name), name)
         _require(remediation.get("scientific_rules_changed") is False and remediation.get("v1_observations_reused") is False, "v2 scientific or observation boundary mismatch")
+    else:
+        remediation = protocol.get("supersedes", {})
+        _require(remediation.get("protocol_id") == "bounded_whole_vehicle_main_campaign_v2" and remediation.get("campaign_id") == "FU-BMC-002", "v3 predecessor identity mismatch")
+        _require(remediation.get("stopped_work") == "060", "v3 stopped-work provenance mismatch")
+        _require(remediation.get("reason") == "validate admission protocol SHA-256 against the active protocol path rather than a hard-coded v1 path", "v3 remediation scope mismatch")
+        for name in ("v2_failure_record_sha256", "v2_protocol_fingerprint_sha256", "v2_training_fingerprint_sha256", "v2_stage_fingerprint_sha256"):
+            _require_sha256(remediation.get(name), name)
+        _require(remediation.get("scientific_rules_changed") is False and remediation.get("v2_observations_reused") is False, "v3 scientific or observation boundary mismatch")
     _require(protocol.get("status") == "preregistered_not_run", "campaign status must remain preregistered_not_run")
     _require_commit(protocol.get("frozen_source_commit"), "frozen_source_commit")
     claim = protocol.get("claim_level")

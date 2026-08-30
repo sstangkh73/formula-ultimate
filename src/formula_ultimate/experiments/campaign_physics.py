@@ -137,6 +137,37 @@ def training_evaluator_identity(protocol: Mapping[str, Any], environment: Mappin
     })
 
 
+def validate_campaign_admission(
+    root: Path, admission_path: Path, protocol_path: Path, protocol: Mapping[str, Any],
+    environment: Mapping[str, Any], implementation_identity: Mapping[str, str], *,
+    require_clean_worktree: bool = True,
+) -> dict[str, Any]:
+    """Validate admission against the exact active protocol path before ledger creation."""
+    root, admission_path, protocol_path = Path(root), Path(admission_path), Path(protocol_path)
+    if not admission_path.is_file():
+        raise CampaignPhysicsError("committed burn-in admission evidence is missing")
+    admission = read_json(admission_path)
+    if admission.get("decision") != "burn_in_accepted_for_admitted_main_campaign":
+        raise CampaignPhysicsError("burn-in did not authorize admitted main execution")
+    if admission.get("protocol_id") != protocol.get("protocol_id") or admission.get("campaign_id") != f"{protocol.get('campaign_id')}-BURNIN":
+        raise CampaignPhysicsError("admission protocol or campaign identity differs")
+    if admission.get("protocol_sha256") != file_sha256(protocol_path):
+        raise CampaignPhysicsError("admission protocol file identity differs")
+    if admission.get("protocol_fingerprint_sha256") != environment["protocol_summary"]["protocol_fingerprint_sha256"]:
+        raise CampaignPhysicsError("admission protocol fingerprint differs")
+    if admission.get("upstream_identity") != environment["upstream_identity"] or admission.get("tool_identity") != environment["tool_identity"]:
+        raise CampaignPhysicsError("admission upstream or tool identity differs")
+    if admission.get("implementation_identity") != dict(implementation_identity):
+        raise CampaignPhysicsError("implementation changed after burn-in")
+    commit = str(admission.get("repository_commit", ""))
+    ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", commit, "HEAD"], cwd=root, capture_output=True)
+    if len(commit) != 40 or ancestor.returncode:
+        raise CampaignPhysicsError("burn-in evidence is not from a committed ancestor")
+    if require_clean_worktree and subprocess.run(["git", "status", "--porcelain"], cwd=root, text=True, capture_output=True, check=True).stdout:
+        raise CampaignPhysicsError("admitted execution requires a clean worktree")
+    return admission
+
+
 def evaluate_level0(
     execution_protocol: Mapping[str, Any], candidate: SearchCandidate, environment: Mapping[str, Any],
     evaluator_sha256: str, *, partition: str,

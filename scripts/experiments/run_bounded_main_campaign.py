@@ -32,6 +32,7 @@ from formula_ultimate.experiments.campaign_physics import (  # noqa: E402
     run_refinement_benchmark,
     training_evaluator_identity,
     validate_campaign_environment,
+    validate_campaign_admission,
     write_json,
 )
 from formula_ultimate.experiments.campaign_runner import (  # noqa: E402
@@ -91,32 +92,6 @@ def _skipped_result(candidate_id: str, stage: str, reason: str) -> dict:
     return {**draft, "result_sha256": canonical_sha256(draft)}
 
 
-def _validate_admission(path: Path, protocol: dict, environment: dict) -> dict:
-    if not path.is_file():
-        raise CampaignPhysicsError("committed burn-in admission evidence is missing")
-    admission = read_json(path)
-    if admission.get("decision") != "burn_in_accepted_for_admitted_main_campaign":
-        raise CampaignPhysicsError("burn-in did not authorize admitted main execution")
-    if admission.get("protocol_sha256") != file_sha256(ROOT / "config/experiments/bounded_whole_vehicle_main_campaign_v1.json"):
-        raise CampaignPhysicsError("admission protocol identity differs")
-    if admission.get("protocol_fingerprint_sha256") != environment["protocol_summary"]["protocol_fingerprint_sha256"]:
-        raise CampaignPhysicsError("admission protocol fingerprint differs")
-    if admission.get("upstream_identity") != environment["upstream_identity"] or admission.get("tool_identity") != environment["tool_identity"]:
-        raise CampaignPhysicsError("admission upstream or tool identity differs")
-    expected_implementation = {
-        "campaign_runner_sha256": file_sha256(ROOT / "src/formula_ultimate/experiments/campaign_runner.py"),
-        "campaign_physics_sha256": file_sha256(ROOT / "src/formula_ultimate/experiments/campaign_physics.py"),
-        "campaign_command_sha256": file_sha256(Path(__file__)),
-    }
-    if admission.get("implementation_identity") != expected_implementation:
-        raise CampaignPhysicsError("implementation changed after burn-in")
-    commit = str(admission.get("repository_commit", ""))
-    ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", commit, "HEAD"], cwd=ROOT, capture_output=True)
-    if len(commit) != 40 or ancestor.returncode:
-        raise CampaignPhysicsError("burn-in evidence is not from a committed ancestor")
-    return admission
-
-
 def _counts(training_results, treatments, seeds):
     return {
         f"{treatment}:{seed}": sum(item.candidate.treatment == treatment and item.candidate.seed == seed for item in training_results)
@@ -147,7 +122,12 @@ def main() -> int:
             seeds = tuple(protocol["design"]["paired_seeds"])
             campaign_id, evidence_class, admitted = protocol["campaign_id"], "admitted_campaign", True
             stage = "admission"
-            _validate_admission(args.admission, protocol, environment)
+            implementation = {
+                "campaign_runner_sha256": file_sha256(ROOT / "src/formula_ultimate/experiments/campaign_runner.py"),
+                "campaign_physics_sha256": file_sha256(ROOT / "src/formula_ultimate/experiments/campaign_physics.py"),
+                "campaign_command_sha256": file_sha256(Path(__file__)),
+            }
+            validate_campaign_admission(ROOT, args.admission, args.protocol, protocol, environment, implementation)
         execution = execution_protocol_from_main(protocol, seeds=seeds)
         evaluator_sha = training_evaluator_identity(protocol, environment)
         budget = ChainedJsonlLedger(args.artifact_root / "budget_ledger.jsonl", protocol_id=protocol["protocol_id"], campaign_id=campaign_id, evidence_class=evidence_class, ledger_kind="budget")
@@ -252,7 +232,7 @@ def main() -> int:
         }
         summary = {
             "status": "passed", "final_status": final_status, "decision": decision,
-            "campaign_kind": args.kind, "campaign_id": campaign_id, "evidence_class": evidence_class,
+            "campaign_kind": args.kind, "protocol_id": protocol["protocol_id"], "campaign_id": campaign_id, "evidence_class": evidence_class,
             "claim_level": protocol["claim_level"], "protocol_sha256": file_sha256(args.protocol),
             "protocol_fingerprint_sha256": environment["protocol_summary"]["protocol_fingerprint_sha256"],
             "upstream_identity": environment["upstream_identity"], "tool_identity": environment["tool_identity"],

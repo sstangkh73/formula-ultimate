@@ -71,6 +71,7 @@ from .campaign_physics import (
     run_refinement_benchmark,
     training_evaluator_identity,
     validate_campaign_environment,
+    validate_campaign_admission,
 )
 
 __all__ = [
@@ -130,4 +131,5 @@ __all__ = [
     "run_refinement_benchmark",
     "training_evaluator_identity",
     "validate_campaign_environment",
+    "validate_campaign_admission",
 ]

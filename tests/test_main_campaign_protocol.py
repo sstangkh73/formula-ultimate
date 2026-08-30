@@ -20,6 +20,10 @@ def protocol_v2_fixture():
     return json.loads((ROOT / "config/experiments/bounded_whole_vehicle_main_campaign_v2.json").read_text(encoding="utf-8"))
 
 
+def protocol_v3_fixture():
+    return json.loads((ROOT / "config/experiments/bounded_whole_vehicle_main_campaign_v3.json").read_text(encoding="utf-8"))
+
+
 class MainCampaignProtocolTests(unittest.TestCase):
     def test_v2_changes_identity_and_remediation_only(self):
         v1, v2 = protocol_fixture(), protocol_v2_fixture()
@@ -41,6 +45,24 @@ class MainCampaignProtocolTests(unittest.TestCase):
         protocol = protocol_v2_fixture()
         protocol["supersedes"]["v1_stage_ledger_sha256"] = "invalid"
         with self.assertRaisesRegex(MainCampaignProtocolError, "SHA-256"):
+            validate_main_campaign_protocol(protocol)
+
+    def test_v3_changes_identity_and_remediation_only(self):
+        v1, v3 = protocol_fixture(), protocol_v3_fixture()
+        validate_main_campaign_protocol(v3)
+        for protocol in (v1, v3):
+            for name in ("protocol_id", "campaign_id", "frozen_source_commit"):
+                protocol.pop(name)
+        remediation = v3.pop("supersedes")
+        self.assertEqual(v1, v3)
+        self.assertEqual("060", remediation["stopped_work"])
+        self.assertFalse(remediation["scientific_rules_changed"])
+        self.assertFalse(remediation["v2_observations_reused"])
+
+    def test_v3_remediation_scope_fails_closed(self):
+        protocol = protocol_v3_fixture()
+        protocol["supersedes"]["reason"] = "change physics"
+        with self.assertRaisesRegex(MainCampaignProtocolError, "remediation scope"):
             validate_main_campaign_protocol(protocol)
 
     def test_frozen_protocol_has_balanced_non_repeating_budget(self):
