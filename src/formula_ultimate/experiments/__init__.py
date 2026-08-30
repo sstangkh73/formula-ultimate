@@ -41,6 +41,12 @@ from .refined_readiness import (
     ReadinessAdjudicationError,
     adjudicate_refined_readiness,
 )
+from .main_campaign_protocol import (
+    MainCampaignProtocolError,
+    MainCampaignProtocolSummary,
+    summary_as_dict as main_campaign_summary_as_dict,
+    validate_main_campaign_protocol,
+)
 
 __all__ = [
     "CadLevel0Result",
@@ -74,4 +80,8 @@ __all__ = [
     "validate_search_protocol",
     "ReadinessAdjudicationError",
     "adjudicate_refined_readiness",
+    "MainCampaignProtocolError",
+    "MainCampaignProtocolSummary",
+    "main_campaign_summary_as_dict",
+    "validate_main_campaign_protocol",
 ]
