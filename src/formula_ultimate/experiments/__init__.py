@@ -37,6 +37,10 @@ from .whole_vehicle_search import (
     run_search_pilot,
     validate_search_protocol,
 )
+from .refined_readiness import (
+    ReadinessAdjudicationError,
+    adjudicate_refined_readiness,
+)
 
 __all__ = [
     "CadLevel0Result",
@@ -68,4 +72,6 @@ __all__ = [
     "readiness_decision",
     "run_search_pilot",
     "validate_search_protocol",
+    "ReadinessAdjudicationError",
+    "adjudicate_refined_readiness",
 ]

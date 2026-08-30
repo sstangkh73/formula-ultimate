@@ -1,0 +1,23 @@
+{
+  "protocol_id": "refined_gate_readiness_adjudication_v1",
+  "claim_level": "readiness for a bounded whole-vehicle research campaign; not physical vehicle validation or discovery evidence",
+  "expected_treatments": ["GRID", "RANDOM", "EVOLUTION"],
+  "original_promotions_per_treatment": 3,
+  "minimum_supported_per_treatment": 2,
+  "expected_attempts_per_treatment": 96,
+  "work050": {
+    "protocol_sha256": "b538082990566ea836258e9fece8498e1510bf5532f500def0d66be746bc6d1d",
+    "records_sha256": "b35beb7d8b08040c56ab26ec0633f4eb48d9f18ef3219b592cf5c2ffa62ed3bc",
+    "result_ledger_sha256": "15d20e607ddc0e60d6f70e5dc027be680f392a1c55c1a744edf0f1fdd0cbb7bb",
+    "budget_ledger_sha256": "1c27bbe2a5917dd1334a140be3e1550d6028b3391af438bbdd6aa87bceb79224"
+  },
+  "work053": {
+    "implementation_commit": "6ef34945e7637985c9a1fbc87c0195d9a3303794",
+    "evaluator_identity": "project_frame6dof_plus_calculix_b31_section_force_v2",
+    "config_sha256": "a21cd3ad14f2b1c4e2e1b378101c2b1322fd17d41ba79ce2af20d85cfff26ed4",
+    "module_sha256": "ea766dcb73e64fc6ce9927c4f2e0d690cba734550e0224159f8f46e8b02d9e19",
+    "runner_sha256": "8e2d633bc30225eab061fbebd47670937fc0f8e3a51b6653f49dfbcc52b8ebad",
+    "replay_fingerprint_sha256": "e5b28abfa37224b8bc855d28f43626744401b79c03d084f1b6fb1953fe37020d",
+    "calculix_sha256": "2ff89a72b6aac9c361cb716e44220dfcd01d2bb3e66abd6b6455b01b7250f350"
+  }
+}
