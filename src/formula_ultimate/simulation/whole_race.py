@@ -160,7 +160,7 @@ def merge_race_progress(*,config:RaceProgressConfiguration,current:SharedVehicle
     if event_type=="finished":
         next_state=replace(next_state,race_distance_m=config.target_distance_m,status="finished")
     elif event_type=="energy_depletion": next_state=replace(next_state,status="depleted")
-    elif event_type in {"thermal_failure","reliability_failure","damage_failure","degradation_failure"}: next_state=replace(next_state,status="failed")
+    elif event_type in {"thermal_failure","reliability_failure","structural_failure","damage_failure","degradation_failure"}: next_state=replace(next_state,status="failed")
     elif event_type=="timeout": next_state=replace(next_state,status="timeout")
     else: next_state=replace(next_state,status="running")
     laps=min(int(next_state.race_distance_m/config.lap_length_m),int(config.target_distance_m/config.lap_length_m))

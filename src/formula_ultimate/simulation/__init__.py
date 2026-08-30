@@ -144,6 +144,20 @@ from .integration_release import (
     run_baseline_refinement_matrix,
     run_transaction_falsification_suite,
 )
+from .structural_failure_coupling import (
+    ConnectionDefinition,
+    ConnectionState,
+    FailureEnergyLedger,
+    FailureEvidence,
+    GateAIdentity,
+    StructuralCouplingResult,
+    StructuralFailureCouplingError,
+    StructuralNetworkState,
+    StructuralTransition,
+    evaluate_structural_failure_step,
+    initial_network_state,
+    structural_result_fingerprint,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -271,4 +285,16 @@ __all__ = [
     "load_integration_gate_protocol",
     "run_baseline_refinement_matrix",
     "run_transaction_falsification_suite",
+    "ConnectionDefinition",
+    "ConnectionState",
+    "FailureEnergyLedger",
+    "FailureEvidence",
+    "GateAIdentity",
+    "StructuralCouplingResult",
+    "StructuralFailureCouplingError",
+    "StructuralNetworkState",
+    "StructuralTransition",
+    "evaluate_structural_failure_step",
+    "initial_network_state",
+    "structural_result_fingerprint",
 ]

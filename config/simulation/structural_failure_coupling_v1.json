@@ -1,0 +1,35 @@
+{
+  "protocol_id": "structural_failure_coupling_v1",
+  "claim_level": "bounded deterministic connection-state and DNF policy only",
+  "gate_a_identity": {
+    "remediation_protocol_id": "gate_a_remediation_v1",
+    "decision": "narrowly_bounded",
+    "element_route_id": "C3D10_precritical_v1",
+    "support_topology_sha256": "7f4444a78af66157f04441b38e4d4bc3225a892b29f90ebf9840279694fb6258",
+    "boundary_model_id": "bonded_cylindrical_surface_zero_displacement_v1"
+  },
+  "mechanism_protocols": {
+    "yield": "yield_plasticity_acceptance_v1",
+    "fracture": "fracture_initiation_acceptance_v1",
+    "fatigue": "fatigue_damage_acceptance_v1"
+  },
+  "applied_wrench": {
+    "force_n": [1000.0, 50.0, -20.0],
+    "moment_nm": [10.0, 5.0, -3.0]
+  },
+  "connections": [
+    {"connection_id": "joint_a", "load_path_id": "primary_mount", "share_weight": 1.0, "stored_elastic_energy_j": 12.0},
+    {"connection_id": "joint_b", "load_path_id": "primary_mount", "share_weight": 1.0, "stored_elastic_energy_j": 8.0}
+  ],
+  "events": [
+    {"evidence_id": "yield_joint_a", "connection_id": "joint_a", "mechanism": "yield", "crossing_time_s": 0.2, "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "dissipated_fraction": 0.0},
+    {"evidence_id": "fracture_joint_a", "connection_id": "joint_a", "mechanism": "fracture", "crossing_time_s": 0.375, "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "dissipated_fraction": 0.7}
+  ],
+  "timestep_refinement_s": [0.5, 0.25, 0.125],
+  "tolerances": {
+    "event_time_relative": 1e-6,
+    "force_moment_residual_relative": 1e-6,
+    "energy_residual_relative": 1e-6,
+    "event_time_absolute_s": 1e-12
+  }
+}

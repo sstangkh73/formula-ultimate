@@ -35,11 +35,12 @@ EVENT_PRIORITY = {
     "finished": 0,
     "thermal_failure": 1,
     "reliability_failure": 2,
-    "damage_failure": 3,
-    "degradation_failure": 4,
-    "energy_depletion": 5,
-    "timeout": 6,
-    "step_complete": 7,
+    "structural_failure": 3,
+    "damage_failure": 4,
+    "degradation_failure": 5,
+    "energy_depletion": 6,
+    "timeout": 7,
+    "step_complete": 8,
 }
 
 RESIDUAL_UNITS = {

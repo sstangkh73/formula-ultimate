@@ -193,6 +193,7 @@ source module Tie priority กลางคือ:
 finished
 thermal_failure
 reliability_failure
+structural_failure
 damage_failure
 degradation_failure
 energy_depletion
