@@ -1,0 +1,38 @@
+{
+  "protocol_id": "fixed_topology_end_to_end_baseline_v1",
+  "evaluator_version": "bounded_end_to_end_baseline_v1",
+  "claim_level": "fixed-topology orchestration baseline at current bounded evidence classes only",
+  "upstream_identity": {
+    "work048_source_commit": "86e61fa70d3b92a6416f1d274a3c9e858bed28a9",
+    "load_case_protocol_sha256": "6369b11f173dc30abd62ce72d34809fe3122b428398a01b0df1aea1cdc11f193",
+    "load_case_result_sha256": "da4848de71c19f9d76cad00cdf5013791e5b0d6f5b544293dcf9e094d782bb03",
+    "assembly_step_sha256": "f60bb686dfaca51c06bed8b1b086418c5f9ce2208d861b5b2ff18d8f845f18b9",
+    "training_partition_sha256": "d19f8e33c1259e64632e6e89f9768fddeb8c6e54f4a204994e200037c6beba38",
+    "holdout_partition_sha256": "5045fd461c740e4edc461a702dc96bf3e93fba0b4dbb0bbeeca8adcaf4d5cf41"
+  },
+  "required_evidence": ["work048_cad_step_freecad_load_summary", "bounded_level0_fixture_v1", "fixed_topology_no_geometry_mutation"],
+  "race_fixture": {
+    "distance_m": 1000.0,
+    "reference_speed_m_per_s": 25.0,
+    "base_energy_j_per_m": 100.0,
+    "auxiliary_power_w": 200.0,
+    "initial_energy_j": 150000.0
+  },
+  "variants": [
+    {"variant_id":"reference","capacity_scale":1.0,"mass_scale":1.0,"load_path_connected":true,"evidence":["work048_cad_step_freecad_load_summary","bounded_level0_fixture_v1","fixed_topology_no_geometry_mutation"]},
+    {"variant_id":"weak_control","capacity_scale":0.5,"mass_scale":1.0,"load_path_connected":true,"evidence":["work048_cad_step_freecad_load_summary","bounded_level0_fixture_v1","fixed_topology_no_geometry_mutation"]},
+    {"variant_id":"disconnected_control","capacity_scale":1.0,"mass_scale":1.0,"load_path_connected":false,"evidence":["work048_cad_step_freecad_load_summary","bounded_level0_fixture_v1","fixed_topology_no_geometry_mutation"]},
+    {"variant_id":"heavy_feasible_control","capacity_scale":1.0,"mass_scale":1.2,"load_path_connected":true,"evidence":["work048_cad_step_freecad_load_summary","bounded_level0_fixture_v1","fixed_topology_no_geometry_mutation"]}
+  ],
+  "timestep_refinement_s": [1.0, 0.5, 0.25],
+  "structural_resolution": [
+    {"resolution_id":"bounded_low","capacity_factor":0.995},
+    {"resolution_id":"bounded_reference","capacity_factor":1.0},
+    {"resolution_id":"bounded_high","capacity_factor":1.002}
+  ],
+  "tolerances": {
+    "timestep_finish_time_relative": 1e-12,
+    "structural_utilization_relative": 0.01,
+    "energy_residual_j": 1e-9
+  }
+}
