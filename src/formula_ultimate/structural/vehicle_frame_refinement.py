@@ -212,6 +212,8 @@ def build_calculix_b31_deck(
     young: float,
     poisson: float,
     output_section_id: str | None = None,
+    *,
+    geometric_nonlinear: bool = False,
 ) -> str:
     nodes=dict(model.nodes); lines=["*HEADING","Work 052 independent vehicle frame","*NODE,NSET=NALL"]
     lines += [f"{node},{position[0]:.12E},{position[1]:.12E},{position[2]:.12E}" for node,position in model.nodes]
@@ -221,7 +223,11 @@ def build_calculix_b31_deck(
     for section in model.sections:
         first=next(item for item in model.elements if item.section_id==section.section_id); reference=_basis(nodes[first.node_a],nodes[first.node_b])[1]
         lines += [f"*BEAM SECTION,ELSET=E_{section.section_id.upper()},MATERIAL=MAT,SECTION=RECT",f"{section.width_m:.12E},{section.height_m:.12E}",f"{reference[0]:.12E},{reference[1]:.12E},{reference[2]:.12E}"]
-    lines += ["*STEP","*STATIC","*BOUNDARY","FIXED,1,6,0","*CLOAD"]
+    if geometric_nonlinear:
+        lines += ["*STEP,NLGEOM", "*STATIC", "1.000000E-01,1.000000E+00,1.000000E-05,1.000000E-01"]
+    else:
+        lines += ["*STEP", "*STATIC"]
+    lines += ["*BOUNDARY","FIXED,1,6,0","*CLOAD"]
     for node_id in sorted(loads):
         for component,value in enumerate(loads[node_id],1):
             if value: lines.append(f"{node_id},{component},{float(value):.12E}")

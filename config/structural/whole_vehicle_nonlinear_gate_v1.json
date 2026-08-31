@@ -1,0 +1,52 @@
+{
+  "protocol_id": "whole_vehicle_geometric_nonlinearity_gate_v1",
+  "status": "frozen_not_run",
+  "claim_level": "geometric-nonlinearity sensitivity evidence for Work 062 finalists in the bounded B31 beam-network domain only",
+  "source_evidence": {
+    "campaign_id": "FU-BMC-003",
+    "protocol_fingerprint_sha256": "9ef748f2719923632a05ef5fcbba95b8f2fa1b4156d2dbbf6cb9b4fbd02d4c36",
+    "training_fingerprint_sha256": "503917192f3029c66e27cec2a2ef1f7521ebfba9c2872e3541945bf35a281176",
+    "stage_fingerprint_sha256": "9e2554f865788b98c21cff736063d46857eff888e022299256222fad186e1182",
+    "analysis_fingerprint_sha256": "f6a86288b3653b75d1d5c56f62b948344884911d946b91ef8ddbfc6e46dbef19",
+    "expected_cad_witness_passed": 51,
+    "selection_rule": "all_and_only_work062_cad_witness_passed_candidates"
+  },
+  "execution": {
+    "mesh_subdivisions": 16,
+    "required_holdout_case_ids": [
+      "aero_extreme",
+      "holdout_combined"
+    ],
+    "required_solver_confirmation": "nonlinear geometric",
+    "calculix_step": "STEP_NLGEOM_STATIC",
+    "reuse_linear_reference": "exact_work062_fine_mesh_calculix_surface_result"
+  },
+  "material": {
+    "material_id": "synthetic_linear_elastic_aluminium_like_v1",
+    "young_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.3,
+    "yield_stress_pa": 250000000.0,
+    "provenance": "synthetic solver-verification material; not a certified allowable"
+  },
+  "thresholds": {
+    "maximum_displacement_amplification": 1.1,
+    "maximum_stress_amplification": 1.15,
+    "minimum_yield_margin": 1.1
+  },
+  "failure_policy": {
+    "silent_repair_allowed": false,
+    "retry_failed_candidate_allowed": false,
+    "missing_or_nonfinite_evidence": "fail",
+    "nonzero_process_exit": "fail",
+    "missing_nonlinear_confirmation": "fail"
+  },
+  "limitations": [
+    "no_initial_imperfection",
+    "beam_elements_not_solids",
+    "no_contact",
+    "linear_elastic_material",
+    "no_plasticity_fracture_or_fatigue",
+    "synthetic_material_not_calibrated",
+    "not_physical_validation"
+  ]
+}

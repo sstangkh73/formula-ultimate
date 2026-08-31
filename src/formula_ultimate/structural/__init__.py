@@ -91,6 +91,13 @@ from .vehicle_frame_refinement import (
     section_force_extreme_von_mises,
     solve_frame,
 )
+from .vehicle_nonlinear_gate import (
+    NONLINEAR_GATE_IDENTITY,
+    NonlinearGateConfig,
+    adjudicate_nonlinear_case,
+    aggregate_candidate_nonlinear_gate,
+    nonlinear_gate_config_from_mapping,
+)
 
 __all__ = [
     "BendingSpec",
@@ -166,4 +173,9 @@ __all__ = [
     "parse_calculix_section_forces_frd",
     "section_force_extreme_von_mises",
     "solve_frame",
+    "NONLINEAR_GATE_IDENTITY",
+    "NonlinearGateConfig",
+    "adjudicate_nonlinear_case",
+    "aggregate_candidate_nonlinear_gate",
+    "nonlinear_gate_config_from_mapping",
 ]
