@@ -1,0 +1,38 @@
+{
+  "protocol_id": "coupled_planar_differential_v1_reference",
+  "model_version": "coupled_planar_differential_load_transfer_v1",
+  "claim_level": "synthetic coupled Level-0 planar, differential, and quasi-static per-step load-transfer specimen; not physical validation",
+  "differential_source": "functional_differential_drive_v1.json",
+  "planar": {
+    "initial_longitudinal_speed_m_per_s": 10.0,
+    "steer_angle_rad": 0.01,
+    "maximum_steer_angle_rad": 0.6,
+    "throttle": 0.3,
+    "duration_s": 0.5,
+    "time_step_s": 0.001,
+    "lateral_friction_coefficient": 1.1,
+    "front_cornering_stiffness_n_per_rad": 10000.0,
+    "rear_cornering_stiffness_n_per_rad": 8000.0,
+    "lateral_speed_regularization_m_per_s": 0.1
+  },
+  "falsification_controls": {
+    "excessive_steer_angle_rad": 0.04,
+    "split_grip_left_friction": 1.0,
+    "split_grip_right_friction": 1.2
+  },
+  "solver": {
+    "maximum_load_iterations": 96,
+    "acceleration_absolute_tolerance_m_per_s2": 1e-8,
+    "acceleration_relative_tolerance": 1e-8,
+    "relaxation_factor": 0.5
+  },
+  "numerical": {
+    "geometry_relative_tolerance": 1e-9,
+    "balance_relative_tolerance": 1e-9,
+    "interface_energy_relative_tolerance": 0.001,
+    "body_energy_relative_tolerance": 0.001,
+    "global_energy_relative_tolerance": 0.001,
+    "mirror_relative_tolerance": 1e-9,
+    "refinement_relative_tolerance": 0.02
+  }
+}
