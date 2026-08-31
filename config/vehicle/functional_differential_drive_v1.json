@@ -1,0 +1,79 @@
+{
+  "protocol_id": "functional_differential_drive_v1_reference",
+  "model_version": "differential_independent_wheel_dynamics_v1",
+  "claim_level": "synthetic open-differential and independent driven-wheel energy specimen; not measured hardware or whole-vehicle validation",
+  "architecture_variant_source": "functional_vehicle_architecture_v3_planar.json",
+  "support_gate_source": "planar_support_gate_v1.json",
+  "powertrain_source": "functional_powertrain_dynamics_v1.json",
+  "architecture_candidate_id": "fu-functional-planar-reference-0001",
+  "differential": {
+    "component_id": "torque_transmission",
+    "differential_damping_nm_per_rad_s": 0.02,
+    "maximum_differential_speed_rad_s": 100.0,
+    "maximum_branch_speed_rad_s": 150.0,
+    "nominal_left_torque_fraction": 0.5,
+    "nominal_right_torque_fraction": 0.5
+  },
+  "vehicle": {
+    "mass_kg": 276.89543100079806,
+    "gravity_m_per_s2": 9.80665,
+    "air_density_kg_per_m3": 1.225,
+    "drag_area_m2": 0.8,
+    "rolling_resistance_coefficient": 0.015,
+    "slip_regularization_speed_m_per_s": 0.5
+  },
+  "branches": [
+    {
+      "side": "left",
+      "contact_id": "left_ground_contact",
+      "component_id": "left_ground_unit",
+      "connection_id": "transmission_to_left",
+      "transmission_output_port_id": "transmission_left_out",
+      "ground_unit_drive_port_id": "left_drive_in",
+      "effective_radius_m": 0.14,
+      "rotational_inertia_kg_m2": 0.13034241725073026,
+      "static_normal_load_n": 701.6810927158073,
+      "connection_efficiency": 0.98,
+      "friction_coefficient": 1.2,
+      "longitudinal_stiffness_n_per_slip": 20000.0,
+      "maximum_drive_torque_nm": 600.0,
+      "maximum_longitudinal_force_n": 4000.0
+    },
+    {
+      "side": "right",
+      "contact_id": "right_ground_contact",
+      "component_id": "right_ground_unit",
+      "connection_id": "transmission_to_right",
+      "transmission_output_port_id": "transmission_right_out",
+      "ground_unit_drive_port_id": "right_drive_in",
+      "effective_radius_m": 0.14,
+      "rotational_inertia_kg_m2": 0.13034241725073026,
+      "static_normal_load_n": 701.6810927158073,
+      "connection_efficiency": 0.98,
+      "friction_coefficient": 1.2,
+      "longitudinal_stiffness_n_per_slip": 20000.0,
+      "maximum_drive_torque_nm": 600.0,
+      "maximum_longitudinal_force_n": 4000.0
+    }
+  ],
+  "inertia_closure": {
+    "other_output_inertia_kg_m2": 2.2393151654985397
+  },
+  "reference_experiment": {
+    "throttle": 0.5,
+    "duration_s": 2.0,
+    "step_s": 0.0005,
+    "sample_stride": 20
+  },
+  "falsification_controls": {
+    "split_grip_left_friction": 1.0,
+    "split_grip_right_friction": 1.2,
+    "overspeed_control_maximum_branch_speed_rad_s": 25.0
+  },
+  "numerical": {
+    "geometry_relative_tolerance": 1e-9,
+    "torque_power_relative_tolerance": 0.001,
+    "energy_relative_tolerance": 0.001,
+    "refinement_relative_tolerance": 0.02
+  }
+}
