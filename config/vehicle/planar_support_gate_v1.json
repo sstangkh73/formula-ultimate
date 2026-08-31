@@ -1,0 +1,33 @@
+{
+  "protocol_id": "stable_support_planar_gate_v1",
+  "model_version": "stable_support_planar_gate_v1",
+  "claim_level": "geometry-derived support and Level-0 planar steering admission only",
+  "architecture_variant_source": "functional_vehicle_architecture_v3_planar.json",
+  "negative_control_source": "functional_vehicle_architecture_v2.json",
+  "load_cases": [
+    {"case_id": "static", "longitudinal_acceleration_m_per_s2": 0.0, "lateral_acceleration_m_per_s2": 0.0, "expected_status": "passed"},
+    {"case_id": "acceleration", "longitudinal_acceleration_m_per_s2": 6.0, "lateral_acceleration_m_per_s2": 0.0, "expected_status": "passed"},
+    {"case_id": "braking", "longitudinal_acceleration_m_per_s2": -6.0, "lateral_acceleration_m_per_s2": 0.0, "expected_status": "passed"},
+    {"case_id": "lateral_left", "longitudinal_acceleration_m_per_s2": 0.0, "lateral_acceleration_m_per_s2": 3.0, "expected_status": "passed"},
+    {"case_id": "lateral_right", "longitudinal_acceleration_m_per_s2": 0.0, "lateral_acceleration_m_per_s2": -3.0, "expected_status": "passed"},
+    {"case_id": "contact_lift_control", "longitudinal_acceleration_m_per_s2": 0.0, "lateral_acceleration_m_per_s2": 8.0, "expected_status": "contact_lift"}
+  ],
+  "planar": {
+    "gravity_m_per_s2": 9.80665,
+    "initial_longitudinal_speed_m_per_s": 10.0,
+    "steer_angle_rad": 0.02,
+    "duration_s": 0.5,
+    "time_step_s": 0.002,
+    "front_cornering_stiffness_n_per_rad": 10000.0,
+    "rear_cornering_stiffness_n_per_rad": 8000.0,
+    "front_requested_longitudinal_force_n": 300.0,
+    "friction_coefficient_longitudinal": 1.2,
+    "friction_coefficient_lateral": 1.1,
+    "maximum_steer_angle_rad": 0.6
+  },
+  "numerical": {
+    "geometry_relative_tolerance": 1e-9,
+    "equilibrium_relative_tolerance": 1e-9,
+    "refinement_relative_tolerance": 0.02
+  }
+}

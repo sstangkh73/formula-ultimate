@@ -204,6 +204,23 @@ from .drive_ground_coupling import (
     step_drive_ground,
     total_drive_ground_accounted_energy_j,
 )
+from .planar_support_gate import (
+    MODEL_VERSION as PLANAR_SUPPORT_GATE_MODEL_VERSION,
+    VARIANT_VERSION as FUNCTIONAL_ARCHITECTURE_VARIANT_VERSION,
+    ContactPoint,
+    LoadCase,
+    LoadCaseResult,
+    PlanarRunResult,
+    PlanarSupportGateError,
+    SupportAssessment,
+    SupportGateConfig,
+    assess_support_polygon,
+    load_support_gate_config,
+    mapping as planar_support_gate_mapping,
+    materialize_architecture_variant,
+    run_planar_steering,
+    solve_support_load_case,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -383,4 +400,19 @@ __all__ = [
     "run_drive_ground",
     "step_drive_ground",
     "total_drive_ground_accounted_energy_j",
+    "PLANAR_SUPPORT_GATE_MODEL_VERSION",
+    "FUNCTIONAL_ARCHITECTURE_VARIANT_VERSION",
+    "ContactPoint",
+    "LoadCase",
+    "LoadCaseResult",
+    "PlanarRunResult",
+    "PlanarSupportGateError",
+    "SupportAssessment",
+    "SupportGateConfig",
+    "assess_support_polygon",
+    "load_support_gate_config",
+    "planar_support_gate_mapping",
+    "materialize_architecture_variant",
+    "run_planar_steering",
+    "solve_support_load_case",
 ]

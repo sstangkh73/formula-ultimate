@@ -1,0 +1,56 @@
+{
+  "variant_version": "functional_vehicle_architecture_variant_v1",
+  "protocol_id": "functional_vehicle_architecture_v3_planar_reference",
+  "candidate_id": "fu-functional-planar-reference-0001",
+  "claim_level": "stable three-contact architecture and planar admission fixture only; not optimized or physically validated",
+  "base_architecture_source": "functional_vehicle_architecture_v2.json",
+  "base_candidate_id": "fu-functional-reference-0001",
+  "base_declaration_sha256": "aab2aa83b794cbee8f1cdfa897c875bcf440394672e0013805d31f4bd20d9990",
+  "load_spine_port": {
+    "port_id": "spine_rear_support_mount",
+    "domain": "structural",
+    "direction": "bidirectional",
+    "local_position_m": [-0.55, 0.0, -0.04],
+    "limits": {"maximum_force_n": 20000.0, "maximum_moment_nm": 6000.0}
+  },
+  "added_component": {
+    "component_id": "rear_ground_support",
+    "function_tags": ["ground_support"],
+    "material_id": "structural_light",
+    "primitive": {"type": "cylinder_y", "radius_m": 0.08, "length_m": 0.08},
+    "translation_m": [-0.55, 0.0, 0.08],
+    "parameters": {"maximum_support_force_n": 8000.0},
+    "ports": [
+      {
+        "port_id": "rear_support_mount",
+        "domain": "structural",
+        "direction": "bidirectional",
+        "local_position_m": [0.0, 0.0, 0.08],
+        "limits": {"maximum_force_n": 20000.0, "maximum_moment_nm": 6000.0}
+      },
+      {
+        "port_id": "rear_support_ground",
+        "domain": "ground",
+        "direction": "bidirectional",
+        "local_position_m": [0.0, 0.0, -0.08],
+        "limits": {"maximum_normal_force_n": 8000.0, "maximum_longitudinal_force_n": 1000.0, "maximum_lateral_force_n": 3000.0}
+      }
+    ]
+  },
+  "added_connection": {
+    "connection_id": "mount_rear_support",
+    "domain": "structural",
+    "from_port": "spine_rear_support_mount",
+    "to_port": "rear_support_mount",
+    "efficiency": 1.0,
+    "maximum_length_m": 0.1
+  },
+  "added_ground_contact": {
+    "contact_id": "rear_ground_contact",
+    "component_id": "rear_ground_support",
+    "port_id": "rear_support_ground",
+    "maximum_normal_force_n": 7000.0,
+    "maximum_longitudinal_force_n": 800.0,
+    "maximum_lateral_force_n": 2500.0
+  }
+}
