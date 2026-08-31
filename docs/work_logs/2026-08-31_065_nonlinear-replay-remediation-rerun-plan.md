@@ -1,6 +1,6 @@
 # Work 065 Plan: Nonlinear Replay Remediation and Fresh Rerun
 
-Status: In progress
+Status: Completed
 
 Thai companion: `2026-08-31_065_nonlinear-replay-remediation-rerun-plan.th.md`
 

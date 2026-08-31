@@ -1,6 +1,6 @@
 # แผนงาน 065: Nonlinear Replay Remediation และ Fresh Rerun
 
-สถานะ: กำลังดำเนินการ (In progress)
+สถานะ: เสร็จสมบูรณ์ (Completed)
 
 ไฟล์ต้นฉบับภาษาอังกฤษ: `2026-08-31_065_nonlinear-replay-remediation-rerun-plan.md`
 
