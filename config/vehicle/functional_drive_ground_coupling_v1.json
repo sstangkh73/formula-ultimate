@@ -1,0 +1,53 @@
+{
+  "protocol_id": "functional_drive_ground_coupling_v1_reference",
+  "model_version": "drive_ground_slip_coupling_v1",
+  "claim_level": "synthetic straight-line slip and energy-coupling specimen; not a measured tyre or whole-vehicle validation",
+  "architecture_source": "functional_vehicle_architecture_v2.json",
+  "powertrain_source": "functional_powertrain_dynamics_v1.json",
+  "architecture_candidate_id": "fu-functional-reference-0001",
+  "vehicle": {
+    "mass_kg": 272.55249331647553,
+    "gravity_m_per_s2": 9.80665,
+    "air_density_kg_per_m3": 1.225,
+    "drag_area_m2": 0.8,
+    "rolling_resistance_coefficient": 0.015,
+    "slip_regularization_speed_m_per_s": 0.5
+  },
+  "ground_units": [
+    {
+      "contact_id": "left_ground_contact",
+      "component_id": "left_ground_unit",
+      "effective_radius_m": 0.14,
+      "rotational_inertia_kg_m2": 0.13034241725073026,
+      "normal_load_n": 1336.4134542910074,
+      "friction_coefficient": 1.2,
+      "longitudinal_stiffness_n_per_slip": 20000.0,
+      "maximum_longitudinal_force_n": 4000.0
+    },
+    {
+      "contact_id": "right_ground_contact",
+      "component_id": "right_ground_unit",
+      "effective_radius_m": 0.14,
+      "rotational_inertia_kg_m2": 0.13034241725073026,
+      "normal_load_n": 1336.4134542910074,
+      "friction_coefficient": 1.2,
+      "longitudinal_stiffness_n_per_slip": 20000.0,
+      "maximum_longitudinal_force_n": 4000.0
+    }
+  ],
+  "inertia_closure": {
+    "other_output_inertia_kg_m2": 2.2393151654985397
+  },
+  "reference_experiment": {
+    "throttle": 0.5,
+    "duration_s": 2.0,
+    "step_s": 0.0005,
+    "sample_stride": 20
+  },
+  "numerical": {
+    "geometry_relative_tolerance": 1e-9,
+    "torque_power_relative_tolerance": 0.001,
+    "energy_relative_tolerance": 0.001,
+    "refinement_relative_tolerance": 0.02
+  }
+}
