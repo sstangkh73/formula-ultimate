@@ -1,6 +1,6 @@
 # แผนงาน 062: Protocol v3 Admitted Main Campaign
 
-สถานะ: กำลังดำเนินการ แต่ execution ยังล็อกจนกว่า Work 061 commit และ clean-tree active-path admission replay ผ่าน
+สถานะ: เสร็จสมบูรณ์ (Completed)
 
 ไฟล์ต้นฉบับภาษาอังกฤษ: `2026-08-31_062_v3-admitted-main-campaign-plan.md`
 

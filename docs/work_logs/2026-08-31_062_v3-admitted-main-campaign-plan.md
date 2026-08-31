@@ -1,6 +1,6 @@
 # Work 062 Plan: Protocol v3 Admitted Main Campaign
 
-Status: In progress; execution remains locked until the Work 061 commit and clean-tree active-path admission replay pass
+Status: Completed
 
 Thai companion: `2026-08-31_062_v3-admitted-main-campaign-plan.th.md`
 
