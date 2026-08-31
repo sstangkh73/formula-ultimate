@@ -46,7 +46,6 @@ from formula_ultimate.topology.vehicle_assembly import (  # noqa: E402
 )
 
 
-CAMPAIGN_ID = "FU-NLG-001"
 EVIDENCE_CLASS = "post_campaign_sensitivity"
 LEDGER_KIND = "nonlinear_case"
 
@@ -58,6 +57,12 @@ def read_json(path: Path) -> dict[str, Any]:
 def write_json(path: Path, value: Mapping[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
+
+
+def json_compatible(value: Any) -> Any:
+    """Return the exact value representation produced by strict JSON storage."""
+
+    return json.loads(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False))
 
 
 def file_sha256(path: Path) -> str:
@@ -72,6 +77,21 @@ def _require_clean_tree() -> str:
     if _git("status", "--porcelain"):
         raise VehicleFrameError("Work 064 execution requires a clean worktree")
     return _git("rev-parse", "HEAD")
+
+
+def validate_execution_protocol(raw: Mapping[str, Any], *, gate_config_sha256: str) -> tuple[str, str]:
+    if raw.get("protocol_id") != "work062_finalist_nonlinear_execution_v2":
+        raise VehicleFrameError("Work 065 execution protocol identity mismatch")
+    if raw.get("campaign_id") != "FU-NLG-002":
+        raise VehicleFrameError("Work 065 campaign identity mismatch")
+    remediation = raw.get("remediation")
+    if not isinstance(remediation, Mapping):
+        raise VehicleFrameError("Work 065 remediation declaration is missing")
+    if remediation.get("scientific_rules_changed") is not False or remediation.get("work064_observations_reused") is not False:
+        raise VehicleFrameError("Work 065 unchanged-science or fresh-rerun declaration failed")
+    if raw.get("gate_config_sha256") != gate_config_sha256:
+        raise VehicleFrameError("Work 065 gate configuration identity mismatch")
+    return str(raw["protocol_id"]), str(raw["campaign_id"])
 
 
 def _unique_payloads(payloads: Sequence[Mapping[str, Any]], record_type: str, key_path: tuple[str, ...]) -> dict[str, Mapping[str, Any]]:
@@ -280,6 +300,7 @@ def summarize_terminal_records(
     ledger_fingerprint: str,
     identities: Mapping[str, Any],
     execution_commit: str,
+    execution_protocol: Mapping[str, Any],
 ) -> dict[str, Any]:
     config = nonlinear_gate_config_from_mapping(config_raw)
     expected_keys = {(identity, case) for identity in source["candidate_ids"] for case in config.required_case_ids}
@@ -307,8 +328,9 @@ def summarize_terminal_records(
     stress = [float(row["stress_amplification"]) for row in by_key.values() if row["stress_amplification"] is not None]
     margin = [float(row["yield_margin"]) for row in by_key.values() if row["yield_margin"] is not None]
     draft = {
-        "protocol_id": NONLINEAR_GATE_IDENTITY,
-        "campaign_id": CAMPAIGN_ID,
+        "protocol_id": execution_protocol["protocol_id"],
+        "campaign_id": execution_protocol["campaign_id"],
+        "gate_identity": NONLINEAR_GATE_IDENTITY,
         "evidence_class": EVIDENCE_CLASS,
         "status": "passed",
         "decision": "completed_with_nonlinear_passes" if candidate_status["passed"] else "completed_without_nonlinear_pass",
@@ -339,25 +361,32 @@ def summarize_terminal_records(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, default=Path("config/structural/whole_vehicle_nonlinear_gate_v1.json"))
+    parser.add_argument("--execution-protocol", type=Path, default=Path("config/experiments/work062_finalist_nonlinear_execution_v2.json"))
     parser.add_argument("--work062-summary", type=Path, default=Path("artifacts/work062/campaign_summary.json"))
     parser.add_argument("--work062-stage", type=Path, default=Path("artifacts/work062/stage_ledger.jsonl"))
-    parser.add_argument("--artifact-root", type=Path, default=Path("artifacts/work064"))
+    parser.add_argument("--artifact-root", type=Path, default=Path("artifacts/work065"))
     parser.add_argument("--ccx", type=Path, default=Path(r"C:\Program Files\FreeCAD 1.1\bin\ccx.exe"))
     parser.add_argument("--verify-only", action="store_true")
     args = parser.parse_args()
     head = _require_clean_tree()
     config_path = ROOT / args.config
+    execution_protocol_path = ROOT / args.execution_protocol
     summary_path = ROOT / args.work062_summary
     stage_path = ROOT / args.work062_stage
     artifact_root = ROOT / args.artifact_root
     ccx = args.ccx if args.ccx.is_absolute() else ROOT / args.ccx
     config_raw = read_json(config_path)
     config = nonlinear_gate_config_from_mapping(config_raw)
+    execution_protocol = read_json(execution_protocol_path)
+    protocol_id, campaign_id = validate_execution_protocol(
+        execution_protocol, gate_config_sha256=file_sha256(config_path)
+    )
     source = load_work062_source(config_raw=config_raw, summary_path=summary_path, stage_path=stage_path)
     if not ccx.is_file():
         raise VehicleFrameError("CalculiX executable is missing")
     identities = {
         "config_sha256": file_sha256(config_path),
+        "execution_protocol_sha256": file_sha256(execution_protocol_path),
         "runner_sha256": file_sha256(Path(__file__)),
         "gate_module_sha256": file_sha256(ROOT / "src/formula_ultimate/structural/vehicle_nonlinear_gate.py"),
         "frame_module_sha256": file_sha256(ROOT / "src/formula_ultimate/structural/vehicle_frame_refinement.py"),
@@ -365,8 +394,8 @@ def main() -> int:
     }
     ledger = ChainedJsonlLedger(
         artifact_root / "nonlinear_case_ledger.jsonl",
-        protocol_id=NONLINEAR_GATE_IDENTITY,
-        campaign_id=CAMPAIGN_ID,
+        protocol_id=protocol_id,
+        campaign_id=campaign_id,
         evidence_class=EVIDENCE_CLASS,
         ledger_kind=LEDGER_KIND,
     )
@@ -407,14 +436,15 @@ def main() -> int:
         subprocess.run(["git", "merge-base", "--is-ancestor", execution_commit, head], cwd=ROOT, check=True)
     else:
         execution_commit = head
-    calculated = summarize_terminal_records(
+    calculated = json_compatible(summarize_terminal_records(
         config_raw=config_raw,
         source=source,
         records=tuple(row.payload for row in rows),
         ledger_fingerprint=ledger.fingerprint(),
         identities=identities,
         execution_commit=execution_commit,
-    )
+        execution_protocol=execution_protocol,
+    ))
     if args.verify_only:
         if recorded != calculated:
             raise VehicleFrameError("Work 064 deterministic summary replay mismatch")

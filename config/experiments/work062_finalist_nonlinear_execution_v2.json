@@ -1,0 +1,27 @@
+{
+  "protocol_id": "work062_finalist_nonlinear_execution_v2",
+  "campaign_id": "FU-NLG-002",
+  "status": "frozen_not_run",
+  "gate_identity": "whole_vehicle_geometric_nonlinearity_gate_v1",
+  "gate_config_sha256": "2dff176188c2fcbf1ec73b1727e3637c3de6062e10aa1fc372a7306cfee8d1b9",
+  "source_campaign_id": "FU-BMC-003",
+  "fresh_artifact_root": "artifacts/work065",
+  "remediation": {
+    "supersedes_protocol_id": "whole_vehicle_geometric_nonlinearity_gate_v1",
+    "supersedes_campaign_id": "FU-NLG-001",
+    "stopped_work": "064",
+    "reason": "canonicalize the complete summary through a strict JSON round trip before storage and replay comparison",
+    "scientific_rules_changed": false,
+    "work064_observations_reused": false
+  },
+  "frozen_scientific_identity": {
+    "source_stage_fingerprint_sha256": "9e2554f865788b98c21cff736063d46857eff888e022299256222fad186e1182",
+    "expected_candidate_count": 51,
+    "expected_case_count": 102,
+    "mesh_subdivisions": 16,
+    "maximum_displacement_amplification": 1.1,
+    "maximum_stress_amplification": 1.15,
+    "minimum_yield_margin": 1.1,
+    "yield_stress_pa": 250000000.0
+  }
+}
