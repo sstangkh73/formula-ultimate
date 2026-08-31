@@ -1,0 +1,71 @@
+{
+  "protocol_id": "functional_powertrain_dynamics_v1_reference",
+  "model_version": "functional_powertrain_dynamics_v1",
+  "claim_level": "synthetic transient component-law specimen; not a measured powertrain or whole-vehicle validation",
+  "units": "SI",
+  "architecture_source": "functional_vehicle_architecture_v2.json",
+  "energy_storage": {
+    "initial_energy_j": 50000000.0,
+    "maximum_output_power_w": 120000.0
+  },
+  "electrical_connection": {
+    "efficiency": 0.99
+  },
+  "energy_converter": {
+    "maximum_input_power_w": 118800.0,
+    "maximum_output_power_w": 114000.0,
+    "inertia_kg_m2": 0.2,
+    "viscous_coefficient_nm_per_rad_s": 0.02,
+    "torque_speed_curve_nm": [
+      [0.0, 450.0],
+      [200.0, 450.0],
+      [400.0, 0.0]
+    ],
+    "efficiency_curve": [
+      [0.0, 0.8],
+      [0.5, 0.95],
+      [1.0, 0.92]
+    ]
+  },
+  "compliant_connection": {
+    "stiffness_nm_per_rad": 2000.0,
+    "damping_nm_s_per_rad": 35.0,
+    "efficiency": 0.99,
+    "maximum_torque_nm": 450.0,
+    "maximum_twist_rad": 0.3
+  },
+  "transmission": {
+    "ratio": 3.0,
+    "efficiency": 0.95,
+    "maximum_input_torque_nm": 450.0,
+    "maximum_output_torque_nm": 1200.0,
+    "maximum_input_speed_rad_s": 400.0,
+    "maximum_output_speed_rad_s": 150.0,
+    "output_inertia_kg_m2": 2.5,
+    "output_viscous_coefficient_nm_per_rad_s": 0.1
+  },
+  "thermal": {
+    "ambient_temperature_k": 300.0,
+    "converter": {
+      "heat_capacity_j_per_k": 20000.0,
+      "cooling_w_per_k": 50.0,
+      "maximum_temperature_k": 450.0
+    },
+    "transmission": {
+      "heat_capacity_j_per_k": 15000.0,
+      "cooling_w_per_k": 40.0,
+      "maximum_temperature_k": 450.0
+    }
+  },
+  "reference_experiment": {
+    "throttle": 0.5,
+    "requested_load_torque_nm": 200.0,
+    "duration_s": 2.0,
+    "step_s": 0.0005,
+    "sample_stride": 20
+  },
+  "numerical": {
+    "energy_relative_tolerance": 0.001,
+    "refinement_relative_tolerance": 0.02
+  }
+}
