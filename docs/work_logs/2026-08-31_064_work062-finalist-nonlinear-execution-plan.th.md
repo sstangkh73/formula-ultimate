@@ -1,6 +1,6 @@
 # แผนงาน 064: Work 062 Finalist Nonlinear Execution
 
-สถานะ: กำลังดำเนินการ (In progress)
+สถานะ: หยุด (Stopped) — deterministic verify-only replay เปรียบเทียบ in-memory evidence แบบ tuple กับ strict-JSON evidence แบบ list
 
 ไฟล์ต้นฉบับภาษาอังกฤษ: `2026-08-31_064_work062-finalist-nonlinear-execution-plan.md`
 

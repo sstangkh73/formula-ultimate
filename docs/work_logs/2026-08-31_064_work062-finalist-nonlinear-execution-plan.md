@@ -1,6 +1,6 @@
 # Work 064 Plan: Work 062 Finalist Nonlinear Execution
 
-Status: In progress
+Status: Stopped — deterministic verify-only replay compared tuple-valued in-memory evidence with list-valued strict-JSON evidence
 
 Thai companion: `2026-08-31_064_work062-finalist-nonlinear-execution-plan.th.md`
 
