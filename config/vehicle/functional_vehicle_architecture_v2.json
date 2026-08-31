@@ -1,0 +1,165 @@
+{
+  "protocol_id": "functional_vehicle_architecture_v2_reference",
+  "grammar_version": "functional_vehicle_architecture_v2",
+  "candidate_id": "fu-functional-reference-0001",
+  "claim_level": "fixed functional architecture and CAD evidence only; not optimized, physically validated, or prescribed for free-topology search",
+  "frame": "right_handed_si_x_forward_y_left_z_up",
+  "materials": {
+    "structural_light": {"density_kg_per_m3": 2700.0, "provenance": "synthetic architecture fixture"},
+    "energy_dense": {"density_kg_per_m3": 4200.0, "provenance": "synthetic architecture fixture"},
+    "electromechanical": {"density_kg_per_m3": 3600.0, "provenance": "synthetic architecture fixture"},
+    "polymer_control": {"density_kg_per_m3": 1400.0, "provenance": "synthetic architecture fixture"},
+    "thermal_light": {"density_kg_per_m3": 1200.0, "provenance": "synthetic architecture fixture"}
+  },
+  "envelope": {"minimum_m": [-0.8, -0.4, 0.0], "maximum_m": [0.8, 0.4, 0.58]},
+  "components": [
+    {
+      "component_id": "load_spine", "function_tags": ["load_structure"], "material_id": "structural_light",
+      "primitive": {"type": "box", "size_m": [1.5, 0.4, 0.08]}, "translation_m": [0.0, 0.0, 0.22],
+      "parameters": {"maximum_force_n": 100000.0, "maximum_moment_nm": 50000.0},
+      "ports": [
+        {"port_id": "spine_store_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [-0.52, 0.0, 0.04], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "spine_converter_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [-0.22, 0.0, 0.04], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "spine_transmission_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.08, 0.0, 0.04], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "spine_left_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.45, 0.18, 0.0], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "spine_right_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.45, -0.18, 0.0], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "spine_steering_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.38, -0.08, 0.04], "limits": {"maximum_force_n": 12000.0, "maximum_moment_nm": 5000.0}},
+        {"port_id": "spine_brake_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.38, 0.08, 0.04], "limits": {"maximum_force_n": 12000.0, "maximum_moment_nm": 5000.0}},
+        {"port_id": "spine_radiator_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.68, 0.0, 0.04], "limits": {"maximum_force_n": 12000.0, "maximum_moment_nm": 5000.0}},
+        {"port_id": "spine_controller_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [-0.25, 0.0, 0.04], "limits": {"maximum_force_n": 5000.0, "maximum_moment_nm": 2000.0}}
+      ]
+    },
+    {
+      "component_id": "energy_store", "function_tags": ["energy_storage"], "material_id": "energy_dense",
+      "primitive": {"type": "box", "size_m": [0.3, 0.24, 0.16]}, "translation_m": [-0.52, 0.0, 0.38],
+      "parameters": {"capacity_j": 50000000.0, "maximum_output_power_w": 120000.0},
+      "ports": [
+        {"port_id": "store_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.0, 0.0, -0.08], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "store_power_out", "domain": "electrical", "direction": "out", "local_position_m": [0.15, 0.0, 0.0], "limits": {"maximum_power_w": 120000.0}}
+      ]
+    },
+    {
+      "component_id": "energy_converter", "function_tags": ["energy_converter", "heat_source"], "material_id": "electromechanical",
+      "primitive": {"type": "box", "size_m": [0.22, 0.2, 0.16]}, "translation_m": [-0.22, 0.0, 0.38],
+      "parameters": {"maximum_input_power_w": 120000.0, "maximum_output_power_w": 114000.0, "maximum_torque_nm": 450.0, "maximum_speed_rad_s": 400.0, "efficiency": 0.95},
+      "ports": [
+        {"port_id": "converter_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.0, 0.0, -0.08], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "converter_power_in", "domain": "electrical", "direction": "in", "local_position_m": [-0.11, 0.0, 0.0], "limits": {"maximum_power_w": 120000.0}},
+        {"port_id": "converter_torque_out", "domain": "mechanical_rotary", "direction": "out", "local_position_m": [0.11, 0.0, 0.0], "limits": {"maximum_torque_nm": 450.0, "maximum_speed_rad_per_s": 400.0}},
+        {"port_id": "converter_heat_out", "domain": "thermal", "direction": "out", "local_position_m": [0.0, 0.1, 0.0], "limits": {"maximum_heat_flow_w": 6000.0}},
+        {"port_id": "converter_control_in", "domain": "control", "direction": "in", "local_position_m": [0.0, -0.1, 0.0], "limits": {"maximum_signal_rate_hz": 1000.0}}
+      ]
+    },
+    {
+      "component_id": "torque_transmission", "function_tags": ["power_transmission", "heat_source"], "material_id": "electromechanical",
+      "primitive": {"type": "box", "size_m": [0.22, 0.18, 0.14]}, "translation_m": [0.08, 0.0, 0.37],
+      "parameters": {"ratio": 3.0, "maximum_input_torque_nm": 450.0, "maximum_output_torque_nm": 1200.0, "efficiency": 0.95},
+      "ports": [
+        {"port_id": "transmission_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.0, 0.0, -0.07], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "transmission_torque_in", "domain": "mechanical_rotary", "direction": "in", "local_position_m": [-0.11, 0.0, 0.0], "limits": {"maximum_torque_nm": 450.0, "maximum_speed_rad_per_s": 400.0}},
+        {"port_id": "transmission_left_out", "domain": "mechanical_rotary", "direction": "out", "local_position_m": [0.11, 0.07, 0.0], "limits": {"maximum_torque_nm": 600.0, "maximum_speed_rad_per_s": 150.0}},
+        {"port_id": "transmission_right_out", "domain": "mechanical_rotary", "direction": "out", "local_position_m": [0.11, -0.07, 0.0], "limits": {"maximum_torque_nm": 600.0, "maximum_speed_rad_per_s": 150.0}},
+        {"port_id": "transmission_heat_out", "domain": "thermal", "direction": "out", "local_position_m": [0.0, 0.09, 0.0], "limits": {"maximum_heat_flow_w": 3000.0}}
+      ]
+    },
+    {
+      "component_id": "left_ground_unit", "function_tags": ["ground_propulsion"], "material_id": "structural_light",
+      "primitive": {"type": "cylinder_y", "radius_m": 0.14, "length_m": 0.08}, "translation_m": [0.45, 0.32, 0.14],
+      "parameters": {"maximum_drive_torque_nm": 600.0},
+      "ports": [
+        {"port_id": "left_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.0, -0.04, 0.06], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "left_drive_in", "domain": "mechanical_rotary", "direction": "in", "local_position_m": [-0.14, 0.0, 0.0], "limits": {"maximum_torque_nm": 600.0, "maximum_speed_rad_per_s": 150.0}},
+        {"port_id": "left_steer_in", "domain": "mechanical_rotary", "direction": "in", "local_position_m": [0.0, -0.04, 0.0], "limits": {"maximum_torque_nm": 200.0, "maximum_speed_rad_per_s": 5.0}},
+        {"port_id": "left_brake_in", "domain": "mechanical_rotary", "direction": "in", "local_position_m": [0.14, 0.0, 0.0], "limits": {"maximum_torque_nm": 750.0, "maximum_speed_rad_per_s": 200.0}},
+        {"port_id": "left_ground", "domain": "ground", "direction": "bidirectional", "local_position_m": [0.0, 0.0, -0.14], "limits": {"maximum_normal_force_n": 10000.0, "maximum_longitudinal_force_n": 5000.0, "maximum_lateral_force_n": 4000.0}}
+      ]
+    },
+    {
+      "component_id": "right_ground_unit", "function_tags": ["ground_propulsion"], "material_id": "structural_light",
+      "primitive": {"type": "cylinder_y", "radius_m": 0.14, "length_m": 0.08}, "translation_m": [0.45, -0.32, 0.14],
+      "parameters": {"maximum_drive_torque_nm": 600.0},
+      "ports": [
+        {"port_id": "right_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.0, 0.04, 0.06], "limits": {"maximum_force_n": 30000.0, "maximum_moment_nm": 10000.0}},
+        {"port_id": "right_drive_in", "domain": "mechanical_rotary", "direction": "in", "local_position_m": [-0.14, 0.0, 0.0], "limits": {"maximum_torque_nm": 600.0, "maximum_speed_rad_per_s": 150.0}},
+        {"port_id": "right_steer_in", "domain": "mechanical_rotary", "direction": "in", "local_position_m": [0.0, 0.04, 0.0], "limits": {"maximum_torque_nm": 200.0, "maximum_speed_rad_per_s": 5.0}},
+        {"port_id": "right_brake_in", "domain": "mechanical_rotary", "direction": "in", "local_position_m": [0.14, 0.0, 0.0], "limits": {"maximum_torque_nm": 750.0, "maximum_speed_rad_per_s": 200.0}},
+        {"port_id": "right_ground", "domain": "ground", "direction": "bidirectional", "local_position_m": [0.0, 0.0, -0.14], "limits": {"maximum_normal_force_n": 10000.0, "maximum_longitudinal_force_n": 5000.0, "maximum_lateral_force_n": 4000.0}}
+      ]
+    },
+    {
+      "component_id": "direction_actuator", "function_tags": ["direction_control"], "material_id": "electromechanical",
+      "primitive": {"type": "box", "size_m": [0.18, 0.12, 0.08]}, "translation_m": [0.38, -0.08, 0.34],
+      "parameters": {"maximum_angle_rad": 0.6, "maximum_rate_rad_per_s": 2.0},
+      "ports": [
+        {"port_id": "direction_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.0, 0.0, -0.04], "limits": {"maximum_force_n": 12000.0, "maximum_moment_nm": 5000.0}},
+        {"port_id": "direction_control_in", "domain": "control", "direction": "in", "local_position_m": [-0.09, 0.0, 0.0], "limits": {"maximum_signal_rate_hz": 1000.0}},
+        {"port_id": "direction_left_out", "domain": "mechanical_rotary", "direction": "out", "local_position_m": [0.09, 0.04, 0.0], "limits": {"maximum_torque_nm": 200.0, "maximum_speed_rad_per_s": 5.0}},
+        {"port_id": "direction_right_out", "domain": "mechanical_rotary", "direction": "out", "local_position_m": [0.09, -0.04, 0.0], "limits": {"maximum_torque_nm": 200.0, "maximum_speed_rad_per_s": 5.0}}
+      ]
+    },
+    {
+      "component_id": "brake_actuator", "function_tags": ["braking", "heat_source"], "material_id": "electromechanical",
+      "primitive": {"type": "box", "size_m": [0.18, 0.12, 0.08]}, "translation_m": [0.38, 0.08, 0.34],
+      "parameters": {"maximum_brake_torque_nm": 1500.0},
+      "ports": [
+        {"port_id": "brake_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.0, 0.0, -0.04], "limits": {"maximum_force_n": 12000.0, "maximum_moment_nm": 5000.0}},
+        {"port_id": "brake_control_in", "domain": "control", "direction": "in", "local_position_m": [-0.09, 0.0, 0.0], "limits": {"maximum_signal_rate_hz": 1000.0}},
+        {"port_id": "brake_left_out", "domain": "mechanical_rotary", "direction": "out", "local_position_m": [0.09, 0.04, 0.0], "limits": {"maximum_torque_nm": 750.0, "maximum_speed_rad_per_s": 200.0}},
+        {"port_id": "brake_right_out", "domain": "mechanical_rotary", "direction": "out", "local_position_m": [0.09, -0.04, 0.0], "limits": {"maximum_torque_nm": 750.0, "maximum_speed_rad_per_s": 200.0}},
+        {"port_id": "brake_heat_out", "domain": "thermal", "direction": "out", "local_position_m": [0.0, 0.06, 0.0], "limits": {"maximum_heat_flow_w": 20000.0}}
+      ]
+    },
+    {
+      "component_id": "heat_rejector", "function_tags": ["heat_rejection"], "material_id": "thermal_light",
+      "primitive": {"type": "box", "size_m": [0.12, 0.34, 0.18]}, "translation_m": [0.68, 0.0, 0.4],
+      "parameters": {"maximum_heat_rejection_w": 50000.0, "maximum_temperature_k": 450.0},
+      "ports": [
+        {"port_id": "heat_rejector_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.0, 0.0, -0.09], "limits": {"maximum_force_n": 12000.0, "maximum_moment_nm": 5000.0}},
+        {"port_id": "heat_converter_in", "domain": "thermal", "direction": "in", "local_position_m": [-0.06, 0.1, 0.04], "limits": {"maximum_heat_flow_w": 6000.0}},
+        {"port_id": "heat_transmission_in", "domain": "thermal", "direction": "in", "local_position_m": [-0.06, 0.0, 0.0], "limits": {"maximum_heat_flow_w": 3000.0}},
+        {"port_id": "heat_brake_in", "domain": "thermal", "direction": "in", "local_position_m": [-0.06, -0.1, -0.04], "limits": {"maximum_heat_flow_w": 20000.0}}
+      ]
+    },
+    {
+      "component_id": "vehicle_controller", "function_tags": ["controller"], "material_id": "polymer_control",
+      "primitive": {"type": "box", "size_m": [0.14, 0.12, 0.06]}, "translation_m": [-0.25, 0.0, 0.52],
+      "parameters": {"maximum_update_rate_hz": 1000.0},
+      "ports": [
+        {"port_id": "controller_mount", "domain": "structural", "direction": "bidirectional", "local_position_m": [0.0, 0.0, -0.03], "limits": {"maximum_force_n": 5000.0, "maximum_moment_nm": 2000.0}},
+        {"port_id": "controller_converter_out", "domain": "control", "direction": "out", "local_position_m": [0.07, 0.04, 0.0], "limits": {"maximum_signal_rate_hz": 1000.0}},
+        {"port_id": "controller_direction_out", "domain": "control", "direction": "out", "local_position_m": [0.07, 0.0, 0.0], "limits": {"maximum_signal_rate_hz": 1000.0}},
+        {"port_id": "controller_brake_out", "domain": "control", "direction": "out", "local_position_m": [0.07, -0.04, 0.0], "limits": {"maximum_signal_rate_hz": 1000.0}}
+      ]
+    }
+  ],
+  "connections": [
+    {"connection_id": "mount_store", "domain": "structural", "from_port": "spine_store_mount", "to_port": "store_mount", "efficiency": 1.0, "maximum_length_m": 0.2},
+    {"connection_id": "mount_converter", "domain": "structural", "from_port": "spine_converter_mount", "to_port": "converter_mount", "efficiency": 1.0, "maximum_length_m": 0.2},
+    {"connection_id": "mount_transmission", "domain": "structural", "from_port": "spine_transmission_mount", "to_port": "transmission_mount", "efficiency": 1.0, "maximum_length_m": 0.2},
+    {"connection_id": "mount_left", "domain": "structural", "from_port": "spine_left_mount", "to_port": "left_mount", "efficiency": 1.0, "maximum_length_m": 0.3},
+    {"connection_id": "mount_right", "domain": "structural", "from_port": "spine_right_mount", "to_port": "right_mount", "efficiency": 1.0, "maximum_length_m": 0.3},
+    {"connection_id": "mount_direction", "domain": "structural", "from_port": "spine_steering_mount", "to_port": "direction_mount", "efficiency": 1.0, "maximum_length_m": 0.2},
+    {"connection_id": "mount_brake", "domain": "structural", "from_port": "spine_brake_mount", "to_port": "brake_mount", "efficiency": 1.0, "maximum_length_m": 0.2},
+    {"connection_id": "mount_heat", "domain": "structural", "from_port": "spine_radiator_mount", "to_port": "heat_rejector_mount", "efficiency": 1.0, "maximum_length_m": 0.3},
+    {"connection_id": "mount_controller", "domain": "structural", "from_port": "spine_controller_mount", "to_port": "controller_mount", "efficiency": 1.0, "maximum_length_m": 0.4},
+    {"connection_id": "storage_to_converter", "domain": "electrical", "from_port": "store_power_out", "to_port": "converter_power_in", "efficiency": 0.99, "maximum_length_m": 0.1},
+    {"connection_id": "converter_to_transmission", "domain": "mechanical_rotary", "from_port": "converter_torque_out", "to_port": "transmission_torque_in", "efficiency": 0.99, "maximum_length_m": 0.15},
+    {"connection_id": "transmission_to_left", "domain": "mechanical_rotary", "from_port": "transmission_left_out", "to_port": "left_drive_in", "efficiency": 0.98, "maximum_length_m": 0.5},
+    {"connection_id": "transmission_to_right", "domain": "mechanical_rotary", "from_port": "transmission_right_out", "to_port": "right_drive_in", "efficiency": 0.98, "maximum_length_m": 0.5},
+    {"connection_id": "direction_to_left", "domain": "mechanical_rotary", "from_port": "direction_left_out", "to_port": "left_steer_in", "efficiency": 0.98, "maximum_length_m": 0.6},
+    {"connection_id": "direction_to_right", "domain": "mechanical_rotary", "from_port": "direction_right_out", "to_port": "right_steer_in", "efficiency": 0.98, "maximum_length_m": 0.6},
+    {"connection_id": "brake_to_left", "domain": "mechanical_rotary", "from_port": "brake_left_out", "to_port": "left_brake_in", "efficiency": 0.98, "maximum_length_m": 0.6},
+    {"connection_id": "brake_to_right", "domain": "mechanical_rotary", "from_port": "brake_right_out", "to_port": "right_brake_in", "efficiency": 0.98, "maximum_length_m": 0.6},
+    {"connection_id": "converter_to_heat", "domain": "thermal", "from_port": "converter_heat_out", "to_port": "heat_converter_in", "efficiency": 1.0, "maximum_length_m": 1.0},
+    {"connection_id": "transmission_to_heat", "domain": "thermal", "from_port": "transmission_heat_out", "to_port": "heat_transmission_in", "efficiency": 1.0, "maximum_length_m": 1.0},
+    {"connection_id": "brake_to_heat", "domain": "thermal", "from_port": "brake_heat_out", "to_port": "heat_brake_in", "efficiency": 1.0, "maximum_length_m": 0.6},
+    {"connection_id": "control_converter", "domain": "control", "from_port": "controller_converter_out", "to_port": "converter_control_in", "efficiency": 1.0, "maximum_length_m": 0.5},
+    {"connection_id": "control_direction", "domain": "control", "from_port": "controller_direction_out", "to_port": "direction_control_in", "efficiency": 1.0, "maximum_length_m": 1.0},
+    {"connection_id": "control_brake", "domain": "control", "from_port": "controller_brake_out", "to_port": "brake_control_in", "efficiency": 1.0, "maximum_length_m": 1.0}
+  ],
+  "ground_contacts": [
+    {"contact_id": "left_ground_contact", "component_id": "left_ground_unit", "port_id": "left_ground", "maximum_normal_force_n": 8000.0, "maximum_longitudinal_force_n": 4000.0, "maximum_lateral_force_n": 3000.0},
+    {"contact_id": "right_ground_contact", "component_id": "right_ground_unit", "port_id": "right_ground", "maximum_normal_force_n": 8000.0, "maximum_longitudinal_force_n": 4000.0, "maximum_lateral_force_n": 3000.0}
+  ],
+  "tolerances": {"geometry_m": 1e-9, "connection_length_m": 1e-9, "mass_property_relative": 1e-6}
+}
