@@ -1,0 +1,36 @@
+{
+  "protocol_id": "transient_suspension_wheel_contact_v1_reference",
+  "model_version": "transient_suspension_wheel_contact_v1",
+  "claim_level": "synthetic coupled Level-0 transient suspension and wheel-contact specimen; not physical validation",
+  "coupled_planar_source": "coupled_planar_differential_v1.json",
+  "profiles": {
+    "powered_contact": {
+      "spring_stiffness_n_per_m": 35000.0,
+      "damping_ratio": 0.35,
+      "maximum_compression_m": 0.05,
+      "maximum_rebound_m": 0.05
+    },
+    "passive_contact": {
+      "spring_stiffness_n_per_m": 50000.0,
+      "damping_ratio": 0.4,
+      "maximum_compression_m": 0.05,
+      "maximum_rebound_m": 0.05
+    }
+  },
+  "falsification_controls": {
+    "stiffness_scale": 0.5,
+    "contact_loss_contact_id": "left_ground_contact",
+    "contact_loss_initial_travel_m": -0.03,
+    "contact_loss_initial_velocity_m_per_s": 0.0,
+    "travel_failure_contact_id": "right_ground_contact",
+    "travel_failure_initial_travel_m": 0.049,
+    "travel_failure_initial_velocity_m_per_s": 1.0
+  },
+  "numerical": {
+    "force_relative_tolerance": 1e-9,
+    "energy_relative_tolerance": 1e-9,
+    "global_energy_relative_tolerance": 0.001,
+    "mirror_relative_tolerance": 1e-9,
+    "refinement_relative_tolerance": 0.02
+  }
+}

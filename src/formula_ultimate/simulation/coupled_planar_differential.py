@@ -6,7 +6,7 @@ from dataclasses import asdict, dataclass, replace
 import hashlib
 import json
 import math
-from typing import Any, Mapping
+from typing import Any, Callable, Mapping
 
 from formula_ultimate.physics.lateral import (
     PlanarContact,
@@ -608,6 +608,7 @@ def step_coupled_planar_differential(
     initial_powertrain_energy_j: float,
     initial_total_energy_j: float,
     time_step_s: float | None = None,
+    normal_load_transform: Callable[[tuple[float, ...]], tuple[float, ...]] | None = None,
 ) -> tuple[CoupledPlanarDifferentialState, CoupledStepEvidence]:
     if state.outcome != "running":
         raise CoupledPlanarDifferentialError("DNF state cannot execute another coupled step")
@@ -623,9 +624,34 @@ def step_coupled_planar_differential(
             longitudinal_acceleration_m_per_s2=guess_ax,
             lateral_acceleration_m_per_s2=guess_ay,
         )
-        normal_loads = load_solution.normal_loads_n
-        if load_solution.status != "ok":
-            return _terminal_contact_step(config, state, load_solution.reason, normal_loads, iteration)
+        target_normal_loads = load_solution.normal_loads_n
+        recoverable_target_lift = (
+            normal_load_transform is not None
+            and load_solution.reason.startswith("contact lift produced negative normal load")
+        )
+        if load_solution.status != "ok" and not recoverable_target_lift:
+            return _terminal_contact_step(
+                config, state, load_solution.reason, target_normal_loads, iteration
+            )
+        normal_loads = (
+            target_normal_loads
+            if normal_load_transform is None
+            else tuple(normal_load_transform(target_normal_loads))
+        )
+        if len(normal_loads) != len(config.contacts) or not all(
+            math.isfinite(load) for load in normal_loads
+        ):
+            raise CoupledPlanarDifferentialError(
+                "normal-load transform returned invalid contact coverage or non-finite load"
+            )
+        if any(load <= 0.0 for load in normal_loads):
+            return _terminal_contact_step(
+                config,
+                state,
+                "transient contact lift produced non-positive actual normal load",
+                normal_loads,
+                iteration,
+            )
         final = _resolve_iteration(config, powertrain, state, normal_loads, initial_powertrain_energy_j, dt)
         resolved, _, _, total_fx, total_fy, _, _, _, _ = final
         new_ax, new_ay = total_fx / config.vehicle_mass_kg, total_fy / config.vehicle_mass_kg
