@@ -319,6 +319,18 @@ from .closed_loop_corridor_controller import (
     steering_command,
     with_feedback_gains,
 )
+from .linkage_motion_ratio import (
+    MODEL_VERSION as LINKAGE_MOTION_RATIO_MODEL_VERSION,
+    LinkageApplication,
+    LinkageMotionRatioConfig,
+    LinkageMotionRatioError,
+    MotionRatioEvidence,
+    RockerLinkageGeometry,
+    application_to_mapping as linkage_application_to_mapping,
+    apply_linkage_motion_ratios,
+    derive_motion_ratio,
+    load_linkage_motion_ratio_config,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -601,4 +613,14 @@ __all__ = [
     "run_closed_loop_controller",
     "steering_command",
     "with_feedback_gains",
+    "LINKAGE_MOTION_RATIO_MODEL_VERSION",
+    "LinkageApplication",
+    "LinkageMotionRatioConfig",
+    "LinkageMotionRatioError",
+    "MotionRatioEvidence",
+    "RockerLinkageGeometry",
+    "linkage_application_to_mapping",
+    "apply_linkage_motion_ratios",
+    "derive_motion_ratio",
+    "load_linkage_motion_ratio_config",
 ]

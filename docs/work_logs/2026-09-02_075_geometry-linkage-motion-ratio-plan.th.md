@@ -1,6 +1,6 @@
 # แผน Work 075: Motion Ratio ของ Linkage ที่คำนวณจาก Geometry
 
-สถานะ: กำลังดำเนินการ (In progress)
+สถานะ: เสร็จสมบูรณ์ (Completed)
 
 แปลจากไฟล์ภาษาอังกฤษ: `2026-09-02_075_geometry-linkage-motion-ratio-plan.md`
 

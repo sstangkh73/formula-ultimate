@@ -1,6 +1,6 @@
 # Work 075 Plan: Geometry-Derived Linkage Motion Ratio
 
-Status: In progress
+Status: Completed
 
 Thai companion: `2026-09-02_075_geometry-linkage-motion-ratio-plan.th.md`
 

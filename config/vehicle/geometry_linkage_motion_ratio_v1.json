@@ -1,0 +1,45 @@
+{
+  "protocol_id": "geometry_linkage_motion_ratio_v1_reference",
+  "model_version": "geometry_linkage_motion_ratio_v1",
+  "claim_level": "synthetic small-angle geometry-derived rocker motion ratio; not CAD-joint or physical validation",
+  "sprung_body_vertical_source": "sprung_body_road_tyre_vertical_v1.json",
+  "linkages": [
+    {
+      "contact_id": "left_ground_contact",
+      "pivot_m": [0.0, 0.0, 0.0],
+      "rotation_axis": [0.0, 1.0, 0.0],
+      "wheel_pickup_m": [0.2, 0.0, 0.0],
+      "spring_pickup_m": [0.16, 0.0, 0.0],
+      "wheel_direction": [0.0, 0.0, -1.0],
+      "spring_direction": [0.0, 0.0, -1.0]
+    },
+    {
+      "contact_id": "rear_ground_contact",
+      "pivot_m": [0.0, 0.0, 0.0],
+      "rotation_axis": [0.0, 1.0, 0.0],
+      "wheel_pickup_m": [0.2, 0.0, 0.0],
+      "spring_pickup_m": [0.2, 0.0, 0.0],
+      "wheel_direction": [0.0, 0.0, -1.0],
+      "spring_direction": [0.0, 0.0, -1.0]
+    },
+    {
+      "contact_id": "right_ground_contact",
+      "pivot_m": [0.0, 0.0, 0.0],
+      "rotation_axis": [0.0, 1.0, 0.0],
+      "wheel_pickup_m": [0.2, 0.0, 0.0],
+      "spring_pickup_m": [0.16, 0.0, 0.0],
+      "wheel_direction": [0.0, 0.0, -1.0],
+      "spring_direction": [0.0, 0.0, -1.0]
+    }
+  ],
+  "unit_ratio_control": [
+    {"contact_id": "left_ground_contact", "pivot_m": [0.0, 0.0, 0.0], "rotation_axis": [0.0, 1.0, 0.0], "wheel_pickup_m": [0.2, 0.0, 0.0], "spring_pickup_m": [0.2, 0.0, 0.0], "wheel_direction": [0.0, 0.0, -1.0], "spring_direction": [0.0, 0.0, -1.0]},
+    {"contact_id": "rear_ground_contact", "pivot_m": [0.0, 0.0, 0.0], "rotation_axis": [0.0, 1.0, 0.0], "wheel_pickup_m": [0.2, 0.0, 0.0], "spring_pickup_m": [0.2, 0.0, 0.0], "wheel_direction": [0.0, 0.0, -1.0], "spring_direction": [0.0, 0.0, -1.0]},
+    {"contact_id": "right_ground_contact", "pivot_m": [0.0, 0.0, 0.0], "rotation_axis": [0.0, 1.0, 0.0], "wheel_pickup_m": [0.2, 0.0, 0.0], "spring_pickup_m": [0.2, 0.0, 0.0], "wheel_direction": [0.0, 0.0, -1.0], "spring_direction": [0.0, 0.0, -1.0]}
+  ],
+  "numerical": {
+    "geometry_absolute_tolerance_m": 1e-12,
+    "ratio_absolute_tolerance": 1e-12,
+    "energy_relative_tolerance": 0.001
+  }
+}
