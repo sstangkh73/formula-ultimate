@@ -1,0 +1,182 @@
+{
+  "contract_version": "geometry_causal_part_v1",
+  "part_id": "reference_bracket_001",
+  "function_tags": [
+    "transfer_load",
+    "mount_subsystem"
+  ],
+  "feature_history": [
+    {
+      "feature_id": "base_sketch",
+      "operator": "sketch_profile",
+      "parameters": {
+        "length_m": 0.12,
+        "width_m": 0.06
+      },
+      "parent_feature_ids": []
+    },
+    {
+      "feature_id": "body_extrude",
+      "operator": "extrude",
+      "parameters": {
+        "thickness_m": 0.008
+      },
+      "parent_feature_ids": [
+        "base_sketch"
+      ]
+    },
+    {
+      "feature_id": "mount_holes",
+      "operator": "through_hole",
+      "parameters": {
+        "diameter_m": 0.01,
+        "hole_count": 2
+      },
+      "parent_feature_ids": [
+        "body_extrude"
+      ]
+    }
+  ],
+  "material": {
+    "material_id": "synthetic_aluminium_reference_v1",
+    "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evidence_status": "synthetic"
+  },
+  "local_frame": {
+    "origin_m": [0.0, 0.0, 0.0],
+    "x_axis": [1.0, 0.0, 0.0],
+    "y_axis": [0.0, 1.0, 0.0],
+    "z_axis": [0.0, 0.0, 1.0]
+  },
+  "datums": [
+    {
+      "datum_id": "mount_plane",
+      "datum_type": "plane",
+      "frame": {
+        "origin_m": [0.0, 0.0, 0.0],
+        "x_axis": [1.0, 0.0, 0.0],
+        "y_axis": [0.0, 1.0, 0.0],
+        "z_axis": [0.0, 0.0, 1.0]
+      }
+    },
+    {
+      "datum_id": "load_axis",
+      "datum_type": "axis",
+      "frame": {
+        "origin_m": [0.0, 0.0, 0.008],
+        "x_axis": [1.0, 0.0, 0.0],
+        "y_axis": [0.0, 1.0, 0.0],
+        "z_axis": [0.0, 0.0, 1.0]
+      }
+    }
+  ],
+  "interfaces": [
+    {
+      "interface_id": "chassis_mount",
+      "interface_type": "fixed_mount",
+      "datum_id": "mount_plane",
+      "geometry_signature_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "mating_role": "mount to a declared structural support",
+      "tolerance_m": 0.0001,
+      "allowed_dofs": []
+    },
+    {
+      "interface_id": "subsystem_mount",
+      "interface_type": "bolted",
+      "datum_id": "load_axis",
+      "geometry_signature_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "mating_role": "receive the declared subsystem resultant",
+      "tolerance_m": 0.0001,
+      "allowed_dofs": []
+    }
+  ],
+  "load_regions": [
+    {
+      "region_id": "subsystem_load_region",
+      "role": "application",
+      "geometry_signature_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    {
+      "region_id": "chassis_support_region",
+      "role": "support",
+      "geometry_signature_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "load_path": [
+    "subsystem_load_region",
+    "chassis_support_region"
+  ],
+  "manufacturing": {
+    "process": "machining",
+    "evidence_id": "work077-declaration-only"
+  },
+  "tolerances": {
+    "general_tolerance_m": 0.0002,
+    "angular_tolerance_rad": 0.001
+  },
+  "minimum_feature_size_m": 0.003,
+  "parameter_provenance": {
+    "features.base_sketch.parameters.length_m": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    },
+    "features.base_sketch.parameters.width_m": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    },
+    "features.body_extrude.parameters.thickness_m": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    },
+    "features.mount_holes.parameters.diameter_m": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    },
+    "features.mount_holes.parameters.hole_count": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    },
+    "interfaces.chassis_mount.tolerance_m": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    },
+    "interfaces.subsystem_mount.tolerance_m": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    },
+    "minimum_feature_size_m": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    },
+    "tolerances.general_tolerance_m": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    },
+    "tolerances.angular_tolerance_rad": {
+      "source": "work077 reference declaration",
+      "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "confidence": 1.0
+    }
+  },
+  "claim_boundary": {
+    "admitted_claims": [
+      "contract_complete",
+      "deterministic_declaration"
+    ],
+    "prohibited_claims": [
+      "cad_validity",
+      "manufacturability",
+      "physical_validation",
+      "structural_capacity"
+    ]
+  }
+}
