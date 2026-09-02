@@ -1,0 +1,39 @@
+{
+  "protocol_id": "sprung_body_road_tyre_vertical_v1_reference",
+  "model_version": "sprung_body_road_tyre_vertical_v1",
+  "claim_level": "synthetic coupled Level-0 sprung-body, tyre-vertical, and road specimen; not physical validation",
+  "transient_suspension_source": "transient_suspension_coupling_v1.json",
+  "tyre_vertical_profiles": {
+    "powered_contact": {
+      "stiffness_n_per_m": 180000.0,
+      "damping_ratio": 0.15
+    },
+    "passive_contact": {
+      "stiffness_n_per_m": 120000.0,
+      "damping_ratio": 0.15
+    }
+  },
+  "falsification_controls": {
+    "soft_tyre_scale": 0.5,
+    "bump_contact_id": "left_ground_contact",
+    "bump_amplitude_m": 0.003,
+    "bump_start_s": 0.1,
+    "bump_duration_s": 0.08,
+    "contact_loss_amplitude_m": -0.05,
+    "contact_loss_start_s": 0.02,
+    "contact_loss_duration_s": 0.04,
+    "travel_failure_amplitude_m": 0.08,
+    "travel_failure_start_s": 0.02,
+    "travel_failure_duration_s": 0.2,
+    "travel_failure_profile_shape": "ramp_hold",
+    "travel_state_initial_heave_m": -0.049,
+    "travel_state_initial_heave_velocity_m_per_s": -1.0
+  },
+  "numerical": {
+    "force_relative_tolerance": 1e-9,
+    "energy_relative_tolerance": 1e-9,
+    "global_energy_relative_tolerance": 0.001,
+    "mirror_relative_tolerance": 1e-9,
+    "refinement_relative_tolerance": 0.02
+  }
+}
