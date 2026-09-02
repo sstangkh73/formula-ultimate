@@ -1,6 +1,6 @@
 # Work 076 Plan: Integrated Level-0 Closed-Loop Lap Gate
 
-Status: In progress
+Status: Completed
 
 Thai companion: `2026-09-02_076_integrated-level0-lap-gate-plan.th.md`
 

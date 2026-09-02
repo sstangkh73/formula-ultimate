@@ -228,10 +228,10 @@ def project_to_corridor(
     y = _finite("y_m", y_m)
     spacing = _positive("station_spacing_m", station_spacing_m)
     stations = integrate_corridor(corridor, maximum_station_spacing_m=spacing)
-    return _project_stations(corridor, stations, x, y)
+    return project_to_corridor_stations(corridor, stations, x, y)
 
 
-def _project_stations(
+def project_to_corridor_stations(
     corridor: CircuitCorridor,
     stations: tuple[CorridorStation, ...],
     x: float,
@@ -302,7 +302,7 @@ def steering_command(
     )
 
 
-def _steering_command_from_stations(
+def steering_command_from_stations(
     config: ClosedLoopControllerConfig,
     corridor: CircuitCorridor,
     stations: tuple[CorridorStation, ...],
@@ -312,7 +312,7 @@ def _steering_command_from_stations(
     y_m: float,
     heading_rad: float,
 ) -> SteeringCommandEvidence:
-    projection = _project_stations(corridor, stations, x_m, y_m)
+    projection = project_to_corridor_stations(corridor, stations, x_m, y_m)
     heading_error = _wrap(_finite("heading_rad", heading_rad) - projection.desired_heading_rad)
     feedforward = math.atan(_positive("wheelbase_m", wheelbase_m) * projection.curvature_1pm)
     heading_feedback = -config.heading_gain * heading_error
@@ -376,7 +376,7 @@ def run_closed_loop_controller(
     initial_coupled = total_coupled_accounted_energy_j(vertical.transient.coupled, powertrain, state.coupled)
     zero_road = tuple(0.0 for _ in vertical.contacts)
     initial_total = conservation_accounted_energy_j(vertical, powertrain, state, zero_road)
-    initial_projection = _project_stations(
+    initial_projection = project_to_corridor_stations(
         corridor, stations, planar.x_position_m, planar.y_position_m
     )
     trace: list[ClosedLoopStepEvidence] = []
@@ -390,7 +390,7 @@ def run_closed_loop_controller(
         outcome, terminal = "DNF", "corridor_departure"
     for index in range(requested_steps if outcome == "running" else 0):
         planar = state.coupled.planar
-        command = _steering_command_from_stations(
+        command = steering_command_from_stations(
             config,
             corridor,
             stations,
@@ -411,7 +411,7 @@ def run_closed_loop_controller(
             time_step_s=config.time_step_s,
         )
         executed += 1
-        final_projection = _project_stations(
+        final_projection = project_to_corridor_stations(
             corridor, stations,
             state.coupled.planar.x_position_m,
             state.coupled.planar.y_position_m,

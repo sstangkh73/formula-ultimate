@@ -314,9 +314,11 @@ from .closed_loop_corridor_controller import (
     SteeringCommandEvidence,
     load_closed_loop_controller_config,
     project_to_corridor,
+    project_to_corridor_stations,
     result_to_mapping as closed_loop_controller_result_to_mapping,
     run_closed_loop_controller,
     steering_command,
+    steering_command_from_stations,
     with_feedback_gains,
 )
 from .linkage_motion_ratio import (
@@ -330,6 +332,17 @@ from .linkage_motion_ratio import (
     apply_linkage_motion_ratios,
     derive_motion_ratio,
     load_linkage_motion_ratio_config,
+)
+from .integrated_lap_gate import (
+    MODEL_VERSION as INTEGRATED_LAP_GATE_MODEL_VERSION,
+    IntegratedLapGateConfig,
+    IntegratedLapGateError,
+    IntegratedLapRunResult,
+    IntegratedLapStepEvidence,
+    LapFinishEvidence,
+    load_integrated_lap_gate_config,
+    result_to_mapping as integrated_lap_result_to_mapping,
+    run_integrated_lap_gate,
 )
 
 __all__ = [
@@ -609,9 +622,11 @@ __all__ = [
     "SteeringCommandEvidence",
     "load_closed_loop_controller_config",
     "project_to_corridor",
+    "project_to_corridor_stations",
     "closed_loop_controller_result_to_mapping",
     "run_closed_loop_controller",
     "steering_command",
+    "steering_command_from_stations",
     "with_feedback_gains",
     "LINKAGE_MOTION_RATIO_MODEL_VERSION",
     "LinkageApplication",
@@ -623,4 +638,13 @@ __all__ = [
     "apply_linkage_motion_ratios",
     "derive_motion_ratio",
     "load_linkage_motion_ratio_config",
+    "INTEGRATED_LAP_GATE_MODEL_VERSION",
+    "IntegratedLapGateConfig",
+    "IntegratedLapGateError",
+    "IntegratedLapRunResult",
+    "IntegratedLapStepEvidence",
+    "LapFinishEvidence",
+    "load_integrated_lap_gate_config",
+    "integrated_lap_result_to_mapping",
+    "run_integrated_lap_gate",
 ]

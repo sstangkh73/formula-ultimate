@@ -1,6 +1,6 @@
 # แผน Work 076: Gate หนึ่งรอบแบบ Closed Loop ระดับ Level 0 ที่รวมระบบ
 
-สถานะ: กำลังดำเนินการ (In progress)
+สถานะ: เสร็จสมบูรณ์ (Completed)
 
 แปลจากไฟล์ภาษาอังกฤษ: `2026-09-02_076_integrated-level0-lap-gate-plan.md`
 

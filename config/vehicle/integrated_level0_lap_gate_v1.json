@@ -1,0 +1,39 @@
+{
+  "protocol_id": "integrated_level0_lap_gate_v1_reference",
+  "model_version": "integrated_level0_lap_gate_v1",
+  "claim_level": "one synthetic closed-loop Level-0 lap integration gate; not a real-circuit lap or physical validation",
+  "controller_source": "closed_loop_corridor_controller_v1.json",
+  "linkage_source": "geometry_linkage_motion_ratio_v1.json",
+  "reference_corridor_id": "synthetic_circle_left_r50",
+  "mirror_corridor_id": "synthetic_circle_right_r50",
+  "lap": {
+    "time_step_s": 0.005,
+    "timeout_s": 40.0,
+    "throttle": 0.3,
+    "heading_gain": 0.6,
+    "cross_track_gain_rad_per_m": 0.15,
+    "maximum_steer_angle_rad": 0.03,
+    "station_spacing_m": 0.5,
+    "vehicle_half_width_m": 0.65,
+    "initial_lateral_error_m": 0.0,
+    "initial_heading_error_rad": 0.06,
+    "finish_position_tolerance_m": 0.15,
+    "finish_heading_tolerance_rad": 0.02,
+    "progress_spatial_residual_tolerance_m": 0.02,
+    "progress_reversal_tolerance_m": 0.1
+  },
+  "falsification_controls": {
+    "narrow_half_width_m": 0.7,
+    "timeout_s": 0.1,
+    "contact_loss_contact_id": "left_ground_contact",
+    "contact_loss_amplitude_m": -0.05,
+    "contact_loss_start_s": 0.02,
+    "contact_loss_duration_s": 0.04,
+    "refinement_segment_distance_m": 5.0
+  },
+  "numerical": {
+    "mirror_absolute_tolerance": 1e-7,
+    "refinement_relative_tolerance": 0.02,
+    "energy_relative_tolerance": 0.001
+  }
+}
