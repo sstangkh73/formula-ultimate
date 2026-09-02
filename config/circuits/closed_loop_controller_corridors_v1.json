@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "description": "Analytical Work 074 controller fixtures; not real-circuit geometry",
+  "corridors": [
+    {
+      "schema_version": "1.0",
+      "corridor_id": "synthetic_circle_left_r50",
+      "circuit_id": "work074_synthetic_course",
+      "layout_reference": "Analytical full circle, left, radius 50 m",
+      "start_x_m": 0.0,
+      "start_y_m": 0.0,
+      "start_z_m": 0.0,
+      "start_heading_rad": 0.0,
+      "closed_loop": true,
+      "evidence": {
+        "evidence_class": "synthetic_validation",
+        "source_id": "work074-circle-left-r50-v1",
+        "source_title": "Formula Ultimate analytical controller fixture",
+        "source_url": "urn:formula-ultimate:work074:circle-left-r50:v1",
+        "coordinate_reference_system": "local Cartesian ENU metres",
+        "horizontal_uncertainty_m": 0.0,
+        "vertical_uncertainty_m": 0.0
+      },
+      "segments": [{"segment_id": "circle_left", "length_m": 314.1592653589793, "curvature_1pm": 0.02, "grade_rad": 0.0, "bank_rad": 0.0, "width_left_m": 4.0, "width_right_m": 4.0}]
+    },
+    {
+      "schema_version": "1.0",
+      "corridor_id": "synthetic_circle_right_r50",
+      "circuit_id": "work074_synthetic_course",
+      "layout_reference": "Analytical full circle, right, radius 50 m",
+      "start_x_m": 0.0,
+      "start_y_m": 0.0,
+      "start_z_m": 0.0,
+      "start_heading_rad": 0.0,
+      "closed_loop": true,
+      "evidence": {
+        "evidence_class": "synthetic_validation",
+        "source_id": "work074-circle-right-r50-v1",
+        "source_title": "Formula Ultimate analytical mirrored controller fixture",
+        "source_url": "urn:formula-ultimate:work074:circle-right-r50:v1",
+        "coordinate_reference_system": "local Cartesian ENU metres",
+        "horizontal_uncertainty_m": 0.0,
+        "vertical_uncertainty_m": 0.0
+      },
+      "segments": [{"segment_id": "circle_right", "length_m": 314.1592653589793, "curvature_1pm": -0.02, "grade_rad": 0.0, "bank_rad": 0.0, "width_left_m": 4.0, "width_right_m": 4.0}]
+    },
+    {
+      "schema_version": "1.0",
+      "corridor_id": "synthetic_straight_100",
+      "circuit_id": "work074_synthetic_course",
+      "layout_reference": "Analytical 100 m straight",
+      "start_x_m": 0.0,
+      "start_y_m": 0.0,
+      "start_z_m": 0.0,
+      "start_heading_rad": 0.0,
+      "closed_loop": false,
+      "evidence": {
+        "evidence_class": "synthetic_validation",
+        "source_id": "work074-straight-v1",
+        "source_title": "Formula Ultimate analytical straight controller fixture",
+        "source_url": "urn:formula-ultimate:work074:straight:v1",
+        "coordinate_reference_system": "local Cartesian ENU metres",
+        "horizontal_uncertainty_m": 0.0,
+        "vertical_uncertainty_m": 0.0
+      },
+      "segments": [{"segment_id": "straight", "length_m": 100.0, "curvature_1pm": 0.0, "grade_rad": 0.0, "bank_rad": 0.0, "width_left_m": 4.0, "width_right_m": 4.0}]
+    }
+  ]
+}

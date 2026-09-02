@@ -304,6 +304,21 @@ from .sprung_body_vertical_coupling import (
     with_tyre_stiffness_scale,
     with_vertical_steer,
 )
+from .closed_loop_corridor_controller import (
+    MODEL_VERSION as CLOSED_LOOP_CONTROLLER_MODEL_VERSION,
+    CentrelineProjection,
+    ClosedLoopControllerConfig,
+    ClosedLoopControllerError,
+    ClosedLoopRunResult,
+    ClosedLoopStepEvidence,
+    SteeringCommandEvidence,
+    load_closed_loop_controller_config,
+    project_to_corridor,
+    result_to_mapping as closed_loop_controller_result_to_mapping,
+    run_closed_loop_controller,
+    steering_command,
+    with_feedback_gains,
+)
 
 __all__ = [
     "COUPLING_STAGES",
@@ -573,4 +588,17 @@ __all__ = [
     "with_tyre_damping_scale",
     "with_tyre_stiffness_scale",
     "with_vertical_steer",
+    "CLOSED_LOOP_CONTROLLER_MODEL_VERSION",
+    "CentrelineProjection",
+    "ClosedLoopControllerConfig",
+    "ClosedLoopControllerError",
+    "ClosedLoopRunResult",
+    "ClosedLoopStepEvidence",
+    "SteeringCommandEvidence",
+    "load_closed_loop_controller_config",
+    "project_to_corridor",
+    "closed_loop_controller_result_to_mapping",
+    "run_closed_loop_controller",
+    "steering_command",
+    "with_feedback_gains",
 ]
