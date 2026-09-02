@@ -1,6 +1,6 @@
 # Work 080 Plan: Mechanical Assembly and Joint Kernel
 
-Status: In progress
+Status: Completed
 
 Thai companion: `2026-09-02_080_mechanical-assembly-joint-kernel-plan.th.md`
 

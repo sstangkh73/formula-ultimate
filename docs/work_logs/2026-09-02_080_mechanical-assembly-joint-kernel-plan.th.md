@@ -1,6 +1,6 @@
 # แผน Work 080: Mechanical Assembly and Joint Kernel
 
-สถานะ: In progress
+สถานะ: Completed
 
 ต้นฉบับภาษาอังกฤษ: `2026-09-02_080_mechanical-assembly-joint-kernel-plan.md`
 
