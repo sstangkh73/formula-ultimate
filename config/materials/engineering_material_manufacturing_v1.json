@@ -1,0 +1,166 @@
+{
+  "protocol_version": "engineering_material_manufacturing_binding_v1",
+  "material": {
+    "contract_version": "engineering_material_v1",
+    "material_id": "synthetic_aluminium_like_verification_v1",
+    "display_name": "Synthetic aluminium-like verification fixture",
+    "evidence_status": "synthetic",
+    "properties": {
+      "density_kg_per_m3": 2700.0,
+      "youngs_modulus_pa": 70000000000.0,
+      "poisson_ratio": 0.33,
+      "shear_modulus_pa": 26315789473.68421,
+      "yield_strength_pa": 250000000.0,
+      "ultimate_strength_pa": 310000000.0,
+      "fracture_toughness_pa_sqrt_m": 25000000.0,
+      "thermal_conductivity_w_per_m_k": 150.0,
+      "specific_heat_capacity_j_per_kg_k": 900.0,
+      "thermal_expansion_per_k": 0.000023,
+      "allowable_temperature_min_k": 250.0,
+      "allowable_temperature_max_k": 400.0
+    },
+    "fatigue": {
+      "evidence_status": "missing",
+      "model": null,
+      "points": [],
+      "source_id": null
+    },
+    "evidence_records": [
+      {
+        "source_id": "work079_synthetic_material_fixture",
+        "citation": "Work 079 synthetic verification values; not a design-material source",
+        "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "evidence_class": "synthetic",
+        "confidence": 1.0,
+        "domain": {
+          "temperature_min_k": 250.0,
+          "temperature_max_k": 400.0,
+          "material_condition": "synthetic_isotropic_verification_only",
+          "process_condition": "not_applicable_to_production"
+        }
+      }
+    ],
+    "property_sources": {
+      "density_kg_per_m3": "work079_synthetic_material_fixture",
+      "youngs_modulus_pa": "work079_synthetic_material_fixture",
+      "poisson_ratio": "work079_synthetic_material_fixture",
+      "shear_modulus_pa": "work079_synthetic_material_fixture",
+      "yield_strength_pa": "work079_synthetic_material_fixture",
+      "ultimate_strength_pa": "work079_synthetic_material_fixture",
+      "fracture_toughness_pa_sqrt_m": "work079_synthetic_material_fixture",
+      "thermal_conductivity_w_per_m_k": "work079_synthetic_material_fixture",
+      "specific_heat_capacity_j_per_kg_k": "work079_synthetic_material_fixture",
+      "thermal_expansion_per_k": "work079_synthetic_material_fixture",
+      "allowable_temperature_min_k": "work079_synthetic_material_fixture",
+      "allowable_temperature_max_k": "work079_synthetic_material_fixture"
+    },
+    "validation_tolerances": {
+      "elastic_consistency_relative": 1e-12
+    },
+    "claim_boundary": {
+      "design_use_allowed": false,
+      "prohibited_claims": [
+        "maximum_force_without_geometry",
+        "physical_validation",
+        "real_material_allowable",
+        "fatigue_life"
+      ]
+    }
+  },
+  "manufacturing_process": {
+    "contract_version": "manufacturing_process_v1",
+    "process_id": "synthetic_machining_envelope_v1",
+    "process_type": "machining",
+    "evidence_status": "synthetic",
+    "limits": {
+      "minimum_wall_thickness_m": 0.002,
+      "minimum_hole_diameter_m": 0.004,
+      "minimum_ligament_m": 0.003,
+      "minimum_web_thickness_m": 0.0025,
+      "minimum_internal_radius_m": 0.001,
+      "minimum_bend_radius_m": 0.003
+    },
+    "tool_access": {
+      "required_clearance_m": 0.005,
+      "maximum_depth_to_diameter_ratio": 8.0,
+      "allowed_directions": ["x", "y", "z", "-x", "-y", "-z"]
+    },
+    "tolerance_class": {
+      "class_id": "synthetic_general_v1",
+      "minimum_achievable_tolerance_m": 0.0001
+    },
+    "unsupported_feature_policy": "reject",
+    "evidence_records": [
+      {
+        "source_id": "work079_synthetic_process_fixture",
+        "citation": "Work 079 synthetic machining envelope; not supplier capability evidence",
+        "source_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_class": "synthetic",
+        "confidence": 1.0,
+        "domain": {
+          "temperature_min_k": 250.0,
+          "temperature_max_k": 400.0,
+          "material_condition": "synthetic_material_fixture_only",
+          "process_condition": "synthetic_machining_verification_only"
+        }
+      }
+    ],
+    "limit_sources": {
+      "minimum_wall_thickness_m": "work079_synthetic_process_fixture",
+      "minimum_hole_diameter_m": "work079_synthetic_process_fixture",
+      "minimum_ligament_m": "work079_synthetic_process_fixture",
+      "minimum_web_thickness_m": "work079_synthetic_process_fixture",
+      "minimum_internal_radius_m": "work079_synthetic_process_fixture",
+      "minimum_bend_radius_m": "work079_synthetic_process_fixture",
+      "required_clearance_m": "work079_synthetic_process_fixture",
+      "maximum_depth_to_diameter_ratio": "work079_synthetic_process_fixture",
+      "minimum_achievable_tolerance_m": "work079_synthetic_process_fixture"
+    },
+    "claim_boundary": {
+      "production_use_allowed": false,
+      "prohibited_claims": [
+        "manufacturability_proof",
+        "supplier_capability",
+        "production_quality"
+      ]
+    }
+  },
+  "geometry_witness": {
+    "witness_version": "manufacturing_geometry_witness_v1",
+    "part_id": "bracket_001",
+    "geometry_sha256": "b06e3141f7a1fcad8017537d3680a787164d3190d4503417d3f6c1c98ed1ba89",
+    "measurement_evidence": {
+      "evidence_status": "synthetic",
+      "method": "declared Work 079 gate fixture; not extracted from STEP",
+      "report_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "wall_thicknesses_m": [0.008],
+    "hole_diameters_m": [0.01],
+    "ligaments_m": [0.006],
+    "web_thicknesses_m": [0.006],
+    "internal_radii_m": [0.002],
+    "bend_radii_m": [0.004],
+    "tool_access_checks": [
+      {
+        "direction": "z",
+        "clearance_m": 0.01,
+        "depth_m": 0.02,
+        "diameter_m": 0.01
+      }
+    ],
+    "unsupported_features": [],
+    "requested_tolerance_m": 0.0002
+  },
+  "assignment": {
+    "part_id": "bracket_001",
+    "geometry_sha256": "b06e3141f7a1fcad8017537d3680a787164d3190d4503417d3f6c1c98ed1ba89",
+    "material_id": "synthetic_aluminium_like_verification_v1",
+    "material_record_sha256": "72a1b5527e4aede10c6de73523c54835f11458f80100c6383d2a304d4d912097",
+    "process_id": "synthetic_machining_envelope_v1",
+    "process_record_sha256": "76837d5d53dd678f7aac3dc1869e099726b91d66023cda970e4fb753a6253558",
+    "claim_boundary": {
+      "admitted_claims": ["contract_bound", "synthetic_verification_fixture"],
+      "prohibited_claims": ["physical_validation", "design_material_approved", "manufacturability_proof"]
+    }
+  }
+}

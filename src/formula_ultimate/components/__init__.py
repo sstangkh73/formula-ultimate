@@ -22,6 +22,17 @@ from .brep_grammar import (
     brep_declaration_sha256,
     validate_brep_grammar,
 )
+from .engineering_contracts import (
+    GEOMETRY_WITNESS_VERSION,
+    MANUFACTURING_CONTRACT_VERSION,
+    MATERIAL_CONTRACT_VERSION,
+    EngineeringContractViolation,
+    evaluate_manufacturing_witness,
+    record_sha256,
+    validate_engineering_assignment,
+    validate_manufacturing_process,
+    validate_material_record,
+)
 
 __all__ = [
     "GRAMMAR_VERSION",
@@ -40,4 +51,13 @@ __all__ = [
     "BrepGrammarViolation",
     "brep_declaration_sha256",
     "validate_brep_grammar",
+    "GEOMETRY_WITNESS_VERSION",
+    "MANUFACTURING_CONTRACT_VERSION",
+    "MATERIAL_CONTRACT_VERSION",
+    "EngineeringContractViolation",
+    "evaluate_manufacturing_witness",
+    "record_sha256",
+    "validate_engineering_assignment",
+    "validate_manufacturing_process",
+    "validate_material_record",
 ]
