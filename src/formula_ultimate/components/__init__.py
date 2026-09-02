@@ -15,6 +15,13 @@ from .part_contract import (
     part_declaration_sha256,
     validate_part_mapping,
 )
+from .brep_grammar import (
+    BREP_GRAMMAR_VERSION,
+    OPERATORS as BREP_OPERATORS,
+    BrepGrammarViolation,
+    brep_declaration_sha256,
+    validate_brep_grammar,
+)
 
 __all__ = [
     "GRAMMAR_VERSION",
@@ -28,4 +35,9 @@ __all__ = [
     "canonical_part_bytes",
     "part_declaration_sha256",
     "validate_part_mapping",
+    "BREP_GRAMMAR_VERSION",
+    "BREP_OPERATORS",
+    "BrepGrammarViolation",
+    "brep_declaration_sha256",
+    "validate_brep_grammar",
 ]

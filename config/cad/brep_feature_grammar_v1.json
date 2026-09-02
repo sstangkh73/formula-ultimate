@@ -1,0 +1,220 @@
+{
+  "grammar_version": "parametric_brep_feature_grammar_v1",
+  "candidates": [
+    {
+      "candidate_id": "shaft_001",
+      "family": "shaft",
+      "features": [
+        {
+          "feature_id": "shaft_profile",
+          "operator": "sketch_profile",
+          "inputs": [],
+          "parameters": {"profile_type": "shaft_section", "center_x_m": 0.0, "center_y_m": 0.0, "size_a_m": 0.012, "size_b_m": 0.14}
+        },
+        {
+          "feature_id": "shaft_revolve",
+          "operator": "revolve",
+          "inputs": ["shaft_profile"],
+          "parameters": {"angle_rad": 6.283185307179586}
+        },
+        {
+          "feature_id": "shaft_with_shoulder",
+          "operator": "shaft_shoulder",
+          "inputs": ["shaft_revolve"],
+          "parameters": {"diameter_m": 0.04, "length_m": 0.02, "offset_z_m": 0.04}
+        },
+        {
+          "feature_id": "finished_shaft",
+          "operator": "fillet_chamfer",
+          "inputs": ["shaft_with_shoulder"],
+          "parameters": {"mode": "fillet", "selector": "circular", "size_m": 0.001}
+        }
+      ],
+      "final_feature_id": "finished_shaft"
+    },
+    {
+      "candidate_id": "bracket_001",
+      "family": "bracket",
+      "features": [
+        {
+          "feature_id": "bracket_profile",
+          "operator": "sketch_profile",
+          "inputs": [],
+          "parameters": {"profile_type": "rectangle", "center_x_m": 0.0, "center_y_m": 0.0, "size_a_m": 0.12, "size_b_m": 0.06}
+        },
+        {
+          "feature_id": "bracket_blank",
+          "operator": "extrude",
+          "inputs": ["bracket_profile"],
+          "parameters": {"distance_m": 0.012}
+        },
+        {
+          "feature_id": "bracket_pocket",
+          "operator": "pocket_cut",
+          "inputs": ["bracket_blank"],
+          "parameters": {"width_m": 0.04, "height_m": 0.02, "depth_m": 0.005, "center_x_m": 0.0, "center_y_m": 0.0}
+        },
+        {
+          "feature_id": "bracket_hole",
+          "operator": "through_hole",
+          "inputs": ["bracket_pocket"],
+          "parameters": {"diameter_m": 0.01, "center_x_m": -0.04, "center_y_m": 0.0}
+        },
+        {
+          "feature_id": "finished_bracket",
+          "operator": "fillet_chamfer",
+          "inputs": ["bracket_hole"],
+          "parameters": {"mode": "chamfer", "selector": "vertical", "size_m": 0.001}
+        }
+      ],
+      "final_feature_id": "finished_bracket"
+    },
+    {
+      "candidate_id": "hollow_housing_001",
+      "family": "hollow_housing",
+      "features": [
+        {
+          "feature_id": "housing_profile",
+          "operator": "sketch_profile",
+          "inputs": [],
+          "parameters": {"profile_type": "circle", "center_x_m": 0.0, "center_y_m": 0.0, "size_a_m": 0.045, "size_b_m": 0.0}
+        },
+        {
+          "feature_id": "housing_blank",
+          "operator": "extrude",
+          "inputs": ["housing_profile"],
+          "parameters": {"distance_m": 0.08}
+        },
+        {
+          "feature_id": "housing_shell",
+          "operator": "shell_wall",
+          "inputs": ["housing_blank"],
+          "parameters": {"wall_thickness_m": 0.005, "opening": "top"}
+        },
+        {
+          "feature_id": "finished_housing",
+          "operator": "stepped_bore",
+          "inputs": ["housing_shell"],
+          "parameters": {"through_diameter_m": 0.006, "counterbore_diameter_m": 0.01, "counterbore_depth_m": 0.01, "center_x_m": 0.04, "center_y_m": 0.0}
+        }
+      ],
+      "final_feature_id": "finished_housing"
+    },
+    {
+      "candidate_id": "ribbed_plate_001",
+      "family": "ribbed_plate",
+      "features": [
+        {
+          "feature_id": "plate_profile",
+          "operator": "sketch_profile",
+          "inputs": [],
+          "parameters": {"profile_type": "rectangle", "center_x_m": 0.0, "center_y_m": 0.0, "size_a_m": 0.16, "size_b_m": 0.08}
+        },
+        {
+          "feature_id": "plate_blank",
+          "operator": "extrude",
+          "inputs": ["plate_profile"],
+          "parameters": {"distance_m": 0.006}
+        },
+        {
+          "feature_id": "rib_seed",
+          "operator": "rib_web",
+          "inputs": ["plate_blank"],
+          "parameters": {"length_m": 0.012, "width_m": 0.07, "height_m": 0.014, "center_x_m": -0.04, "center_y_m": 0.0, "base_z_m": 0.006}
+        },
+        {
+          "feature_id": "rib_pattern",
+          "operator": "linear_pattern",
+          "inputs": ["rib_seed"],
+          "parameters": {"count": 3, "spacing_m": 0.04, "direction": "x"}
+        },
+        {
+          "feature_id": "ribbed_union",
+          "operator": "boolean_union",
+          "inputs": ["plate_blank", "rib_pattern"],
+          "parameters": {}
+        },
+        {
+          "feature_id": "cut_profile",
+          "operator": "sketch_profile",
+          "inputs": [],
+          "parameters": {"profile_type": "circle", "center_x_m": 0.0, "center_y_m": 0.025, "size_a_m": 0.008, "size_b_m": 0.0}
+        },
+        {
+          "feature_id": "cut_tool",
+          "operator": "extrude",
+          "inputs": ["cut_profile"],
+          "parameters": {"distance_m": 0.03}
+        },
+        {
+          "feature_id": "ribbed_subtract",
+          "operator": "boolean_subtract",
+          "inputs": ["ribbed_union", "cut_tool"],
+          "parameters": {}
+        },
+        {
+          "feature_id": "trim_profile",
+          "operator": "sketch_profile",
+          "inputs": [],
+          "parameters": {"profile_type": "rectangle", "center_x_m": 0.0, "center_y_m": 0.0, "size_a_m": 0.15, "size_b_m": 0.075}
+        },
+        {
+          "feature_id": "trim_tool",
+          "operator": "extrude",
+          "inputs": ["trim_profile"],
+          "parameters": {"distance_m": 0.03}
+        },
+        {
+          "feature_id": "finished_ribbed_plate",
+          "operator": "boolean_intersect",
+          "inputs": ["ribbed_subtract", "trim_tool"],
+          "parameters": {}
+        }
+      ],
+      "final_feature_id": "finished_ribbed_plate"
+    },
+    {
+      "candidate_id": "hub_like_001",
+      "family": "hub_like_rotating_part",
+      "features": [
+        {
+          "feature_id": "hub_profile",
+          "operator": "sketch_profile",
+          "inputs": [],
+          "parameters": {"profile_type": "annulus", "center_x_m": 0.0, "center_y_m": 0.0, "size_a_m": 0.04, "size_b_m": 0.014}
+        },
+        {
+          "feature_id": "hub_blank",
+          "operator": "extrude",
+          "inputs": ["hub_profile"],
+          "parameters": {"distance_m": 0.03}
+        },
+        {
+          "feature_id": "lug_profile",
+          "operator": "sketch_profile",
+          "inputs": [],
+          "parameters": {"profile_type": "rectangle", "center_x_m": 0.039, "center_y_m": 0.0, "size_a_m": 0.016, "size_b_m": 0.01}
+        },
+        {
+          "feature_id": "lug_seed",
+          "operator": "extrude",
+          "inputs": ["lug_profile"],
+          "parameters": {"distance_m": 0.03}
+        },
+        {
+          "feature_id": "lug_pattern",
+          "operator": "circular_pattern",
+          "inputs": ["lug_seed"],
+          "parameters": {"count": 6, "angle_rad": 6.283185307179586}
+        },
+        {
+          "feature_id": "finished_hub",
+          "operator": "boolean_union",
+          "inputs": ["hub_blank", "lug_pattern"],
+          "parameters": {}
+        }
+      ],
+      "final_feature_id": "finished_hub"
+    }
+  ]
+}
