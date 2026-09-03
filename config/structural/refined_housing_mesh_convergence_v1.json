@@ -1,0 +1,18 @@
+{
+  "schema_version": "refined_housing_mesh_convergence_v1",
+  "experiment_id": "work086_refined_housing_mesh_convergence_v1",
+  "base_config_path": "config/structural/generalized_meshed_torsion_bearing_housing_v1.json",
+  "base_config_sha256": "f23b487f5f053325a4e349f686f4a2e24af3281fe8de3e1caf8e83fb7a5aec11",
+  "failed_evidence_path": "artifacts/work085/run_g/solver_evidence.json",
+  "failed_evidence_file_sha256": "71244cf626bc593f953dc5c37329541eb55462340a6c28885601b4d733f2c247",
+  "failed_case_id": "converter_housing_mount",
+  "failed_metric": "maximum_displacement_m",
+  "observed_last_two_relative_change": 0.13187908211258156,
+  "unchanged_gate": 0.12,
+  "replacement_mesh_levels_m": [0.0045, 0.0035, 0.00275],
+  "allowed_changed_path": "cases[2].mesh_levels_m",
+  "evidence_policy": {
+    "design_use_allowed": false,
+    "evidence_class": "synthetic_meshed_verification"
+  }
+}
