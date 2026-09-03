@@ -1,0 +1,47 @@
+{
+  "schema_version": "whole_mechanical_vehicle_candidate_001_v1",
+  "candidate_id": "whole_mechanical_vehicle_candidate_001",
+  "random_seed": 88001,
+  "sources": {
+    "work083": {"path": "artifacts/work083/run_b/result.json", "result_sha256": "a061d0b2de7b01eb31233cd3ed1ab9945eb5dbc015ca478c26fb9b77fbfaded3", "file_sha256": "afc157a46b0837fb1c0d762f5e72225edc26929cfa1c8897bc7f99cabdc9eaa4"},
+    "work084": {"path": "artifacts/work084/run_b/result.json", "result_sha256": "c87fa43572efc0a8bc6ef67e375589943d73ecc4ca3b3a3d7a51df4ddb3edb66", "file_sha256": "af68e8c2c47a616962e887e35b23afa1c535f6f49ddea02ac019af43d13a9a8b"},
+    "work086": {"path": "artifacts/work086/run_b/result.json", "result_sha256": "ec818c21ea45f4a129f762bac3130e06628c7b560bb1d74dff8a8c9555cdf827", "file_sha256": "0c4930b49e6d77189f24e6a752ae8b14664c1bc9c6c054349d01a74be1636e64"},
+    "work087": {"path": "artifacts/work087/run_b/result.json", "result_sha256": "faae1e084549e6ce5bbe23e1a635e7bb5e16aa37f9f2e339f11af9df6e4ba6ae", "file_sha256": "38c8327a4f454dd0eb46fae7daa466638f938e3fa38aeeb8c971a7ab8bfe7cc9"}
+  },
+  "integration_evidence": {
+    "evaluation_path": "artifacts/work087/run_b/evaluation.json",
+    "evaluation_file_sha256": "62d98b958bfc71cffe032422e29724602aae9099be3853c6cb06592312bdc41a",
+    "geometry_manifest_path": "artifacts/work087/run_b/geometry_manifest.json",
+    "geometry_manifest_file_sha256": "90e1868368e9f6dc4c9f1de4b8e7d863d46453ec63e265449b9130f0e5395f1c",
+    "geometry_root": "artifacts/work087/run_b",
+    "assembly_step": "load_structure_integration_001.step",
+    "assembly_step_sha256": "33c1ade66729602bf9d022c36af017690ce1783364d38fddc71604684e62ee7d",
+    "freecad_file": "load_structure_integration_001.FCStd",
+    "freecad_file_sha256": "4c792bbe1cb2a7bf796087b316b5e2369357d093eb051c0591f642b3238a578d",
+    "part_count": 17
+  },
+  "required_artifact_classes": [
+    "individual_step_per_part", "complete_assembly_step", "freecad_fcstd", "assembly_tree",
+    "joint_dof_manifest", "material_manifest", "mass_com_inertia_report", "interference_report",
+    "structural_load_case_report", "torque_power_energy_ledger", "failure_propagation_report",
+    "deterministic_replay_manifest", "level0_simulation_decision"
+  ],
+  "required_case_ids": [
+    "static_support", "acceleration", "braking", "steady_cornering",
+    "combined_braking_cornering", "bump_vertical_event", "torque_reaction",
+    "thermal_duration", "single_connection_failure", "refinement_replay", "mirrored_control"
+  ],
+  "expected_blockers": [
+    "forbidden_work083_work084_geometry_interference",
+    "work083_vertical_motion_breaks_rigid_work084_coaxial_butt_interface",
+    "new_load_frame_has_no_meshed_convergence_evidence",
+    "synthetic_material_process_evidence"
+  ],
+  "evidence_policy": {
+    "hidden_geometry_repair_allowed": false,
+    "result_conditioned_geometry_mutation_allowed": false,
+    "design_use_allowed": false,
+    "run_level0_when_blocked": false,
+    "physical_validation_claim_allowed": false
+  }
+}
