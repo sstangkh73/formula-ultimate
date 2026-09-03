@@ -1,0 +1,80 @@
+{
+  "schema_version": "generalized_meshed_structural_coupling_v1",
+  "experiment_id": "work085_generalized_meshed_torsion_bearing_housing_v1",
+  "claim_level": "synthetic meshed software verification only; not physical validation or design admission",
+  "source": {
+    "work084_result_path": "artifacts/work084/run_b/result.json",
+    "work084_result_sha256": "c87fa43572efc0a8bc6ef67e375589943d73ecc4ca3b3a3d7a51df4ddb3edb66",
+    "geometry_manifest_path": "artifacts/work084/run_b/geometry_manifest.json",
+    "geometry_manifest_sha256": "c6902beac7bd4bf07928c5322387d8d3740ecceddf31fbfbd70bd43e5e9fc7a5",
+    "freecad_report_path": "artifacts/work084/run_b/freecad_report.json",
+    "freecad_report_sha256": "b83a54bab70712802a7eeb8f9de278e987ef1b75cb48ca62083d6ffba10276cc",
+    "step_root": "artifacts/work084/run_b"
+  },
+  "material": {
+    "material_id": "synthetic_aluminium_like_verification_v1",
+    "material_record_sha256": "72a1b5527e4aede10c6de73523c54835f11458f80100c6383d2a304d4d912097",
+    "density_kg_per_m3": 2700.0,
+    "youngs_modulus_pa": 70000000000.0,
+    "poisson_ratio": 0.33,
+    "yield_strength_pa": 250000000.0,
+    "evidence_class": "synthetic_verification",
+    "design_use_allowed": false
+  },
+  "cases": [
+    {
+      "case_id": "output_shaft_combined",
+      "part_id": "output_shaft",
+      "step_file": "output_shaft.step",
+      "step_sha256": "b53bb2404a0e2ee658c773b96f15e0c2856f7598bd6ef37122f2d0e2ad43ab3d",
+      "load_region": {"kind": "end_plane", "axis": "y", "coordinate_m": 0.019, "center_m": [-0.04, 0.019, -0.104]},
+      "support_region": {"axis": "y", "coordinate_m": 0.086},
+      "force_n": [415.3846153846154, 0.0, 0.0],
+      "torque_nm": [0.0, 22.8, 0.0],
+      "characteristic_length_m": 0.067,
+      "mesh_levels_m": [0.003, 0.002, 0.0015]
+    },
+    {
+      "case_id": "support_block_bearing",
+      "part_id": "support_block",
+      "step_file": "support_block.step",
+      "step_sha256": "900a38da3c65ac1c1bdb25138ef446e65f512d2a44b4dfbd16a76fadb81d64b9",
+      "load_region": {"kind": "cylinder_y", "center_xz_m": [-0.04, -0.104], "radius_m": 0.0068},
+      "support_region": {"axis": "x", "coordinate_m": -0.1},
+      "force_n": [-384.6153846153847, 0.0, 0.0],
+      "torque_nm": [0.0, 0.0, 0.0],
+      "characteristic_length_m": 0.082,
+      "mesh_levels_m": [0.004, 0.003, 0.0022]
+    },
+    {
+      "case_id": "converter_housing_mount",
+      "part_id": "converter_housing",
+      "step_file": "converter_housing.step",
+      "step_sha256": "6f44dc413a7851a1f64079d1151626fe3b28557cded9519b17f0f11ebeb2452b",
+      "load_region": {"kind": "cylinder_y", "center_xz_m": [-0.04, -0.0638], "radius_m": 0.025},
+      "support_region": {"axis": "x", "coordinate_m": -0.08},
+      "force_n": [0.0, 0.0, 0.0],
+      "torque_nm": [0.0, 8.0, 0.0],
+      "characteristic_length_m": 0.08,
+      "mesh_levels_m": [0.008, 0.006, 0.0045]
+    }
+  ],
+  "tolerances": {
+    "surface_m": 1e-6,
+    "force_residual_relative": 1e-5,
+    "moment_residual_relative": 1e-5,
+    "energy_residual_relative": 1e-4,
+    "last_two_mesh_relative_change": 0.12
+  },
+  "failure_control": {
+    "kind": "severed_support",
+    "expected_transmitted_force_n": [0.0, 0.0, 0.0],
+    "expected_transmitted_torque_nm": [0.0, 0.0, 0.0],
+    "expected_state": "dnf"
+  },
+  "evidence_policy": {
+    "hidden_geometry_repair_allowed": false,
+    "design_use_allowed": false,
+    "evidence_class": "synthetic_meshed_verification"
+  }
+}
