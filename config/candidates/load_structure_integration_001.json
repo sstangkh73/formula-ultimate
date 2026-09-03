@@ -1,0 +1,40 @@
+{
+  "schema_version": "load_structure_integration_candidate_v1",
+  "candidate_id": "load_structure_integration_001",
+  "claim_level": "synthetic integration fixture; not chassis or physical validation",
+  "sources": {
+    "work083_result": {"path": "artifacts/work083/run_b/result.json", "result_sha256": "a061d0b2de7b01eb31233cd3ed1ab9945eb5dbc015ca478c26fb9b77fbfaded3", "manifest_path": "artifacts/work083/run_b/geometry_manifest.json", "manifest_sha256": "0ea7151e3610aa8652d0fd0352216bf3e667d84e34fc70e1720d00b26d517066", "step_root": "artifacts/work083/run_b"},
+    "work084_result": {"path": "artifacts/work084/run_b/result.json", "result_sha256": "c87fa43572efc0a8bc6ef67e375589943d73ecc4ca3b3a3d7a51df4ddb3edb66", "manifest_path": "artifacts/work084/run_b/geometry_manifest.json", "manifest_sha256": "c6902beac7bd4bf07928c5322387d8d3740ecceddf31fbfbd70bd43e5e9fc7a5", "step_root": "artifacts/work084/run_b"},
+    "work086_result": {"path": "artifacts/work086/run_b/result.json", "result_sha256": "ec818c21ea45f4a129f762bac3130e06628c7b560bb1d74dff8a8c9555cdf827"}
+  },
+  "material": {"structure_density_kg_per_m3": 2700.0, "material_record_sha256": "72a1b5527e4aede10c6de73523c54835f11458f80100c6383d2a304d4d912097", "evidence_class": "synthetic_verification", "design_use_allowed": false},
+  "generated_parts": [
+    {"part_id": "upper_load_bridge", "kind": "bridge_frame", "parameters": {"x_center_m": -0.055, "x_length_m": 0.25, "rail_y_m": [-0.045, 0.095], "rail_section_m": [0.012, 0.012], "crossmember_x_m": [-0.16, -0.055, 0.055], "crossmember_y_length_m": 0.152, "z_center_m": 0.031}},
+    {"part_id": "ground_mount_adapter", "kind": "box", "parameters": {"size_m": [0.04, 0.05, 0.013], "center_m": [0.035, 0.0, 0.0185]}},
+    {"part_id": "energy_mount_adapter", "kind": "box", "parameters": {"size_m": [0.05, 0.05, 0.0408], "center_m": [-0.124, 0.023, 0.0046]}},
+    {"part_id": "coolant_inlet_route", "kind": "annular_y_tube", "parameters": {"axis_xz_m": [-0.0725, -0.0638], "y_min_m": -0.07, "y_max_m": -0.034, "outer_radius_m": 0.0055, "inner_radius_m": 0.004}},
+    {"part_id": "coolant_outlet_route", "kind": "annular_y_tube", "parameters": {"axis_xz_m": [-0.0075, -0.0638], "y_min_m": -0.07, "y_max_m": -0.034, "outer_radius_m": 0.0055, "inner_radius_m": 0.004}}
+  ],
+  "densities_kg_per_m3": {"default": 2700.0, "contact_roller": 1150.0},
+  "allowed_pairs": [
+    ["structural_mount", "guide_frame"], ["guide_frame", "carrier"], ["carrier", "axle"], ["carrier", "contact_roller"], ["axle", "contact_roller"],
+    ["energy_store", "converter_housing"], ["energy_store", "support_block"], ["converter_rotor", "input_shaft"], ["output_shaft", "ratio_drum"], ["input_shaft", "ratio_drum"],
+    ["output_shaft", "axle"], ["upper_load_bridge", "ground_mount_adapter"], ["upper_load_bridge", "energy_mount_adapter"], ["ground_mount_adapter", "structural_mount"], ["energy_mount_adapter", "energy_store"],
+    ["coolant_inlet_route", "converter_housing"], ["coolant_outlet_route", "converter_housing"]
+  ],
+  "motion_interface": {"moving_work083_parts": ["carrier", "axle", "contact_roller"], "travel_m": [-0.007, 0.007], "work083_axis_xz_m": [-0.04, -0.104], "work084_axis_xz_m": [-0.04, -0.104], "maximum_axis_misalignment_m": 1e-6},
+  "routing": {"minimum_clearance_m": 0.002, "minimum_bend_radius_m": 0.02, "declared_bend_radius_m": 0.03, "control_route_polyline_m": [[-0.124, 0.09, 0.04], [-0.04, 0.09, 0.04], [0.035, 0.09, 0.04]]},
+  "service": {"removed_part_id": "energy_store", "direction": [-1.0, 0.0, 0.0], "distance_m": 0.16, "minimum_clearance_m": 0.002},
+  "load_cases": [
+    {"case_id": "acceleration", "force_n": [-320.0, 0.0, -1250.0], "torque_nm": [0.0, -22.8, 0.0]},
+    {"case_id": "braking", "force_n": [450.0, 0.0, -1250.0], "torque_nm": [0.0, 12.0, 0.0]},
+    {"case_id": "cornering", "force_n": [0.0, -500.0, -1250.0], "torque_nm": [0.0, 0.0, 0.0]},
+    {"case_id": "combined", "force_n": [350.0, -400.0, -1250.0], "torque_nm": [0.0, 12.0, 0.0]},
+    {"case_id": "bump", "force_n": [0.0, 0.0, -2500.0], "torque_nm": [0.0, 0.0, 0.0]},
+    {"case_id": "torque_reaction", "force_n": [0.0, 0.0, 0.0], "torque_nm": [0.0, -22.8, 0.0]}
+  ],
+  "thermal_energy": {"generated_heat_j": 2986.666666666666, "coolant_rejected_heat_j": 2835.0, "air_rejected_heat_j": 151.66666666666606, "external_primary_inflow_j": 0.0},
+  "gates": {"required_part_count": 17, "maximum_overlap_m3": 1e-12, "minimum_forbidden_clearance_m": 0.0005, "force_residual_relative": 1e-5, "moment_residual_relative": 1e-5, "energy_residual_relative": 1e-4, "thermal_residual_relative": 1e-4, "minimum_ground_clearance_m": 0.005},
+  "controls": ["disconnected_mount", "blocked_service_path", "routing_collision", "inadequate_rejection", "asymmetric_load", "weakened_mount", "thin_frame", "mirror", "replay"],
+  "evidence_policy": {"hidden_geometry_repair_allowed": false, "result_conditioned_geometry_mutation_allowed": false, "new_frame_meshed": false, "design_use_allowed": false}
+}
