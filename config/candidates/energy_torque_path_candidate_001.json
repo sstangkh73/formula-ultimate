@@ -1,0 +1,284 @@
+{
+  "schema_version": "energy_torque_path_candidate_v1",
+  "candidate_id": "energy_torque_path_candidate_001",
+  "claim_level": "synthetic software and CAD verification candidate; not physical validation or design admission",
+  "declared_technology": {
+    "energy_store_kind": "sealed onboard primary-energy medium vessel",
+    "converter_kind": "single-rotor onboard primary-energy to mechanical-rotation converter",
+    "transformation_kind": "two-radius rolling traction coupling on parallel axes",
+    "technology_neutrality_note": "the evaluator accepts any declaration satisfying the typed interfaces; this candidate does not make a conventional powertrain layout mandatory"
+  },
+  "coordinate_system": {
+    "units": "SI",
+    "x_axis": "longitudinal_forward",
+    "y_axis": "lateral_left",
+    "z_axis": "vertical_up"
+  },
+  "material": {
+    "material_id": "synthetic_aluminium_like_verification_v1",
+    "material_record_sha256": "72a1b5527e4aede10c6de73523c54835f11458f80100c6383d2a304d4d912097",
+    "density_kg_per_m3": 2700.0,
+    "youngs_modulus_pa": 70000000000.0,
+    "yield_strength_pa": 250000000.0,
+    "specific_heat_j_per_kg_k": 900.0,
+    "allowable_bearing_pressure_pa": 80000000.0,
+    "maximum_temperature_k": 400.0,
+    "evidence_class": "synthetic_verification",
+    "design_use_allowed": false
+  },
+  "parts": [
+    {
+      "part_id": "energy_store",
+      "role": "sealed primary-energy vessel and Work 084 reaction terminal shell",
+      "geometry": {
+        "kind": "hollow_vessel",
+        "outer_size_m": [0.088, 0.114, 0.080],
+        "outer_center_m": [-0.124, 0.023, -0.0558],
+        "wall_thickness_m": 0.004,
+        "fill_port_radius_m": 0.003,
+        "fill_port_center_xy_m": [-0.124, 0.023]
+      }
+    },
+    {
+      "part_id": "converter_housing",
+      "role": "converter bore, mount interface, coolant passages, lubrication feed, and cooling fins",
+      "geometry": {
+        "kind": "converter_housing",
+        "box_size_m": [0.080, 0.062, 0.064],
+        "box_center_m": [-0.040, -0.003, -0.0638],
+        "bore_radius_m": 0.025,
+        "bore_axis_xz_m": [-0.040, -0.0638],
+        "coolant_passage_radius_m": 0.006,
+        "coolant_passage_x_m": [-0.0725, -0.0075],
+        "lubrication_port_radius_m": 0.004,
+        "lubrication_port_center_xy_m": [-0.040, 0.020],
+        "lubrication_port_depth_m": 0.008,
+        "fin_length_m": 0.072,
+        "fin_thickness_m": 0.002,
+        "fin_height_m": 0.010,
+        "fin_center_y_m": [-0.028, -0.014, 0.000, 0.010]
+      }
+    },
+    {
+      "part_id": "converter_rotor",
+      "role": "rotating converter output body",
+      "geometry": {
+        "kind": "cylinder",
+        "axis_xz_m": [-0.040, -0.0638],
+        "radius_m": 0.024,
+        "y_min_m": -0.030,
+        "y_max_m": 0.010
+      }
+    },
+    {
+      "part_id": "input_shaft",
+      "role": "rotor-side torque member and drive traction radius",
+      "geometry": {
+        "kind": "cylinder",
+        "axis_xz_m": [-0.040, -0.0638],
+        "radius_m": 0.010,
+        "y_min_m": 0.010,
+        "y_max_m": 0.060
+      }
+    },
+    {
+      "part_id": "ratio_drum",
+      "role": "driven traction radius and torque transformation body",
+      "geometry": {
+        "kind": "annular_drum",
+        "axis_xz_m": [-0.040, -0.104],
+        "outer_radius_m": 0.030,
+        "bore_radius_m": 0.006,
+        "y_min_m": 0.032,
+        "y_max_m": 0.056
+      }
+    },
+    {
+      "part_id": "output_shaft",
+      "role": "coaxial torque member terminating at the frozen Work 083 axle interface",
+      "geometry": {
+        "kind": "cylinder",
+        "axis_xz_m": [-0.040, -0.104],
+        "radius_m": 0.0058,
+        "y_min_m": 0.019,
+        "y_max_m": 0.086
+      }
+    },
+    {
+      "part_id": "support_block",
+      "role": "output-group reaction support carrying the bearing bore",
+      "geometry": {
+        "kind": "bored_block",
+        "box_size_m": [0.082, 0.018, 0.0162],
+        "box_center_m": [-0.059, 0.071, -0.1039],
+        "bore_radius_m": 0.0068,
+        "bore_axis_xz_m": [-0.040, -0.104]
+      }
+    }
+  ],
+  "joints": [
+    {"joint_id": "store_world", "parent": "structure_terminal", "child": "energy_store", "type": "fixed", "constraint_rows": 6},
+    {"joint_id": "housing_store", "parent": "energy_store", "child": "converter_housing", "type": "fixed", "constraint_rows": 6},
+    {"joint_id": "support_store", "parent": "energy_store", "child": "support_block", "type": "fixed", "constraint_rows": 6},
+    {"joint_id": "rotor_housing", "parent": "converter_housing", "child": "converter_rotor", "type": "revolute", "axis": [0.0, 1.0, 0.0], "constraint_rows": 5},
+    {"joint_id": "input_shaft_rotor", "parent": "converter_rotor", "child": "input_shaft", "type": "fixed", "constraint_rows": 6},
+    {"joint_id": "output_shaft_support", "parent": "support_block", "child": "output_shaft", "type": "revolute", "axis": [0.0, 1.0, 0.0], "constraint_rows": 5},
+    {"joint_id": "drum_output_shaft", "parent": "output_shaft", "child": "ratio_drum", "type": "fixed", "constraint_rows": 6}
+  ],
+  "couplings": [
+    {
+      "coupling_id": "traction_coupling",
+      "drive_part_id": "input_shaft",
+      "driven_part_id": "ratio_drum",
+      "type": "rolling",
+      "constraint_rows": 1,
+      "drive_radius_m": 0.010,
+      "driven_radius_m": 0.030,
+      "engagement_gap_m": 0.0002,
+      "engagement_elements_modelled": false
+    }
+  ],
+  "rotation": {
+    "axis": [0.0, 1.0, 0.0],
+    "input_group": ["converter_rotor", "input_shaft"],
+    "output_group": ["output_shaft", "ratio_drum"]
+  },
+  "clearance": {
+    "contact_pairs": [
+      ["energy_store", "converter_housing"],
+      ["energy_store", "support_block"],
+      ["converter_rotor", "input_shaft"],
+      ["output_shaft", "ratio_drum"]
+    ],
+    "coupling_pairs": [["input_shaft", "ratio_drum"]],
+    "minimum_clearance_m": 0.0005,
+    "maximum_mate_gap_m": 0.0005,
+    "maximum_overlap_m3": 1e-12
+  },
+  "work083_interface": {
+    "result_path": "artifacts/work083/run_b/result.json",
+    "result_sha256": "a061d0b2de7b01eb31233cd3ed1ab9945eb5dbc015ca478c26fb9b77fbfaded3",
+    "assembly_step_sha256": "57dc477bbec58da05a0908d1b9b8de04c57a482f710c2362980fed8c51ccb135",
+    "axle_step_sha256": "b44add5cc5a31471947d2dbf614ae78c4187384059677e7107dd7151b4e470ef",
+    "axle_axis_xz_m": [-0.040, -0.104],
+    "axle_radius_m": 0.0058,
+    "axle_outboard_y_m": 0.019,
+    "contact_plane_z_m": -0.139,
+    "coupling_position_tolerance_m": 1e-06,
+    "coupling_radius_tolerance_m": 1e-06,
+    "fastener_modelled": false
+  },
+  "paths": {
+    "torque_edges": [
+      ["converter_rotor", "input_shaft"],
+      ["input_shaft", "ratio_drum"],
+      ["ratio_drum", "output_shaft"],
+      ["output_shaft", "w083_axle"],
+      ["w083_axle", "w083_contact_roller"]
+    ],
+    "reaction_edges": [
+      ["converter_housing", "energy_store"],
+      ["support_block", "energy_store"],
+      ["energy_store", "structure_terminal"]
+    ],
+    "recovery_return_edge": ["converter_rotor", "energy_store"],
+    "torque_source": "converter_rotor",
+    "torque_sink": "w083_contact_roller",
+    "reaction_source": "converter_housing",
+    "reaction_sink": "structure_terminal",
+    "recovery_source": "w083_contact_roller",
+    "recovery_sink": "energy_store"
+  },
+  "energy_store_state": {
+    "medium_density_kg_per_m3": 800.0,
+    "medium_specific_energy_j_per_kg": 1800000.0,
+    "external_primary_inflow_j": 0.0
+  },
+  "drive_case": {
+    "rotor_torque_nm": 8.0,
+    "rotor_angular_speed_rad_s": 300.0,
+    "converter_efficiency": 0.90,
+    "support_drag_torque_nm": 1.2,
+    "duration_s": 4.0
+  },
+  "brake_case": {
+    "source_kinetic_energy_j": 60000.0,
+    "output_brake_torque_nm": -12.0,
+    "output_angular_speed_rad_s": 100.0,
+    "recovery_efficiency": 0.60,
+    "duration_s": 3.0
+  },
+  "thermal": {
+    "coolant_mass_flow_kg_s": 0.05,
+    "coolant_specific_heat_j_per_kg_k": 3600.0,
+    "coolant_density_kg_per_m3": 1050.0,
+    "coolant_inlet_temperature_k": 295.0,
+    "coolant_wall_coefficient_w_per_m2_k": 3000.0,
+    "air_temperature_k": 300.0,
+    "air_fin_coefficient_w_per_m2_k": 45.0,
+    "maximum_coolant_temperature_rise_k": 8.0,
+    "maximum_coolant_velocity_m_s": 3.0
+  },
+  "limits": {
+    "maximum_rotor_angular_speed_rad_s": 600.0,
+    "maximum_rotor_surface_speed_m_s": 20.0,
+    "maximum_efficiency": 0.99
+  },
+  "structural_analytic": {
+    "evidence_class": "analytic_synthetic_verification",
+    "meshed_solver_evidence": false,
+    "cases": [
+      "output_shaft_combined",
+      "input_shaft_combined",
+      "support_block_bearing",
+      "converter_housing_mount"
+    ],
+    "maximum_utilization": 1.0
+  },
+  "gates": {
+    "required_part_count": 7,
+    "required_mobility_dof": 1,
+    "torque_residual_relative": 1e-05,
+    "reaction_residual_relative": 1e-05,
+    "energy_residual_relative": 0.0001,
+    "thermal_residual_relative": 0.0001,
+    "area_cross_check_relative": 1e-06
+  },
+  "controls": [
+    "mirror",
+    "locked_converter",
+    "seized_support",
+    "broken_coupling",
+    "zero_loss_exploit",
+    "efficiency_over_one",
+    "reversed_torque",
+    "overspeed",
+    "inadequate_cooling",
+    "disconnected_housing_reaction"
+  ],
+  "control_settings": {
+    "locked_converter_angular_speed_rad_s": 0.0,
+    "zero_loss_drag_torque_nm": 0.0,
+    "zero_loss_converter_efficiency": 1.0,
+    "efficiency_over_one_value": 1.05,
+    "overspeed_angular_speed_rad_s": 900.0,
+    "inadequate_cooling_mass_flow_kg_s": 0.002
+  },
+  "evidence_policy": {
+    "hidden_geometry_repair_allowed": false,
+    "result_conditioned_geometry_mutation_allowed": false,
+    "design_evidence_required_for_admission": true,
+    "available_evidence_class": "synthetic_verification"
+  },
+  "non_claims": [
+    "validated motor or engine",
+    "validated battery or fuel system",
+    "validated transmission or coupling",
+    "validated bearing or lubrication system",
+    "validated cooling system",
+    "technology superiority",
+    "meshed structural validation",
+    "manufacturing readiness",
+    "physical validation"
+  ]
+}
