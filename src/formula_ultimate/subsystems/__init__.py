@@ -1,0 +1,1 @@
+"""Inspectable mechanical subsystem candidates."""

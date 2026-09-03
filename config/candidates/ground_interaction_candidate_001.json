@@ -1,0 +1,172 @@
+{
+  "schema_version": "ground_interaction_candidate_v1",
+  "candidate_id": "ground_interaction_candidate_001",
+  "claim_level": "synthetic software and CAD verification candidate; not physical validation or design admission",
+  "coordinate_system": {
+    "units": "SI",
+    "x_axis": "longitudinal_forward",
+    "y_axis": "lateral_left",
+    "z_axis": "vertical_up"
+  },
+  "parts": [
+    {
+      "part_id": "structural_mount",
+      "role": "ground-force terminal mount",
+      "geometry": {
+        "kind": "frozen_step",
+        "source_step": "artifacts/work081/source_step/bracket_001.step",
+        "expected_step_sha256": "b06e3141f7a1fcad8017537d3680a787164d3190d4503417d3f6c1c98ed1ba89"
+      },
+      "synthetic_density_kg_per_m3": 2700.0
+    },
+    {
+      "part_id": "guide_frame",
+      "role": "fixed vertical guide and mount-hole load input",
+      "geometry": {
+        "kind": "guide_frame",
+        "mount_hole_center_x_m": -0.04,
+        "bridge_size_m": [0.05, 0.05, 0.008],
+        "rail_size_m": [0.025, 0.006, 0.07],
+        "rail_center_y_m": 0.021,
+        "pin_radius_m": 0.0049,
+        "pin_height_m": 0.014
+      },
+      "synthetic_density_kg_per_m3": 2700.0
+    },
+    {
+      "part_id": "carrier",
+      "role": "vertically translating clevis carrier",
+      "geometry": {
+        "kind": "carrier",
+        "center_x_m": -0.04,
+        "stem_size_m": [0.022, 0.022, 0.045],
+        "stem_center_z_m": -0.0385,
+        "crossbar_size_m": [0.026, 0.034, 0.008],
+        "crossbar_center_z_m": -0.065,
+        "arm_size_m": [0.016, 0.006, 0.06],
+        "arm_center_y_m": 0.014,
+        "arm_center_z_m": -0.099,
+        "axle_center_z_m": -0.104,
+        "axle_bore_radius_m": 0.0061
+      },
+      "synthetic_density_kg_per_m3": 2700.0
+    },
+    {
+      "part_id": "axle",
+      "role": "torque and contact-force transfer member",
+      "geometry": {
+        "kind": "axle",
+        "center_x_m": -0.04,
+        "center_z_m": -0.104,
+        "radius_m": 0.0058,
+        "length_m": 0.038
+      },
+      "synthetic_density_kg_per_m3": 2700.0
+    },
+    {
+      "part_id": "contact_roller",
+      "role": "annular rotating ground-contact body",
+      "geometry": {
+        "kind": "annular_roller",
+        "center_x_m": -0.04,
+        "center_z_m": -0.104,
+        "outer_radius_m": 0.035,
+        "inner_radius_m": 0.0062,
+        "width_m": 0.02
+      },
+      "synthetic_density_kg_per_m3": 1150.0
+    }
+  ],
+  "joints": [
+    {"joint_id": "mount_world", "parent": "world", "child": "structural_mount", "type": "fixed", "constraint_rows": 6},
+    {"joint_id": "guide_mount", "parent": "structural_mount", "child": "guide_frame", "type": "fixed", "constraint_rows": 6},
+    {"joint_id": "carrier_guide", "parent": "guide_frame", "child": "carrier", "type": "prismatic", "axis": [0.0, 0.0, 1.0], "constraint_rows": 5},
+    {"joint_id": "axle_carrier", "parent": "carrier", "child": "axle", "type": "fixed", "constraint_rows": 6},
+    {"joint_id": "roller_axle", "parent": "axle", "child": "contact_roller", "type": "revolute", "axis": [0.0, 1.0, 0.0], "constraint_rows": 5}
+  ],
+  "motion": {
+    "translation_axis": [0.0, 0.0, 1.0],
+    "travel_min_m": -0.007,
+    "travel_max_m": 0.007,
+    "reference_translation_m": 0.0,
+    "moving_parts": ["carrier", "axle", "contact_roller"]
+  },
+  "clearance": {
+    "forbidden_pairs": [
+      ["structural_mount", "carrier"],
+      ["structural_mount", "axle"],
+      ["structural_mount", "contact_roller"],
+      ["guide_frame", "axle"],
+      ["guide_frame", "contact_roller"]
+    ],
+    "minimum_clearance_m": 0.0005,
+    "maximum_overlap_m3": 1e-12
+  },
+  "ground_interface": {
+    "contact_part_id": "contact_roller",
+    "contact_point_m": [-0.04, 0.0, -0.139],
+    "force_on_candidate_n": [320.0, 180.0, 1250.0],
+    "force_direction_angle_rad": 0.5123894603107377
+  },
+  "torque_case": {
+    "input_part_id": "axle",
+    "output_part_id": "contact_roller",
+    "drive_torque_nm": 42.0,
+    "brake_torque_nm": -30.0,
+    "angular_speed_rad_s": 80.0,
+    "duration_s": 0.25,
+    "drive_efficiency": 0.92
+  },
+  "paths": {
+    "force_edges": [
+      ["contact_roller", "axle"],
+      ["axle", "carrier"],
+      ["carrier", "guide_frame"],
+      ["guide_frame", "structural_mount"]
+    ],
+    "torque_edges": [["axle", "contact_roller"]]
+  },
+  "capacity": {
+    "reference_force_capacity_n": 2000.0,
+    "undersized_scale": 0.25
+  },
+  "structural_evidence": {
+    "result_path": "artifacts/work082/run_e/result.json",
+    "result_sha256": "3b5d82a7a60f68a8420f1fe5bea9915e494cc29f98bf568e1862903e929b805a",
+    "geometry_step_sha256": "b06e3141f7a1fcad8017537d3680a787164d3190d4503417d3f6c1c98ed1ba89",
+    "material_record_sha256": "72a1b5527e4aede10c6de73523c54835f11458f80100c6383d2a304d4d912097",
+    "evidence_class": "synthetic_verification",
+    "design_use_allowed": false
+  },
+  "gates": {
+    "required_part_count": 5,
+    "required_mobility_dof": 2,
+    "force_residual_relative": 1e-5,
+    "moment_residual_relative": 1e-5,
+    "energy_residual_relative": 1e-4
+  },
+  "controls": [
+    "mirror",
+    "rigid_no_travel",
+    "disconnected_mount",
+    "blocked_translation",
+    "seized_rotation",
+    "broken_torque_path",
+    "undersized_capacity",
+    "contact_loss"
+  ],
+  "evidence_policy": {
+    "hidden_geometry_repair_allowed": false,
+    "result_conditioned_geometry_mutation_allowed": false,
+    "design_evidence_required_for_admission": true,
+    "available_evidence_class": "synthetic_verification"
+  },
+  "non_claims": [
+    "validated suspension",
+    "validated wheel or tyre",
+    "validated steering or brake",
+    "fatigue or bearing life",
+    "manufacturing readiness",
+    "physical validation"
+  ]
+}
