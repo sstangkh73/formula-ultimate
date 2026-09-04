@@ -60,6 +60,12 @@ from .constructive_validity import (
     evaluate_candidate as evaluate_constructive_candidate,
     validate_gate_config as validate_constructive_gate_config,
 )
+from .semantic_geometry_witness import (
+    WITNESS_VERSION as SEMANTIC_GEOMETRY_WITNESS_VERSION,
+    SemanticWitnessViolation,
+    compare_report as compare_semantic_geometry_report,
+    validate_config as validate_semantic_geometry_config,
+)
 
 __all__ = [
     "GRAMMAR_VERSION",
@@ -108,4 +114,8 @@ __all__ = [
     "build_constructive_candidate",
     "evaluate_constructive_candidate",
     "validate_constructive_gate_config",
+    "SEMANTIC_GEOMETRY_WITNESS_VERSION",
+    "SemanticWitnessViolation",
+    "compare_semantic_geometry_report",
+    "validate_semantic_geometry_config",
 ]

@@ -1,0 +1,43 @@
+{
+  "witness_version": "semantic_geometry_witness_v3",
+  "source_manifest_sha256": "369750f5ebef5a72dcd63147cec251a9a88d3d05a289d68289d6a9cd501a90ea",
+  "material_density_kg_per_m3": 2700.0,
+  "tolerances": {
+    "relative": 1e-6,
+    "length_absolute_m": 1e-8,
+    "axis_orthogonality": 1e-8,
+    "curvature_zero_per_m": 1e-9,
+    "region_tie_relative": 1e-9
+  },
+  "sampling_protocol": {
+    "curvature_parameter_fractions": [0.25, 0.5, 0.75],
+    "thickness_grid_fractions": [0.25, 0.5, 0.75],
+    "section_path_fractions": [0.2, 0.5, 0.8],
+    "section_slab_fraction": 0.005,
+    "oriented_bounds_tessellation_m": 0.00005,
+    "swept_motion_model": "static_identity_only"
+  },
+  "semantic_regions": [
+    {"region_id": "support_region", "intent": "support", "selector": "extreme_min_centroid"},
+    {"region_id": "load_region", "intent": "load", "selector": "extreme_max_centroid"},
+    {"region_id": "contact_region", "intent": "contact", "selector": "largest_area"},
+    {"region_id": "thermal_region", "intent": "thermal", "selector": "all_faces"},
+    {"region_id": "fluid_region", "intent": "fluid", "selector": "curved_faces_or_all"}
+  ],
+  "candidate_bindings": [
+    {"candidate_id": "curved_branch_001", "family": "curved_branch", "step_sha256": "016bace59ce24714af86b113b574d965a82f8f38ab709f647198fa4c0a7906d7", "expected_solid_count": 1, "path_datum_id": "main_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "main_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "terminal_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]},
+    {"candidate_id": "tapered_hollow_duct_001", "family": "tapered_hollow_duct", "step_sha256": "12bcac345f9395ffc766d84a8385a488c75533d162c233e6989215f8829e636d", "expected_solid_count": 1, "path_datum_id": "main_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "main_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "outlet_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]},
+    {"candidate_id": "lofted_rotary_member_001", "family": "lofted_rotary_member", "step_sha256": "f72ba2509550952a4db6360b6879578566c494253fd7c1b981d915ca182f0a3c", "expected_solid_count": 1, "path_datum_id": "rotation_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "rotation_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "mount_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "min"}}]},
+    {"candidate_id": "organic_load_bridge_001", "family": "organic_load_bridge", "step_sha256": "a2951f6ada1126cae9c5bca4cc626cf1acdb2e5c2f2205f1a83fc1950e208c2e", "expected_solid_count": 1, "path_datum_id": "load_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "load_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "terminal_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]},
+    {"candidate_id": "variable_section_shell_001", "family": "variable_section_shell", "step_sha256": "eb16a3c22bcac5320db296fa6528d5d797cf0a90200f0bb642332df5bb5be098", "expected_solid_count": 1, "path_datum_id": "shell_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "shell_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "outlet_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]},
+    {"candidate_id": "tapered_open_shell_001", "family": "tapered_open_shell", "step_sha256": "0549d28e84178c4fec462f2619ae844a72f0b7a3f3501cc00f41922a7caba02e", "expected_solid_count": 1, "path_datum_id": "shell_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "shell_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "opening_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]},
+    {"candidate_id": "ribbed_gusset_bridge_001", "family": "ribbed_hybrid", "step_sha256": "3ab1c3871dda6730c4ed5e2ac50c33acd79f85c2f6e634af2ea963c28f57beee", "expected_solid_count": 1, "path_datum_id": "bridge_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "bridge_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "base_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "min"}}]},
+    {"candidate_id": "bored_chamfered_hub_001", "family": "faceted_hub", "step_sha256": "28d63180063b525cfe4150a7291664d7d21373847b2b2c89311eb88d166d6852", "expected_solid_count": 1, "path_datum_id": "hub_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "hub_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "mount_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "min"}}]},
+    {"candidate_id": "patterned_fillet_plate_001", "family": "patterned_skin", "step_sha256": "7b4ce4a180b02cb231408287aa06a9bc4fb76decae9e15ffa46c4d86004736d1", "expected_solid_count": 1, "path_datum_id": "plate_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "plate_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "top_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]},
+    {"candidate_id": "revolved_intersection_member_001", "family": "revolved_intersection", "step_sha256": "2df976f5459fe66536996f97a6279f8242079140939878115fbc16c34e37d44c", "expected_solid_count": 4, "path_datum_id": "member_axis", "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "member_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "side_plane", "kind": "extreme_plane", "parameters": {"axis": "x", "side": "max"}}]}
+  ],
+  "claim_boundary": {
+    "admitted_claims": ["exact_step_identity", "independent_freecad_inspection", "signature_selected_semantics", "bounded_sampled_fields"],
+    "prohibited_claims": ["global_minimum_thickness", "assembly_clearance", "structural_validity", "manufacturability_proof", "physical_validation"]
+  }
+}
