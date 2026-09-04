@@ -43,6 +43,15 @@ from .freeform_wire_grammar import (
     declaration_sha256 as freeform_wire_declaration_sha256,
     validate_grammar as validate_freeform_wire_grammar,
 )
+from .freeform_solid_grammar import (
+    DATUM_KINDS as FREEFORM_SOLID_DATUM_KINDS,
+    GRAMMAR_VERSION as FREEFORM_SOLID_GRAMMAR_VERSION,
+    OPERATORS as FREEFORM_SOLID_OPERATORS,
+    REQUIRED_FAMILIES as FREEFORM_SOLID_REQUIRED_FAMILIES,
+    FreeformSolidGrammarError,
+    declaration_sha256 as freeform_solid_declaration_sha256,
+    validate_solid_grammar,
+)
 
 __all__ = [
     "GRAMMAR_VERSION",
@@ -78,4 +87,11 @@ __all__ = [
     "compare_measurement_witnesses",
     "freeform_wire_declaration_sha256",
     "validate_freeform_wire_grammar",
+    "FREEFORM_SOLID_DATUM_KINDS",
+    "FREEFORM_SOLID_GRAMMAR_VERSION",
+    "FREEFORM_SOLID_OPERATORS",
+    "FREEFORM_SOLID_REQUIRED_FAMILIES",
+    "FreeformSolidGrammarError",
+    "freeform_solid_declaration_sha256",
+    "validate_solid_grammar",
 ]

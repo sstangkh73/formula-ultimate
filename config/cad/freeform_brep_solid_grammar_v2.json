@@ -1,0 +1,135 @@
+{
+  "grammar_version": "freeform_brep_solid_grammar_v2",
+  "units": "SI_m_rad",
+  "source_wire_declaration_sha256": "4a88ef8001377472c35eb18fe0eac23f4afd92b83c86edf86233af458a223820",
+  "limits": {"maximum_coordinate_m": 1.0, "maximum_dimension_m": 0.5, "minimum_feature_m": 0.00001, "maximum_features_per_candidate": 32, "measurement_relative_tolerance": 0.002, "position_absolute_tolerance_m": 0.0000001},
+  "candidates": [
+    {
+      "candidate_id": "curved_branch_001", "family": "curved_branch", "expected_body_count": 1,
+      "features": [
+        {"feature_id": "root_section", "operator": "section", "inputs": [], "parameters": {"profile_id": "circle_plain", "scale": 0.25, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "root_path", "operator": "path", "inputs": [], "parameters": {"path_kind": "spline", "points_m": [[0.0, 0.0, 0.0], [0.0, 0.0, 0.04], [0.0, 0.0, 0.08]]}},
+        {"feature_id": "root_sweep", "operator": "sweep", "inputs": ["root_section", "root_path"], "parameters": {"is_frenet": true, "transition_mode": "transformed"}},
+        {"feature_id": "left_section", "operator": "section", "inputs": [], "parameters": {"profile_id": "circle_plain", "scale": 0.18, "translation_m": [0.0, 0.0, 0.05], "rotation_rad": 0.0}},
+        {"feature_id": "left_path", "operator": "path", "inputs": [], "parameters": {"path_kind": "spline", "points_m": [[0.0, 0.0, 0.05], [-0.015, 0.0, 0.065], [-0.04, 0.01, 0.09]]}},
+        {"feature_id": "left_sweep", "operator": "sweep", "inputs": ["left_section", "left_path"], "parameters": {"is_frenet": true, "transition_mode": "round"}},
+        {"feature_id": "right_section", "operator": "section", "inputs": [], "parameters": {"profile_id": "circle_plain", "scale": 0.16, "translation_m": [0.0, 0.0, 0.055], "rotation_rad": 0.0}},
+        {"feature_id": "right_path", "operator": "path", "inputs": [], "parameters": {"path_kind": "spline", "points_m": [[0.0, 0.0, 0.055], [0.018, 0.0, 0.07], [0.038, -0.012, 0.095]]}},
+        {"feature_id": "right_sweep", "operator": "sweep", "inputs": ["right_section", "right_path"], "parameters": {"is_frenet": true, "transition_mode": "round"}},
+        {"feature_id": "branch_union", "operator": "boolean_union", "inputs": ["root_sweep", "left_sweep", "right_sweep"], "parameters": {}}
+      ],
+      "final_feature_id": "branch_union",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "main_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "terminal_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]
+    },
+    {
+      "candidate_id": "tapered_hollow_duct_001", "family": "tapered_hollow_duct", "expected_body_count": 1,
+      "features": [
+        {"feature_id": "outer_a", "operator": "section", "inputs": [], "parameters": {"profile_id": "ellipse_plain", "scale": 0.8, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "outer_b", "operator": "section", "inputs": [], "parameters": {"profile_id": "ellipse_plain", "scale": 0.5, "translation_m": [0.015, 0.0, 0.1], "rotation_rad": 0.35}},
+        {"feature_id": "outer", "operator": "loft", "inputs": ["outer_a", "outer_b"], "parameters": {"ruled": false}},
+        {"feature_id": "inner_a", "operator": "section", "inputs": [], "parameters": {"profile_id": "ellipse_plain", "scale": 0.58, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "inner_b", "operator": "section", "inputs": [], "parameters": {"profile_id": "ellipse_plain", "scale": 0.32, "translation_m": [0.015, 0.0, 0.1], "rotation_rad": 0.35}},
+        {"feature_id": "inner", "operator": "loft", "inputs": ["inner_a", "inner_b"], "parameters": {"ruled": false}},
+        {"feature_id": "duct", "operator": "boolean_subtract", "inputs": ["outer", "inner"], "parameters": {}}
+      ],
+      "final_feature_id": "duct",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "main_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "outlet_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]
+    },
+    {
+      "candidate_id": "lofted_rotary_member_001", "family": "lofted_rotary_member", "expected_body_count": 1,
+      "features": [
+        {"feature_id": "a", "operator": "section", "inputs": [], "parameters": {"profile_id": "circle_plain", "scale": 0.45, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "b", "operator": "section", "inputs": [], "parameters": {"profile_id": "circle_plain", "scale": 0.75, "translation_m": [0.003, 0.0, 0.045], "rotation_rad": 0.0}},
+        {"feature_id": "c", "operator": "section", "inputs": [], "parameters": {"profile_id": "circle_plain", "scale": 0.38, "translation_m": [0.0, 0.0, 0.09], "rotation_rad": 0.0}},
+        {"feature_id": "blank", "operator": "loft", "inputs": ["a", "b", "c"], "parameters": {"ruled": false}},
+        {"feature_id": "bored", "operator": "bore", "inputs": ["blank"], "parameters": {"radius_m": 0.008, "length_m": 0.12, "origin_m": [0.0, 0.0, -0.01], "direction": [0.0, 0.0, 1.0]}}
+      ],
+      "final_feature_id": "bored",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "rotation_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "mount_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "min"}}]
+    },
+    {
+      "candidate_id": "organic_load_bridge_001", "family": "organic_load_bridge", "expected_body_count": 1,
+      "features": [
+        {"feature_id": "section", "operator": "section", "inputs": [], "parameters": {"profile_id": "quadratic_bezier_blob", "scale": 0.22, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "arch_path", "operator": "path", "inputs": [], "parameters": {"path_kind": "spline", "points_m": [[0.0, 0.0, 0.0], [0.02, 0.0, 0.035], [-0.018, 0.012, 0.075], [0.012, 0.0, 0.12]]}},
+        {"feature_id": "bridge", "operator": "sweep", "inputs": ["section", "arch_path"], "parameters": {"is_frenet": true, "transition_mode": "round"}},
+        {"feature_id": "oriented", "operator": "transform", "inputs": ["bridge"], "parameters": {"translation_m": [0.01, -0.005, 0.0], "axis_start_m": [0.0, 0.0, 0.0], "axis_end_m": [0.0, 0.0, 1.0], "angle_rad": 0.25}}
+      ],
+      "final_feature_id": "oriented",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "load_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "terminal_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]
+    },
+    {
+      "candidate_id": "variable_section_shell_001", "family": "variable_section_shell", "expected_body_count": 1,
+      "features": [
+        {"feature_id": "oa", "operator": "section", "inputs": [], "parameters": {"profile_id": "quadratic_bezier_blob", "scale": 0.9, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "ob", "operator": "section", "inputs": [], "parameters": {"profile_id": "quadratic_bezier_blob", "scale": 0.65, "translation_m": [0.012, 0.0, 0.05], "rotation_rad": 0.3}},
+        {"feature_id": "oc", "operator": "section", "inputs": [], "parameters": {"profile_id": "quadratic_bezier_blob", "scale": 1.0, "translation_m": [-0.005, 0.008, 0.1], "rotation_rad": -0.2}},
+        {"feature_id": "outer", "operator": "loft", "inputs": ["oa", "ob", "oc"], "parameters": {"ruled": false}},
+        {"feature_id": "ia", "operator": "section", "inputs": [], "parameters": {"profile_id": "quadratic_bezier_blob", "scale": 0.62, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "ib", "operator": "section", "inputs": [], "parameters": {"profile_id": "quadratic_bezier_blob", "scale": 0.4, "translation_m": [0.012, 0.0, 0.05], "rotation_rad": 0.3}},
+        {"feature_id": "ic", "operator": "section", "inputs": [], "parameters": {"profile_id": "quadratic_bezier_blob", "scale": 0.7, "translation_m": [-0.005, 0.008, 0.1], "rotation_rad": -0.2}},
+        {"feature_id": "inner", "operator": "loft", "inputs": ["ia", "ib", "ic"], "parameters": {"ruled": false}},
+        {"feature_id": "shell", "operator": "boolean_subtract", "inputs": ["outer", "inner"], "parameters": {}}
+      ],
+      "final_feature_id": "shell",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "shell_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "outlet_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]
+    },
+    {
+      "candidate_id": "tapered_open_shell_001", "family": "tapered_open_shell", "expected_body_count": 1,
+      "features": [
+        {"feature_id": "profile", "operator": "section", "inputs": [], "parameters": {"profile_id": "polygon_hexagon", "scale": 0.65, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "tapered", "operator": "extrude", "inputs": ["profile"], "parameters": {"vector_m": [0.0, 0.0, 0.075], "taper_rad": 0.08}},
+        {"feature_id": "open_shell", "operator": "shell", "inputs": ["tapered"], "parameters": {"thickness_m": 0.003, "opening_axis": "z", "opening_side": "max", "kind": "intersection"}}
+      ],
+      "final_feature_id": "open_shell",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "shell_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "opening_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]
+    },
+    {
+      "candidate_id": "ribbed_gusset_bridge_001", "family": "ribbed_hybrid", "expected_body_count": 1,
+      "features": [
+        {"feature_id": "profile", "operator": "section", "inputs": [], "parameters": {"profile_id": "polygon_rectangle", "scale": 0.8, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "plate", "operator": "extrude", "inputs": ["profile"], "parameters": {"vector_m": [0.0, 0.0, 0.012], "taper_rad": 0.0}},
+        {"feature_id": "ribbed", "operator": "rib_web", "inputs": ["plate"], "parameters": {"size_m": [0.012, 0.025, 0.045], "center_m": [0.0, 0.0, 0.02]}},
+        {"feature_id": "gusseted", "operator": "gusset", "inputs": ["ribbed"], "parameters": {"size_m": [0.04, 0.025, 0.035], "center_m": [0.0, 0.0, 0.0175], "axis": "z"}},
+        {"feature_id": "pocketed", "operator": "pocket", "inputs": ["gusseted"], "parameters": {"size_m": [0.018, 0.012, 0.02], "center_m": [0.025, 0.0, 0.012]}}
+      ],
+      "final_feature_id": "pocketed",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "bridge_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "base_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "min"}}]
+    },
+    {
+      "candidate_id": "bored_chamfered_hub_001", "family": "faceted_hub", "expected_body_count": 1,
+      "features": [
+        {"feature_id": "profile", "operator": "section", "inputs": [], "parameters": {"profile_id": "polygon_hexagon", "scale": 0.75, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "blank", "operator": "extrude", "inputs": ["profile"], "parameters": {"vector_m": [0.0, 0.0, 0.045], "taper_rad": 0.0}},
+        {"feature_id": "bored", "operator": "bore", "inputs": ["blank"], "parameters": {"radius_m": 0.009, "length_m": 0.065, "origin_m": [0.0, 0.0, -0.01], "direction": [0.0, 0.0, 1.0]}},
+        {"feature_id": "chamfered", "operator": "chamfer", "inputs": ["bored"], "parameters": {"distance_m": 0.002, "selector_axis": "z"}}
+      ],
+      "final_feature_id": "chamfered",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "hub_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "mount_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "min"}}]
+    },
+    {
+      "candidate_id": "patterned_fillet_plate_001", "family": "patterned_skin", "expected_body_count": 1,
+      "features": [
+        {"feature_id": "profile", "operator": "section", "inputs": [], "parameters": {"profile_id": "polygon_rectangle", "scale": 0.5, "translation_m": [0.0, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "cell", "operator": "extrude", "inputs": ["profile"], "parameters": {"vector_m": [0.0, 0.0, 0.014], "taper_rad": 0.0}},
+        {"feature_id": "pattern", "operator": "linear_pattern", "inputs": ["cell"], "parameters": {"count": 3, "spacing_m": 0.03, "direction": "x", "fuse": true}},
+        {"feature_id": "rounded", "operator": "fillet", "inputs": ["pattern"], "parameters": {"radius_m": 0.002, "selector_axis": "z"}}
+      ],
+      "final_feature_id": "rounded",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "plate_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "top_plane", "kind": "extreme_plane", "parameters": {"axis": "z", "side": "max"}}]
+    },
+    {
+      "candidate_id": "revolved_intersection_member_001", "family": "revolved_intersection", "expected_body_count": 4,
+      "features": [
+        {"feature_id": "revolve_section", "operator": "section", "inputs": [], "parameters": {"profile_id": "trimmed_diamond", "scale": 0.25, "translation_m": [0.055, 0.0, 0.0], "rotation_rad": 0.0}},
+        {"feature_id": "ring", "operator": "revolve", "inputs": ["revolve_section"], "parameters": {"axis_start_m": [0.0, -0.1, 0.0], "axis_end_m": [0.0, 0.1, 0.0], "angle_rad": 6.283185307179586}},
+        {"feature_id": "block_section", "operator": "section", "inputs": [], "parameters": {"profile_id": "polygon_rectangle", "scale": 1.0, "translation_m": [0.0, 0.0, -0.035], "rotation_rad": 0.0}},
+        {"feature_id": "block", "operator": "extrude", "inputs": ["block_section"], "parameters": {"vector_m": [0.0, 0.0, 0.07], "taper_rad": 0.0}},
+        {"feature_id": "clipped", "operator": "boolean_intersect", "inputs": ["ring", "block"], "parameters": {}},
+        {"feature_id": "oriented", "operator": "transform", "inputs": ["clipped"], "parameters": {"translation_m": [0.0, 0.0, 0.02], "axis_start_m": [0.0, 0.0, 0.0], "axis_end_m": [0.0, 0.0, 1.0], "angle_rad": 0.2}}
+      ],
+      "final_feature_id": "oriented",
+      "datums": [{"datum_id": "centre", "kind": "bbox_center", "parameters": {}}, {"datum_id": "member_axis", "kind": "longest_bbox_axis", "parameters": {}}, {"datum_id": "side_plane", "kind": "extreme_plane", "parameters": {"axis": "x", "side": "max"}}]
+    }
+  ]
+}
