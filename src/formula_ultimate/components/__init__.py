@@ -33,6 +33,16 @@ from .engineering_contracts import (
     validate_manufacturing_process,
     validate_material_record,
 )
+from .freeform_wire_grammar import (
+    CONSTRAINTS as FREEFORM_WIRE_CONSTRAINTS,
+    GRAMMAR_VERSION as FREEFORM_WIRE_GRAMMAR_VERSION,
+    OPERATORS as FREEFORM_WIRE_OPERATORS,
+    TRANSFORMS as FREEFORM_WIRE_TRANSFORMS,
+    FreeformWireGrammarError,
+    compare_measurement_witnesses,
+    declaration_sha256 as freeform_wire_declaration_sha256,
+    validate_grammar as validate_freeform_wire_grammar,
+)
 
 __all__ = [
     "GRAMMAR_VERSION",
@@ -60,4 +70,12 @@ __all__ = [
     "validate_engineering_assignment",
     "validate_manufacturing_process",
     "validate_material_record",
+    "FREEFORM_WIRE_CONSTRAINTS",
+    "FREEFORM_WIRE_GRAMMAR_VERSION",
+    "FREEFORM_WIRE_OPERATORS",
+    "FREEFORM_WIRE_TRANSFORMS",
+    "FreeformWireGrammarError",
+    "compare_measurement_witnesses",
+    "freeform_wire_declaration_sha256",
+    "validate_freeform_wire_grammar",
 ]
