@@ -1,0 +1,35 @@
+{
+  "protocol_version": "reproducible_topology_mutation_v1",
+  "source_genome_declaration_sha256": "e1583e9aec9c3a4968ec5e35d1b81478d9023ca2392e08ec78ee0a48e9e5c69d",
+  "proposal_phase": "pre_evaluation_only",
+  "maximum_retries_per_slot": 2,
+  "operator_schedule": ["grow_branch", "prune_branch", "split_part", "add_crosslink", "reroute_path", "replace_solid_family", "insert_feature", "mutate_material_process"],
+  "operator_probabilities": {"grow_branch": 0.125, "prune_branch": 0.125, "split_part": 0.125, "add_crosslink": 0.125, "reroute_path": 0.125, "replace_solid_family": 0.125, "insert_feature": 0.125, "mutate_material_process": 0.125},
+  "initializer_strata": [
+    {"stratum": "primitive", "parent_genome_id": "monolithic_crossdomain_001", "seed": 1101},
+    {"stratum": "skeletal_serial", "parent_genome_id": "serial_three_001", "seed": 2202},
+    {"stratum": "shell", "parent_genome_id": "nested_crosslink_five_001", "seed": 3303},
+    {"stratum": "rotary", "parent_genome_id": "cyclic_four_001", "seed": 4404},
+    {"stratum": "branching", "parent_genome_id": "branch_four_001", "seed": 5505},
+    {"stratum": "hybrid", "parent_genome_id": "asymmetric_hybrid_six_001", "seed": 6606}
+  ],
+  "interface_policy": {
+    "fixed": {"domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "allowed_dof": []},
+    "revolute": {"domains": ["load", "energy", "motion"], "allowed_dof": ["rx", "ry", "rz"]},
+    "prismatic": {"domains": ["load", "motion"], "allowed_dof": ["tx", "ty", "tz"]},
+    "spherical": {"domains": ["load", "motion"], "allowed_dof": ["rx", "ry", "rz"]},
+    "fluid_coupling": {"domains": ["energy", "fluid", "thermal", "control"], "allowed_dof": ["flow", "current", "heat", "signal"]},
+    "electrical": {"domains": ["energy", "control"], "allowed_dof": ["current", "signal"]},
+    "thermal_contact": {"domains": ["load", "motion", "fluid", "thermal"], "allowed_dof": ["flow", "heat"]},
+    "control_link": {"domains": ["fluid", "thermal", "control"], "allowed_dof": ["flow", "heat", "signal"]}
+  },
+  "material_process_compatibility": {
+    "material_pending_001": ["process_pending_001", "process_pending_002", "process_pending_004", "process_pending_005", "process_pending_006"],
+    "material_pending_002": ["process_pending_002", "process_pending_003", "process_pending_004", "process_pending_005"],
+    "material_pending_003": ["process_pending_002", "process_pending_004", "process_pending_005", "process_pending_006", "process_pending_007"],
+    "material_pending_004": ["process_pending_003", "process_pending_006"],
+    "material_pending_005": ["process_pending_003", "process_pending_006"],
+    "material_pending_006": ["process_pending_005"]
+  },
+  "crossover": {"enabled": false, "disabled_reason": "No exact compatible typed cut-boundary contract exists in V1."}
+}
