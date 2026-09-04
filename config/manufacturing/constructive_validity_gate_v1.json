@@ -1,0 +1,95 @@
+{
+  "gate_version": "constructive_validity_manufacturing_gate_v1",
+  "source_mutation_protocol_sha256": "1d475fbca89bf9395fe97d51f68a7c3ca1cb2cd063e9d4101cc4263a84c2cf10",
+  "source_solid_declaration_sha256": "a0e1c47ee15dbebac9dce2183a502c26199197b751fe427c74c2824dd1b4ad8a",
+  "source_primitive_manifest_sha256": "fff5c0c74513fae1a2bc7cd55020affbbaf67bdd6e9c0908f5aa2ea4131b2448",
+  "evaluation_phase": "pre_performance_evaluation",
+  "measurement_evidence": {
+    "status": "synthetic_contract_fixture",
+    "method": "matched declared scalar controls; not independently measured from STEP",
+    "claim_boundary": "gate behavior only; no source geometry manufacturability claim"
+  },
+  "repair_policy": {
+    "allowed_operations": ["add_support", "increase_escape_hole", "increase_joining_access"],
+    "maximum_operations": 1,
+    "hidden_repair_policy": "reject"
+  },
+  "process_profiles": [
+    {
+      "process_id": "synthetic_additive_v1",
+      "process_type": "additive",
+      "compatible_material_ids": ["material_pending_001", "material_pending_002", "material_pending_003"],
+      "limits": {
+        "minimum_wall_m": 0.0015,
+        "minimum_ligament_m": 0.001,
+        "minimum_radius_m": 0.0005,
+        "minimum_feature_m": 0.0008,
+        "minimum_tool_access_fraction": 0.5,
+        "maximum_unsupported_overhang_rad": 0.7853981633974483,
+        "support_allowed": true,
+        "enclosed_void_allowed": true,
+        "minimum_escape_hole_m": 0.002,
+        "minimum_achievable_tolerance_m": 0.0001,
+        "minimum_joining_access_fraction": 0.6
+      }
+    },
+    {
+      "process_id": "synthetic_machining_v1",
+      "process_type": "machining",
+      "compatible_material_ids": ["material_pending_001", "material_pending_004"],
+      "limits": {
+        "minimum_wall_m": 0.002,
+        "minimum_ligament_m": 0.003,
+        "minimum_radius_m": 0.001,
+        "minimum_feature_m": 0.001,
+        "minimum_tool_access_fraction": 0.75,
+        "maximum_unsupported_overhang_rad": 3.141592653589793,
+        "support_allowed": false,
+        "enclosed_void_allowed": false,
+        "minimum_escape_hole_m": 0.004,
+        "minimum_achievable_tolerance_m": 0.0001,
+        "minimum_joining_access_fraction": 0.75
+      }
+    }
+  ],
+  "representation_families": [
+    {"family": "primitive_control", "source_collection": "primitive_witness", "source_candidate_id": "shaft_001", "source_geometry_sha256": "34e81618e3cd6fefa278bf6cdfd564db06407d118651efa16c16202971f485c1"},
+    {"family": "curved_branch", "source_collection": "work092_solid", "source_candidate_id": "curved_branch_001", "source_geometry_sha256": "016bace59ce24714af86b113b574d965a82f8f38ab709f647198fa4c0a7906d7"},
+    {"family": "tapered_hollow_duct", "source_collection": "work092_solid", "source_candidate_id": "tapered_hollow_duct_001", "source_geometry_sha256": "12bcac345f9395ffc766d84a8385a488c75533d162c233e6989215f8829e636d"},
+    {"family": "lofted_rotary_member", "source_collection": "work092_solid", "source_candidate_id": "lofted_rotary_member_001", "source_geometry_sha256": "f72ba2509550952a4db6360b6879578566c494253fd7c1b981d915ca182f0a3c"},
+    {"family": "organic_load_bridge", "source_collection": "work092_solid", "source_candidate_id": "organic_load_bridge_001", "source_geometry_sha256": "a2951f6ada1126cae9c5bca4cc626cf1acdb2e5c2f2205f1a83fc1950e208c2e"},
+    {"family": "variable_section_shell", "source_collection": "work092_solid", "source_candidate_id": "variable_section_shell_001", "source_geometry_sha256": "eb16a3c22bcac5320db296fa6528d5d797cf0a90200f0bb642332df5bb5be098"}
+  ],
+  "base_candidate": {
+    "material_id": "material_pending_001",
+    "process_id": "synthetic_additive_v1",
+    "evaluation_observed": false,
+    "evidence": {
+      "brep_valid": true,
+      "solid_count": 1,
+      "self_intersection_count": 0,
+      "zero_thickness_entity_count": 0,
+      "minimum_wall_m": 0.003,
+      "minimum_ligament_m": 0.003,
+      "minimum_radius_m": 0.0015,
+      "minimum_feature_m": 0.0015,
+      "tool_access_fraction": 0.9,
+      "maximum_unsupported_overhang_rad": 0.5,
+      "support_present": false,
+      "enclosed_void_count": 0,
+      "minimum_escape_hole_m": 0.005,
+      "requested_tolerance_m": 0.0002,
+      "joining_access_fraction": 0.9
+    }
+  },
+  "scenarios": [
+    {"scenario_id": "baseline", "evidence_overrides": {}, "proposed_repairs": [], "unrecorded_repair_detected": false},
+    {"scenario_id": "preregistered_support_repair", "evidence_overrides": {"maximum_unsupported_overhang_rad": 1.2}, "proposed_repairs": ["add_support"], "unrecorded_repair_detected": false},
+    {"scenario_id": "self_intersection", "evidence_overrides": {"self_intersection_count": 1}, "proposed_repairs": [], "unrecorded_repair_detected": false},
+    {"scenario_id": "sliver", "evidence_overrides": {"minimum_feature_m": 0.0002}, "proposed_repairs": [], "unrecorded_repair_detected": false},
+    {"scenario_id": "zero_thickness", "evidence_overrides": {"zero_thickness_entity_count": 1}, "proposed_repairs": [], "unrecorded_repair_detected": false},
+    {"scenario_id": "inaccessible_feature", "evidence_overrides": {"tool_access_fraction": 0.25}, "proposed_repairs": [], "unrecorded_repair_detected": false},
+    {"scenario_id": "unsupported_wall", "evidence_overrides": {"minimum_wall_m": 0.0005, "maximum_unsupported_overhang_rad": 1.2}, "proposed_repairs": [], "unrecorded_repair_detected": false},
+    {"scenario_id": "hidden_repair", "evidence_overrides": {}, "proposed_repairs": [], "unrecorded_repair_detected": true}
+  ]
+}

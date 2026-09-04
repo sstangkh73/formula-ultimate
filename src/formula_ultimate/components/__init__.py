@@ -52,6 +52,14 @@ from .freeform_solid_grammar import (
     declaration_sha256 as freeform_solid_declaration_sha256,
     validate_solid_grammar,
 )
+from .constructive_validity import (
+    GATE_VERSION as CONSTRUCTIVE_VALIDITY_GATE_VERSION,
+    REPAIR_OPERATIONS as CONSTRUCTIVE_REPAIR_OPERATIONS,
+    ConstructiveValidityError,
+    build_candidate as build_constructive_candidate,
+    evaluate_candidate as evaluate_constructive_candidate,
+    validate_gate_config as validate_constructive_gate_config,
+)
 
 __all__ = [
     "GRAMMAR_VERSION",
@@ -94,4 +102,10 @@ __all__ = [
     "FreeformSolidGrammarError",
     "freeform_solid_declaration_sha256",
     "validate_solid_grammar",
+    "CONSTRUCTIVE_VALIDITY_GATE_VERSION",
+    "CONSTRUCTIVE_REPAIR_OPERATIONS",
+    "ConstructiveValidityError",
+    "build_constructive_candidate",
+    "evaluate_constructive_candidate",
+    "validate_constructive_gate_config",
 ]
