@@ -1,0 +1,140 @@
+{
+  "genome_version": "typed_morphology_topology_genome_v1",
+  "source_solid_declaration_sha256": "a0e1c47ee15dbebac9dce2183a502c26199197b751fe427c74c2824dd1b4ad8a",
+  "required_domains": ["load", "energy", "motion", "fluid", "thermal", "control"],
+  "limits": {"maximum_parts": 8, "maximum_interfaces": 24, "maximum_features_per_part": 32, "maximum_paths": 24},
+  "genomes": [
+    {
+      "genome_id": "monolithic_crossdomain_001",
+      "parts": [
+        {"part_id": "core", "parent_part_id": null, "solid_family": "organic_load_bridge", "source_solid_candidate_id": "organic_load_bridge_001", "material_id": "material_pending_001", "process_id": "process_pending_001", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "path", "operator": "path", "inputs": []}, {"feature_id": "body", "operator": "sweep", "inputs": ["section", "path"]}], "final_feature_id": "body"}
+      ],
+      "interfaces": [],
+      "terminals": [
+        {"terminal_id": "source", "part_id": "core", "role": "source", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true},
+        {"terminal_id": "sink", "part_id": "core", "role": "sink", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true}
+      ],
+      "paths": [{"path_id": "internal_path", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "terminal_ids": ["source", "sink"], "part_ids": ["core"], "interface_ids": []}],
+      "symmetry": {"mode": "none", "axis": null, "order": 1}
+    },
+    {
+      "genome_id": "serial_three_001",
+      "parts": [
+        {"part_id": "input", "parent_part_id": null, "solid_family": "tapered_hollow_duct", "source_solid_candidate_id": "tapered_hollow_duct_001", "material_id": "material_pending_001", "process_id": "process_pending_002", "features": [{"feature_id": "a", "operator": "section", "inputs": []}, {"feature_id": "b", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "loft", "inputs": ["a", "b"]}], "final_feature_id": "body"},
+        {"part_id": "converter", "parent_part_id": null, "solid_family": "lofted_rotary_member", "source_solid_candidate_id": "lofted_rotary_member_001", "material_id": "material_pending_002", "process_id": "process_pending_003", "features": [{"feature_id": "a", "operator": "section", "inputs": []}, {"feature_id": "b", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "loft", "inputs": ["a", "b"]}, {"feature_id": "final", "operator": "bore", "inputs": ["body"]}], "final_feature_id": "final"},
+        {"part_id": "output", "parent_part_id": null, "solid_family": "tapered_open_shell", "source_solid_candidate_id": "tapered_open_shell_001", "material_id": "material_pending_003", "process_id": "process_pending_002", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "blank", "operator": "extrude", "inputs": ["section"]}, {"feature_id": "body", "operator": "shell", "inputs": ["blank"]}], "final_feature_id": "body"}
+      ],
+      "interfaces": [
+        {"interface_id": "input_to_converter", "part_a": "input", "part_b": "converter", "interface_type": "fixed", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "allowed_dof": []},
+        {"interface_id": "converter_to_output", "part_a": "converter", "part_b": "output", "interface_type": "fixed", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "allowed_dof": []}
+      ],
+      "terminals": [{"terminal_id": "source", "part_id": "input", "role": "source", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true}, {"terminal_id": "sink", "part_id": "output", "role": "sink", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true}],
+      "paths": [{"path_id": "serial_path", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "terminal_ids": ["source", "sink"], "part_ids": ["input", "converter", "output"], "interface_ids": ["input_to_converter", "converter_to_output"]}],
+      "symmetry": {"mode": "rotational", "axis": "z", "order": 3}
+    },
+    {
+      "genome_id": "branch_four_001",
+      "parts": [
+        {"part_id": "root", "parent_part_id": null, "solid_family": "curved_branch", "source_solid_candidate_id": "curved_branch_001", "material_id": "material_pending_001", "process_id": "process_pending_004", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "path", "operator": "path", "inputs": []}, {"feature_id": "body", "operator": "sweep", "inputs": ["section", "path"]}], "final_feature_id": "body"},
+        {"part_id": "arm_a", "parent_part_id": "root", "solid_family": "organic_load_bridge", "source_solid_candidate_id": "organic_load_bridge_001", "material_id": "material_pending_002", "process_id": "process_pending_004", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "extrude", "inputs": ["section"]}], "final_feature_id": "body"},
+        {"part_id": "arm_b", "parent_part_id": "root", "solid_family": "variable_section_shell", "source_solid_candidate_id": "variable_section_shell_001", "material_id": "material_pending_003", "process_id": "process_pending_005", "features": [{"feature_id": "a", "operator": "section", "inputs": []}, {"feature_id": "b", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "loft", "inputs": ["a", "b"]}], "final_feature_id": "body"},
+        {"part_id": "arm_c", "parent_part_id": "root", "solid_family": "lofted_rotary_member", "source_solid_candidate_id": "lofted_rotary_member_001", "material_id": "material_pending_004", "process_id": "process_pending_003", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "revolve", "inputs": ["section"]}], "final_feature_id": "body"}
+      ],
+      "interfaces": [
+        {"interface_id": "root_a", "part_a": "root", "part_b": "arm_a", "interface_type": "revolute", "domains": ["load", "motion"], "allowed_dof": ["rx"]},
+        {"interface_id": "root_b", "part_a": "root", "part_b": "arm_b", "interface_type": "electrical", "domains": ["energy", "control"], "allowed_dof": ["current", "signal"]},
+        {"interface_id": "root_c", "part_a": "root", "part_b": "arm_c", "interface_type": "fluid_coupling", "domains": ["fluid", "thermal"], "allowed_dof": ["flow", "heat"]}
+      ],
+      "terminals": [
+        {"terminal_id": "source", "part_id": "root", "role": "source", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true},
+        {"terminal_id": "sink_a", "part_id": "arm_a", "role": "sink", "domains": ["load", "motion"], "required": true},
+        {"terminal_id": "sink_b", "part_id": "arm_b", "role": "sink", "domains": ["energy", "control"], "required": true},
+        {"terminal_id": "sink_c", "part_id": "arm_c", "role": "sink", "domains": ["fluid", "thermal"], "required": true}
+      ],
+      "paths": [
+        {"path_id": "mechanical_branch", "domains": ["load", "motion"], "terminal_ids": ["source", "sink_a"], "part_ids": ["root", "arm_a"], "interface_ids": ["root_a"]},
+        {"path_id": "electrical_branch", "domains": ["energy", "control"], "terminal_ids": ["source", "sink_b"], "part_ids": ["root", "arm_b"], "interface_ids": ["root_b"]},
+        {"path_id": "fluid_branch", "domains": ["fluid", "thermal"], "terminal_ids": ["source", "sink_c"], "part_ids": ["root", "arm_c"], "interface_ids": ["root_c"]}
+      ],
+      "symmetry": {"mode": "none", "axis": null, "order": 1}
+    },
+    {
+      "genome_id": "cyclic_four_001",
+      "parts": [
+        {"part_id": "north", "parent_part_id": null, "solid_family": "patterned_skin", "source_solid_candidate_id": "patterned_fillet_plate_001", "material_id": "material_pending_001", "process_id": "process_pending_006", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "cell", "operator": "extrude", "inputs": ["section"]}, {"feature_id": "body", "operator": "linear_pattern", "inputs": ["cell"]}], "final_feature_id": "body"},
+        {"part_id": "east", "parent_part_id": "north", "solid_family": "faceted_hub", "source_solid_candidate_id": "bored_chamfered_hub_001", "material_id": "material_pending_002", "process_id": "process_pending_003", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "blank", "operator": "extrude", "inputs": ["section"]}, {"feature_id": "body", "operator": "bore", "inputs": ["blank"]}], "final_feature_id": "body"},
+        {"part_id": "south", "parent_part_id": "north", "solid_family": "revolved_intersection", "source_solid_candidate_id": "revolved_intersection_member_001", "material_id": "material_pending_003", "process_id": "process_pending_007", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "revolve", "inputs": ["section"]}], "final_feature_id": "body"},
+        {"part_id": "west", "parent_part_id": "north", "solid_family": "ribbed_hybrid", "source_solid_candidate_id": "ribbed_gusset_bridge_001", "material_id": "material_pending_004", "process_id": "process_pending_006", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "blank", "operator": "extrude", "inputs": ["section"]}, {"feature_id": "body", "operator": "rib_web", "inputs": ["blank"]}], "final_feature_id": "body"}
+      ],
+      "interfaces": [
+        {"interface_id": "ne", "part_a": "north", "part_b": "east", "interface_type": "fixed", "domains": ["load", "energy", "motion"], "allowed_dof": []},
+        {"interface_id": "es", "part_a": "east", "part_b": "south", "interface_type": "revolute", "domains": ["load", "energy", "motion"], "allowed_dof": ["rz"]},
+        {"interface_id": "sw", "part_a": "south", "part_b": "west", "interface_type": "fluid_coupling", "domains": ["fluid", "thermal", "control"], "allowed_dof": ["flow", "heat", "signal"]},
+        {"interface_id": "wn", "part_a": "west", "part_b": "north", "interface_type": "control_link", "domains": ["fluid", "thermal", "control"], "allowed_dof": ["flow", "heat", "signal"]}
+      ],
+      "terminals": [{"terminal_id": "source", "part_id": "north", "role": "source", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true}, {"terminal_id": "sink", "part_id": "south", "role": "sink", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true}],
+      "paths": [
+        {"path_id": "east_route", "domains": ["load", "energy", "motion"], "terminal_ids": ["source", "sink"], "part_ids": ["north", "east", "south"], "interface_ids": ["ne", "es"]},
+        {"path_id": "west_route", "domains": ["fluid", "thermal", "control"], "terminal_ids": ["source", "sink"], "part_ids": ["north", "west", "south"], "interface_ids": ["wn", "sw"]}
+      ],
+      "symmetry": {"mode": "rotational", "axis": "z", "order": 4}
+    },
+    {
+      "genome_id": "nested_crosslink_five_001",
+      "parts": [
+        {"part_id": "core", "parent_part_id": null, "solid_family": "variable_section_shell", "source_solid_candidate_id": "variable_section_shell_001", "material_id": "material_pending_001", "process_id": "process_pending_005", "features": [{"feature_id": "a", "operator": "section", "inputs": []}, {"feature_id": "b", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "loft", "inputs": ["a", "b"]}], "final_feature_id": "body"},
+        {"part_id": "carrier", "parent_part_id": "core", "solid_family": "tapered_open_shell", "source_solid_candidate_id": "tapered_open_shell_001", "material_id": "material_pending_002", "process_id": "process_pending_005", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "blank", "operator": "extrude", "inputs": ["section"]}, {"feature_id": "body", "operator": "shell", "inputs": ["blank"]}], "final_feature_id": "body"},
+        {"part_id": "left", "parent_part_id": "carrier", "solid_family": "organic_load_bridge", "source_solid_candidate_id": "organic_load_bridge_001", "material_id": "material_pending_003", "process_id": "process_pending_004", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "path", "operator": "path", "inputs": []}, {"feature_id": "body", "operator": "sweep", "inputs": ["section", "path"]}], "final_feature_id": "body"},
+        {"part_id": "right", "parent_part_id": "carrier", "solid_family": "lofted_rotary_member", "source_solid_candidate_id": "lofted_rotary_member_001", "material_id": "material_pending_004", "process_id": "process_pending_003", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "revolve", "inputs": ["section"]}], "final_feature_id": "body"},
+        {"part_id": "terminal", "parent_part_id": "right", "solid_family": "faceted_hub", "source_solid_candidate_id": "bored_chamfered_hub_001", "material_id": "material_pending_005", "process_id": "process_pending_003", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "blank", "operator": "extrude", "inputs": ["section"]}, {"feature_id": "body", "operator": "chamfer", "inputs": ["blank"]}], "final_feature_id": "body"}
+      ],
+      "interfaces": [
+        {"interface_id": "core_carrier", "part_a": "core", "part_b": "carrier", "interface_type": "fixed", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "allowed_dof": []},
+        {"interface_id": "carrier_left", "part_a": "carrier", "part_b": "left", "interface_type": "prismatic", "domains": ["load", "motion"], "allowed_dof": ["tx"]},
+        {"interface_id": "carrier_right", "part_a": "carrier", "part_b": "right", "interface_type": "electrical", "domains": ["energy", "control"], "allowed_dof": ["current", "signal"]},
+        {"interface_id": "carrier_right_fluid", "part_a": "carrier", "part_b": "right", "interface_type": "fluid_coupling", "domains": ["fluid", "thermal"], "allowed_dof": ["flow", "heat"]},
+        {"interface_id": "right_terminal", "part_a": "right", "part_b": "terminal", "interface_type": "fluid_coupling", "domains": ["fluid", "thermal"], "allowed_dof": ["flow", "heat"]},
+        {"interface_id": "right_terminal_electrical", "part_a": "right", "part_b": "terminal", "interface_type": "electrical", "domains": ["energy", "control"], "allowed_dof": ["current", "signal"]},
+        {"interface_id": "left_terminal", "part_a": "left", "part_b": "terminal", "interface_type": "spherical", "domains": ["load", "motion"], "allowed_dof": ["rx", "ry", "rz"]}
+      ],
+      "terminals": [
+        {"terminal_id": "source", "part_id": "core", "role": "source", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true},
+        {"terminal_id": "left_sink", "part_id": "left", "role": "sink", "domains": ["load", "motion"], "required": true},
+        {"terminal_id": "terminal_sink", "part_id": "terminal", "role": "sink", "domains": ["energy", "fluid", "thermal", "control"], "required": true}
+      ],
+      "paths": [
+        {"path_id": "mechanical", "domains": ["load", "motion"], "terminal_ids": ["source", "left_sink"], "part_ids": ["core", "carrier", "left"], "interface_ids": ["core_carrier", "carrier_left"]},
+        {"path_id": "electrofluid", "domains": ["energy", "control"], "terminal_ids": ["source", "terminal_sink"], "part_ids": ["core", "carrier", "right", "terminal"], "interface_ids": ["core_carrier", "carrier_right", "right_terminal_electrical"]},
+        {"path_id": "thermal_fluid", "domains": ["fluid", "thermal"], "terminal_ids": ["source", "terminal_sink"], "part_ids": ["core", "carrier", "right", "terminal"], "interface_ids": ["core_carrier", "carrier_right_fluid", "right_terminal"]}
+      ],
+      "symmetry": {"mode": "mirror", "axis": "y", "order": 2}
+    },
+    {
+      "genome_id": "asymmetric_hybrid_six_001",
+      "parts": [
+        {"part_id": "hub", "parent_part_id": null, "solid_family": "curved_branch", "source_solid_candidate_id": "curved_branch_001", "material_id": "material_pending_001", "process_id": "process_pending_004", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "path", "operator": "path", "inputs": []}, {"feature_id": "body", "operator": "sweep", "inputs": ["section", "path"]}], "final_feature_id": "body"},
+        {"part_id": "upper", "parent_part_id": "hub", "solid_family": "tapered_hollow_duct", "source_solid_candidate_id": "tapered_hollow_duct_001", "material_id": "material_pending_002", "process_id": "process_pending_002", "features": [{"feature_id": "a", "operator": "section", "inputs": []}, {"feature_id": "b", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "loft", "inputs": ["a", "b"]}], "final_feature_id": "body"},
+        {"part_id": "lower", "parent_part_id": "hub", "solid_family": "ribbed_hybrid", "source_solid_candidate_id": "ribbed_gusset_bridge_001", "material_id": "material_pending_003", "process_id": "process_pending_006", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "blank", "operator": "extrude", "inputs": ["section"]}, {"feature_id": "body", "operator": "gusset", "inputs": ["blank"]}], "final_feature_id": "body"},
+        {"part_id": "upper_tip", "parent_part_id": "upper", "solid_family": "lofted_rotary_member", "source_solid_candidate_id": "lofted_rotary_member_001", "material_id": "material_pending_004", "process_id": "process_pending_003", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "revolve", "inputs": ["section"]}], "final_feature_id": "body"},
+        {"part_id": "lower_tip", "parent_part_id": "lower", "solid_family": "patterned_skin", "source_solid_candidate_id": "patterned_fillet_plate_001", "material_id": "material_pending_005", "process_id": "process_pending_006", "features": [{"feature_id": "section", "operator": "section", "inputs": []}, {"feature_id": "cell", "operator": "extrude", "inputs": ["section"]}, {"feature_id": "body", "operator": "linear_pattern", "inputs": ["cell"]}], "final_feature_id": "body"},
+        {"part_id": "collector", "parent_part_id": "upper_tip", "solid_family": "variable_section_shell", "source_solid_candidate_id": "variable_section_shell_001", "material_id": "material_pending_006", "process_id": "process_pending_005", "features": [{"feature_id": "a", "operator": "section", "inputs": []}, {"feature_id": "b", "operator": "section", "inputs": []}, {"feature_id": "body", "operator": "loft", "inputs": ["a", "b"]}], "final_feature_id": "body"}
+      ],
+      "interfaces": [
+        {"interface_id": "hub_upper", "part_a": "hub", "part_b": "upper", "interface_type": "fixed", "domains": ["load", "energy", "fluid", "thermal", "control"], "allowed_dof": []},
+        {"interface_id": "hub_lower", "part_a": "hub", "part_b": "lower", "interface_type": "revolute", "domains": ["load", "motion"], "allowed_dof": ["ry"]},
+        {"interface_id": "upper_tip_link", "part_a": "upper", "part_b": "upper_tip", "interface_type": "fluid_coupling", "domains": ["energy", "fluid", "thermal", "control"], "allowed_dof": ["flow", "heat", "current", "signal"]},
+        {"interface_id": "lower_tip_link", "part_a": "lower", "part_b": "lower_tip", "interface_type": "prismatic", "domains": ["load", "motion"], "allowed_dof": ["tz"]},
+        {"interface_id": "upper_collector", "part_a": "upper_tip", "part_b": "collector", "interface_type": "electrical", "domains": ["energy", "control"], "allowed_dof": ["current", "signal"]},
+        {"interface_id": "upper_collector_fluid", "part_a": "upper_tip", "part_b": "collector", "interface_type": "fluid_coupling", "domains": ["fluid", "thermal"], "allowed_dof": ["flow", "heat"]},
+        {"interface_id": "lower_collector", "part_a": "lower_tip", "part_b": "collector", "interface_type": "thermal_contact", "domains": ["load", "motion", "fluid", "thermal"], "allowed_dof": ["flow", "heat"]}
+      ],
+      "terminals": [{"terminal_id": "source", "part_id": "hub", "role": "source", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true}, {"terminal_id": "collector_sink", "part_id": "collector", "role": "sink", "domains": ["load", "energy", "motion", "fluid", "thermal", "control"], "required": true}],
+      "paths": [
+        {"path_id": "upper_route", "domains": ["energy", "control"], "terminal_ids": ["source", "collector_sink"], "part_ids": ["hub", "upper", "upper_tip", "collector"], "interface_ids": ["hub_upper", "upper_tip_link", "upper_collector"]},
+        {"path_id": "lower_route", "domains": ["load", "motion"], "terminal_ids": ["source", "collector_sink"], "part_ids": ["hub", "lower", "lower_tip", "collector"], "interface_ids": ["hub_lower", "lower_tip_link", "lower_collector"]},
+        {"path_id": "fluid_route", "domains": ["fluid", "thermal"], "terminal_ids": ["source", "collector_sink"], "part_ids": ["hub", "upper", "upper_tip", "collector"], "interface_ids": ["hub_upper", "upper_tip_link", "upper_collector_fluid"]}
+      ],
+      "symmetry": {"mode": "none", "axis": null, "order": 1}
+    }
+  ]
+}
