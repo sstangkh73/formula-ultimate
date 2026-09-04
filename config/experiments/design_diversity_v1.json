@@ -1,0 +1,22 @@
+{
+  "schema_version": "design_diversity_v1",
+  "census_id": "current_bounded_search_bias_001",
+  "claim_level": "search-space measurement only; not design discovery or physical validation",
+  "sources": {
+    "base_assembly": {"path": "config/vehicle/topology_neutral_vehicle_v1.json", "file_sha256": "305098ece49a499fa7b77108b251d152960cf8165beb774c5c0d6192265a859f"},
+    "search_protocol": {"path": "config/experiments/bounded_whole_vehicle_search_pilot_v1.json", "file_sha256": "b538082990566ea836258e9fece8498e1510bf5532f500def0d66be746bc6d1d"},
+    "load_protocol": {"path": "config/vehicle/whole_vehicle_load_cases_v1.json", "file_sha256": "6369b11f173dc30abd62ce72d34809fe3122b428398a01b0df1aea1cdc11f193"},
+    "failure_contract": {"path": "config/simulation/structural_failure_coupling_v1.json", "file_sha256": "e0647cca22c35e18265743787e910e4f53ca9751d631fdd12c4d4368dfd8cd43"},
+    "baseline_protocol": {"path": "config/vehicle/fixed_topology_end_to_end_baseline_v1.json", "file_sha256": "93ef09d276b7faead52fdbe5ac8ad40c59a2f818b701927624c2a536ca5e3987"}
+  },
+  "census": {
+    "treatments": ["GRID", "RANDOM", "EVOLUTION"],
+    "seeds": [101, 202, 303],
+    "attempts_per_treatment_seed": 32,
+    "expected_attempts": 288,
+    "expected_variable_names": ["contact_radius_scale", "core_length_scale", "core_width_scale", "propulsor_size_scale", "source_size_scale"]
+  },
+  "invariances": ["component_interface_renaming", "global_translation", "signed_axis_permutation", "uniform_scale"],
+  "change_controls": ["branch_addition", "connectivity_reroute", "primitive_family_change", "interface_topology_change"],
+  "metrics": ["topology_signature", "geometry_signature", "unique_topology_ratio", "unique_geometry_ratio", "duplicate_phenotype_rate", "primitive_fraction", "primitive_type_entropy_bits", "curved_surface_area_fraction", "functional_path_signature", "failure_mode_coverage"]
+}
