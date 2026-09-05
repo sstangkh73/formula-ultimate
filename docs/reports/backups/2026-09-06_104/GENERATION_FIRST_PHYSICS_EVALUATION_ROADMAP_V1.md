@@ -1,5 +1,3 @@
-> Superseded for future execution on 2026-09-06 by the [Whole-Vehicle and Technology Discovery Protocol V1](../contracts/WHOLE_VEHICLE_TECHNOLOGY_DISCOVERY_PROTOCOL_V1_2026-09-06.md). The historical roadmap below is preserved. An [exact pre-change backup](backups/2026-09-06_104/GENERATION_FIRST_PHYSICS_EVALUATION_ROADMAP_V1.md) is retained.
-
 # Generation-First, Physics-Evaluation Roadmap V1
 
 Thai companion: `GENERATION_FIRST_PHYSICS_EVALUATION_ROADMAP_V1.th.md`

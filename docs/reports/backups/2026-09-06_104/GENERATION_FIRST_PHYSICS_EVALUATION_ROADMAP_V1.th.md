@@ -1,5 +1,3 @@
-> เปลี่ยนแนวทางดำเนินงานในอนาคตเมื่อ 2026-09-06 ไปใช้ [Protocol V1 การค้นพบรถทั้งคันและเทคโนโลยี](../contracts/WHOLE_VEHICLE_TECHNOLOGY_DISCOVERY_PROTOCOL_V1_2026-09-06.th.md) โดยเก็บ roadmap ประวัติด้านล่างไว้ พร้อม [backup ก่อนแก้ที่ตรงทุก byte](backups/2026-09-06_104/GENERATION_FIRST_PHYSICS_EVALUATION_ROADMAP_V1.th.md)
-
 # Roadmap V1 แบบสร้างก่อน แล้วใช้ฟิสิกส์ประเมิน
 
 ต้นฉบับภาษาอังกฤษ: `GENERATION_FIRST_PHYSICS_EVALUATION_ROADMAP_V1.md`
