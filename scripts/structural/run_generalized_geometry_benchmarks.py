@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
 from formula_ultimate.components.semantic_geometry_witness import compare_report, validate_config as validate_semantic_config  # noqa: E402
+from formula_ultimate.structural.generalized_geometry_benchmarks import EVALUATOR_VERSION  # noqa: E402
 from formula_ultimate.structural.generalized_geometry_benchmarks import canonical_sha256, evaluate_case, severed_edge_control, validate_config, validate_severed_edge_control, validate_source_evidence  # noqa: E402
 
 
@@ -42,6 +43,7 @@ def main() -> int:
     if divergence["status"] != "invalid" or divergence["reason"] != "solver_divergence" or divergence["fallback_used"] is not False:
         raise RuntimeError("divergence control did not remain invalid")
     body = {"status": "passed", "schema_version": config["schema_version"], "config_sha256": validation["config_sha256"], "semantic_config_sha256": semantic_validation["config_sha256"], "freecad_report_sha256": report["report_sha256"], "semantic_comparison_sha256": comparison["comparison_sha256"], "case_count": len(case_results), "model_coverage": models, "contact_law_coverage": laws, "case_results": case_results, "controls": {"severed_edges": severed, "divergent_solver": divergence, "post_observation_failure_repair_allowed": False}, "evidence_class": config["evidence_policy"]["evidence_class"], "design_use_allowed": False, "claim_boundary": "seven reduced-order cross-method benchmarks only; no arbitrary-topology or real-material validation"}
+    body.update(evaluator_version=EVALUATOR_VERSION, full_balance_validated=False)
     result = {**body, "result_sha256": canonical_sha256(body)}; write(args.output, result)
     if args.replay_reference and load(args.replay_reference) != result: raise RuntimeError("generalized benchmark replay mismatch")
     print(json.dumps({"status": "passed", "case_count": len(case_results), "models": models, "result_sha256": result["result_sha256"]}, sort_keys=True)); return 0

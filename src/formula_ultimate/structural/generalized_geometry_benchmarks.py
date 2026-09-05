@@ -8,6 +8,8 @@ from typing import Any, Callable, Mapping, Sequence
 
 
 SCHEMA_VERSION = "generalized_geometry_benchmarks_v1"
+EVALUATOR_VERSION = "generalized_geometry_equations_v2"
+SCALAR_SOLVE_TOLERANCE = 1e-12
 CASE_IDS = ("curved_cantilever", "tapered_beam", "hollow_shell", "branched_joint", "lattice_rib_junction", "bearing_seat", "contact_pair")
 SOURCE_CANDIDATE_IDS = ("curved_branch_001", "tapered_open_shell_001", "tapered_hollow_duct_001", "organic_load_bridge_001", "ribbed_gusset_bridge_001", "bored_chamfered_hub_001", "revolved_intersection_member_001")
 RESPONSE_MODELS = ("curved_bending", "tapered_bending", "shell_membrane", "parallel_branch_bending", "rib_network", "bearing_ring", "hertz_contact")
@@ -141,6 +143,62 @@ def _linear(values: Sequence[float], fraction: float) -> float:
     return float(values[left]) * (1 - local) + float(values[left + 1]) * local
 
 
+def _hertz_parameters(witness: Mapping[str, Any], material: Mapping[str, Any]) -> tuple[float, float, float]:
+    """Equal elastic materials; the witness radius is only an effective-radius proxy."""
+    E = _finite(material["youngs_modulus_pa"], "Young modulus", minimum=1e-30)
+    nu = _finite(material["poisson_ratio"], "Poisson ratio")
+    if not -1 < nu < 0.5:
+        raise GeneralizedBenchmarkViolation("Poisson ratio outside elastic domain")
+    radius = witness["path_witness"]["minimum_sampled_bend_radius_m"]
+    if radius is None:
+        radius = witness["thickness_field"]["minimum_sampled_span_m"]
+    radius = _finite(radius, "effective contact radius", minimum=1e-30)
+    effective_modulus = E / (2 * (1 - nu ** 2))
+    return radius, effective_modulus, 4 * effective_modulus * math.sqrt(radius) / 3
+
+
+def scalar_constitutive_evidence(
+    response: float, generalized_load: float, coefficient: float,
+    *, exponent: float = 1.0, load_unit: str = "N",
+) -> dict[str, Any]:
+    """Check q = K*u**p using K supplied by the model, never inferred as q/u.
+
+    This is scalar equation evidence, not independently recovered field balance.
+    Work assumes a proportional quasistatic ramp with q(u) proportional to u**p.
+    For pressure, q*u is energy per area, not total energy.
+    """
+    response = _finite(response, "response", minimum=1e-30)
+    generalized_load = _finite(generalized_load, "generalized load", minimum=1e-30)
+    coefficient = _finite(coefficient, "constitutive coefficient", minimum=1e-30)
+    if exponent not in (1.0, 1.5) or load_unit not in ("N", "Pa"):
+        raise GeneralizedBenchmarkViolation("unsupported scalar law or unit")
+    try:
+        recovered_load = coefficient * response ** exponent
+        stored_energy = coefficient * response ** (exponent + 1) / (exponent + 1)
+        ramp_work = generalized_load * response / (exponent + 1)
+    except OverflowError as error:
+        raise GeneralizedBenchmarkViolation("nonfinite scalar constitutive evidence") from error
+    for value in (recovered_load, stored_energy, ramp_work):
+        _finite(value, "scalar constitutive evidence", minimum=1e-300)
+    equation_residual = abs(recovered_load - generalized_load) / generalized_load
+    energy_residual = abs(stored_energy - ramp_work) / max(stored_energy, ramp_work)
+    return {
+        "constitutive_coefficient": coefficient, "constitutive_exponent": exponent,
+        "generalized_load": generalized_load, "recovered_generalized_load": recovered_load,
+        "generalized_load_unit": load_unit,
+        "generalized_equilibrium_residual_relative": equation_residual,
+        "constitutive_energy_residual_relative": energy_residual,
+        "stored_energy": stored_energy, "quasistatic_ramp_work": ramp_work,
+        "energy_unit": "J" if load_unit == "N" else "J/m^2",
+        "equilibrium_evidence": "scalar_constitutive_only",
+        "full_balance_validated": False,
+        "force_residual_relative": None, "moment_residual_relative": None,
+        "energy_residual_relative": None,
+        "field_balance_status": "not_computed_no_independent_field_reactions",
+        "solver_converged": max(equation_residual, energy_residual) <= SCALAR_SOLVE_TOLERANCE,
+    }
+
+
 def response_reference(case: Mapping[str, Any], witness: Mapping[str, Any], material: Mapping[str, Any]) -> dict[str, float]:
     areas, inertias, radii = _positive_sections(witness) if case["response_model"] != "hertz_contact" else ([], [], [])
     E = float(material["youngs_modulus_pa"]); nu = float(material["poisson_ratio"]); length = float(witness["path_witness"]["path_length_m"]); load = float(case["load_n"])
@@ -160,38 +218,90 @@ def response_reference(case: Mapping[str, Any], witness: Mapping[str, Any], mate
     elif model == "bearing_ring":
         outer = math.fsum(radii) / len(radii); thickness = min(float(witness["thickness_field"]["minimum_sampled_span_m"]), outer * 0.8); inner = max(outer - thickness, outer * 0.1)
         generalized_load = load + float(case["pressure_pa"]) * 2 * math.pi * inner * length; response = generalized_load * math.log(outer / inner) / (2 * math.pi * E * length)
-    else:
-        radius = float(witness["path_witness"]["minimum_sampled_bend_radius_m"] or witness["thickness_field"]["minimum_sampled_span_m"]); effective_modulus = E / (2 * (1 - nu ** 2)); stiffness = 4 * effective_modulus * math.sqrt(radius) / 3
+    elif model == "hertz_contact":
+        _, _, stiffness = _hertz_parameters(witness, material)
+        _finite(load, "Hertz load", minimum=1e-30)
         generalized_load = load; response = (generalized_load / stiffness) ** (2 / 3)
+    else:
+        raise GeneralizedBenchmarkViolation("unknown response model")
     if not math.isfinite(response) or response <= 0: raise GeneralizedBenchmarkViolation("reference solver returned invalid response")
     return {"response_m": response, "generalized_load": generalized_load}
 
 
 def discrete_response(case: Mapping[str, Any], witness: Mapping[str, Any], material: Mapping[str, Any], level: int) -> dict[str, Any]:
-    reference = response_reference(case, witness, material); areas, inertias, radii = _positive_sections(witness) if case["response_model"] != "hertz_contact" else ([], [], [])
-    E = float(material["youngs_modulus_pa"]); nu = float(material["poisson_ratio"]); length = float(witness["path_witness"]["path_length_m"]); load = float(case["load_n"]); model = case["response_model"]
+    if isinstance(level, bool) or not isinstance(level, int) or level < 1:
+        raise GeneralizedBenchmarkViolation("discrete level must be a positive integer")
+    reference = response_reference(case, witness, material)
+    model = case["response_model"]
+    areas, inertias, radii = _positive_sections(witness) if model != "hertz_contact" else ([], [], [])
+    E = float(material["youngs_modulus_pa"])
+    length = float(witness["path_witness"]["path_length_m"])
+    load = float(case["load_n"])
+    generalized_load = reference["generalized_load"]
+    exponent = 1.0
+    residual_history = []
     if model == "curved_bending":
-        inertia = math.fsum(inertias) / len(inertias); radius = witness["path_witness"]["minimum_sampled_bend_radius_m"] or length
-        response = _midpoint(lambda x: load * (length - x) ** 2 * (1 + (x / radius) ** 2) / (E * inertia), 0.0, length, level); effort = level
-    elif model == "tapered_bending":
-        response = _midpoint(lambda x: load * (length - x) ** 2 / (E * max(_linear(inertias, x / length), 1e-30)), 0.0, length, level); effort = level
-    elif model == "shell_membrane":
-        radius = math.fsum(radii) / len(radii); effective_radius = radius * math.sin(math.pi / level) / (math.pi / level); thickness = float(witness["thickness_field"]["minimum_sampled_span_m"])
-        response = float(case["pressure_pa"]) * effective_radius ** 2 / (E * thickness); effort = level
-    elif model == "parallel_branch_bending":
-        inertia = math.fsum(inertias) / len(inertias); response = _midpoint(lambda x: load * (length - x) ** 2 / (2 * E * inertia), 0.0, length, level); effort = 2 * level
-    elif model == "rib_network":
-        area = math.fsum(areas) / len(areas); element_stiffness = E * area / (length / level); branch_stiffness = element_stiffness / level; response = load / (3 * branch_stiffness); effort = 3 * level
-    elif model == "bearing_ring":
-        outer = math.fsum(radii) / len(radii); thickness = min(float(witness["thickness_field"]["minimum_sampled_span_m"]), outer * 0.8); inner = max(outer - thickness, outer * 0.1); generalized_load = reference["generalized_load"]
-        compliance = _midpoint(lambda radius: 1 / (2 * math.pi * E * length * radius), inner, outer, level); response = generalized_load * compliance; effort = level
-    else:
-        radius = float(witness["path_witness"]["minimum_sampled_bend_radius_m"] or witness["thickness_field"]["minimum_sampled_span_m"]); effective_modulus = E / (2 * (1 - nu ** 2)); stiffness = 4 * effective_modulus * math.sqrt(radius) / 3; response = reference["response_m"] * 0.5
-        for _ in range(level):
-            residual = stiffness * response ** 1.5 - load; derivative = 1.5 * stiffness * math.sqrt(response); response -= residual / derivative
+        inertia = math.fsum(inertias) / len(inertias)
+        radius = witness["path_witness"]["minimum_sampled_bend_radius_m"] or length
+        compliance = _midpoint(lambda x: (length - x) ** 2 * (1 + (x / radius) ** 2) / (E * inertia), 0.0, length, level)
         effort = level
-    generalized_load = reference["generalized_load"]; stiffness = generalized_load / response; external = 0.5 * generalized_load * response; internal = 0.5 * stiffness * response ** 2
-    return {"level": level, "effective_elements_or_iterations": effort, "response_m": response, "reference_relative_error": abs(response - reference["response_m"]) / reference["response_m"], "force_residual_relative": abs(load + (-load)) / max(load, 1.0), "moment_residual_relative": abs(float(case["torque_n_m"]) + (-float(case["torque_n_m"]))) / max(float(case["torque_n_m"]), 1.0), "energy_residual_relative": abs(external - internal) / max(abs(external), abs(internal), 1e-30), "solver_converged": True}
+    elif model == "tapered_bending":
+        compliance = _midpoint(lambda x: (length - x) ** 2 / (E * max(_linear(inertias, x / length), 1e-30)), 0.0, length, level)
+        effort = level
+    elif model == "shell_membrane":
+        radius = math.fsum(radii) / len(radii)
+        effective_radius = radius * math.sin(math.pi / level) / (math.pi / level)
+        thickness = float(witness["thickness_field"]["minimum_sampled_span_m"])
+        compliance = effective_radius ** 2 / (E * thickness)
+        effort = level
+    elif model == "parallel_branch_bending":
+        inertia = math.fsum(inertias) / len(inertias)
+        compliance = _midpoint(lambda x: (length - x) ** 2 / (2 * E * inertia), 0.0, length, level)
+        effort = 2 * level
+    elif model == "rib_network":
+        area = math.fsum(areas) / len(areas)
+        element_stiffness = E * area / (length / level)
+        branch_stiffness = element_stiffness / level
+        compliance = 1 / (3 * branch_stiffness)
+        effort = 3 * level
+    elif model == "bearing_ring":
+        outer = math.fsum(radii) / len(radii)
+        thickness = min(float(witness["thickness_field"]["minimum_sampled_span_m"]), outer * 0.8)
+        inner = max(outer - thickness, outer * 0.1)
+        compliance = _midpoint(lambda radius: 1 / (2 * math.pi * E * length * radius), inner, outer, level)
+        effort = level
+    elif model == "hertz_contact":
+        _, _, stiffness = _hertz_parameters(witness, material)
+        exponent = 1.5
+        # Perturbed analytical seed: a bounded root-solver benchmark,
+        # not an independent 3D contact solution.
+        response = reference["response_m"] * 0.5
+        residual_history.append(abs(stiffness * response ** 1.5 - load) / load)
+        effort = 0
+        for _ in range(level):
+            residual = stiffness * response ** 1.5 - load
+            derivative = 1.5 * stiffness * math.sqrt(response)
+            response -= residual / derivative
+            _finite(response, "Newton response", minimum=1e-30)
+            effort += 1
+            residual_history.append(abs(stiffness * response ** 1.5 - load) / load)
+            if residual_history[-1] <= SCALAR_SOLVE_TOLERANCE:
+                break
+    else:
+        raise GeneralizedBenchmarkViolation("unknown response model")
+    if model != "hertz_contact":
+        stiffness = 1 / _finite(compliance, "discrete compliance", minimum=1e-300)
+        response = generalized_load * compliance
+    evidence = scalar_constitutive_evidence(
+        response, generalized_load, stiffness, exponent=exponent,
+        load_unit="Pa" if model == "shell_membrane" else "N",
+    )
+    return {
+        "evaluator_version": EVALUATOR_VERSION, "level": level,
+        "effective_elements_or_iterations": effort, "response_m": response,
+        "reference_relative_error": abs(response - reference["response_m"]) / reference["response_m"],
+        "nonlinear_residual_history": residual_history, **evidence,
+    }
 
 
 def _relative(first: float, second: float) -> float:
@@ -201,19 +311,41 @@ def _relative(first: float, second: float) -> float:
 def adjudicate_mesh_evidence(
     tolerances: Mapping[str, Any], reference: Mapping[str, Any], levels: Sequence[Mapping[str, Any]]
 ) -> dict[str, Any]:
-    """Fail closed on convergence and balance evidence supplied by a solver path."""
+    """Adjudicate scalar solve/refinement only; field balance remains unverified."""
     if len(levels) != 3:
         raise GeneralizedBenchmarkViolation("exactly three refinement levels are required")
+    counts = [item.get("level") for item in levels]
+    if any(isinstance(n, bool) or not isinstance(n, int) or n < 1 for n in counts) or counts[1] != 2 * counts[0] or counts[2] != 2 * counts[1]:
+        raise GeneralizedBenchmarkViolation("evidence levels must double strictly")
     responses = [_finite(item.get("response_m"), "response", minimum=1e-30) for item in levels]
     reference_response = _finite(reference.get("response_m"), "reference response", minimum=1e-30)
     if any(item.get("solver_converged") is not True for item in levels):
         raise GeneralizedBenchmarkViolation("solver did not converge")
     for result in levels:
-        for metric in ("reference_relative_error", "force_residual_relative", "moment_residual_relative", "energy_residual_relative"):
-            _finite(result.get(metric), metric, minimum=0.0)
+        if result.get("evaluator_version") != EVALUATOR_VERSION or result.get("equilibrium_evidence") != "scalar_constitutive_only" or result.get("full_balance_validated") is not False or result.get("field_balance_status") != "not_computed_no_independent_field_reactions":
+            raise GeneralizedBenchmarkViolation("scalar evidence scope/version mismatch")
         for metric in ("force_residual_relative", "moment_residual_relative", "energy_residual_relative"):
-            if result[metric] > tolerances[metric]:
+            if metric not in result or result[metric] is not None:
+                raise GeneralizedBenchmarkViolation(f"{metric} unavailable without field solution")
+        if result.get("generalized_load") != reference.get("generalized_load"):
+            raise GeneralizedBenchmarkViolation("generalized load differs from reference input")
+        recomputed = scalar_constitutive_evidence(
+            result["response_m"], result.get("generalized_load"),
+            result.get("constitutive_coefficient"),
+            exponent=result.get("constitutive_exponent"), load_unit=result.get("generalized_load_unit"),
+        )
+        if not recomputed["solver_converged"]:
+            raise GeneralizedBenchmarkViolation("scalar solver did not converge")
+        for metric, tolerance in (("generalized_equilibrium_residual_relative", "force_residual_relative"), ("constitutive_energy_residual_relative", "energy_residual_relative")):
+            reported = _finite(result.get(metric), metric, minimum=0.0)
+            if reported != recomputed[metric] or recomputed[metric] > tolerances[tolerance]:
                 raise GeneralizedBenchmarkViolation(f"{metric} gate failed")
+        for key in ("stored_energy", "quasistatic_ramp_work", "recovered_generalized_load", "energy_unit"):
+            if result.get(key) != recomputed[key]:
+                raise GeneralizedBenchmarkViolation(f"{key} differs from constitutive law")
+        actual_error = abs(result["response_m"] - reference_response) / reference_response
+        if _finite(result.get("reference_relative_error"), "reference_relative_error", minimum=0.0) != actual_error:
+            raise GeneralizedBenchmarkViolation("reference error differs from response")
     changes = [_relative(responses[index], responses[index + 1]) for index in range(2)]
     first_difference = abs(responses[0] - responses[1])
     second_difference = abs(responses[1] - responses[2])
@@ -223,7 +355,7 @@ def adjudicate_mesh_evidence(
         raise GeneralizedBenchmarkViolation("response or last-two convergence gate failed")
     if not exact_match and (observed_order is None or observed_order < tolerances["minimum_observed_order"]):
         raise GeneralizedBenchmarkViolation("observed convergence order gate failed")
-    return {"last_two_relative_change": changes[-1], "observed_order": observed_order, "exact_discrete_match": exact_match}
+    return {"last_two_relative_change": changes[-1], "observed_order": observed_order, "exact_discrete_match": exact_match, "full_balance_validated": False, "balance_gate_status": "not_evaluated_no_field_solution"}
 
 
 def failure_indicators(case: Mapping[str, Any], witness: Mapping[str, Any], material: Mapping[str, Any], *, failure_ratio_limit: float = 1.0) -> dict[str, Any]:
@@ -234,7 +366,10 @@ def failure_indicators(case: Mapping[str, Any], witness: Mapping[str, Any], mate
     torsion = torque * radius / max(2 * inertia, 1e-30); axial = load / area
     hoop = float(case["pressure_pa"]) * radius / thickness if case["response_model"] in {"shell_membrane", "bearing_ring"} else 0.0
     if case["response_model"] == "hertz_contact":
-        contact_radius = (3 * max(load, 1e-30) * max(witness["path_witness"]["minimum_sampled_bend_radius_m"] or thickness, thickness) / (4 * E)) ** (1 / 3); contact = 3 * load / (2 * math.pi * contact_radius ** 2)
+        effective_radius, effective_modulus, _ = _hertz_parameters(witness, material)
+        _finite(load, "Hertz load", minimum=0.0)
+        contact_radius = (3 * load * effective_radius / (4 * effective_modulus)) ** (1 / 3)
+        contact = 3 * load / (2 * math.pi * contact_radius ** 2) if load > 0 else 0.0
     else: contact = 0.0
     thermal = E * float(material["thermal_expansion_per_k"]) * float(case["temperature_delta_k"]); combined = max(bending, torsion, axial, hoop, contact) + thermal
     buckling_capacity = math.pi ** 2 * E * inertia / max(length ** 2, 1e-30); buckling_ratio = load / buckling_capacity
@@ -250,6 +385,7 @@ def evaluate_case(config: Mapping[str, Any], case: Mapping[str, Any], witness: M
     levels = [discrete_response(case, witness, config["material"], item) for item in case["discrete_levels"]]
     if force_divergence:
         levels[-1]["solver_converged"] = False
+    if any(item["solver_converged"] is not True for item in levels):
         return {"status": "invalid", "reason": "solver_divergence", "case_id": case["case_id"], "mesh_results": levels, "fallback_used": False}
     tolerances = config["tolerances"]
     convergence = adjudicate_mesh_evidence(tolerances, reference, levels)
@@ -270,4 +406,4 @@ def validate_severed_edge_control(control: Mapping[str, Any]) -> None:
         raise GeneralizedBenchmarkViolation("severed-edge failure control is noncausal")
 
 
-__all__ = ["SCHEMA_VERSION", "CASE_IDS", "SOURCE_CANDIDATE_IDS", "GeneralizedBenchmarkViolation", "canonical_sha256", "validate_config", "validate_source_evidence", "select_model", "response_reference", "discrete_response", "adjudicate_mesh_evidence", "failure_indicators", "evaluate_case", "severed_edge_control", "validate_severed_edge_control"]
+__all__ = ["SCHEMA_VERSION", "EVALUATOR_VERSION", "CASE_IDS", "SOURCE_CANDIDATE_IDS", "GeneralizedBenchmarkViolation", "canonical_sha256", "validate_config", "validate_source_evidence", "select_model", "response_reference", "scalar_constitutive_evidence", "discrete_response", "adjudicate_mesh_evidence", "failure_indicators", "evaluate_case", "severed_edge_control", "validate_severed_edge_control"]
