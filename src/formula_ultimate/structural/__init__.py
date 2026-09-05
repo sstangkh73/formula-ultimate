@@ -98,6 +98,16 @@ from .vehicle_nonlinear_gate import (
     aggregate_candidate_nonlinear_gate,
     nonlinear_gate_config_from_mapping,
 )
+from .generalized_geometry_benchmarks import (
+    CASE_IDS as GENERALIZED_GEOMETRY_CASE_IDS,
+    GeneralizedBenchmarkViolation,
+    adjudicate_mesh_evidence,
+    evaluate_case as evaluate_generalized_geometry_case,
+    select_model as select_generalized_geometry_model,
+    validate_config as validate_generalized_geometry_benchmark_config,
+    validate_source_evidence as validate_generalized_geometry_source_evidence,
+    validate_severed_edge_control,
+)
 
 __all__ = [
     "BendingSpec",
@@ -178,4 +188,12 @@ __all__ = [
     "adjudicate_nonlinear_case",
     "aggregate_candidate_nonlinear_gate",
     "nonlinear_gate_config_from_mapping",
+    "GENERALIZED_GEOMETRY_CASE_IDS",
+    "GeneralizedBenchmarkViolation",
+    "adjudicate_mesh_evidence",
+    "evaluate_generalized_geometry_case",
+    "select_generalized_geometry_model",
+    "validate_generalized_geometry_benchmark_config",
+    "validate_generalized_geometry_source_evidence",
+    "validate_severed_edge_control",
 ]
