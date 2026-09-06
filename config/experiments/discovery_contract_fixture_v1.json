@@ -1,0 +1,366 @@
+{
+  "body": {
+    "alternatives": [
+      "A single Boolean loses unresolved and process-specific evidence.",
+      "An uncharged retry or cache hit distorts opportunity."
+    ],
+    "analysis": {
+      "alpha": 0.05,
+      "controller_policy": "controlled_substitution_and_matched_adaptation_with_separate_costs",
+      "direction": "minimize",
+      "minimum_effect": 0.1,
+      "multiplicity": "holm",
+      "primary_metric": "synthetic_ratio",
+      "sample_size": 2,
+      "sample_size_rationale": "Two paired seeds exercise registration only; not a scientific power calculation.",
+      "secondary_metrics": [
+        "synthetic_niche_count"
+      ],
+      "test": "paired_permutation_registered_for_future_study_not_executed",
+      "uncertainty": "registered_intervals_for_future_study; fixtures_descriptive_only",
+      "unit": "1"
+    },
+    "audit": {
+      "reporting": "within_stratum_unknown_bounds",
+      "sample_per_stratum": 2,
+      "seed": 17
+    },
+    "budget": {
+      "cache_policy": "same_context_full_charge",
+      "overshoot_policy": "record_and_stop",
+      "pools": {
+        "audit": {
+          "attempts": 80,
+          "cache_hits": 10000,
+          "cad_calls": 10000,
+          "cpu_s": 100.0,
+          "dof": 10000,
+          "elements": 10000,
+          "geometry_executions": 10000,
+          "gpu_s": 100.0,
+          "mesh_attempts": 10000,
+          "peak_memory_bytes": 10000000,
+          "proposals": 30,
+          "solver_iterations": 10000,
+          "wall_s": 200.0
+        },
+        "exploration": {
+          "attempts": 80,
+          "cache_hits": 10000,
+          "cad_calls": 10000,
+          "cpu_s": 100.0,
+          "dof": 10000,
+          "elements": 10000,
+          "geometry_executions": 10000,
+          "gpu_s": 100.0,
+          "mesh_attempts": 10000,
+          "peak_memory_bytes": 10000000,
+          "proposals": 30,
+          "solver_iterations": 10000,
+          "wall_s": 200.0
+        },
+        "finalist": {
+          "attempts": 80,
+          "cache_hits": 10000,
+          "cad_calls": 10000,
+          "cpu_s": 100.0,
+          "dof": 10000,
+          "elements": 10000,
+          "geometry_executions": 10000,
+          "gpu_s": 100.0,
+          "mesh_attempts": 10000,
+          "peak_memory_bytes": 10000000,
+          "proposals": 30,
+          "solver_iterations": 10000,
+          "wall_s": 200.0
+        },
+        "quality": {
+          "attempts": 80,
+          "cache_hits": 10000,
+          "cad_calls": 10000,
+          "cpu_s": 100.0,
+          "dof": 10000,
+          "elements": 10000,
+          "geometry_executions": 10000,
+          "gpu_s": 100.0,
+          "mesh_attempts": 10000,
+          "peak_memory_bytes": 10000000,
+          "proposals": 30,
+          "solver_iterations": 10000,
+          "wall_s": 200.0
+        },
+        "stepping_stone": {
+          "attempts": 80,
+          "cache_hits": 10000,
+          "cad_calls": 10000,
+          "cpu_s": 100.0,
+          "dof": 10000,
+          "elements": 10000,
+          "geometry_executions": 10000,
+          "gpu_s": 100.0,
+          "mesh_attempts": 10000,
+          "peak_memory_bytes": 10000000,
+          "proposals": 30,
+          "solver_iterations": 10000,
+          "wall_s": 200.0
+        }
+      },
+      "primary_resource": "cpu_s",
+      "recovery_policy": "started_charge_reservation_unstarted_charge_attempt",
+      "retry_limit": 2
+    },
+    "controls": [
+      "same_external_task",
+      "paired_seeds",
+      "same_per_treatment_seed_budget",
+      "same_evaluator_access"
+    ],
+    "criteria": {
+      "failure": "Any conflated state, hidden mutation, free retry or unsupported promotion.",
+      "leakage": "Disjoint datasets; no holdout feedback or old-registration continuation.",
+      "reproduction": "Bounded registered selection only; no QD agent implemented here.",
+      "success": "All software acceptance cases pass; zero scientific survivors.",
+      "unresolved": "Retain reason, missing evidence and cost; do not infer physical failure."
+    },
+    "evaluators": [
+      {
+        "applicability": "Synthetic contract payloads only; no physical evaluator is installed by this registration.",
+        "domains": [
+          "structural",
+          "additive",
+          "machining",
+          "decision",
+          "safety"
+        ],
+        "evidence_class": "software_fixture",
+        "fidelities": [
+          "coarse",
+          "fine",
+          "holdout",
+          "check",
+          "independent"
+        ],
+        "id": "fixture_primary",
+        "implementation_sha256": "dfbf1aebca4992f6a75c2f3b66fb45a2aad4380399881aed2ee002a72a07368d",
+        "independent_of": null,
+        "representations": [
+          "solid",
+          "shell",
+          "multi_body",
+          "lattice"
+        ],
+        "validation_sha256": "3be09e22f2888c1151a9b8c8725b2fd7c56ab5d52ab1f4fe0ba218e28439c666"
+      },
+      {
+        "applicability": "Synthetic contract payloads only; no physical evaluator is installed by this registration.",
+        "domains": [
+          "structural",
+          "additive",
+          "machining",
+          "decision",
+          "safety"
+        ],
+        "evidence_class": "software_fixture",
+        "fidelities": [
+          "coarse",
+          "fine",
+          "holdout",
+          "check",
+          "independent"
+        ],
+        "id": "fixture_independent",
+        "implementation_sha256": "46cc4e086fd057e3a24e049bbb5bc01e8eb3c63ecef9279a2a3f794e02115605",
+        "independent_of": "fixture_primary",
+        "representations": [
+          "solid",
+          "shell",
+          "multi_body",
+          "lattice"
+        ],
+        "validation_sha256": "bf8fa4a7b8d2acf0dff84907b220d93db9e025d0d0254aec26193f5ced27f438"
+      }
+    ],
+    "evidence_class": "software_fixture",
+    "execution": {
+      "holdout_feedback": false,
+      "ordering": "registered_serial",
+      "reallocation": "none",
+      "stopping": "budget_or_protocol_failure",
+      "workers": 1
+    },
+    "experiment_id": "WORK098-SOFTWARE-CONTRACT-FIXTURE",
+    "gates": [
+      {
+        "comparison": "le",
+        "domain": "structural",
+        "error_limit": 0.01,
+        "evaluator_id": "fixture_primary",
+        "evidence_type": "check",
+        "fidelity": "coarse",
+        "fidelity_rank": 1,
+        "id": "structural_coarse",
+        "kind": "physics",
+        "metric": "synthetic_ratio",
+        "minimum_refinements": 1,
+        "threshold": 1.0,
+        "unit": "1"
+      },
+      {
+        "comparison": "le",
+        "domain": "structural",
+        "error_limit": 0.01,
+        "evaluator_id": "fixture_primary",
+        "evidence_type": "field",
+        "fidelity": "fine",
+        "fidelity_rank": 2,
+        "id": "structural_fine",
+        "kind": "physics",
+        "metric": "synthetic_ratio",
+        "minimum_refinements": 3,
+        "threshold": 1.0,
+        "unit": "1"
+      },
+      {
+        "comparison": "le",
+        "domain": "additive",
+        "error_limit": 0.01,
+        "evaluator_id": "fixture_primary",
+        "evidence_type": "check",
+        "fidelity": "check",
+        "fidelity_rank": 0,
+        "id": "additive",
+        "kind": "manufacturing",
+        "metric": "synthetic_ratio",
+        "minimum_refinements": 1,
+        "threshold": 1.0,
+        "unit": "1"
+      },
+      {
+        "comparison": "le",
+        "domain": "machining",
+        "error_limit": 0.01,
+        "evaluator_id": "fixture_primary",
+        "evidence_type": "check",
+        "fidelity": "check",
+        "fidelity_rank": 0,
+        "id": "machining",
+        "kind": "manufacturing",
+        "metric": "synthetic_ratio",
+        "minimum_refinements": 1,
+        "threshold": 1.0,
+        "unit": "1"
+      },
+      {
+        "comparison": "le",
+        "domain": "structural",
+        "error_limit": 0.01,
+        "evaluator_id": "fixture_primary",
+        "evidence_type": "check",
+        "fidelity": "holdout",
+        "fidelity_rank": 2,
+        "id": "holdout",
+        "kind": "holdout",
+        "metric": "synthetic_ratio",
+        "minimum_refinements": 1,
+        "threshold": 1.0,
+        "unit": "1"
+      },
+      {
+        "comparison": "le",
+        "domain": "decision",
+        "error_limit": 0.01,
+        "evaluator_id": "fixture_primary",
+        "evidence_type": "check",
+        "fidelity": "check",
+        "fidelity_rank": 0,
+        "id": "replay",
+        "kind": "replay",
+        "metric": "synthetic_ratio",
+        "minimum_refinements": 1,
+        "threshold": 1.0,
+        "unit": "1"
+      },
+      {
+        "comparison": "le",
+        "domain": "safety",
+        "error_limit": 0.01,
+        "evaluator_id": "fixture_primary",
+        "evidence_type": "check",
+        "fidelity": "check",
+        "fidelity_rank": 0,
+        "id": "safety",
+        "kind": "safety",
+        "metric": "synthetic_ratio",
+        "minimum_refinements": 1,
+        "threshold": 1.0,
+        "unit": "1"
+      },
+      {
+        "comparison": "le",
+        "domain": "structural",
+        "error_limit": 0.01,
+        "evaluator_id": "fixture_independent",
+        "evidence_type": "field",
+        "fidelity": "independent",
+        "fidelity_rank": 3,
+        "id": "independent",
+        "kind": "independent",
+        "metric": "synthetic_ratio",
+        "minimum_refinements": 3,
+        "threshold": 1.0,
+        "unit": "1"
+      }
+    ],
+    "hypothesis": "Event-based states preserve outcome distinctions and prevent unsupported admission.",
+    "independent_variables": [
+      "gate_order",
+      "archive_policy",
+      "representation"
+    ],
+    "partitions": {
+      "calibration": [
+        "calibration_fixture"
+      ],
+      "holdout": [
+        "holdout_fixture"
+      ],
+      "training": [
+        "training_fixture"
+      ]
+    },
+    "profiles": {
+      "energy_profile_sha256": "b06b425149351bf7c74dde7d081d8d8dfc0157776391485dff062b3027476a22",
+      "environment_sha256": "c3fa3c5617f98d4de8f2607dec7314e508c5481077b7b5531e0abd36fbf73602",
+      "material_library_sha256": "5b85e50cb5fd8f94619ee91363542ee768d2c34347e4dea911c79472eca488c2",
+      "operator_library_sha256": "0f25334abedd56910ade363300283b133f272161ad7ad7ac3a0e85260b6cef92",
+      "representation_library_sha256": "9b39b4ed25aa4de43417aebabd86482723291bdbec39a5126120c8bc25b6beb9",
+      "task_sha256": "90c81aa5ddb00a1a414fc87209b3bc06864c1fb43cd3499519293e3f2f391e09"
+    },
+    "promotion_gates": [
+      "structural_fine",
+      "additive",
+      "holdout",
+      "replay",
+      "safety",
+      "independent"
+    ],
+    "promotion_scope": "synthetic_assembly_contract_only",
+    "protocol_id": "FU-WHOLE-VEHICLE-DISCOVERY-V1-2026-09-06",
+    "schema": "discovery_contract_v1",
+    "seeds": [
+      7,
+      19
+    ],
+    "survivor_gates": [
+      "structural_fine",
+      "additive",
+      "holdout",
+      "replay"
+    ],
+    "treatments": [
+      "CONVENTIONAL_CONTROL",
+      "OPEN_ARCHITECTURE"
+    ]
+  },
+  "registration_sha256": "c9f2e8c9b3aae3d7db0c394f716dce7d42212fc8effa1ae61a23bac49e14185e"
+}
