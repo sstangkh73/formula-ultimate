@@ -1,0 +1,49 @@
+{
+  "schema": "executable_morphology_qd_v1",
+  "seeds": [7, 19],
+  "limits": {
+    "maximum_parts": 8,
+    "maximum_nodes_per_part": 24,
+    "maximum_edges_per_part": 32,
+    "maximum_interfaces": 16,
+    "maximum_terminals": 12,
+    "maximum_coordinate_m": 0.5,
+    "minimum_radius_m": 0.002,
+    "maximum_radius_m": 0.04,
+    "minimum_edge_length_m": 0.002,
+    "mutation_step_m": 0.012
+  },
+  "operators": [
+    "perturb_node",
+    "grow_branch",
+    "split_part",
+    "rewire_interface",
+    "merge_parts",
+    "mutate_radius_field",
+    "mutate_controller"
+  ],
+  "measurement": {
+    "required_fields": [
+      "volume_m3",
+      "surface_area_m2",
+      "bounds_m",
+      "center_m",
+      "solid_count",
+      "face_count",
+      "edge_count",
+      "terminal_positions_m"
+    ],
+    "relative_tolerance": 0.000001,
+    "absolute_position_tolerance_m": 0.0000001
+  },
+  "archive": {
+    "descriptors": ["part_count", "interface_cycle_rank", "branch_node_count", "terminal_domain_count"],
+    "capacity_per_niche": {"feasible": 2, "failed": 1, "unresolved": 1},
+    "reproduction_caps": {"feasible": 1, "failed": 1, "unresolved": 1}
+  },
+  "claim_boundary": {
+    "evidence_scope": "software_fixture_with_executed_cad",
+    "admitted_claims": ["executable_geometry", "measured_geometry", "reproducible_lineage", "bounded_archive_behavior"],
+    "prohibited_claims": ["physical_validation", "physical_feasibility", "manufacturing_feasibility", "race_performance", "technology_discovery"]
+  }
+}
