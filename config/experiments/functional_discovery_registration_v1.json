@@ -1,0 +1,235 @@
+{
+  "body": {
+    "schema": "discovery_contract_v1",
+    "protocol_id": "FU-WHOLE-VEHICLE-DISCOVERY-V1-2026-09-06",
+    "experiment_id": "WORK100-FUNCTIONAL-COUPLED-DISCOVERY-TRIAL-V1",
+    "evidence_class": "admitted_simulation",
+    "hypothesis": "An executable geometry-derived axial and thermal network can produce at least one bounded candidate survivor with a functional signature not declared by the fixed-topology control while preserving explicit numerical, process-envelope, holdout, replay, and claim gates.",
+    "alternatives": [
+      "All generated architectures fail physical, numerical, process-envelope, holdout, or replay gates.",
+      "A surviving non-fixed signature is structurally distinct but offers no measured functional distinction at this fidelity.",
+      "Proxy ranking disagrees materially with refined evaluation within a treatment and seed stratum.",
+      "Observed differences are seed-specific and the bounded sample cannot support a superiority claim."
+    ],
+    "independent_variables": [
+      "registered_treatment",
+      "paired_seed",
+      "graph_topology",
+      "radius_field",
+      "passive_controller_gene"
+    ],
+    "controls": [
+      "same_registered_training_and_holdout_tasks",
+      "same_declared_material_model",
+      "same_process_envelope",
+      "same_primary_and_reference_solvers",
+      "same_refinement_levels",
+      "same_per_treatment_seed_budget",
+      "registered_serial_execution",
+      "no_holdout_feedback"
+    ],
+    "profiles": {
+      "task_sha256": "24d92f309eb03129d75343ac498015b176666da451d9daea507cd5ff4791314b",
+      "energy_profile_sha256": "afdaf9b5cc279a93a4c2d7979376bf638875662dce91e4595bbbb485ca4ec51b",
+      "material_library_sha256": "375e7876c956a1e652024342f5ae865b15a3f03a694d27ea5d482867d1c2c356",
+      "representation_library_sha256": "1b501f1a40748418042f475b3621100d760333f4fdbf2afa1815422155485a9e",
+      "operator_library_sha256": "37aea93bc6e219e36ec80e33acedf8863a2a55cdcaf6f5dd873c6c1de3e18c1f",
+      "environment_sha256": "bd627c6e870eae2daf64b81acf3316254635b2d4b6835878c1b899554d820259"
+    },
+    "treatments": [
+      "FIXED_TOPOLOGY",
+      "RANDOM_CONTROL",
+      "GRAPH_ONLY",
+      "MORPHOLOGY_ONLY",
+      "JOINT_MORPHOLOGY_CONTROLLER"
+    ],
+    "seeds": [7, 19],
+    "partitions": {
+      "calibration": ["functional_calibration_formula_fixture_v1"],
+      "training": ["functional_training_v1"],
+      "holdout": ["functional_holdout_v1"]
+    },
+    "evaluators": [
+      {
+        "id": "axial_thermal_primary",
+        "implementation_sha256": "5d45e6e715d4215ed8fdf3241bc44b6219bb2162376ff46582f4a842597aa7c2",
+        "validation_sha256": "47e79730d77f66523ebe38252fce3c5e19ca53bb0ca70eec4b78d198a1df9586",
+        "evidence_class": "admitted_simulation",
+        "domains": ["coupled_axial_thermal", "robotic_deposition", "decision", "safety"],
+        "fidelities": ["proxy", "refined", "holdout", "check"],
+        "representations": ["solid", "multi_body"],
+        "applicability": "Linear static scalar axial-load and steady-state thermal-resistance networks derived from the registered executable morphology, with fixed load-and-thermal interfaces and one registered source/sink ancestry pair; excludes bending, buckling, contact, fatigue, transient thermal response, fluids, controls, whole-vehicle dynamics, and manufacturing proof.",
+        "independent_of": null
+      },
+      {
+        "id": "axial_thermal_reference",
+        "implementation_sha256": "789cccb9eaab91e1d34d4e94e32dbb54040846105e95c5bbe5fdaee1613ff575",
+        "validation_sha256": "47e79730d77f66523ebe38252fce3c5e19ca53bb0ca70eec4b78d198a1df9586",
+        "evidence_class": "admitted_simulation",
+        "domains": ["coupled_axial_thermal"],
+        "fidelities": ["exact_reference"],
+        "representations": ["solid", "multi_body"],
+        "applicability": "Closed-form linearly varying circular-edge resistance assembled into the same bounded linear network; algorithmically separate from segment subdivision but shares the declared equations, geometry genotype, NumPy linear algebra runtime, and therefore is not an independent software stack or physical test.",
+        "independent_of": "axial_thermal_primary"
+      }
+    ],
+    "gates": [
+      {
+        "id": "coupled_proxy",
+        "kind": "physics",
+        "domain": "coupled_axial_thermal",
+        "fidelity": "proxy",
+        "evaluator_id": "axial_thermal_primary",
+        "metric": "coupled_utilization_ratio",
+        "unit": "1",
+        "comparison": "le",
+        "threshold": 1.0,
+        "minimum_refinements": 3,
+        "error_limit": 0.005,
+        "evidence_type": "field",
+        "fidelity_rank": 1
+      },
+      {
+        "id": "coupled_refined",
+        "kind": "physics",
+        "domain": "coupled_axial_thermal",
+        "fidelity": "refined",
+        "evaluator_id": "axial_thermal_primary",
+        "metric": "coupled_utilization_ratio",
+        "unit": "1",
+        "comparison": "le",
+        "threshold": 1.0,
+        "minimum_refinements": 3,
+        "error_limit": 0.005,
+        "evidence_type": "field",
+        "fidelity_rank": 2
+      },
+      {
+        "id": "process_envelope",
+        "kind": "manufacturing",
+        "domain": "robotic_deposition",
+        "fidelity": "check",
+        "evaluator_id": "axial_thermal_primary",
+        "metric": "process_violation_ratio",
+        "unit": "1",
+        "comparison": "le",
+        "threshold": 1.0,
+        "minimum_refinements": 1,
+        "error_limit": 0.0,
+        "evidence_type": "check",
+        "fidelity_rank": 0
+      },
+      {
+        "id": "coupled_holdout",
+        "kind": "holdout",
+        "domain": "coupled_axial_thermal",
+        "fidelity": "holdout",
+        "evaluator_id": "axial_thermal_primary",
+        "metric": "coupled_utilization_ratio",
+        "unit": "1",
+        "comparison": "le",
+        "threshold": 1.0,
+        "minimum_refinements": 3,
+        "error_limit": 0.005,
+        "evidence_type": "field",
+        "fidelity_rank": 3
+      },
+      {
+        "id": "decision_replay",
+        "kind": "replay",
+        "domain": "decision",
+        "fidelity": "check",
+        "evaluator_id": "axial_thermal_primary",
+        "metric": "replay_difference_ratio",
+        "unit": "1",
+        "comparison": "le",
+        "threshold": 0.0,
+        "minimum_refinements": 1,
+        "error_limit": 0.0,
+        "evidence_type": "check",
+        "fidelity_rank": 0
+      },
+      {
+        "id": "safety_margin",
+        "kind": "safety",
+        "domain": "safety",
+        "fidelity": "check",
+        "evaluator_id": "axial_thermal_primary",
+        "metric": "unresolved_safety_requirement_count",
+        "unit": "1",
+        "comparison": "le",
+        "threshold": 0.0,
+        "minimum_refinements": 1,
+        "error_limit": 0.0,
+        "evidence_type": "check",
+        "fidelity_rank": 0
+      },
+      {
+        "id": "independent_exact",
+        "kind": "independent",
+        "domain": "coupled_axial_thermal",
+        "fidelity": "exact_reference",
+        "evaluator_id": "axial_thermal_reference",
+        "metric": "coupled_utilization_ratio",
+        "unit": "1",
+        "comparison": "le",
+        "threshold": 1.0,
+        "minimum_refinements": 1,
+        "error_limit": 0.005,
+        "evidence_type": "scalar",
+        "fidelity_rank": 4
+      }
+    ],
+    "survivor_gates": ["coupled_refined", "process_envelope", "coupled_holdout", "decision_replay"],
+    "promotion_gates": ["coupled_refined", "process_envelope", "coupled_holdout", "decision_replay", "safety_margin", "independent_exact"],
+    "analysis": {
+      "primary_metric": "coupled_utilization_ratio",
+      "unit": "1",
+      "direction": "minimize",
+      "minimum_effect": 0.05,
+      "secondary_metrics": ["geometry_derived_mass_kg", "maximum_displacement_m", "maximum_axial_stress_pa", "maximum_temperature_rise_k", "process_violation_ratio", "proxy_refined_agreement"],
+      "sample_size": 2,
+      "sample_size_rationale": "Two paired seeds bound implementation cost and demonstrate the evidence path only; this is not a scientific power calculation and cannot support a superiority claim.",
+      "test": "paired_permutation_descriptive_only_at_n_equals_2",
+      "alpha": 0.05,
+      "multiplicity": "holm_for_four_treatment_contrasts_if_a_future_powered_study_is_run",
+      "uncertainty": "refinement_change_conservation_residual_and_separate_closed_form_reference_error",
+      "controller_policy": "controller_gene_observed_but_not_causal_at_this_passive_subsystem_fidelity"
+    },
+    "budget": {
+      "primary_resource": "cpu_s",
+      "pools": {
+        "exploration": {"proposals": 2, "attempts": 10, "geometry_executions": 2, "cad_calls": 2, "mesh_attempts": 20, "elements": 100000, "dof": 100000, "solver_iterations": 100000, "cpu_s": 100.0, "gpu_s": 0.0, "wall_s": 100.0, "peak_memory_bytes": 1000000000, "cache_hits": 10},
+        "audit": {"proposals": 2, "attempts": 10, "geometry_executions": 2, "cad_calls": 2, "mesh_attempts": 20, "elements": 100000, "dof": 100000, "solver_iterations": 100000, "cpu_s": 100.0, "gpu_s": 0.0, "wall_s": 100.0, "peak_memory_bytes": 1000000000, "cache_hits": 10},
+        "quality": {"proposals": 2, "attempts": 10, "geometry_executions": 2, "cad_calls": 2, "mesh_attempts": 20, "elements": 100000, "dof": 100000, "solver_iterations": 100000, "cpu_s": 100.0, "gpu_s": 0.0, "wall_s": 100.0, "peak_memory_bytes": 1000000000, "cache_hits": 10},
+        "stepping_stone": {"proposals": 2, "attempts": 10, "geometry_executions": 2, "cad_calls": 2, "mesh_attempts": 20, "elements": 100000, "dof": 100000, "solver_iterations": 100000, "cpu_s": 100.0, "gpu_s": 0.0, "wall_s": 100.0, "peak_memory_bytes": 1000000000, "cache_hits": 10},
+        "finalist": {"proposals": 2, "attempts": 10, "geometry_executions": 2, "cad_calls": 2, "mesh_attempts": 20, "elements": 300000, "dof": 300000, "solver_iterations": 300000, "cpu_s": 100.0, "gpu_s": 0.0, "wall_s": 100.0, "peak_memory_bytes": 1000000000, "cache_hits": 10}
+      },
+      "retry_limit": 1,
+      "cache_policy": "same_context_full_charge",
+      "overshoot_policy": "record_and_stop",
+      "recovery_policy": "started_charge_reservation_unstarted_charge_attempt"
+    },
+    "audit": {
+      "sample_per_stratum": 1,
+      "seed": 100,
+      "reporting": "within_stratum_unknown_bounds"
+    },
+    "execution": {
+      "workers": 1,
+      "ordering": "registered_serial",
+      "reallocation": "none",
+      "stopping": "budget_or_protocol_failure",
+      "holdout_feedback": false
+    },
+    "criteria": {
+      "success": "At least one candidate with a functional signature different from the fixed-topology control reaches candidate_survivor through registered refined physics, process-envelope, holdout, and exact decision-replay gates.",
+      "failure": "No such candidate reaches the scoped survivor gates, or a registered physical or process criterion fails without numerical ambiguity.",
+      "unresolved": "Any nonconvergence, conservation breach, excessive refinement change, excessive reference error, unsupported interface, or missing artifact remains numerically or procedurally unresolved and is not converted into physical failure or success.",
+      "leakage": "Training and holdout dataset identifiers remain disjoint; holdout outputs never affect candidate generation, audit selection, or registered thresholds.",
+      "reproduction": "A second run in the frozen runtime must exactly reproduce deterministic evidence and the trusted ledger replay; timing is observed separately and excluded from identity."
+    },
+    "promotion_scope": "bounded_axial_thermal_subsystem_simulation_v1"
+  },
+  "registration_sha256": "aa5012d3b0a85b9f6c42b1ede5561681713cb9c9832577f6d2bf88e09d96a871"
+}

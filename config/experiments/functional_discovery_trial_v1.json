@@ -1,0 +1,89 @@
+{
+  "schema": "functional_coupled_discovery_trial_v1",
+  "seeds": [7, 19],
+  "treatments": [
+    "FIXED_TOPOLOGY",
+    "RANDOM_CONTROL",
+    "GRAPH_ONLY",
+    "MORPHOLOGY_ONLY",
+    "JOINT_MORPHOLOGY_CONTROLLER"
+  ],
+  "representation_limits": {
+    "maximum_parts": 8,
+    "maximum_nodes_per_part": 24,
+    "maximum_edges_per_part": 32,
+    "maximum_interfaces": 16,
+    "maximum_terminals": 12,
+    "maximum_coordinate_m": 0.5,
+    "minimum_radius_m": 0.002,
+    "maximum_radius_m": 0.04,
+    "minimum_edge_length_m": 0.002,
+    "mutation_step_m": 0.012
+  },
+  "material": {
+    "material_id": "linear_aluminium_like_study_model_v1",
+    "density_kg_per_m3": 2700.0,
+    "youngs_modulus_pa": 70000000000.0,
+    "yield_strength_pa": 250000000.0,
+    "thermal_conductivity_w_per_m_k": 170.0,
+    "model_scope": "declared_linear_isotropic_study_model_not_material_certification"
+  },
+  "process": {
+    "process_id": "bounded_robotic_deposition_envelope_v1",
+    "minimum_diameter_m": 0.004,
+    "maximum_parts": 8,
+    "maximum_span_m": 0.5,
+    "claim": "computational_envelope_only_not_manufacturing_proof"
+  },
+  "proxy_refinement_levels": [1, 2, 4],
+  "refinement_levels": [4, 8, 16],
+  "training_task": {
+    "task_id": "axial_thermal_training_v1",
+    "dataset_id": "functional_training_v1",
+    "force_n": 5000.0,
+    "heat_w": 30.0,
+    "maximum_displacement_m": 0.0002,
+    "maximum_temperature_rise_k": 160.0,
+    "reference_vehicle_mass_kg": 800.0,
+    "external_source_ancestry": "external_source",
+    "external_sink_ancestry": "external_sink"
+  },
+  "holdout_task": {
+    "task_id": "axial_thermal_holdout_v1",
+    "dataset_id": "functional_holdout_v1",
+    "force_n": 6000.0,
+    "heat_w": 35.0,
+    "maximum_displacement_m": 0.0002,
+    "maximum_temperature_rise_k": 160.0,
+    "reference_vehicle_mass_kg": 800.0,
+    "external_source_ancestry": "external_source",
+    "external_sink_ancestry": "external_sink"
+  },
+  "tolerances": {
+    "maximum_refinement_relative_change": 0.005,
+    "maximum_reference_relative_error": 0.005,
+    "maximum_conservation_residual": 0.0000000001
+  },
+  "analysis": {
+    "primary_metric": "coupled_utilization_ratio",
+    "direction": "minimize",
+    "minimum_effect": 0.05,
+    "test": "paired_permutation_descriptive_only_at_n_equals_2",
+    "alpha": 0.05,
+    "multiplicity": "holm_for_four_treatment_contrasts",
+    "sample_size_rationale": "Two paired seeds are a bounded implementation trial and cannot support a superiority claim.",
+    "controller_policy": "controller_gene_observed_but_not_causal_at_this_passive_subsystem_fidelity"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "cadquery": "2.8.0",
+    "numpy": "2.5.2",
+    "workers": 1,
+    "ordering": "registered_serial"
+  },
+  "claim_boundary": {
+    "survivor_scope": "bounded_axial_thermal_subsystem_simulation_v1",
+    "admitted_claims": ["geometry_derived_scalar_network_fields", "bounded_subsystem_candidate_survivor"],
+    "prohibited_claims": ["complete_vehicle_feasibility", "race_superiority", "technology_novelty", "promotion_ready", "physical_validation"]
+  }
+}

@@ -1,0 +1,10 @@
+# Preserve byte-addressed Work 100 evidence identities across Windows checkouts.
+/.gitattributes text eol=lf
+/config/experiments/functional_discovery_*.json text eol=lf
+/docs/contracts/FUNCTIONAL_COUPLED_DISCOVERY_TRIAL_V1*.md text eol=lf
+/docs/work_logs/2026-09-06_100_functional-coupled-discovery-trial-*.md text eol=lf
+/scripts/experiments/run_functional_discovery.py text eol=lf
+/src/formula_ultimate/experiments/functional_discovery.py text eol=lf
+/src/formula_ultimate/physics/functional_network_*.py text eol=lf
+/src/formula_ultimate/search/executable_morphology.py text eol=lf
+/tests/test_functional_discovery.py text eol=lf
