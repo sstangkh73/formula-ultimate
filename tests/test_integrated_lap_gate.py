@@ -31,7 +31,7 @@ LAP_PATH = ROOT / "config" / "vehicle" / "integrated_level0_lap_gate_v1.json"
 CONTROLLER_PATH = ROOT / "config" / "vehicle" / "closed_loop_corridor_controller_v1.json"
 LINKAGE_PATH = ROOT / "config" / "vehicle" / "geometry_linkage_motion_ratio_v1.json"
 CORRIDOR_PATH = ROOT / "config" / "circuits" / "closed_loop_controller_corridors_v1.json"
-WORK074_REFERENCE_SHA256 = "a400e8a9c1c0768d11647aa6c2fde3855a5d12898b548edef0b2fd6911244374"
+WORK074_REFERENCE_SHA256 = "ab4470e28004cc78f87288a4ab2a7828881514362d8dffbb7d5326cdff5a8c6d"
 WORK075_APPLICATION_SHA256 = "51b6255347e4a6a59428ee309f4f78c8e981baa437386bdcf3505df9d8403487"
 
 

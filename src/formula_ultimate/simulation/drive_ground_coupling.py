@@ -8,6 +8,8 @@ import json
 import math
 from typing import Any, Mapping, Sequence
 
+from ..physics.deterministic_math import tanh as deterministic_tanh
+
 from formula_ultimate.topology.functional_vehicle import (
     FunctionalVehicle,
     from_functional_mapping,
@@ -300,7 +302,7 @@ def ground_force_request(unit: GroundUnitConfig, *, wheel_speed_rad_per_s: float
     slip_velocity = surface - speed
     slip_ratio = slip_velocity / max(speed, regularization)
     capacity = min(unit.friction_coefficient * unit.normal_load_n, unit.maximum_longitudinal_force_n)
-    requested = 0.0 if slip_ratio <= 0.0 else capacity * math.tanh(unit.longitudinal_stiffness_n_per_slip * slip_ratio / capacity)
+    requested = 0.0 if slip_ratio <= 0.0 else capacity * deterministic_tanh(unit.longitudinal_stiffness_n_per_slip * slip_ratio / capacity)
     if not all(math.isfinite(item) for item in (surface, slip_velocity, slip_ratio, capacity, requested)):
         raise DriveGroundCouplingError("slip law produced a non-finite state")
     return {

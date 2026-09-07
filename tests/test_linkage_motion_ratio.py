@@ -20,7 +20,7 @@ from tests.test_sprung_body_vertical_coupling import loaded as loaded_vertical
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "vehicle" / "geometry_linkage_motion_ratio_v1.json"
-WORK073_REFERENCE_SHA256 = "802330a0566c746d00beb3f5a6cddb725cfee4a9e9f85e08a8bd509b4a6ce973"
+WORK073_REFERENCE_SHA256 = "2ca3d0da5e128b3bdb6462472b0f5fa9d60afaa4d948a688356b2d2cb9974b8d"
 
 
 def loaded(section: str = "linkages"):
