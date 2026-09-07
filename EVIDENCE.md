@@ -24,12 +24,43 @@ not, the commands are correct and the document is stale.
 ## Continuous integration
 
 The test suite runs on every push and pull request via GitHub Actions:
-[`.github/workflows/tests.yml`](.github/workflows/tests.yml).
+[`.github/workflows/tests.yml`](.github/workflows/tests.yml). The run history at
+https://github.com/sstangkh73/formula-ultimate/actions shows the result at every
+commit.
 
-This is the strongest verification available here — a reader does not need to
-take "the tests pass" on trust, or even run anything locally. The run history at
-https://github.com/sstangkh73/formula-ultimate/actions shows whether the suite
-passed at each commit, including commits made before any CV was written.
+### Current status, stated honestly
+
+As of commit `329c292` (7 September 2026):
+
+| Environment | Result |
+| --- | --- |
+| Local, Windows, Python 3.14, numpy present | `Ran 794 tests` &mdash; **OK (skipped=8)** |
+| CI, Ubuntu, Python 3.11 | `Ran 774 tests` &mdash; **FAILED (failures=2, errors=6, skipped=8)** |
+
+**CI is currently red, and that is the accurate picture, not the local green.**
+Two distinct problems are behind it, and neither is hidden here:
+
+1. **Six errors: tests that require local artifacts.** Tests such as
+   `test_campaign_physics` and `test_refined_housing_mesh` need inputs under
+   `artifacts/`, which is excluded from the repository. On a clean checkout they
+   raise `required campaign input is missing: work048` instead of skipping.
+   These tests should declare their inputs optional and skip when absent; until
+   they do, they cannot run in CI at all.
+
+2. **Two failures: results differ across platforms.** `test_integrated_lap_gate`
+   and `test_linkage_motion_ratio` compare SHA-256 digests of pipeline output.
+   The digests computed on Linux do not match the ones recorded on Windows.
+
+   For a project whose central claim is that results survive independent
+   re-verification, this is the more serious of the two. A pipeline whose output
+   digest depends on the operating system is not yet reproducible in the sense
+   this repository claims, and the honest reading is that cross-platform
+   determinism is an open problem here, not a solved one.
+
+Until both are closed, the defensible claim about this repository is that it has
+a large automated suite wired into CI and that the suite passes on the
+development platform &mdash; not that it passes everywhere. Anyone evaluating this
+work should read the Actions history directly rather than take a summary.
 
 ## Research claims
 
