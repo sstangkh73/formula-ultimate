@@ -6,6 +6,8 @@ import subprocess
 import tempfile
 import unittest
 
+from tests.artifact_requirements import requires_artifacts
+
 from formula_ultimate.experiments.campaign_physics import (
     CampaignPhysicsError,
     adjudicate_seed_outcomes,
@@ -43,6 +45,7 @@ def fixture_evaluation(candidate, objective=1.0):
     return CandidateEvaluation(candidate, "feasible", None, 1.0, 1.0, 1.0, 0.5, objective, 2.0, objective, "training", "f" * 64, canonical_sha256(draft))
 
 
+@requires_artifacts()
 class CampaignPhysicsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

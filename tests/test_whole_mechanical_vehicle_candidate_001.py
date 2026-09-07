@@ -6,6 +6,8 @@ from pathlib import Path
 import tempfile
 import unittest
 
+from tests.artifact_requirements import requires_artifacts
+
 from formula_ultimate.experiments.whole_mechanical_vehicle_candidate import (
     WholeMechanicalVehicleAuditError, build_bundle, evaluate, load_evidence,
     validate_config,
@@ -19,6 +21,7 @@ def raw() -> dict:
     return json.loads(CONFIG.read_text(encoding="utf-8"))
 
 
+@requires_artifacts()
 class WholeMechanicalVehicleCandidateTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
