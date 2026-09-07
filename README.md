@@ -201,3 +201,23 @@ does not mean no constraints.
 Novel appearance is not evidence of new technology, and Level-0 success is not
 physical validation. The preferred hypothesis must be actively falsified at
 each promotion stage.
+
+## License
+
+- **Code** — MIT License, see [`LICENSE`](LICENSE).
+- **Documents, data, and figures** — Creative Commons Attribution 4.0
+  International (CC BY 4.0), see [`LICENSE-DATA.md`](LICENSE-DATA.md). This
+  covers `docs/`, `config/`, and any generated reports.
+
+Attribution: Chisanupong Injun (2026).
+[ORCID 0009-0000-2979-1916](https://orcid.org/0009-0000-2979-1916).
+
+FIA regulation documents linked from this README are published by the FIA and
+are not covered by the licences above.
+
+## Verifying the claims in this repository
+
+[`EVIDENCE.md`](EVIDENCE.md) maps every claim made about this project to the
+artifact or the command that reproduces it, and records the current CI status
+honestly — including the two open problems that keep the Ubuntu CI run red
+while the suite passes on the development platform.
