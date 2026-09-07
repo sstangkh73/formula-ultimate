@@ -9,6 +9,10 @@ decimal rounding.
 The output is ordered from the most primitive layer upward: libm probes, then
 the loaded configuration, then the simulation state after a growing number of
 steps. The first line that differs names the layer that is responsible.
+
+This tool found the cross-platform difference recorded in EVIDENCE.md: the
+wheel slip law used math.tanh, which the Windows and Linux C libraries round
+differently. Keep it for the next time a digest fails to reproduce elsewhere.
 """
 
 from __future__ import annotations
@@ -183,7 +187,7 @@ result = run_sprung_body_vertical_coupling(
     application.transformed_vertical, powertrain, sample_stride=25
 )
 print("WORK073 result_sha256      :", result.result_sha256)
-print("  recorded reference       : 802330a0566c746d00beb3f5a6cddb725cfee4a9e9f85e08a8bd509b4a6ce973")
+print("  recorded reference       : 2ca3d0da5e128b3bdb6462472b0f5fa9d60afaa4d948a688356b2d2cb9974b8d")
 print("  executed_steps           :", result.executed_steps)
 print("  maximum_abs_heave_m      :", hx(result.maximum_abs_heave_m))
 print("  max_equation_residual    :", hx(result.maximum_abs_equation_residual))
@@ -205,7 +209,7 @@ try:
         sample_stride=25,
     )
     print("WORK074 result_sha256      :", short.result_sha256)
-    print("  recorded reference       : a400e8a9c1c0768d11647aa6c2fde3855a5d12898b548edef0b2fd6911244374")
+    print("  recorded reference       : ab4470e28004cc78f87288a4ab2a7828881514362d8dffbb7d5326cdff5a8c6d")
     print("WORK075 application_sha256 :", gate_linkage.application_sha256)
 except Exception as error:  # pragma: no cover - shape of loaded() may differ
     print("lap gate probe skipped:", type(error).__name__, error)
