@@ -38,6 +38,24 @@ def hx(value: float) -> str:
     return value.hex() if isinstance(value, float) else repr(value)
 
 
+def flatten(value, prefix=""):
+    """Yield (path, value) for every leaf under a nested dict/list structure."""
+    if isinstance(value, dict):
+        for key in sorted(value):
+            yield from flatten(value[key], f"{prefix}.{key}" if prefix else str(key))
+    elif isinstance(value, (list, tuple)):
+        for index, item in enumerate(value):
+            yield from flatten(item, f"{prefix}[{index}]")
+    else:
+        yield prefix, value
+
+
+def dump_state(label, state):
+    for path, item in flatten(asdict(state)):
+        if isinstance(item, float):
+            print(f"{label} {path} {item.hex()}")
+
+
 def section(title: str) -> None:
     print(f"\n===== {title} =====")
 
@@ -150,6 +168,8 @@ for index in range(1, 1001):
         print(f"step {index:5}  state={digest(asdict(walk))}  "
               f"heave={hx(evidence.body_heave_m)}  "
               f"resid={hx(evidence.maximum_abs_equation_residual)}")
+    if index in (3, 4, 5, 6):
+        dump_state(f"FIELD step{index}", walk)
     if walk.outcome == "DNF":
         print(f"step {index:5}  DNF {walk.dnf_reason}")
         break
