@@ -1,8 +1,5 @@
 name: xplat-probe
 
-# Temporary diagnostic for the cross-platform digest difference.
-# Delete once the difference is resolved.
-
 on:
   workflow_dispatch:
 
@@ -16,5 +13,5 @@ jobs:
           python-version: "3.14"
       - name: Install project
         run: python -m pip install -e .
-      - name: Call trace
-        run: python tools/xplat_call_trace.py
+      - name: Load solve trace
+        run: python tools/xplat_load_solve_trace.py
