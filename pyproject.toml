@@ -7,6 +7,11 @@ name = "formula-ultimate"
 version = "0.0.1"
 description = "Open-ended engineering discovery under explicit racing constraints"
 requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+# CadQuery-backed CAD kernel tests skip themselves when it is absent.
+cad = ["cadquery>=2.4"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
