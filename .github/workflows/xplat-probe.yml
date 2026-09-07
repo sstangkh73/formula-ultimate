@@ -1,8 +1,7 @@
 name: xplat-probe
 
-# Temporary diagnostic: runs tools/xplat_digest_probe.py on Linux across the
-# Python versions in use, so the OS difference can be separated from the
-# interpreter-version difference. Delete once the digest gap is resolved.
+# Temporary diagnostic for the cross-platform digest difference.
+# Delete once the difference is resolved.
 
 on:
   workflow_dispatch:
@@ -10,16 +9,12 @@ on:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python: ["3.11", "3.14"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python }}
+          python-version: "3.14"
       - name: Install project
         run: python -m pip install -e .
-      - name: Run probe
-        run: python tools/xplat_digest_probe.py
+      - name: Call trace
+        run: python tools/xplat_call_trace.py
