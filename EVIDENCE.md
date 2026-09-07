@@ -28,39 +28,73 @@ The test suite runs on every push and pull request via GitHub Actions:
 https://github.com/sstangkh73/formula-ultimate/actions shows the result at every
 commit.
 
-### Current status, stated honestly
+### Current status
 
-As of commit `329c292` (7 September 2026):
+As of 7 September 2026, the suite is green on both platforms:
 
 | Environment | Result |
 | --- | --- |
-| Local, Windows, Python 3.14, numpy present | `Ran 794 tests` &mdash; **OK (skipped=8)** |
-| CI, Ubuntu, Python 3.11 | `Ran 774 tests` &mdash; **FAILED (failures=2, errors=6, skipped=8)** |
+| Local, Windows, Python 3.14 | `Ran 794 tests` — **OK (skipped=8)** |
+| CI, Ubuntu, Python 3.11 and 3.14 | `Ran 794 tests` — **OK (skipped=32)** |
 
-**CI is currently red, and that is the accurate picture, not the local green.**
-Two distinct problems are behind it, and neither is hidden here:
+The extra skips on CI are the tests that replay recorded evidence from
+`artifacts/`, which `.gitignore` excludes because of its size. They skip with a
+message naming the missing path rather than failing, so a clean checkout can
+reach a green run; where the artifacts are present the same tests run and assert
+exactly what they did before.
 
-1. **Six errors: tests that require local artifacts.** Tests such as
-   `test_campaign_physics` and `test_refined_housing_mesh` need inputs under
-   `artifacts/`, which is excluded from the repository. On a clean checkout they
-   raise `required campaign input is missing: work048` instead of skipping.
-   These tests should declare their inputs optional and skip when absent; until
-   they do, they cannot run in CI at all.
+### The cross-platform difference that used to make CI red, and how it was fixed
 
-2. **Two failures: results differ across platforms.** `test_integrated_lap_gate`
-   and `test_linkage_motion_ratio` compare SHA-256 digests of pipeline output.
-   The digests computed on Linux do not match the ones recorded on Windows.
+Until 7 September 2026 two tests failed on Linux while passing on Windows. Both
+compared a SHA-256 digest of a simulation run against a recorded value. The
+cause was found by measurement, not by guessing, and the method is reusable:
+[`tools/xplat_digest_probe.py`](tools/xplat_digest_probe.py) prints every
+intermediate quantity as a float hex literal, ordered from the C library upward,
+so diffing two platforms names the first layer that diverges.
 
-   For a project whose central claim is that results survive independent
-   re-verification, this is the more serious of the two. A pipeline whose output
-   digest depends on the operating system is not yet reproducible in the sense
-   this repository claims, and the honest reading is that cross-platform
-   determinism is an open problem here, not a solved one.
+What the probe showed, in order:
 
-Until both are closed, the defensible claim about this repository is that it has
-a large automated suite wired into CI and that the suite passes on the
-development platform &mdash; not that it passes everywhere. Anyone evaluating this
-work should read the Actions history directly rather than take a summary.
+1. The parsed configuration, the initial state, and the first three simulation
+   steps were **bit-identical** on both platforms. The inputs were not the
+   problem, and neither was line-ending or JSON parsing.
+2. Running the probe on Linux under both Python 3.11 and 3.14 gave **identical**
+   output, which ruled out the interpreter version and the numpy version.
+3. Tracing every math call located the first differing value: an argument to a
+   tyre force calculation, one unit in the last place apart.
+4. The normal-load solve upstream of it was bit-identical, so the difference was
+   in the requested force, not the load.
+5. The requested force comes from the wheel slip law, which computed it with
+   **`math.tanh`**. IEEE 754 does not require the elementary functions to be
+   correctly rounded, and the Windows UCRT and Linux glibc disagreed by one ulp
+   on **35 of 111 sampled arguments**, and on **9 of the first 40 calls** this
+   model makes. The first divergence in the entire run was
+   `tanh(0x1.3755407c17994p-10)`, returning `...385` on Windows and `...386` on
+   Linux.
+
+One ulp was enough because the longitudinal slip heat is computed as a
+difference of nearly equal terms, which amplified it by roughly two hundred
+times within a few steps, and from there it reached the differential speed, the
+recorded state, and the digest.
+
+The fix computes tanh in decimal arithmetic
+([`src/formula_ultimate/physics/deterministic_math.py`](src/formula_ultimate/physics/deterministic_math.py)),
+which is a software implementation with deterministic semantics rather than a
+call into the host C library. The digests for work 073 and work 074 were
+rerecorded because the computation changed; the historical evidence under
+`artifacts/` still holds the values the old slip law produced and was left
+untouched. [`tests/test_deterministic_math.py`](tests/test_deterministic_math.py)
+now asserts the exact bit patterns, so the property is enforced rather than
+assumed.
+
+### What is still true about reproducibility here
+
+The model calls other elementary functions — 28 `cos`, 26 `sin`, 9 `atan2`,
+and others — that carry the same risk. They agree between these two platforms at
+the arguments this model currently reaches, and the green CI run is evidence of
+that, but it is not a proof that they always will. A digest recorded on one
+machine reproducing on another is therefore an **empirical result for the
+configurations under test**, not a guarantee for every future configuration.
+Saying otherwise would overstate what has been demonstrated.
 
 ## Research claims
 
