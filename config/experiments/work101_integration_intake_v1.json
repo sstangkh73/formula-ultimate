@@ -1,0 +1,54 @@
+{
+  "schema": "work101_integration_intake_v1",
+  "source": {
+    "work100_registration_sha256": "2c3aaa21ffb6ed36da532493c82c6e1f0195b13990180dc5d055c75fb47bdd45",
+    "work100_deterministic_sha256": "652ba7d9db9d76ed841d5b2c24af421075cc2d266a9098bc065fe4a8ac45da61",
+    "expected_candidate_count": 10,
+    "expected_survivor_count": 10
+  },
+  "activity": {
+    "mechanical_input_n": 5000.0,
+    "thermal_input_w": 30.0,
+    "relative_flow_threshold": 0.00000001,
+    "minimum_meaningful_utilization_difference": 0.05,
+    "maximum_canonical_active_nodes": 8
+  },
+  "capabilities": {
+    "required_vehicle": [
+      "braking",
+      "controller",
+      "direction_control",
+      "energy_converter",
+      "energy_storage",
+      "ground_propulsion",
+      "heat_rejection",
+      "load_structure",
+      "power_transmission"
+    ],
+    "work100_contribution": ["load_structure"]
+  },
+  "evidence": {
+    "required_for_program_exit": [
+      "candidate_survivor",
+      "holdout",
+      "independent_higher_fidelity",
+      "safety",
+      "coupled_transient",
+      "energy",
+      "contact",
+      "failure",
+      "optimized_baseline"
+    ],
+    "provided_by_work100": ["candidate_survivor", "holdout"]
+  },
+  "claim_boundary": {
+    "intake_scope": "analysis_only_typed_subsystem_intake_not_vehicle_admission",
+    "prohibited_claims": [
+      "promotion_ready",
+      "whole_vehicle_admission",
+      "race_superiority",
+      "technology_discovery",
+      "physical_validation"
+    ]
+  }
+}
