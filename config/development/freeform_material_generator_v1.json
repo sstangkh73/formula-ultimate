@@ -1,0 +1,41 @@
+{
+  "protocol_version": "freeform_material_generator_v1",
+  "units": "SI_m",
+  "dependency": {
+    "work108_commit": "9e5249d343389a702d229a2cc090c71a12f13a4b",
+    "spatial_contract_path": "docs/contracts/SPATIAL_MATERIAL_VOID_V1.md",
+    "spatial_contract_sha256": "0b9a01a925323fbde7059575bc243afe357fc60f00f2f14090b25cc20ad5c9ae"
+  },
+  "representation": {
+    "domain_min_m": [-0.12, -0.12, -0.12],
+    "domain_max_m": [0.12, 0.12, 0.12],
+    "resolution_m": 0.01,
+    "minimum_feature_m": 0.01,
+    "surface_volume_relative_tolerance": 0.0000000001,
+    "maximum_occupied_cells": 12000,
+    "maximum_changed_cells_per_edit": 4000,
+    "maximum_surface_triangles": 50000
+  },
+  "materials": ["material_alpha", "material_beta"],
+  "source_primitives": [
+    {"kind": "sphere", "centre_m": [0.0, 0.0, 0.0], "radius_m": 0.067, "material": "material_alpha"},
+    {"kind": "capsule", "path_m": [[0.02, 0.0, 0.0], [0.09, 0.04, 0.03]], "radius_m": 0.012, "material": "material_beta", "feature_tag": "asymmetric_thin_feature"}
+  ],
+  "operator_chain": [
+    {"operator": "boundary_displacement", "parameters": {"path_m": [[-0.065, 0.02, 0.0], [-0.04, 0.025, 0.01]], "radius_m": 0.018, "material": "material_alpha"}, "seed": 10901, "slot": 0},
+    {"operator": "cavity_route", "parameters": {"path_m": [[0.0, 0.0, -0.09], [0.0, 0.0, 0.09]], "radius_m": 0.018}, "seed": 10902, "slot": 1},
+    {"operator": "boundary_displacement", "parameters": {"path_m": [[0.0, 0.0, -0.09], [0.0, 0.0, 0.09]], "radius_m": 0.018, "material": "material_alpha"}, "seed": 10903, "slot": 2},
+    {"operator": "branch", "parameters": {"path_m": [[0.04, 0.02, 0.01], [0.095, -0.045, 0.035]], "radius_m": 0.012, "material": "material_beta"}, "seed": 10904, "slot": 3},
+    {"operator": "split", "parameters": {"axis": "x", "coordinate_m": 0.0, "thickness_m": 0.02}, "seed": 10905, "slot": 4},
+    {"operator": "merge", "parameters": {"path_m": [[-0.03, 0.0, 0.0], [0.03, 0.0, 0.0]], "radius_m": 0.012, "material": "material_alpha"}, "seed": 10906, "slot": 5},
+    {"operator": "material_redistribution", "parameters": {"centre_m": [0.045, 0.015, 0.01], "radius_m": 0.025, "from_material": "material_alpha", "to_material": "material_beta"}, "seed": 10907, "slot": 6}
+  ],
+  "refinement_resolutions_m": [0.02, 0.01, 0.008],
+  "experiment": {
+    "independent_variables": ["operator", "resolution_m", "seed", "complexity cap"],
+    "dependent_variables": ["volume error", "topology descriptors", "material cells", "thin-feature survival", "operation count"],
+    "controls": ["fixed domain", "fixed material labels", "fixed operator slots and seeds", "fixed per-attempt budgets", "Work 108 B-rep comparison route"],
+    "success_criteria": ["all operators causal", "hole created and closed", "split and merge observed", "thin feature retained", "surface conversion within tolerance", "exact replay"],
+    "failure_criteria": ["no-op edit", "vanished required feature", "label mixing", "non-manifold surface", "budget exceeded", "renaming-only novelty", "unsupported conversion hidden"]
+  }
+}
