@@ -1,0 +1,21 @@
+{
+  "protocol_version": "geometry_mesh_bridge_v1",
+  "units": "SI_m_kg",
+  "dependencies": [
+    {"work": 108, "commit": "9e5249d343389a702d229a2cc090c71a12f13a4b", "contract_path": "docs/contracts/SPATIAL_MATERIAL_VOID_V1.md", "contract_sha256": "0b9a01a925323fbde7059575bc243afe357fc60f00f2f14090b25cc20ad5c9ae"},
+    {"work": 109, "commit": "83c552bf4a613507546c8271c0dd5d5c8c80fc8b", "contract_path": "docs/contracts/FREEFORM_MATERIAL_GENERATOR_V1.md", "contract_sha256": "db308bb721f32d1ac19d207d797664a0b5c0070a08d22cce498dd21e207b7c47"}
+  ],
+  "refinement_resolutions_m": [0.02, 0.01, 0.008],
+  "limits": {"maximum_elements": 200000, "minimum_jacobian_m3": 0.000000000001, "maximum_edge_ratio": 1.8, "field_volume_relative": 0.0000000001, "brep_volume_relative": 0.35, "mass_relative": 0.35},
+  "routes": [
+    {"route_id": "implicit_field", "representation": "work109_field", "source_config": "config/development/freeform_material_generator_v1.json", "source_identity": "9e1d6f2b2d28f457af9e2c6724a29008d5b44fa74295933fe1f0c92d814b0797", "material_density_kg_m3": 1200.0, "required_boundary_sets": ["external_surface", "load_surface", "contact_surface", "material_interface"]},
+    {"route_id": "hollow_brep", "representation": "work108_brep", "source_config": "config/cad/freeform_brep_solid_grammar_v2.json", "source_identity": "12bcac345f9395ffc766d84a8385a488c75533d162c233e6989215f8829e636d", "material_density_kg_m3": 1200.0, "required_boundary_sets": ["external_surface", "load_surface", "contact_surface"]}
+  ],
+  "experiment": {
+    "independent_variables": ["source representation", "geometry family", "resolution_m"],
+    "dependent_variables": ["element quality", "volume and mass error", "material coverage", "boundary coverage", "mesh cost"],
+    "controls": ["same upstream identity", "same material meaning", "same boundary names", "same six-tetra cell split"],
+    "success_criteria": ["positive Jacobians", "required sets present", "cavity retained", "registered error bounds", "exact replay"],
+    "failure_criteria": ["inverted element", "missing set", "filled cavity", "wrong units", "stale source", "label loss", "budget overflow", "geometry substitution"]
+  }
+}
