@@ -1,0 +1,107 @@
+{
+  "contract_version": "spatial_material_v1",
+  "units": "SI_m_kg_s_rad",
+  "source": {
+    "solid_config": "config/cad/freeform_brep_solid_grammar_v2.json",
+    "wire_config": "config/cad/freeform_wire_grammar_v2.json",
+    "solid_declaration_sha256": "a0e1c47ee15dbebac9dce2183a502c26199197b751fe427c74c2824dd1b4ad8a",
+    "wire_declaration_sha256": "4a88ef8001377472c35eb18fe0eac23f4afd92b83c86edf86233af458a223820"
+  },
+  "limits": {
+    "maximum_coordinate_m": 1.0,
+    "maximum_cases": 8,
+    "maximum_regions_per_case": 8
+  },
+  "tolerances": {
+    "volume_relative": 0.0000005,
+    "mass_relative": 0.0000005,
+    "centre_absolute_m": 0.0000001,
+    "inertia_relative": 0.000002,
+    "overlap_volume_m3": 0.000000000001,
+    "cavity_closure_relative": 0.00000001
+  },
+  "materials": {
+    "synthetic_aluminium": {
+      "density_kg_m3": 2700.0,
+      "provenance": "synthetic_fixture",
+      "validity": "constant density only; no strength, thermal, or process claim"
+    },
+    "synthetic_polymer": {
+      "density_kg_m3": 1200.0,
+      "provenance": "synthetic_fixture",
+      "validity": "constant density only; no strength, thermal, or process claim"
+    },
+    "synthetic_steel": {
+      "density_kg_m3": 7800.0,
+      "provenance": "synthetic_fixture",
+      "validity": "constant density only; no strength, thermal, or process claim"
+    }
+  },
+  "cases": [
+    {
+      "case_id": "curved_branch_placed",
+      "source_candidate_id": "curved_branch_001",
+      "family": "curved",
+      "source_step_sha256": "016bace59ce24714af86b113b574d965a82f8f38ab709f647198fa4c0a7906d7",
+      "expected_body_count": 1,
+      "material_regions": [
+        {"region_id": "branch_body", "material_id": "synthetic_aluminium", "body_indices": [0]}
+      ],
+      "void_regions": [],
+      "placement": {
+        "translation_m": [0.12, -0.04, 0.08],
+        "rotation_axis": [0.0, 0.0, 1.0],
+        "rotation_rad": 0.63
+      }
+    },
+    {
+      "case_id": "tapered_hollow_placed",
+      "source_candidate_id": "tapered_hollow_duct_001",
+      "family": "hollow",
+      "source_step_sha256": "12bcac345f9395ffc766d84a8385a488c75533d162c233e6989215f8829e636d",
+      "expected_body_count": 1,
+      "material_regions": [
+        {"region_id": "duct_wall", "material_id": "synthetic_polymer", "body_indices": [0]}
+      ],
+      "void_regions": [
+        {
+          "region_id": "duct_cavity",
+          "operation": "boolean_subtract",
+          "outer_feature_id": "outer",
+          "cavity_feature_id": "inner",
+          "occupied_feature_id": "duct"
+        }
+      ],
+      "placement": {
+        "translation_m": [-0.08, 0.06, 0.02],
+        "rotation_axis": [1.0, 0.0, 0.0],
+        "rotation_rad": -0.41
+      }
+    },
+    {
+      "case_id": "multi_body_mixed_material_placed",
+      "source_candidate_id": "revolved_intersection_member_001",
+      "family": "multi_body",
+      "source_step_sha256": "2df976f5459fe66536996f97a6279f8242079140939878115fbc16c34e37d44c",
+      "expected_body_count": 4,
+      "material_regions": [
+        {"region_id": "body_0", "material_id": "synthetic_steel", "body_indices": [0]},
+        {"region_id": "body_1", "material_id": "synthetic_aluminium", "body_indices": [1]},
+        {"region_id": "body_2", "material_id": "synthetic_polymer", "body_indices": [2]},
+        {"region_id": "body_3", "material_id": "synthetic_steel", "body_indices": [3]}
+      ],
+      "void_regions": [],
+      "placement": {
+        "translation_m": [0.02, 0.01, -0.03],
+        "rotation_axis": [0.0, 1.0, 0.0],
+        "rotation_rad": 0.35
+      }
+    }
+  ],
+  "experiment": {
+    "independent_variables": ["cavity-bearing source revision", "material density assignment", "rigid placement"],
+    "dependent_variables": ["occupied volume", "mass", "centre of mass", "centroidal inertia tensor", "dependent evidence identity"],
+    "controls": ["unchanged Work 092 source identity", "homogeneous analytic mass-property unit fixture", "independent FreeCAD import"],
+    "failure_criteria": ["invalid or stale source", "duplicate or incomplete ownership", "undeclared material overlap", "non-finite state", "cavity closure failure", "CAD discrepancy above tolerance", "non-exact replay"]
+  }
+}
