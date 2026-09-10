@@ -1,0 +1,45 @@
+{
+  "protocol_version": "physical_interface_graph_v1",
+  "units": "SI_m_kg_s_K_N_W_rad",
+  "dependency": {"work108_commit": "9e5249d343389a702d229a2cc090c71a12f13a4b", "contract_path": "docs/contracts/SPATIAL_MATERIAL_VOID_V1.md", "contract_sha256": "0b9a01a925323fbde7059575bc243afe357fc60f00f2f14090b25cc20ad5c9ae", "spatial_config": "config/development/spatial_material_v1.json"},
+  "limits": {"maximum_terminals": 8, "frame_origin_tolerance_m": 0.000001, "opposed_normal_dot_maximum": -0.999, "exchange_residual_absolute": 0.000000000001},
+  "domains": {
+    "mechanical_force": {"variable": "force", "unit": "N"},
+    "thermal": {"variable": "heat_flow", "unit": "W"},
+    "motion": {"variable": "angular_velocity", "unit": "rad_s"}
+  },
+  "laws": {
+    "elastic_path_a": {"domain": "mechanical_force", "reference": "synthetic_linear_fixture_a"},
+    "elastic_path_b": {"domain": "mechanical_force", "reference": "synthetic_linear_fixture_b"},
+    "thermal_conductance": {"domain": "thermal", "reference": "synthetic_conductance_fixture"},
+    "revolute_kinematic": {"domain": "motion", "reference": "idealized_kinematic_fixture"}
+  },
+  "graph": {
+    "graph_id": "open_interface_fixture",
+    "terminals": [
+      {"terminal_id": "force_a", "owner_id": "owner_alpha", "region_binding": {"case_id": "curved_branch_placed", "region_id": "branch_body", "surface_id": "branch_mate"}, "role": "source", "domain": "mechanical_force", "variable": "force", "unit": "N", "frame": {"origin_m": [0.0, 0.0, 0.0], "normal": [1.0, 0.0, 0.0], "reference": [0.0, 1.0, 0.0]}, "allowed_motion": "free"},
+      {"terminal_id": "force_b", "owner_id": "owner_beta", "region_binding": {"case_id": "tapered_hollow_placed", "region_id": "duct_wall", "surface_id": "duct_mate"}, "role": "sink", "domain": "mechanical_force", "variable": "force", "unit": "N", "frame": {"origin_m": [0.0, 0.0, 0.0], "normal": [-1.0, 0.0, 0.0], "reference": [0.0, 1.0, 0.0]}, "allowed_motion": "free"},
+      {"terminal_id": "heat_a", "owner_id": "owner_gamma", "region_binding": {"case_id": "multi_body_mixed_material_placed", "region_id": "body_0", "surface_id": "heat_face_0"}, "role": "source", "domain": "thermal", "variable": "heat_flow", "unit": "W", "frame": {"origin_m": [0.1, 0.0, 0.0], "normal": [0.0, 1.0, 0.0], "reference": [1.0, 0.0, 0.0]}, "allowed_motion": "rigid"},
+      {"terminal_id": "heat_b", "owner_id": "owner_delta", "region_binding": {"case_id": "multi_body_mixed_material_placed", "region_id": "body_1", "surface_id": "heat_face_1"}, "role": "sink", "domain": "thermal", "variable": "heat_flow", "unit": "W", "frame": {"origin_m": [0.1, 0.0, 0.0], "normal": [0.0, -1.0, 0.0], "reference": [1.0, 0.0, 0.0]}, "allowed_motion": "rigid"},
+      {"terminal_id": "motion_a", "owner_id": "owner_epsilon", "region_binding": {"case_id": "multi_body_mixed_material_placed", "region_id": "body_2", "surface_id": "axis_face_0"}, "role": "bidirectional", "domain": "motion", "variable": "angular_velocity", "unit": "rad_s", "frame": {"origin_m": [0.2, 0.0, 0.0], "normal": [0.0, 0.0, 1.0], "reference": [1.0, 0.0, 0.0]}, "allowed_motion": "revolute"},
+      {"terminal_id": "motion_b", "owner_id": "owner_zeta", "region_binding": {"case_id": "multi_body_mixed_material_placed", "region_id": "body_3", "surface_id": "axis_face_1"}, "role": "bidirectional", "domain": "motion", "variable": "angular_velocity", "unit": "rad_s", "frame": {"origin_m": [0.2, 0.0, 0.0], "normal": [0.0, 0.0, -1.0], "reference": [1.0, 0.0, 0.0]}, "allowed_motion": "revolute"}
+    ],
+    "edges": [
+      {"edge_id": "force_path_1", "terminals": ["force_a", "force_b"], "direction": "a_to_b", "law_ref": "elastic_path_a", "exchange": [120.0, -120.0]},
+      {"edge_id": "force_path_2", "terminals": ["force_a", "force_b"], "direction": "a_to_b", "law_ref": "elastic_path_b", "exchange": [30.0, -30.0]},
+      {"edge_id": "heat_path", "terminals": ["heat_a", "heat_b"], "direction": "a_to_b", "law_ref": "thermal_conductance", "exchange": [18.0, -18.0]},
+      {"edge_id": "motion_path", "terminals": ["motion_a", "motion_b"], "direction": "bidirectional", "law_ref": "revolute_kinematic", "exchange": [2.5, -2.5]}
+    ]
+  },
+  "transfer_fixtures": {
+    "unambiguous_split": {"curved_branch_placed/branch_body": [{"case_id": "curved_branch_split", "region_id": "branch_left", "surface_id": "branch_mate_new", "source_surface_ids": ["branch_mate"]}, {"case_id": "curved_branch_split", "region_id": "branch_right", "surface_id": "other_surface", "source_surface_ids": ["other"]}]},
+    "ambiguous_split": {"curved_branch_placed/branch_body": [{"case_id": "curved_branch_split", "region_id": "branch_left", "surface_id": "branch_mate_left", "source_surface_ids": ["branch_mate"]}, {"case_id": "curved_branch_split", "region_id": "branch_right", "surface_id": "branch_mate_right", "source_surface_ids": ["branch_mate"]}]}
+  },
+  "experiment": {
+    "independent_variables": ["terminal role", "frame orientation", "parallel multiplicity", "owner grouping", "identifier rename", "split mapping"],
+    "dependent_variables": ["canonical identity", "compatibility", "connectivity", "exchange residual", "invalidation event"],
+    "controls": ["identifier-only rename", "source-sink reversal", "parallel-edge deletion", "owner regrouping", "disconnected components", "oversize graph"],
+    "success_criteria": ["renaming equivalence", "registered distinctions", "conserved exchange", "exact replay", "bounded unresolved identity"],
+    "failure_criteria": ["incompatible unit", "missing mating surface", "rigid-moving conflict", "exchange imbalance", "silent split ambiguity"]
+  }
+}
