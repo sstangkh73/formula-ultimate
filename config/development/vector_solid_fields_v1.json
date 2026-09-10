@@ -1,0 +1,17 @@
+{
+  "protocol_version": "vector_solid_fields_v1",
+  "units": "SI_m_kg_s_N_Pa",
+  "dependency": {"work110_commit": "c8579948bd8f601659383ac9ff15cb51363b0c45", "contract_path": "docs/contracts/GEOMETRY_MESH_BRIDGE_V1.md", "contract_sha256": "b2b9fe9185513e69adad0bf1996c04341ac928047c282c3d3c330e6e156ade87"},
+  "material": {"material_id": "synthetic_isotropic_elastic", "youngs_modulus_pa": 70000000000.0, "poisson_ratio": 0.3, "density_kg_m3": 2700.0, "evidence_class": "synthetic_fixture"},
+  "load": {"resultant_force_n": [100.0, 50.0, -20.0], "body_acceleration_m_s2": [0.0, 0.0, 0.0], "load_surface": "load_surface", "support_surface": "contact_surface"},
+  "reference": {"length_m": 0.12, "width_m": 0.04, "height_m": 0.04, "force_n": 1000.0, "analytic_displacement_relative_tolerance": 0.08, "patch_strain_absolute_tolerance": 0.000000000001},
+  "unfamiliar": {"source_config": "config/development/freeform_material_generator_v1.json", "resolutions_m": [0.02, 0.01, 0.008], "last_two_relative_change_limit": 0.8},
+  "tolerances": {"force_residual_relative": 0.00000001, "moment_residual_relative": 0.00000001, "energy_residual_relative": 0.0000000001, "minimum_diagonal_condition_proxy": 0.000001},
+  "experiment": {
+    "independent_variables": ["geometry", "load direction", "Youngs modulus", "resolution"],
+    "dependent_variables": ["displacement", "compliance", "p90 von Mises stress", "reactions", "strain energy", "residuals"],
+    "controls": ["analytic cuboid", "affine patch", "stiffness scaling", "unsupported rigid mode", "severed path", "corrupt stiffness"],
+    "success_criteria": ["reference agreement", "residual gates", "bounded last-two change", "causal mutations", "exact replay"],
+    "failure_criteria": ["singular solve", "severed path", "corrupted stiffness", "residual breach", "non-converged quantity", "stale mesh dependency"]
+  }
+}
