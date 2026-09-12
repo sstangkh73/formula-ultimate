@@ -1,0 +1,24 @@
+{
+  "protocol_version": "detailed_connection_contact_v1",
+  "units": "SI_m_kg_s_K_N_Pa_W_rad",
+  "dependencies": [
+    {"work": 111, "commit": "f15d6eba23aa5493e9c624a7f2377db2e11e012b", "contract_path": "docs/contracts/VECTOR_SOLID_FIELDS_V1.md", "contract_sha256": "05ff92c5fc94683b950caa8c7ce3004b8c72dca69f8a5dc2f4c0994df82a11af"},
+    {"work": 112, "commit": "4726ff1424dadb6b54ca70e677d54f491c8aee74", "contract_path": "docs/contracts/PHYSICAL_INTERFACE_GRAPH_V1.md", "contract_sha256": "d1181a67158e4f6b938af7584b5d18c887a702388c47b921e79262131de5b0dc"}
+  ],
+  "task": {"envelope_diameter_m": 0.03, "envelope_length_m": 0.04, "temperature_k": 293.15, "axial_tension_n": 800.0, "shear_n": 500.0, "off_axis_moment_nm": 1.0, "allowed_motion": "rigid_when_engaged"},
+  "material": {"material_id": "synthetic_aluminium", "youngs_modulus_pa": 70000000000.0, "poisson_ratio": 0.3, "evidence_class": "synthetic_fixture"},
+  "contact": {"law": "unilateral_coulomb", "preload_range_n": [2000.0, 6000.0], "friction_range": [0.2, 0.35], "clearance_range_m": [0.0, 0.00005], "characteristic_depth_m": 0.002, "post_slip_stiffness_fraction": 0.02},
+  "strategies": [
+    {"strategy_id": "threaded_reference", "kind": "threaded_helix", "contact_radius_m": 0.006, "root_radius_m": 0.005, "outer_radius_m": 0.007, "sleeve_outer_radius_m": 0.01, "pitch_m": 0.0015, "engagement_length_m": 0.012, "contact_width_m": 0.0004},
+    {"strategy_id": "segmented_ramp_alternative", "kind": "segmented_ramp", "contact_radius_m": 0.007, "root_radius_m": 0.005, "outer_radius_m": 0.009, "sleeve_outer_radius_m": 0.012, "lug_count": 6, "ramp_arc_m": 0.004, "engagement_length_m": 0.008, "contact_width_m": 0.001}
+  ],
+  "refinement_patch_counts": [12, 24, 48],
+  "acceptance": {"baseline_preload_n": 4000.0, "baseline_friction": 0.25, "baseline_clearance_m": 0.00001, "last_two_relative_change_limit": 0.15, "maximum_reduced_displacement_relative_error": 0.05, "force_residual_relative": 0.000000001, "moment_residual_relative": 0.000000001},
+  "experiment": {
+    "independent_variables": ["joining geometry", "patch refinement", "engagement", "preload", "friction", "clearance", "load direction"],
+    "dependent_variables": ["stiffness", "opening", "slip", "patch pressure", "transmitted force and moment", "reduction error"],
+    "controls": ["threaded helix reference", "removed joint", "reverse load", "increased clearance", "reduced engagement", "friction inequality"],
+    "success_criteria": ["actual CAD identities", "contact inequality", "balance residual", "bounded refinement change", "causal controls", "exact replay"],
+    "failure_criteria": ["severed path", "all contact open", "friction exceedance", "non-converged quantity", "stale dependency", "unsupported safety claim"]
+  }
+}
