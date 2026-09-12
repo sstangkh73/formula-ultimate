@@ -1,0 +1,10 @@
+{
+  "protocol_version":"physical_subsystem_correlation_v1","units":"SI",
+  "dependency":{"work":131,"commit":"ac87ed00d5e5fe8786340c9a1cad91270915a913","contract_path":"docs/contracts/PHYSICAL_CONNECTION_CORRELATION_V1.md","contract_sha256":"5cb3fc4077b2134995c73fcf6ff578f23d3200ac4eccfeb33cd853ba5599de6f"},
+  "input":{"path":"artifacts/work131/run_a/result.json","result_sha256":"96a05f1e1433b89dec216e1ebe1529dc7ccee9e16f7e5f0522edb634bb88c9c5"},
+  "entry":{"subsystem_safety_approval_ref":null,"facility_ref":null,"authorized_operator_ref":null,"frozen_configuration_sha256":null,"instrument_manifest_sha256":null},
+  "registration":{"approved_cycles":1000,"maximum_sensor_disagreement":0.05,"required_validation_runs":3,"runner_operates_equipment":false,"lifetime_extrapolation_allowed":false},
+  "records":[],
+  "coverage":{"offline_integrity_pipeline":"implemented","physical_subsystem_execution":"not_authorized","measured_endurance":"missing","universal_lifetime_claim":false},
+  "experiment":{"independent_variables":["approved history","configuration","cycles"],"dependent_variables":["loss","degradation","failure onset","prediction error"],"controls":["missing boundary power","replacement","calibration leakage","censored abort","sensor disagreement"],"success_criteria":["valid Work131 input","authorized traceable records","separate validation"],"failure_criteria":["missing entry evidence","hidden abort","lifetime extrapolation"]}
+}
