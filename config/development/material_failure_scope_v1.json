@@ -1,0 +1,23 @@
+{
+  "protocol_version": "material_failure_scope_v1",
+  "units": "SI_m_kg_s_K_N_Pa",
+  "dependencies": [
+    {"work": 111, "commit": "f15d6eba23aa5493e9c624a7f2377db2e11e012b", "contract_path": "docs/contracts/VECTOR_SOLID_FIELDS_V1.md", "contract_sha256": "05ff92c5fc94683b950caa8c7ce3004b8c72dca69f8a5dc2f4c0994df82a11af"},
+    {"work": 114, "commit": "fce72a918c4464994ed06912ef9a9199f9852f6d", "contract_path": "docs/contracts/MOVING_CONTACT_ASSEMBLY_V1.md", "contract_sha256": "34e28c3bb615dd9a02dbc2177db4d8fa17811b4d215138af13dc7270d7c07bbc"},
+    {"work": 115, "commit": "f674f66832746ce6435e3488043f2d30d76c6587", "contract_path": "docs/contracts/COUPLED_THERMAL_SOLID_V1.md", "contract_sha256": "20de6ec7315329dcff5270a5d3ffef77711262d310152e3963edbc1f7ab5aa38"}
+  ],
+  "inputs": [
+    {"work": 111, "path": "artifacts/work111/run_a/result.json", "result_sha256": "8f057c39a1f79fa45113f86fa48d6cb199562c8ba40ad041bccb9e9c6e8a4c85"},
+    {"work": 114, "path": "artifacts/work114/run_a/result.json", "result_sha256": "5926e067cbe4b07d0bf90364275649f72a7ad4b4566ff204901172fdd9f1ce5f"},
+    {"work": 115, "path": "artifacts/work115/run_a/result.json", "result_sha256": "764f1c22774b3c3321cea384053ba079f8671b587fe1059d12b8910d51bcc5fa"}
+  ],
+  "materials": {
+    "synthetic_joint_aluminium": {"evidence_class": "synthetic_fixture", "source": "Work 111 and Work 115 synthetic fixture", "units": {"youngs_modulus": "Pa", "yield_stress": "Pa", "density": "kg_m3"}, "temperature_range_k": [250.0, 400.0], "strain_rate_range_1_s": [0.0, 0.01], "process": "unspecified_fixture", "uncertainty_relative": 0.2, "youngs_modulus_pa": 70000000000.0, "yield_stress_pa": 250000000.0, "density_kg_m3": 2700.0, "allowed_uses": ["law_verification", "diagnostic_margin"]},
+    "analytic_column_reference": {"evidence_class": "analytic_reference", "source": "Euler ideal pinned-column equation", "units": {"youngs_modulus": "Pa", "yield_stress": "Pa", "density": "kg_m3"}, "temperature_range_k": [293.15, 293.15], "strain_rate_range_1_s": [0.0, 0.0], "process": "ideal_reference", "uncertainty_relative": 0.0, "youngs_modulus_pa": 200000000000.0, "yield_stress_pa": 300000000.0, "density_kg_m3": 7800.0, "allowed_uses": ["buckling_reference"]}
+  },
+  "yield_fixture": {"safe_stress_pa": 100000000.0, "failed_stress_pa": 300000000.0},
+  "buckling_fixture": {"geometry": {"length_m": 1.0, "width_m": 0.02, "height_m": 0.01, "effective_length_factor": 1.0}, "safe_load_fraction": 0.5, "failed_load_fraction": 1.1, "imperfections_m": [0.0, 0.0001, 0.0005]},
+  "extension_slots": {"fatigue": "unresolved_missing_tested_data", "fracture": "unresolved_missing_tested_data", "wear": "unresolved_missing_tested_data"},
+  "acceptance": {"reference_relative_error": 0.000000000001, "candidate_temperature_k": 299.6262800251348, "candidate_strain_rate_1_s": 0.001, "candidate_process": "unspecified_fixture"},
+  "experiment": {"independent_variables": ["material", "process", "temperature", "rate", "imperfection"], "dependent_variables": ["eligibility", "yield margin", "buckling margin", "uncertainty", "missing domains"], "controls": ["safe and failed yield", "Euler reference", "imperfection sensitivity", "range and provenance rejection"], "success_criteria": ["reference laws pass", "candidate scope remains diagnostic", "missing domains block claims", "exact replay"], "failure_criteria": ["stale input", "missing units", "range exit", "synthetic relabel", "unjustified mixture", "unsupported law promotion"]}
+}
