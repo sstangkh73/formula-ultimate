@@ -1,0 +1,22 @@
+{
+  "protocol_version":"onboard_energy_realization_v1",
+  "units":"SI_m_kg_s_K_W_J_V_A_ohm",
+  "dependencies":[
+    {"work":115,"commit":"f674f66832746ce6435e3488043f2d30d76c6587","contract_path":"docs/contracts/COUPLED_THERMAL_SOLID_V1.md","contract_sha256":"20de6ec7315329dcff5270a5d3ffef77711262d310152e3963edbc1f7ab5aa38"},
+    {"work":116,"commit":"caddb0c4b7fdb09f2e4e76f4edb82a369bdc5c43","contract_path":"docs/contracts/MATERIAL_FAILURE_SCOPE_V1.md","contract_sha256":"ac7b13c9c31d6a5c66567d8f5a90c88ccb37adc8978bac1ee664aa2def7d166c"},
+    {"work":119,"commit":"01605e69e2d5dc987a385830602feaf5c9f8dc49","contract_path":"docs/contracts/REALIZED_ACTUATION_CHAIN_V1.md","contract_sha256":"414ba2ec9fad437f46ebd8059d66379adc8c9b6888bb5bc1c20b7252e76f939c"}
+  ],
+  "inputs":[
+    {"work":115,"path":"artifacts/work115/run_a/result.json","result_sha256":"764f1c22774b3c3321cea384053ba079f8671b587fe1059d12b8910d51bcc5fa"},
+    {"work":116,"path":"artifacts/work116/run_a/result.json","result_sha256":"ea418059c16fdddc6f7205b0d13b35b2d0623a17e9a930d474c9133137e708aa"},
+    {"work":119,"path":"artifacts/work119/run_a/result.json","result_sha256":"fe9492419f0b52f3cd781bdca8425a13064361eab81a1de304b6e6a48b409089"}
+  ],
+  "energy_boundary":{"external_replenishment":"prohibited","initial_state_included":true,"losses_inside_boundary":true},
+  "storage":{"route_id":"synthetic_stored_electric_dc_reference","provenance":"synthetic","active_volume_m3":0.02,"active_density_kg_m3":2000.0,"specific_energy_j_kg":720000.0,"usable_fraction":0.8,"initial_fraction":0.8,"specific_heat_j_kg_k":900.0,"temperature_range_k":[280.0,330.0]},
+  "hardware":{"envelope_internal_volume_m3":0.04456,"containment":{"outer_dimensions_m":[0.6,0.4,0.2],"wall_thickness_m":0.004,"density_kg_m3":2700.0,"specific_heat_j_kg_k":900.0},"insulation_volume_m3":0.005,"insulation_density_kg_m3":60.0,"insulation_specific_heat_j_kg_k":1000.0,"connector_volume_m3":0.0004,"connector_density_kg_m3":8960.0,"connector_specific_heat_j_kg_k":385.0,"mount_count":4,"mount_mass_each_kg":0.5,"converter_mass_kg":3.0,"balance_specific_heat_j_kg_k":500.0},
+  "conversion":{"provenance":"synthetic","efficiency":0.95,"maximum_output_power_w":15000.0,"nominal_voltage_v":400.0,"connector_resistance_ohm":0.02},
+  "operating_cases":{"nominal":{"requested_output_power_w":8000.0,"duration_s":600.0},"excessive":{"requested_output_power_w":25000.0,"duration_s":60.0},"thermal":{"requested_output_power_w":15000.0,"duration_s":3600.0},"initial_temperature_k":299.6262800251348},
+  "tolerances":{"energy_residual_absolute_j":1e-8,"mass_sum_absolute_kg":1e-12},
+  "coverage":{"stored_electric_dc_reference":"implemented_synthetic","chemistry_hazard":"unresolved_missing_specialist_evidence","alternative_field_storage":"unresolved_missing_verified_route","alternative_conversion":"unresolved_missing_verified_route","life_fault_propagation":"unresolved_missing_law"},
+  "experiment":{"independent_variables":["active volume","initial fraction","power rate","duration","temperature","connectivity","containment"],"dependent_variables":["usable energy","delivered power and energy","loss and heat","temperature","mass","limiting state"],"controls":["same initial opportunity","empty storage","excess demand","disconnected converter","omitted containment","hidden replenishment","unit boundary"],"success_criteria":["energy closure","complete geometry mass","causal limits","exact replay"],"failure_criteria":["hidden energy","omitted mass","stale dependency","temperature or rate breach","unsupported physics promotion"]}
+}
