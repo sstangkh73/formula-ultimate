@@ -1,0 +1,21 @@
+{
+  "protocol_version":"optimized_vehicle_controls_v1","units":"SI_and_dimensionless_score",
+  "dependencies":[
+    {"work":123,"commit":"e8478ce8828cce245b91a33b7cae1bb59965a779","contract_path":"docs/contracts/COUPLED_VEHICLE_TRANSIENT_V1.md","contract_sha256":"1b2875460494d9e3bd7871849871a3e8259c6a4abf3af25e589a2b107c1f2583"},
+    {"work":124,"commit":"e82748f49d55972d15e49e73a185e584238a2108","contract_path":"docs/contracts/MULTISCALE_DISCOVERY_SEARCH_V1.md","contract_sha256":"a95978f36f7f4a96c0feadfcdc6135f9754360ffcff2c74b388518eb34ec0414"},
+    {"work":126,"commit":"f3539f6830ea1c307b8ed25237636e51d2b51f77","contract_path":"docs/contracts/DETAILED_VEHICLE_CLOSURE_V1.md","contract_sha256":"b71024a4a0f3dbf1e2516ebe9dcd604aa4619d65ce3d691d0a76be8e46d267ca"}
+  ],
+  "inputs":[{"work":123,"path":"artifacts/work123/run_a/result.json","result_sha256":"66abf81b6f49179cb881e70d594e856b5042c4ef0f6fcc0fa813ef2acad2a14c"},{"work":124,"path":"artifacts/work124/run_a/result.json","result_sha256":"8b2cc7908fc4e33a7ab128d3e0e10bcabc3159304ab09ee8b81f6bda9888a887"},{"work":126,"path":"artifacts/work126/run_a/result.json","result_sha256":"ce5f08c8a572b1ef5adbf88db7e7200616c8c1c9c431ba6d032236d8917e3171"}],
+  "registration":{"estimand":"open_minus_best_optimized_control_after_matched_retuning","meaningful_system_effect":0.02,"holdout_sample_size":6,"t_multiplier":2.571,"stopping_rule":"complete_all_registered_pairs"},
+  "arms":{
+    "fixed_topology":{"parameters":[0,1,2,3],"parameter_effects":{"0":0.0,"1":0.01,"2":0.02,"3":0.015},"base_score":1.05,"common_controller_penalty":0.02,"source_energy_j":1000000.0,"baseline_tuned":true,"burdens":{"base_mass_kg":60.0,"cooling_mass_kg":4.0,"containment_mass_kg":3.0,"support_mass_kg":3.0,"manufacturing_penalty":0.01,"energy_j":500000.0}},
+    "reference":{"parameters":[0,1,2,3],"parameter_effects":{"0":0.0,"1":0.015,"2":0.01,"3":0.018},"base_score":1.04,"common_controller_penalty":0.015,"source_energy_j":1000000.0,"baseline_tuned":true,"burdens":{"base_mass_kg":62.0,"cooling_mass_kg":4.0,"containment_mass_kg":3.0,"support_mass_kg":3.0,"manufacturing_penalty":0.008,"energy_j":500000.0}},
+    "random_control":{"parameters":[0,1,2,3],"parameter_effects":{"0":-0.01,"1":0.0,"2":0.01,"3":-0.005},"base_score":1.01,"common_controller_penalty":0.03,"source_energy_j":1000000.0,"baseline_tuned":true,"burdens":{"base_mass_kg":65.0,"cooling_mass_kg":5.0,"containment_mass_kg":3.0,"support_mass_kg":4.0,"manufacturing_penalty":0.012,"energy_j":500000.0}},
+    "open_candidate":{"parameters":[0,1,2,3],"parameter_effects":{"0":0.0,"1":0.01,"2":0.02,"3":0.015},"base_score":1.07,"common_controller_penalty":0.04,"source_energy_j":1000000.0,"baseline_tuned":true,"burdens":{"base_mass_kg":60.0,"cooling_mass_kg":8.0,"containment_mass_kg":5.0,"support_mass_kg":5.0,"manufacturing_penalty":0.025,"energy_j":500000.0}}
+  },
+  "conditions":{"training":["train_1","train_2","train_3","train_4"],"holdout":["holdout_1","holdout_2","holdout_3","holdout_4","holdout_5","holdout_6"],"effects":{"train_1":-0.01,"train_2":0.0,"train_3":0.01,"train_4":0.02,"holdout_1":-0.015,"holdout_2":-0.005,"holdout_3":0.0,"holdout_4":0.005,"holdout_5":0.01,"holdout_6":0.015}},
+  "budgets":{"fixed_topology":{"vehicle_search":4,"controller_tuning":4},"reference":{"vehicle_search":4,"controller_tuning":4},"random_control":{"vehicle_search":4,"controller_tuning":4},"open_candidate":{"vehicle_search":4,"controller_tuning":4}},
+  "burden_weights":{"mass_per_kg":0.001,"energy_per_j":0.00000002},
+  "coverage":{"matched_optimization":"implemented_synthetic","controller_substitution":"common_then_matched_retuning","complete_registered_burdens":true,"held_out_race":"deferred_Work128","physical_validation":"unresolved","promotion_ready":false},
+  "experiment":{"independent_variables":["vehicle arm","substitution","controller treatment","parameter"],"dependent_variables":["paired score","mass","energy","failure","cost"],"controls":["untuned baseline","free controller","omitted cooling","unequal source energy"],"success_criteria":["matched opportunity","complete burden","exact replay","evidence-bound claim"],"failure_criteria":["hidden burden","unequal cost","unsupported promotion","post-result threshold"]}
+}
