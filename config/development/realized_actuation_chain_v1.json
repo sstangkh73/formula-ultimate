@@ -1,0 +1,33 @@
+{
+  "protocol_version": "realized_actuation_chain_v1",
+  "units": "SI_m_kg_s_K_N_Pa_W_J_rad",
+  "dependencies": [
+    {"work": 114, "commit": "fce72a918c4464994ed06912ef9a9199f9852f6d", "contract_path": "docs/contracts/MOVING_CONTACT_ASSEMBLY_V1.md", "contract_sha256": "34e28c3bb615dd9a02dbc2177db4d8fa17811b4d215138af13dc7270d7c07bbc"},
+    {"work": 115, "commit": "f674f66832746ce6435e3488043f2d30d76c6587", "contract_path": "docs/contracts/COUPLED_THERMAL_SOLID_V1.md", "contract_sha256": "20de6ec7315329dcff5270a5d3ffef77711262d310152e3963edbc1f7ab5aa38"},
+    {"work": 116, "commit": "caddb0c4b7fdb09f2e4e76f4edb82a369bdc5c43", "contract_path": "docs/contracts/MATERIAL_FAILURE_SCOPE_V1.md", "contract_sha256": "ac7b13c9c31d6a5c66567d8f5a90c88ccb37adc8978bac1ee664aa2def7d166c"}
+  ],
+  "inputs": [
+    {"work": 114, "path": "artifacts/work114/run_a/result.json", "result_sha256": "5926e067cbe4b07d0bf90364275649f72a7ad4b4566ff204901172fdd9f1ce5f"},
+    {"work": 115, "path": "artifacts/work115/run_a/result.json", "result_sha256": "764f1c22774b3c3321cea384053ba079f8671b587fe1059d12b8910d51bcc5fa"},
+    {"work": 116, "path": "artifacts/work116/run_a/result.json", "result_sha256": "ea418059c16fdddc6f7205b0d13b35b2d0623a17e9a930d474c9133137e708aa"}
+  ],
+  "ports": {"input": {"quantity": "rotary_torque_speed", "torque_unit": "N*m", "speed_unit": "rad/s"}, "output": {"quantity": "rotary_torque_speed", "torque_unit": "N*m", "speed_unit": "rad/s"}},
+  "envelope": {"maximum_abs_input_torque_n_m": 80.0, "maximum_abs_input_speed_rad_s": 300.0, "temperature_range_k": [280.0, 360.0]},
+  "hardware": {
+    "route_id": "coaxial_rotary_reduction_reference",
+    "ratio": 3.5,
+    "members": [
+      {"member_id": "input_transfer_member", "diameter_m": 0.02, "length_m": 0.3, "density_kg_m3": 7800.0, "shear_modulus_pa": 79000000000.0},
+      {"member_id": "output_transfer_member", "diameter_m": 0.03, "length_m": 0.25, "density_kg_m3": 7800.0, "shear_modulus_pa": 79000000000.0}
+    ],
+    "supports": [{"support_id": "support_a", "mass_kg": 0.4}, {"support_id": "support_b", "mass_kg": 0.4}, {"support_id": "support_c", "mass_kg": 0.4}, {"support_id": "support_d", "mass_kg": 0.4}],
+    "containment": {"outer_dimensions_m": [0.4, 0.2, 0.2], "wall_thickness_m": 0.003, "density_kg_m3": 2700.0},
+    "coupler_mass_kg": 0.8,
+    "reaction_arm_m": 0.05
+  },
+  "loss_law": {"provenance": "synthetic", "fractional_loss": 0.04, "fixed_loss_w": 15.0, "speed_loss_w_per_rad_s": 0.05, "torque_loss_w_per_n_m": 0.5, "temperature_loss_w_per_k": 0.2, "reference_temperature_k": 293.15},
+  "map": {"input_speeds_rad_s": [50.0, 100.0, 200.0], "input_torques_n_m": [10.0, 30.0, 60.0], "temperatures_k": [293.15, 330.0], "duration_s": 5.0},
+  "tolerances": {"energy_residual_absolute_w": 1e-10, "reverse_symmetry_relative": 1e-12},
+  "coverage": {"coaxial_rotary_reduction_reference": "implemented_synthetic", "alternative_conversion_route": "extension_requires_verified_law_and_hardware", "fatigue": "unresolved", "wear": "unresolved", "measured_efficiency": "unresolved"},
+  "experiment": {"independent_variables": ["member geometry", "ratio", "torque", "speed", "temperature", "direction", "connectivity"], "dependent_variables": ["output torque speed and work", "loss and heat", "stiffness and stress", "mass", "support reactions"], "controls": ["same port task", "disconnected path", "locked output", "reverse operation", "saturation", "removed supports"], "success_criteria": ["realized hardware coverage", "energy accounting", "causal controls", "exact replay"], "failure_criteria": ["ideal unexplained torque", "missing support", "stale dependency", "energy residual", "unsupported envelope"]}
+}
