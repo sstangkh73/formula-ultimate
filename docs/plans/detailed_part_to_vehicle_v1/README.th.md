@@ -46,6 +46,7 @@ Work 107 จริงคือการขยายเอกสารครั�
 | 131 | 130 | [การวัดวัสดุและจุดเชื่อมเมื่อได้รับอนุญาต](work131-physical_connection_correlation.th.md) | 113, 116, 130 |
 | 132 | 131 | [เทียบ subsystem จริงและความทนทานเมื่อได้รับอนุญาต](work132-physical_subsystem_correlation.th.md) | 131 |
 | 133 | 132 | [โปรแกรมตรวจรถทั้งคันเมื่อได้รับอนุญาต](work133-physical_vehicle_validation.th.md) | 128, 129, 130, 131, 132 |
+| 135 | — | [Native detailed vehicle realization](work135-native_detailed_vehicle_realization.th.md) | 108, 110, 112–123, 125, 126, 129, 130 |
 
 dependency ในตารางหมายถึงความสามารถขาเข้าที่ต้องใช้สำหรับขอบเขตครบ ไม่ใช่ต้องรอก่อนเริ่มเตรียมงานทุกอย่าง Work 110 เริ่ม B-rep ได้ก่อน representation ใหม่พร้อม Work 112 เดินต่อหลัง spatial geometry ขณะพัฒนา meshing ได้ search ย่อยของ Work 124 เริ่มหลัง Work 117 ได้ ส่วนโหมดรถต้องมี Work 123 เพิ่ม ห้ามอ้าง package ครบถ้าส่วนจำเป็นที่ประกาศยังขาด
 
@@ -116,3 +117,7 @@ runner contract ที่เสนอสร้าง `result.json` ใต้ out
 เริ่ม [Work 108](work108-spatial_material.th.md): ตรวจการนับเนื้อวัสดุ/ช่องว่างจริงและ mass properties จาก geometry แล้วเปิดเส้นทาง implicit generator และ meshing/solid-fields จริง ให้ search ปลายทางใช้ geometry ที่มีเหตุทางฟิสิกส์
 
 การจบชุดเอกสารนี้บันทึกใน [ผล Work 107](../../work_logs/2026-09-07_107_detailed-work-package-plans-result.th.md) การจบงานนั้นไม่ได้หมายความว่า Works 108–133 เริ่มแล้วหรือผ่านแล้ว
+
+## 8. ส่วนขยายแก้ไขหลัง Work 133
+
+Work 134 ที่ดำเนินการจริงเพิ่มแผน Work 135 หลังผลการทำงานแสดงว่า Work 126 ปิดงานด้วย registry ที่ใช้กล่อง แทนที่จะส่งมอบ native whole/individual CAD ตามการ์ดเดิม Work 135 เป็นงานแก้ไขไปข้างหน้า: ไม่เขียนประวัติ Work 126 ใหม่และไม่สืบทอด geometry ของ Work 126 เป็น detailed candidate กล่องเหล่านั้นคงใช้เป็น function checklist เท่านั้น

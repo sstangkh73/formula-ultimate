@@ -46,6 +46,7 @@ Each linked plan includes entry evidence, proposed files, ordered implementation
 | 131 | 130 | [Authorized material and connection measurement](work131-physical_connection_correlation.md) | 113, 116, 130 |
 | 132 | 131 | [Authorized subsystem correlation and endurance](work132-physical_subsystem_correlation.md) | 131 |
 | 133 | 132 | [Authorized whole-vehicle validation program](work133-physical_vehicle_validation.md) | 128, 129, 130, 131, 132 |
+| 135 | — | [Native detailed vehicle realization](work135-native_detailed_vehicle_realization.md) | 108, 110, 112–123, 125, 126, 129, 130 |
 
 Dependencies in this table denote the complete scope's capability inputs, not a requirement to wait before all preparatory work. Work 110 may start on B-rep before the new representation branch is ready; Work 112 may proceed after spatial geometry while meshing develops; local Work 124 search can start after Work 117, while its vehicle mode also requires Work 123. Never claim a complete package while its declared required branch is missing.
 
@@ -116,3 +117,7 @@ Do not postpone exploratory architecture feedback until every technology has bee
 Start with [Work 108](work108-spatial_material.md): validate actual material/void ownership and geometry-derived mass properties. Then open the implicit generator and actual meshing/solid-field paths. This gives downstream search causal geometry rather than only new descriptors.
 
 This documentation set is completed through its own [Work 107 result](../../work_logs/2026-09-07_107_detailed-work-package-plans-result.md). Completion of that record does not mean Works 108–133 have started or passed.
+
+## 8. Corrective extension after Work 133
+
+Actual Work 134 added the proposed Work 135 plan after execution showed that Work 126 had closed a box-based registry rather than delivering the native whole/individual CAD requested by its original card. Work 135 is forward corrective work: it does not rewrite Work 126 and does not inherit its geometry as a detailed candidate. Its bounding boxes remain a function checklist only.
