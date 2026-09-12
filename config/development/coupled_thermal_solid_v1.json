@@ -1,0 +1,24 @@
+{
+  "protocol_version": "coupled_thermal_solid_v1",
+  "units": "SI_m_kg_s_K_N_Pa_W_J",
+  "dependencies": [
+    {"work": 111, "commit": "f15d6eba23aa5493e9c624a7f2377db2e11e012b", "contract_path": "docs/contracts/VECTOR_SOLID_FIELDS_V1.md", "contract_sha256": "05ff92c5fc94683b950caa8c7ce3004b8c72dca69f8a5dc2f4c0994df82a11af"},
+    {"work": 113, "commit": "2c6434bfbc2b1776b2ed922fc9b4084c69c03ff5", "contract_path": "docs/contracts/DETAILED_CONNECTION_CONTACT_V1.md", "contract_sha256": "8588fab3d17ada1fb908a1997e787ca97c73f637ab396fe86152789a8f78b3b3"}
+  ],
+  "geometry": {"male_volume_m3": 0.0000009803770506463375, "female_volume_m3": 0.0000026351823298910333, "engagement_length_m": 0.012, "contact_area_m2": 0.00012073261309882398, "work113_result_path": "artifacts/work113/run_a/result.json", "work113_result_sha256": "a0b9fe19fbc9a3105a5bcac65a40d682e41a05d793d8063095e3be00afa58148", "male_step_sha256": "ba8917cc227ac3450d86ab56065e77e082981e6455c6afe2b21ad3a99a6b97ff", "female_step_sha256": "26d9bf69391281612ed5bfed0e199bdeaf7bae5d3dcc65b93bc6fc0a4b605dda"},
+  "materials": {
+    "male": {"density_kg_m3": 2700.0, "specific_heat_j_kg_k": 900.0, "youngs_modulus_pa": 70000000000.0, "thermal_expansion_1_k": 0.000023, "modulus_temperature_coefficient_1_k": 0.0004, "valid_temperature_k": [250.0, 400.0], "evidence_class": "synthetic_fixture"},
+    "female": {"density_kg_m3": 7800.0, "specific_heat_j_kg_k": 500.0, "youngs_modulus_pa": 200000000000.0, "thermal_expansion_1_k": 0.000012, "modulus_temperature_coefficient_1_k": 0.00025, "valid_temperature_k": [250.0, 400.0], "evidence_class": "synthetic_fixture"}
+  },
+  "thermal": {"initial_temperature_k": 293.15, "ambient_temperature_k": 293.15, "duration_s": 5.0, "heat_input_w": 10.0, "boundary_conductance_w_k": 0.5, "contact_conductance_w_m2_k": 20000.0, "preload_conductance_exponent": 0.5},
+  "mechanical": {"reference_preload_n": 4000.0, "reference_joint_stiffness_n_m": 4643562042.262461, "preload_sensitivity_n_m": 20000000.0},
+  "time_steps_s": [0.02, 0.01, 0.005],
+  "tolerances": {"energy_residual_relative": 0.0000000001, "last_two_relative_change_limit": 0.01, "maximum_reduced_temperature_relative_error": 0.2, "minimum_coupling_change": 0.000000001},
+  "experiment": {
+    "independent_variables": ["heat input", "boundary conductance", "contact state", "interface area", "temperature properties", "time step"],
+    "dependent_variables": ["temperature", "heat residual", "expansion", "modulus", "preload", "contact conductance", "reduction error"],
+    "controls": ["insulated energy rise", "zero-source equilibrium", "free and constrained expansion", "removed heat path", "interface-area mutation", "decoupled model"],
+    "success_criteria": ["energy balance", "bidirectional coupling", "three-level consistency", "causal controls", "exact replay"],
+    "failure_criteria": ["stale geometry", "property range exit", "joint opening", "energy breach", "reduction envelope exit", "unsupported cooling claim"]
+  }
+}
