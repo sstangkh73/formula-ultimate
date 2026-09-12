@@ -1,0 +1,29 @@
+{
+  "protocol_version": "ground_interaction_tasks_v1",
+  "units": "SI_m_kg_s_N_J_W_Pa",
+  "dependencies": [
+    {"work": 114, "commit": "fce72a918c4464994ed06912ef9a9199f9852f6d", "contract_path": "docs/contracts/MOVING_CONTACT_ASSEMBLY_V1.md", "contract_sha256": "34e28c3bb615dd9a02dbc2177db4d8fa17811b4d215138af13dc7270d7c07bbc"},
+    {"work": 116, "commit": "caddb0c4b7fdb09f2e4e76f4edb82a369bdc5c43", "contract_path": "docs/contracts/MATERIAL_FAILURE_SCOPE_V1.md", "contract_sha256": "ac7b13c9c31d6a5c66567d8f5a90c88ccb37adc8978bac1ee664aa2def7d166c"}
+  ],
+  "inputs": [
+    {"work": 114, "path": "artifacts/work114/run_a/result.json", "result_sha256": "5926e067cbe4b07d0bf90364275649f72a7ad4b4566ff204901172fdd9f1ce5f"},
+    {"work": 116, "path": "artifacts/work116/run_a/result.json", "result_sha256": "ea418059c16fdddc6f7205b0d13b35b2d0623a17e9a930d474c9133137e708aa"}
+  ],
+  "surface": {"surface_id": "synthetic_rigid_dry_v1", "provenance": "synthetic", "applicability": "rigid_dry_coulomb", "friction_coefficient": 0.8, "friction_range": [0.0, 1.0], "normal_load_range_n": [0.0, 6000.0], "speed_range_m_s": [-30.0, 30.0]},
+  "route": {"route_id": "flat_rigid_reference", "length_m": 100.0, "grade_rad": 0.0, "surface_id": "synthetic_rigid_dry_v1"},
+  "body": {"mass_kg": 300.0, "yaw_inertia_kg_m2": 150.0, "initial_velocity_m_s": 20.0, "maximum_time_s": 10.0},
+  "contacts": [
+    {"port_id": "contact_alpha", "x_m": 1.2, "y_m": 0.0, "normal_load_n": 1200.0},
+    {"port_id": "contact_beta", "x_m": -0.8, "y_m": 0.6, "normal_load_n": 900.0},
+    {"port_id": "contact_gamma", "x_m": -0.8, "y_m": -0.6, "normal_load_n": 900.0}
+  ],
+  "commands": {
+    "propulsion": {"contact_alpha": {"longitudinal_force_n": 1500.0, "lateral_force_n": 0.0}},
+    "direction": {"contact_alpha": {"longitudinal_force_n": 0.0, "lateral_force_n": 800.0}},
+    "saturation": {"contact_alpha": {"longitudinal_force_n": 960.0, "lateral_force_n": 960.0}}
+  },
+  "time_steps_s": [0.1, 0.05, 0.025],
+  "tolerances": {"force_circle_absolute_n": 1e-9, "energy_residual_relative": 1e-12, "analytic_stop_absolute": 1e-10, "last_two_relative_change": 1e-10},
+  "coverage": {"rigid_dry_coulomb": "implemented_synthetic_reference", "tire": "unresolved_missing_measured_adapter", "soft_soil": "unresolved_missing_measured_adapter", "non_tire_adapter": "unresolved_missing_domain_law", "wear_thermal_evolution": "unresolved_missing_law"},
+  "experiment": {"independent_variables": ["contact placement", "normal load", "friction coefficient", "force command", "initial velocity", "time step"], "dependent_variables": ["contact force", "yaw moment", "stopping time and distance", "dissipated energy", "residual", "returned load"], "controls": ["same route and surface", "zero friction", "lift-off", "reverse motion", "saturation", "disconnection", "no interaction"], "success_criteria": ["force-circle compliance", "analytic stopping reference", "energy conservation", "placement causality", "exact replay"], "failure_criteria": ["ground force without interaction", "unsupported-domain coefficient", "stale dependency", "energy or refinement failure"]}
+}
