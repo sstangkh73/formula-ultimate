@@ -1,0 +1,17 @@
+{
+  "protocol_version":"independent_claim_validation_v1","units":"SI",
+  "dependencies":[
+    {"work":125,"commit":"336094ff3579e81609aa18c792dbc57cbf107fcc","contract_path":"docs/contracts/DETAILED_PART_COMPARISON_V1.md","contract_sha256":"f5e62cda4eed92960c5a41125623e13a7336997a15fee56f96a83eb96145a94b"},
+    {"work":126,"commit":"f3539f6830ea1c307b8ed25237636e51d2b51f77","contract_path":"docs/contracts/DETAILED_VEHICLE_CLOSURE_V1.md","contract_sha256":"b71024a4a0f3dbf1e2516ebe9dcd604aa4619d65ce3d691d0a76be8e46d267ca"},
+    {"work":127,"commit":"ce509c0bb350f7c8022b87af1592559bcc431447","contract_path":"docs/contracts/OPTIMIZED_VEHICLE_CONTROLS_V1.md","contract_sha256":"2e82dc246cb4ddbdbb60ad2e71af6bfde47482d4bfa973feeafc7f6304647774"},
+    {"work":128,"commit":"0310d14db300b715430ec338a5d9bbbadf6dae8b","contract_path":"docs/contracts/HELDOUT_RACE_ROBUSTNESS_V1.md","contract_sha256":"3a1e7e017c81f5a3292d9f2f22d4048d37f00bc8d303b0b807d93a9d844a990f"}
+  ],
+  "inputs":[{"work":125,"path":"artifacts/work125/run_a/result.json","result_sha256":"7f5889940e6bf6cb5f24523f9443aa73b705b3510b6ba2244c400d6eae4b79a6"},{"work":126,"path":"artifacts/work126/run_a/result.json","result_sha256":"ce5f08c8a572b1ef5adbf88db7e7200616c8c1c9c431ba6d032236d8917e3171"},{"work":127,"path":"artifacts/work127/run_a/result.json","result_sha256":"d19548b5d45cfcd382ff248aa554e7c96c3043d201d02ee11398d95dd0366f1a"},{"work":128,"path":"artifacts/work128/run_a/result.json","result_sha256":"7ef6c7951abf5dbd3fd96941a10f8775164221ba82b9aceb6d349ac69630bcaa"}],
+  "telemetry":{"path":"artifacts/work128/run_a/telemetry.json","sha256":"8f2c8e76a806f84c51b7e95d2fefeebe606f5788db4f16e28a971f7da5f54751"},
+  "independence":{"upstream_backend":"paired_summary_v1","upstream_source_module":"formula_ultimate.experiments.heldout_race_robustness","independent_backend":"conservative_boundary_reconstruction_v1","independent_source_module":"formula_ultimate.experiments.independent_claim_validation","institutionally_independent":false},
+  "registration":{"expected_telemetry_records":12,"meaningful_time_improvement_s":1.0,"open_boundary_penalty_s_per_severity":0.08,"discrepancy_trigger_s":0.2,"known_omission_detection_s":0.2,"energy_cap_j":520000.0},
+  "shared_assumptions":["same synthetic telemetry sensors","same candidate identities","same SI unit interpretation","no measured manufacturing variability"],
+  "critical_claims":{"paired_time":"highest decision impact","energy_cap":"constraint gate","thermal_margin":"nearer open-arm limit","structural_margin":"physical applicability boundary"},
+  "coverage":{"independent_code_path":"implemented","independent_boundary_interpretation":"implemented_synthetic","institutional_independence":"not_claimed","physical_measurement":"unresolved","promotion_ready":false},
+  "experiment":{"independent_variables":["formulation","boundary correction","critical condition"],"dependent_variables":["disagreement_s","ranking","energy and margins","claim scope"],"controls":["shared wrapper","known omission","changed telemetry identity"],"success_criteria":["independent recomputation","omission detection","classified discrepancies","exact replay"],"failure_criteria":["unexplained discrepancy","shared-function independence claim","unsupported promotion"]}
+}
