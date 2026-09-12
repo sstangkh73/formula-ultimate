@@ -1,0 +1,21 @@
+{
+  "protocol_version": "architecture_part_feedback_v1",
+  "units": "SI_m_kg_s_K_N_Pa_W",
+  "dependencies": [
+    {"work": 112, "commit": "4726ff1424dadb6b54ca70e677d54f491c8aee74", "contract_path": "docs/contracts/PHYSICAL_INTERFACE_GRAPH_V1.md", "contract_sha256": "d1181a67158e4f6b938af7584b5d18c887a702388c47b921e79262131de5b0dc"},
+    {"work": 114, "commit": "fce72a918c4464994ed06912ef9a9199f9852f6d", "contract_path": "docs/contracts/MOVING_CONTACT_ASSEMBLY_V1.md", "contract_sha256": "34e28c3bb615dd9a02dbc2177db4d8fa17811b4d215138af13dc7270d7c07bbc"},
+    {"work": 115, "commit": "f674f66832746ce6435e3488043f2d30d76c6587", "contract_path": "docs/contracts/COUPLED_THERMAL_SOLID_V1.md", "contract_sha256": "20de6ec7315329dcff5270a5d3ffef77711262d310152e3963edbc1f7ab5aa38"}
+  ],
+  "inputs": [
+    {"work": 112, "path": "artifacts/work112/run_a/result.json", "result_sha256": "45e821a075f98258a8fbe5c1a954def9e12b561db1c0e5f1d8f6d21ffe901b37"},
+    {"work": 114, "path": "artifacts/work114/run_a/result.json", "result_sha256": "5926e067cbe4b07d0bf90364275649f72a7ad4b4566ff204901172fdd9f1ce5f"},
+    {"work": 115, "path": "artifacts/work115/run_a/result.json", "result_sha256": "764f1c22774b3c3321cea384053ba079f8671b587fe1059d12b8910d51bcc5fa"}
+  ],
+  "external_task": {"task_id": "immutable_external_connection_task", "maximum_region_mass_kg": 0.1, "envelope_m": [0.04, 0.03, 0.03], "required_outputs": ["load_transfer", "heat_transfer", "motion_clearance"], "race_rules_sha256": "9f71d22aaea96bcb140a1fb12b46372483dc75cb29dc9f29e196c779d6652fe0"},
+  "initial_internal_task": {"task_id": "internal_v0", "parent_task_sha256": null, "version": 0, "load_n": 10000.0, "heat_w": 5.0, "motion_envelope_m": 0.000003, "envelope_m": [0.04, 0.03, 0.03], "unknowns": ["measured_material", "ground_interaction"]},
+  "coefficients": {"allowable_stress_pa": 200000000.0, "density_kg_m3": 2700.0, "conductance_w_m2_k": 20000.0, "allowed_temperature_rise_k": 20.0, "region_length_m": 0.04, "minimum_area_m2": 0.00001},
+  "resource_cap": {"iterations": 3, "evaluations_per_iteration": 1, "seeds": [7, 11, 19]},
+  "feedback_rules": {"load_source": "Work114 finest maximum contact force", "heat_source": "Work115 registered heat input", "motion_source": "Work114 finest maximum displacement", "task_fields_allowed_to_change": ["load_n", "heat_w", "motion_envelope_m", "unknowns"]},
+  "model_coverage": {"structural_reduced": "implemented", "thermal_lumped": "implemented", "motion_history": "implemented", "measured_material": "unresolved", "ground_interaction": "unresolved"},
+  "experiment": {"independent_variables": ["feedback enabled", "task version", "seed", "region merge"], "dependent_variables": ["task and geometry identity", "mass", "margins", "invalidations", "evaluation cost"], "controls": ["immutable external task", "frozen local task", "equal resources", "load mutation", "deduplicated merge", "missing coefficient"], "success_criteria": ["traced regeneration", "causal identity change", "stale evidence invalidated", "equal compute", "exact replay"], "failure_criteria": ["external task mutation", "stale input", "duplicate mass", "invented coefficient", "incomplete model promoted"]}
+}
