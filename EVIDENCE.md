@@ -30,18 +30,36 @@ commit.
 
 ### Current status
 
-As of 7 September 2026, the suite is green on both platforms:
+The most recent CI run is for commit `2c2bf36` (7 September 2026). It was green
+on both platforms:
 
 | Environment | Result |
 | --- | --- |
 | Local, Windows, Python 3.14 | `Ran 794 tests` — **OK (skipped=8)** |
 | CI, Ubuntu, Python 3.11 and 3.14 | `Ran 794 tests` — **OK (skipped=32)** |
 
+Commits after `2c2bf36` (Works 108–136) are in the local history and have not
+been pushed, so no CI run exists for them yet. Measured locally on 20 September
+2026 with the CI dependency set (`pip install -e .`, so no CadQuery):
+
+| Environment | Commit | Result |
+| --- | --- | --- |
+| Local, Windows, Python 3.14.3, no CadQuery | `ed5dae3` (Work 135) | `Ran 956 tests` — **FAILED (errors=1, skipped=8)** |
+| Local, Windows, Python 3.14.3, no CadQuery | Work 136 | `Ran 964 tests` — **OK (skipped=11)** |
+
+The Work 135 error was an import-time `import cadquery` reached from
+`tests/test_native_detailed_vehicle.py`. CadQuery is an optional extra
+(`pip install -e .[cad]`), so the kernel tests that need it must skip when it is
+absent. Work 136 moved them behind that guard. In the pinned CadQuery
+environment they still run and pass (`Ran 9 tests` — OK). The first push of
+these commits is the first time CI will see them.
+
 The extra skips on CI are the tests that replay recorded evidence from
 `artifacts/`, which `.gitignore` excludes because of its size. They skip with a
 message naming the missing path rather than failing, so a clean checkout can
 reach a green run; where the artifacts are present the same tests run and assert
-exactly what they did before.
+exactly what they did before. Tests that need CadQuery also skip when it is not
+installed.
 
 ### The cross-platform difference that used to make CI red, and how it was fixed
 
@@ -124,3 +142,17 @@ checkable one.
   reports rather than implied to be complete.
 - Where a research question is still open, `docs/` records it as a plan, not a
   finding. Plans under `docs/plans/` are intentions; only reports carry results.
+- Works 125, 127, 128 and 129 (detailed-part comparison, optimized vehicle
+  controls, held-out race robustness and independent claim validation) test the
+  registration, control, leakage and replay logic of those gates. Their numeric
+  outcomes are computed from values declared in their configuration files, not
+  produced by a vehicle simulator. For example, the `0.5 s` held-out improvement
+  in Work 128 is `base_time_s: 100.0` minus `99.5` in
+  `config/development/heldout_race_robustness_v1.json`. Those numbers are
+  synthetic fixtures and are not evidence for or against any design.
+- Works 126–130 build on the Work 126 registry of 12 box regions with a
+  recomputed mass of `60.0 kg`. The native B-rep candidate built in Work 135
+  has a geometry-derived mass of `1023.65 kg`. Conclusions from Works 126–130
+  therefore do not transfer to the native geometry until its physics is rerun.
+- Works 131–133 (physical measurement programmes) stopped at their entry gates.
+  No hardware was tested and no measured correlation exists.

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import importlib.util
 import json
 import sys
 import unittest
@@ -19,15 +20,10 @@ from formula_ultimate.assembly.native_detailed_vehicle import (
     evaluate_admitted_evidence,
     validate_declaration,
 )
-from scripts.cad.build_native_detailed_vehicle import (
-    _box,
-    _clean_signature_number,
-    is_one_valid_solid,
-    shape_from_definition,
-)
 
 
 CONFIG = ROOT / "config/development/native_detailed_vehicle_v1.json"
+HAS_CADQUERY = importlib.util.find_spec("cadquery") is not None
 
 
 class NativeDetailedVehicleTests(unittest.TestCase):
@@ -173,22 +169,34 @@ class NativeDetailedVehicleTests(unittest.TestCase):
         with self.assertRaisesRegex(NativeDetailedVehicleViolation, "cyclic assembly order"):
             validate_declaration(cyclic)
 
+
+@unittest.skipUnless(HAS_CADQUERY, "CadQuery kernel tests use the pinned Work 078 environment")
+class NativeDetailedVehicleKernelTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from scripts.cad import build_native_detailed_vehicle  # noqa: PLC0415
+
+        cls.build = build_native_detailed_vehicle
+
+    def setUp(self):
+        self.raw = json.loads(CONFIG.read_text(encoding="utf-8"))
+
     def test_cadquery_closed_flag_regression_uses_valid_single_solid(self):
-        box = _box([0.1, 0.1, 0.1])
+        box = self.build._box([0.1, 0.1, 0.1])
         self.assertFalse(box.Closed())
         self.assertTrue(box.isValid())
         self.assertEqual(len(box.Solids()), 1)
-        self.assertTrue(is_one_valid_solid(box))
+        self.assertTrue(self.build.is_one_valid_solid(box))
 
     def test_fan_definition_regression_is_one_fused_solid(self):
         definition = next(item for item in self.raw["definitions"] if item["definition_id"] == "fan")
-        fan = shape_from_definition(definition)
-        self.assertTrue(is_one_valid_solid(fan))
+        fan = self.build.shape_from_definition(definition)
+        self.assertTrue(self.build.is_one_valid_solid(fan))
         self.assertEqual(len(fan.Solids()), 1)
 
     def test_semantic_signature_canonicalizes_signed_zero(self):
-        self.assertEqual(_clean_signature_number(-0.0, 7), 0.0)
-        self.assertEqual(str(_clean_signature_number(-0.0, 7)), "0.0")
+        self.assertEqual(self.build._clean_signature_number(-0.0, 7), 0.0)
+        self.assertEqual(str(self.build._clean_signature_number(-0.0, 7)), "0.0")
 
 
 if __name__ == "__main__":

@@ -140,17 +140,27 @@ Generated component ห้ามรายงานเองว่าเบา �
 
 ## สถานะ Implementation ปัจจุบัน
 
-ภารกิจสูงสุดตั้งใจกว้างกว่า implementation ปัจจุบัน Repository มี governance
-และ validation document, deterministic Level-0 longitudinal reference kernel
-และวงจรหลักฐาน component ตัวแรก
-`CadQuery -> STEP -> FreeCAD -> Level 0` แล้ว Grammar 3D ตัวแรกเป็นการทดลอง
-mounting plate แบบ bounded ไม่ใช่รถทั้งคันและไม่ใช่ racing component ที่ผ่าน
-physical validation
+ภารกิจสูงสุดตั้งใจกว้างกว่า implementation ปัจจุบัน ณ Work 136 (20 กันยายน 2569)
+repository มีสิ่งต่อไปนี้
 
-Phase 1 ยังตั้งใจจำกัดขอบเขตให้แคบ: ค้นพบและเปรียบเทียบ topology ของ
-powertrain แบบหนึ่งมิติภายใต้ budget ที่เท่ากัน ก่อนเปิด geometry 3D ทั้งคัน,
-aerodynamics, structure และ control co-design Fidelity ladder เป็นเส้นทาง
-promotion ไม่ใช่สิทธิ์ให้อ้าง capability ของขั้นหลังล่วงหน้า
+- governance, validation และบันทึก work-log สองภาษาของทุกงาน
+- deterministic Level-0 vehicle และ race kernel ที่บัญชีพลังงานชัดเจน
+  ครอบคลุมโมเดล longitudinal, lateral, tyre, suspension, powertrain และ aerodynamics
+- วงจรหลักฐาน `CadQuery -> STEP -> FreeCAD -> Level 0` และ bounded 3D grammar
+- bounded whole-vehicle campaign v3 (`docs/research/BOUNDED_MAIN_CAMPAIGN_V3_RESULT.md`):
+  ประเมิน 2,880 ครั้งภายใน geometry grammar ห้าตัวแปรที่ถูก freeze ไว้
+  EVOLUTION นำ RANDOM ในเชิงพรรณนา แต่ exact test ที่ลงทะเบียนล่วงหน้าไม่มีนัยสำคัญ (`p = 0.5`)
+- ชุดงาน part-to-vehicle Works 108–133 ซึ่งเพิ่ม reduced domain model และ evidence gate
+  สำหรับชิ้นส่วนละเอียด, contact, thermal coupling, actuation, energy, flow และ controls
+  comparison gate ของชุดนี้ (Works 125, 127–129) รันบนผลลัพธ์สังเคราะห์ที่ประกาศไว้ใน config
+  และทุกงานให้ผลลบหรือถูกลดระดับข้ออ้าง ส่วนโปรแกรมทางกายภาพ (Works 131–133) หยุดที่ entry gate
+- Work 135: native OCCT B-rep candidate แบบสามจุดสัมผัส มี 48 part definition และ 83 occurrence
+  มวลที่ได้จาก geometry คือ `1023.65 kg` และตรวจมวลกับ inertia ซ้ำใน FreeCAD แล้ว
+  งานนี้ผ่านเพียง geometry และ assembly gate และยังไม่ได้รันฟิสิกส์บน solid ชุดนี้ใหม่
+
+ยังไม่มีแบบใดถูก promote, ผ่าน physical validation หรือแสดงว่าชนะ baseline ที่ optimize แล้ว
+[`EVIDENCE.md`](EVIDENCE.md) ระบุว่าผลใดมาจากการจำลองจริงและผลใดเป็น synthetic fixture
+Fidelity ladder เป็นเส้นทาง promotion ไม่ใช่สิทธิ์ให้อ้าง capability ของขั้นหลังล่วงหน้า
 
 ## แผนผัง Repository
 
@@ -216,5 +226,4 @@ physical validation ต้องพยายามหักล้างสมม
 
 [`EVIDENCE.md`](EVIDENCE.md) แมปทุกข้ออ้างเกี่ยวกับโครงการนี้
 ไปยังหลักฐานหรือคำสั่งที่ใช้ทำซ้ำผลนั้น และบันทึกสถานะ CI ตามความเป็นจริง
-รวมถึงปัญหาที่ยังเปิดอยู่สองข้อ ซึ่งทำให้การรันบน Ubuntu CI ยังแดง
-ทั้งที่ชุดทดสอบผ่านบนแพลตฟอร์มที่ใช้พัฒนา
+รวมถึงข้อเท็จจริงที่ว่า commit หลัง commit ล่าสุดที่ push ไปแล้วยังไม่เคยรันบน CI

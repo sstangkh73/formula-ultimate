@@ -141,16 +141,32 @@ A design is only a **technology-discovery candidate** when:
 ## Current Implementation Status
 
 The ultimate mission is intentionally broader than the current implementation.
-The repository currently contains governance and validation documents, a
-deterministic Level-0 longitudinal reference kernel, and the first constrained
-`CadQuery -> STEP -> FreeCAD -> Level 0` component evidence loop. The first 3D
-grammar is a bounded mounting-plate experiment, not a full vehicle and not a
-physically validated racing component.
+As of Work 136 (20 September 2026) the repository contains:
 
-Phase 1 remains deliberately narrow: discover and compare one-dimensional
-powertrain topologies under matched budgets before opening whole-vehicle 3D
-geometry, aerodynamics, structures, and control co-design. The fidelity ladder
-is a promotion path, not permission to claim later-stage capability early.
+- governance, validation and bilingual work-log records for every work item;
+- a deterministic Level-0 vehicle and race kernel with explicit energy
+  accounting, covering longitudinal, lateral, tyre, suspension, powertrain and
+  aerodynamic models;
+- a `CadQuery -> STEP -> FreeCAD -> Level 0` evidence loop and bounded 3D
+  grammars;
+- bounded whole-vehicle campaign v3 (`docs/research/BOUNDED_MAIN_CAMPAIGN_V3_RESULT.md`):
+  2,880 evaluations inside a frozen five-variable geometry grammar. EVOLUTION
+  led RANDOM descriptively, but the preregistered exact test was not
+  significant (`p = 0.5`);
+- the Works 108–133 part-to-vehicle package. It adds reduced domain models and
+  evidence gates for detailed parts, contact, thermal coupling, actuation,
+  energy, flow and controls. Its comparison gates (Works 125, 127–129) run on
+  config-declared synthetic outcomes, and all of them returned negative or
+  downgraded results. Physical programmes (Works 131–133) stopped at entry;
+- Work 135: a native OCCT B-rep three-contact candidate with 48 part
+  definitions and 83 occurrences. Its geometry-derived mass is `1023.65 kg`,
+  and its mass and inertia were cross-checked in FreeCAD. This passed only a
+  geometry and assembly gate. Physics on these exact solids has not been rerun.
+
+No design is promoted, physically validated or shown to beat an optimized
+baseline. [`EVIDENCE.md`](EVIDENCE.md) states which results are simulated and
+which are synthetic fixtures. The fidelity ladder is a promotion path, not
+permission to claim later-stage capability early.
 
 ## Repository Map
 
@@ -218,6 +234,6 @@ are not covered by the licences above.
 ## Verifying the claims in this repository
 
 [`EVIDENCE.md`](EVIDENCE.md) maps every claim made about this project to the
-artifact or the command that reproduces it, and records the current CI status
-honestly — including the two open problems that keep the Ubuntu CI run red
-while the suite passes on the development platform.
+artifact or the command that reproduces it. It also records the current CI
+status honestly, including the fact that commits after the last pushed commit
+have not yet been run on CI.

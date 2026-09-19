@@ -31,17 +31,34 @@ ORCID ผู้พัฒนา: https://orcid.org/0009-0000-2979-1916
 
 ### สถานะปัจจุบัน
 
-ณ วันที่ 7 กันยายน 2569 ชุดทดสอบผ่านทั้งสองแพลตฟอร์ม
+CI รันครั้งล่าสุดกับ commit `2c2bf36` (7 กันยายน 2569) และผ่านทั้งสองแพลตฟอร์ม
 
 | สภาพแวดล้อม | ผล |
 | --- | --- |
 | เครื่องพัฒนา Windows, Python 3.14 | `Ran 794 tests` — **OK (skipped=8)** |
 | CI, Ubuntu, Python 3.11 และ 3.14 | `Ran 794 tests` — **OK (skipped=32)** |
 
+commit หลัง `2c2bf36` (Works 108–136) อยู่ในประวัติบนเครื่องเท่านั้นและยังไม่ได้ push
+จึงยังไม่มีผล CI ของ commit เหล่านี้ ผลที่วัดบนเครื่องวันที่ 20 กันยายน 2569
+ด้วยชุด dependency เดียวกับ CI (`pip install -e .` ซึ่งไม่มี CadQuery) เป็นดังนี้
+
+| สภาพแวดล้อม | Commit | ผล |
+| --- | --- | --- |
+| เครื่องพัฒนา Windows, Python 3.14.3, ไม่มี CadQuery | `ed5dae3` (Work 135) | `Ran 956 tests` — **FAILED (errors=1, skipped=8)** |
+| เครื่องพัฒนา Windows, Python 3.14.3, ไม่มี CadQuery | Work 136 | `Ran 964 tests` — **OK (skipped=11)** |
+
+error ของ Work 135 เกิดจาก `import cadquery` ที่ถูกเรียกตอน import
+`tests/test_native_detailed_vehicle.py` แต่ CadQuery เป็น optional extra
+(`pip install -e .[cad]`) การทดสอบ kernel ที่ต้องใช้มันจึงต้องข้ามเมื่อไม่ได้ติดตั้ง
+Work 136 ย้ายการทดสอบเหล่านั้นไปไว้หลัง guard ดังกล่าว และใน environment CadQuery
+ที่ pin ไว้ การทดสอบยังรันและผ่านครบ (`Ran 9 tests` — OK)
+การ push commit เหล่านี้ครั้งแรกจะเป็นครั้งแรกที่ CI ได้รันกับมัน
+
 จำนวนที่ข้ามเพิ่มบน CI คือการทดสอบที่ต้องเล่นซ้ำหลักฐานใน `artifacts/`
 ซึ่ง `.gitignore` ตัดออกเพราะขนาดใหญ่ การทดสอบเหล่านี้จะข้ามพร้อมระบุชื่อไฟล์ที่ขาด
 แทนที่จะพัง ทำให้ checkout ใหม่รันจนเขียวได้ และเมื่อมีไฟล์ครบ
 การทดสอบเดิมก็ยังรันและตรวจสิ่งเดิมทุกประการ
+ส่วนการทดสอบที่ต้องใช้ CadQuery จะข้ามเช่นกันเมื่อไม่ได้ติดตั้ง
 
 ### ความต่างข้ามแพลตฟอร์มที่เคยทำให้ CI แดง และวิธีที่แก้
 
@@ -118,3 +135,15 @@ ORCID ผู้พัฒนา: https://orcid.org/0009-0000-2979-1916
   ไม่ได้ทำให้เข้าใจว่าครบถ้วนสมบูรณ์
 - หากคำถามวิจัยใดยังเปิดอยู่ `docs/` จะบันทึกไว้เป็นแผน ไม่ใช่ข้อค้นพบ
   เอกสารใน `docs/plans/` คือความตั้งใจ ส่วนผลลัพธ์อยู่ในรายงานเท่านั้น
+- Works 125, 127, 128 และ 129 (detailed-part comparison, optimized vehicle
+  controls, held-out race robustness และ independent claim validation)
+  ทดสอบ logic ของการลงทะเบียน, control, การรั่วของ holdout และการ replay ของ gate เหล่านั้น
+  แต่ตัวเลขผลลัพธ์คำนวณจากค่าที่ประกาศไว้ในไฟล์ configuration ไม่ได้มาจาก vehicle simulator
+  ตัวอย่างเช่น ผลที่ Work 128 เร็วขึ้น `0.5 s` บน holdout คือ `base_time_s: 100.0` ลบ `99.5`
+  ใน `config/development/heldout_race_robustness_v1.json` ตัวเลขเหล่านี้จึงเป็น synthetic fixture
+  และไม่ใช่หลักฐานสนับสนุนหรือคัดค้านแบบใด
+- Works 126–130 ใช้ registry ของ Work 126 ที่เป็นกล่อง 12 region มวลที่คำนวณได้ `60.0 kg`
+  ส่วน native B-rep candidate ที่สร้างใน Work 135 มีมวลที่ได้จาก geometry `1023.65 kg`
+  ข้อสรุปของ Works 126–130 จึงยังใช้กับ native geometry ไม่ได้จนกว่าจะรันฟิสิกส์ใหม่
+- Works 131–133 (โปรแกรมวัดผลทางกายภาพ) หยุดที่ entry gate
+  ไม่มีการทดสอบฮาร์ดแวร์และไม่มี measured correlation
