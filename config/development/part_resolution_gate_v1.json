@@ -1,0 +1,309 @@
+{
+  "protocol_version": "part_resolution_gate_v1",
+  "units": "SI_m",
+  "runtimes": [
+    {
+      "runtime_id": "cadquery_python",
+      "path": ".tools/cadquery-mcp/Scripts/python.exe",
+      "version": "3.12.14"
+    },
+    {
+      "runtime_id": "gmsh",
+      "path": "C:/Program Files/FreeCAD 1.1/bin/gmsh.exe",
+      "version": "4.15.0"
+    }
+  ],
+  "resolution": {
+    "minimum_feature_m": 5e-05,
+    "minimum_elements_across_feature": 1,
+    "mesh_size_factor": 0.15
+  },
+  "part_classes": {
+    "fastener": {
+      "minimum_faces": 12,
+      "minimum_curved_faces": 4,
+      "minimum_distinct_feature_scales": 3,
+      "minimum_edges": 20
+    },
+    "structural_plate": {
+      "minimum_faces": 6,
+      "minimum_curved_faces": 0,
+      "minimum_distinct_feature_scales": 2,
+      "minimum_edges": 12
+    },
+    "bushing": {
+      "minimum_faces": 4,
+      "minimum_curved_faces": 2,
+      "minimum_distinct_feature_scales": 1,
+      "minimum_edges": 4
+    },
+    "shaft": {
+      "minimum_faces": 3,
+      "minimum_curved_faces": 1,
+      "minimum_distinct_feature_scales": 1,
+      "minimum_edges": 2
+    }
+  },
+  "parts": [
+    {
+      "part_id": "work135_bolt",
+      "part_class": "fastener",
+      "source": "work135_native_detailed_vehicle:bolt",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/bolt.step"
+      }
+    },
+    {
+      "part_id": "work135_nut",
+      "part_class": "fastener",
+      "source": "work135_native_detailed_vehicle:nut",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/nut.step"
+      }
+    },
+    {
+      "part_id": "reference_m8_bolt",
+      "part_class": "fastener",
+      "source": "work140_reference_build",
+      "geometry": {
+        "kind": "reference_build",
+        "builder": "reference_fastener",
+        "parameters": {
+          "diameter_m": 0.008,
+          "pitch_m": 0.00125,
+          "shank_length_m": 0.024,
+          "thread_length_m": 0.018,
+          "head_across_flats_m": 0.013,
+          "head_height_m": 0.0053,
+          "socket_across_flats_m": 0.006,
+          "socket_depth_m": 0.004,
+          "chamfer_m": 0.0005
+        }
+      }
+    },
+    {
+      "part_id": "bond_plate_lower",
+      "part_class": "structural_plate",
+      "source": "work140_reference_build",
+      "geometry": {
+        "kind": "reference_build",
+        "builder": "plate",
+        "parameters": {
+          "dimensions_m": [
+            0.04,
+            0.04,
+            0.005
+          ]
+        }
+      }
+    },
+    {
+      "part_id": "bond_plate_upper",
+      "part_class": "structural_plate",
+      "source": "work140_reference_build",
+      "geometry": {
+        "kind": "reference_build",
+        "builder": "plate",
+        "parameters": {
+          "dimensions_m": [
+            0.04,
+            0.04,
+            0.005
+          ]
+        }
+      }
+    },
+    {
+      "part_id": "press_bushing",
+      "part_class": "bushing",
+      "source": "work140_reference_build",
+      "geometry": {
+        "kind": "reference_build",
+        "builder": "bushing",
+        "parameters": {
+          "outer_radius_m": 0.008,
+          "inner_radius_m": 0.005,
+          "length_m": 0.01
+        }
+      }
+    },
+    {
+      "part_id": "press_shaft",
+      "part_class": "shaft",
+      "source": "work140_reference_build",
+      "geometry": {
+        "kind": "reference_build",
+        "builder": "shaft",
+        "parameters": {
+          "radius_m": 0.00502,
+          "length_m": 0.012
+        }
+      }
+    }
+  ],
+  "joints": [
+    {
+      "joint_id": "work135_pack_threaded",
+      "technology": "threaded",
+      "parts": [
+        "work135_bolt",
+        "work135_nut"
+      ],
+      "placement": {
+        "work135_bolt": {
+          "translation_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_deg_xyz": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "work135_nut": {
+          "translation_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_deg_xyz": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "fit_range_m": [
+        0.0,
+        0.0005
+      ],
+      "minimum_overlap_area_m2": 1e-06
+    },
+    {
+      "joint_id": "reference_bonded_lap",
+      "technology": "bonded",
+      "parts": [
+        "bond_plate_lower",
+        "bond_plate_upper"
+      ],
+      "placement": {
+        "bond_plate_lower": {
+          "translation_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_deg_xyz": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "bond_plate_upper": {
+          "translation_m": [
+            0.0,
+            0.0,
+            0.00515
+          ],
+          "rotation_deg_xyz": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "fit_range_m": [
+        0.0001,
+        0.0002
+      ],
+      "minimum_overlap_area_m2": 0.0001
+    },
+    {
+      "joint_id": "reference_interference_fit",
+      "technology": "interference",
+      "parts": [
+        "press_shaft",
+        "press_bushing"
+      ],
+      "placement": {
+        "press_shaft": {
+          "translation_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_deg_xyz": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "press_bushing": {
+          "translation_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_deg_xyz": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "fit_range_m": [
+        -3e-05,
+        -1e-05
+      ],
+      "minimum_overlap_area_m2": 0.0
+    }
+  ],
+  "controls": [
+    "sliver_below_manufacturing_floor",
+    "primitive_below_resolution_requirement",
+    "mesh_too_coarse_for_feature",
+    "joint_without_measurable_interface",
+    "fit_outside_declared_range",
+    "technology_outside_registry",
+    "no_discovery_claim",
+    "exact_replay"
+  ],
+  "experiment": {
+    "independent_variables": [
+      "part geometry as declared",
+      "joint technology"
+    ],
+    "dependent_variables": [
+      "face, edge and curved-face counts",
+      "smallest feature",
+      "modelled feature scale",
+      "mesh elements across the feature scale",
+      "clearance, interference and mating faces"
+    ],
+    "controls": [
+      "sliver floor",
+      "resolution requirement",
+      "mesh adequacy",
+      "empty interface",
+      "out-of-range fit",
+      "unregistered technology",
+      "claim boundary",
+      "replay"
+    ],
+    "success_criteria": [
+      "one registered status per part and joint",
+      "every gate number measured on built geometry",
+      "all controls rejected",
+      "exact replay"
+    ],
+    "failure_criteria": [
+      "a gate relaxed after seeing a result",
+      "a kernel refusal hidden behind a simplified part",
+      "a subject dropped from the accounting"
+    ]
+  }
+}
