@@ -247,13 +247,19 @@ def evaluate_joint(joint: Mapping[str, Any], measurement: Mapping[str, Any] | No
         "overlap_area_m2": overlap,
         "mating_face_pairs": measurement["mating_face_pairs"],
         "engagement_face_count": measurement["engagement_face_count"],
+        "engagement_face_counts": measurement.get("engagement_face_counts"),
         "required_evidence": list(required),
     }
     found: list[str] = []
     missing: list[str] = []
     for item in required:
         if item == "engagement_faces":
-            (found if measurement["engagement_face_count"] >= 2 else missing).append(item)
+            # A thread bears on a thread. Where the measurement reports each
+            # side, both sides must carry engagement geometry; the pair total
+            # is only a fallback for older evidence.
+            per_side = measurement.get("engagement_face_counts")
+            engaged = min(per_side) >= 1 if per_side else measurement["engagement_face_count"] >= 2
+            (found if engaged else missing).append(item)
         elif item == "bearing_face":
             (found if measurement["mating_face_pairs"] >= 1 else missing).append(item)
         elif item in {"clearance_in_range", "bond_line_in_range", "interference_in_range"}:

@@ -30,6 +30,7 @@ from formula_ultimate.assembly.part_resolution import (  # noqa: E402
     PartResolutionError,
     validate_protocol,
 )
+from scripts.cad.detailed_part_builders import BUILDERS  # noqa: E402
 
 MM = 1000.0
 #: Faces whose surface is neither a plane nor a simple cylinder count as
@@ -42,11 +43,16 @@ def file_sha256(path: Path) -> str:
 
 
 def canonicalize_step(path: Path) -> None:
+    """Remove the two session-dependent fields OCCT writes into a STEP file."""
+
     text = path.read_text(encoding="ascii", errors="strict")
-    updated, count = re.subn(r"(FILE_NAME\('[^']*',)'[^']*'", r"\1'1970-01-01T00:00:00'", text, count=1)
-    if count != 1:
+    stamped = re.subn(r"(FILE_NAME\('[^']*',)'[^']*'", r"\g<1>'1970-01-01T00:00:00'", text, count=1)
+    if stamped[1] != 1:
         raise PartResolutionError("STEP timestamp is missing or ambiguous")
-    path.write_text(updated, encoding="ascii", newline="\n")
+    # OCCT appends a per-process export counter to the product name, so the
+    # same solid exported twice in one process differs in its header alone.
+    updated = re.sub(r"(Open CASCADE STEP translator [0-9.]+) \d+", r"\g<1>", stamped[0])
+    path.write_text(updated, encoding="ascii", newline=chr(10))
 
 
 def _repository_path(path: Path) -> str:
@@ -57,72 +63,6 @@ def _repository_path(path: Path) -> str:
         return resolved.relative_to(ROOT).as_posix()
     except ValueError:
         return resolved.as_posix()
-
-
-def thread_solid(core_radius_mm: float, pitch_mm: float, length_mm: float, inset_mm: float = 0.25) -> cq.Solid:
-    """One swept ISO-form thread helix, in millimetres."""
-
-    height = 0.866025 * pitch_mm
-    points = [
-        (core_radius_mm - inset_mm, 0.0),
-        (core_radius_mm + height * 0.625, pitch_mm * 0.25),
-        (core_radius_mm - inset_mm, pitch_mm * 0.5),
-    ]
-    profile = cq.Workplane("XZ").polyline(points).close().wires().val()
-    helix = cq.Wire.makeHelix(pitch=pitch_mm, height=length_mm, radius=core_radius_mm)
-    return cq.Solid.sweep(profile, [], helix, isFrenet=True)
-
-
-def build_reference_fastener(parameters: dict[str, Any]) -> cq.Shape:
-    """A fastener modelled at part resolution: thread, head, socket, chamfer."""
-
-    diameter = parameters["diameter_m"] * MM
-    pitch = parameters["pitch_m"] * MM
-    shank = parameters["shank_length_m"] * MM
-    thread_length = parameters["thread_length_m"] * MM
-    across_flats = parameters["head_across_flats_m"] * MM
-    head_height = parameters["head_height_m"] * MM
-    socket_across = parameters["socket_across_flats_m"] * MM
-    socket_depth = parameters["socket_depth_m"] * MM
-    chamfer = parameters["chamfer_m"] * MM
-
-    core = diameter / 2.0 - 0.61343 * pitch * 0.5
-    body = cq.Workplane("XY").circle(core).extrude(shank).val()
-    solid = body.fuse(thread_solid(core, pitch, thread_length)).clean()
-    head = (
-        cq.Workplane("XY").polygon(6, across_flats / math.cos(math.pi / 6)).extrude(-head_height)
-        .faces("<Z").workplane().polygon(6, socket_across / math.cos(math.pi / 6)).cutBlind(socket_depth).val()
-    )
-    solid = solid.fuse(head).clean()
-    return cq.Workplane(obj=solid).faces("<Z").edges().chamfer(chamfer).val()
-
-
-def build_plate(parameters: dict[str, Any]) -> cq.Shape:
-    dimensions = [value * MM for value in parameters["dimensions_m"]]
-    return cq.Workplane("XY").box(*dimensions).val()
-
-
-def build_bushing(parameters: dict[str, Any]) -> cq.Shape:
-    outer = parameters["outer_radius_m"] * MM
-    inner = parameters["inner_radius_m"] * MM
-    length = parameters["length_m"] * MM
-    blank = cq.Solid.makeCylinder(outer, length, cq.Vector(0, 0, -length / 2.0))
-    bore = cq.Solid.makeCylinder(inner, length * 2.0, cq.Vector(0, 0, -length))
-    return blank.cut(bore)
-
-
-def build_shaft(parameters: dict[str, Any]) -> cq.Shape:
-    radius = parameters["radius_m"] * MM
-    length = parameters["length_m"] * MM
-    return cq.Solid.makeCylinder(radius, length, cq.Vector(0, 0, -length / 2.0))
-
-
-BUILDERS = {
-    "reference_fastener": build_reference_fastener,
-    "plate": build_plate,
-    "bushing": build_bushing,
-    "shaft": build_shaft,
-}
 
 
 def load_part(part: dict[str, Any]) -> cq.Shape:
@@ -206,6 +146,8 @@ def measure_joint(first: cq.Shape, second: cq.Shape, tolerance_m: float) -> dict
     except Exception as exc:  # noqa: BLE001
         return {"status": "unresolved_joint_measurement", "cause": f"intersection refused: {type(exc).__name__}"}
 
+    first_engagement = sum(1 for face in first.Faces() if face.geomType() in ENGAGEMENT_SURFACES)
+    second_engagement = sum(1 for face in second.Faces() if face.geomType() in ENGAGEMENT_SURFACES)
     tolerance_mm = tolerance_m * MM
     pairs = 0
     overlap = 0.0
@@ -226,10 +168,10 @@ def measure_joint(first: cq.Shape, second: cq.Shape, tolerance_m: float) -> dict
         "interference_volume_m3": interference,
         "mating_face_pairs": pairs,
         "overlap_area_m2": overlap,
-        "engagement_face_count": int(
-            sum(1 for face in first.Faces() if face.geomType() in ENGAGEMENT_SURFACES)
-            + sum(1 for face in second.Faces() if face.geomType() in ENGAGEMENT_SURFACES)
-        ),
+        "engagement_face_count": int(first_engagement + second_engagement),
+        # Per side, because a thread bears on a thread: one threaded part and
+        # one plain one is not a threaded joint.
+        "engagement_face_counts": [int(first_engagement), int(second_engagement)],
         "single_solid": len(first.Solids()) == 1 and len(second.Solids()) == 1,
     }
 
@@ -259,8 +201,30 @@ def main() -> int:
             path = args.output_root / f"{part_id}.step"
             cq.exporters.export(shape, str(path), exportType="STEP")
             canonicalize_step(path)
+            digest = file_sha256(path)
+            # Build it a second time and compare. A part whose own build is not
+            # byte-reproducible cannot carry a reproducible measurement, and
+            # saying so is better than letting the run's replay drift. Only the
+            # verdict is recorded, because the varying bytes are what differ.
+            repeat = args.output_root / f"{part_id}.repeat.step"
+            try:
+                cq.exporters.export(load_part(part), str(repeat), exportType="STEP")
+                canonicalize_step(repeat)
+                reproducible = file_sha256(repeat) == digest
+            except Exception as exc:  # noqa: BLE001
+                parts[part_id] = {"status": "unresolved_measurement", "cause": f"second build refused: {type(exc).__name__}"}
+                continue
+            finally:
+                if repeat.exists():
+                    repeat.unlink()
+            if not reproducible:
+                parts[part_id] = {
+                    "status": "unresolved_measurement",
+                    "cause": "build is not byte-reproducible across two builds in one run",
+                }
+                continue
             measurement["step_path"] = _repository_path(path)
-            measurement["step_sha256"] = file_sha256(path)
+            measurement["step_sha256"] = digest
             shapes[part_id] = shape
         parts[part_id] = measurement
 

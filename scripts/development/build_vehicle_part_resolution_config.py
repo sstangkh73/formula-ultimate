@@ -34,6 +34,44 @@ CLASS_RULES = (
 )
 DEFAULT_CLASS = "structure_or_housing"
 
+#: Work 142 upgrade set: the definitions that failed the Work 141 survey and
+#: for which a part-resolution build exists. Substituting one replaces the
+#: Work 135 geometry for the survey only; the vehicle declaration is untouched.
+UPGRADES = {
+    "bolt": ("reference_fastener", {
+        "diameter_m": 0.008, "pitch_m": 0.00125, "shank_length_m": 0.28, "thread_length_m": 0.024,
+        "head_across_flats_m": 0.016, "head_height_m": 0.006, "socket_across_flats_m": 0.008,
+        "socket_depth_m": 0.004, "chamfer_m": 0.0005}),
+    "nut": ("nyloc_nut", {
+        "across_flats_m": 0.014, "height_m": 0.008, "bore_m": 0.0068,
+        "insert_bore_m": 0.0076, "insert_depth_m": 0.0022, "chamfer_m": 0.0004}),
+    "washer": ("serrated_washer", {
+        "outer_diameter_m": 0.016, "inner_diameter_m": 0.0084, "thickness_m": 0.0016,
+        "teeth": 12, "tooth_radius_m": 0.0012, "chamfer_m": 0.00025}),
+    "pack_gasket": ("beaded_gasket", {
+        "length_m": 0.99, "width_m": 0.59, "band_m": 0.02, "thickness_m": 0.002,
+        "corner_radius_m": 0.02, "bead_radius_m": 0.0007}),
+    "front_axle": ("stepped_axle", {
+        "large_diameter_m": 0.024, "small_diameter_m": 0.018, "large_length_m": 0.04,
+        "small_length_m": 0.06, "groove_width_m": 0.0016, "groove_depth_m": 0.001,
+        "key_width_m": 0.006, "key_depth_m": 0.003, "key_length_m": 0.02, "chamfer_m": 0.0008}),
+    "rear_axle": ("stepped_axle", {
+        "large_diameter_m": 0.024, "small_diameter_m": 0.018, "large_length_m": 0.04,
+        "small_length_m": 0.06, "groove_width_m": 0.0016, "groove_depth_m": 0.001,
+        "key_width_m": 0.006, "key_depth_m": 0.003, "key_length_m": 0.02, "chamfer_m": 0.0008}),
+    "front_bushing": ("flanged_bushing", {
+        "outer_diameter_m": 0.016, "bore_diameter_m": 0.01, "length_m": 0.02,
+        "flange_diameter_m": 0.022, "flange_thickness_m": 0.003,
+        "groove_depth_m": 0.0008, "groove_width_m": 0.002, "chamfer_m": 0.0005}),
+    "rear_bushing": ("flanged_bushing", {
+        "outer_diameter_m": 0.016, "bore_diameter_m": 0.01, "length_m": 0.02,
+        "flange_diameter_m": 0.022, "flange_thickness_m": 0.003,
+        "groove_depth_m": 0.0008, "groove_width_m": 0.002, "chamfer_m": 0.0005}),
+    "motor_rotor": ("slotted_rotor", {
+        "outer_diameter_m": 0.06, "bore_diameter_m": 0.018, "length_m": 0.04, "slots": 8,
+        "slot_width_m": 0.006, "slot_depth_m": 0.008, "chamfer_m": 0.0008}),
+}
+
 
 def classify(occurrence_classes: set[str]) -> str:
     for class_id, members in CLASS_RULES:
@@ -42,7 +80,7 @@ def classify(occurrence_classes: set[str]) -> str:
     return DEFAULT_CLASS
 
 
-def build(vehicle: dict[str, Any], mesh_size_factor: float) -> dict[str, Any]:
+def build(vehicle: dict[str, Any], mesh_size_factor: float, upgrade: bool = False) -> dict[str, Any]:
     roles: dict[str, set[str]] = collections.defaultdict(set)
     for instance in vehicle["instances"]:
         roles[instance["definition_id"]].update(instance["occurrence_classes"])
@@ -54,11 +92,18 @@ def build(vehicle: dict[str, Any], mesh_size_factor: float) -> dict[str, Any]:
         if definition["material_id"] == "void":
             excluded.append(definition_id)
             continue
+        if upgrade and definition_id in UPGRADES:
+            builder, parameters = UPGRADES[definition_id]
+            geometry = {"kind": "reference_build", "builder": builder, "parameters": parameters}
+            source = f"work142_upgrade:{builder}"
+        else:
+            geometry = {"kind": "step_file", "path": f"artifacts/work135/run_a/cad/parts/{definition_id}.step"}
+            source = f"work135_native_detailed_vehicle:{definition_id}"
         parts.append({
             "part_id": definition_id,
             "part_class": classify(roles[definition_id]),
-            "source": f"work135_native_detailed_vehicle:{definition_id}",
-            "geometry": {"kind": "step_file", "path": f"artifacts/work135/run_a/cad/parts/{definition_id}.step"},
+            "source": source,
+            "geometry": geometry,
         })
     parts.sort(key=lambda item: item["part_id"])
 
@@ -102,6 +147,7 @@ def build(vehicle: dict[str, Any], mesh_size_factor: float) -> dict[str, Any]:
             "success_criteria": ["every material definition carries one registered status", "all controls rejected", "exact replay"],
             "failure_criteria": ["a definition dropped from the survey", "a requirement relaxed after seeing a result"],
             "excluded_void_definitions": excluded,
+            "upgraded_definitions": sorted(UPGRADES) if upgrade else [],
         },
     }
 
@@ -111,16 +157,19 @@ def main() -> int:
     parser.add_argument("--vehicle", type=Path, default=ROOT / "config/development/native_detailed_vehicle_v1.json")
     parser.add_argument("--output", type=Path, default=ROOT / "config/development/vehicle_part_resolution_v1.json")
     parser.add_argument("--mesh-size-factor", type=float, default=0.15)
+    parser.add_argument("--upgrade", action="store_true",
+                        help="substitute the Work 142 part-resolution builds for the definitions they replace")
     args = parser.parse_args()
 
     vehicle = json.loads(args.vehicle.read_text(encoding="utf-8"))
-    declaration = build(vehicle, args.mesh_size_factor)
+    declaration = build(vehicle, args.mesh_size_factor, upgrade=args.upgrade)
     args.output.write_text(json.dumps(declaration, indent=2) + "\n", encoding="utf-8", newline="\n")
     counts = collections.Counter(part["part_class"] for part in declaration["parts"])
     print(json.dumps({
         "status": "generated",
         "part_count": len(declaration["parts"]),
         "excluded_void_definitions": declaration["experiment"]["excluded_void_definitions"],
+        "upgraded_definitions": declaration["experiment"]["upgraded_definitions"],
         "class_counts": dict(sorted(counts.items())),
     }, sort_keys=True))
     return 0

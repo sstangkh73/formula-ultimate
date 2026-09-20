@@ -33,6 +33,13 @@ def step_geo(step_path: Path, size_factor: float) -> str:
         'SetFactory("OpenCASCADE");',
         f'Merge "{step_path.as_posix()}";',
         f"Mesh.MeshSizeFactor = {size_factor:.12g};",
+        # One thread: with the default thread count Gmsh returned a
+        # different node count for the same input between runs, which
+        # broke exact replay (Work 142).
+        "General.NumThreads = 1;",
+        "Mesh.MaxNumThreads1D = 1;",
+        "Mesh.MaxNumThreads2D = 1;",
+        "Mesh.MaxNumThreads3D = 1;",
         "Mesh.ElementOrder = 2;",
         "Mesh.SecondOrderIncomplete = 0;",
         # Straight-sided quadratic tetrahedra. Curving midside nodes onto a
@@ -52,6 +59,13 @@ def box_geo(length: float, width: float, height: float, size_factor: float) -> s
         f"Box(1) = {{0, 0, 0, {length:.12g}, {width:.12g}, {height:.12g}}};",
         f"Mesh.CharacteristicLengthMax = {coarsest:.12g};",
         f"Mesh.MeshSizeFactor = {size_factor:.12g};",
+        # One thread: with the default thread count Gmsh returned a
+        # different node count for the same input between runs, which
+        # broke exact replay (Work 142).
+        "General.NumThreads = 1;",
+        "Mesh.MaxNumThreads1D = 1;",
+        "Mesh.MaxNumThreads2D = 1;",
+        "Mesh.MaxNumThreads3D = 1;",
         "Mesh.ElementOrder = 2;",
         "Mesh.SecondOrderIncomplete = 0;",
         # Straight-sided quadratic tetrahedra. Curving midside nodes onto a
