@@ -47,6 +47,9 @@ Work 107 จริงคือการขยายเอกสารครั�
 | 132 | 131 | [เทียบ subsystem จริงและความทนทานเมื่อได้รับอนุญาต](work132-physical_subsystem_correlation.th.md) | 131 |
 | 133 | 132 | [โปรแกรมตรวจรถทั้งคันเมื่อได้รับอนุญาต](work133-physical_vehicle_validation.th.md) | 128, 129, 130, 131, 132 |
 | 135 | — | [Native detailed vehicle realization](work135-native_detailed_vehicle_realization.th.md) | 108, 110, 112–123, 125, 126, 129, 130 |
+| 138 | — | [Structural evaluator ที่รับ geometry ใดก็ได้](work138-geometry_general_evaluator.th.md) | 062, 078, 092, 110, 111, 135 |
+
+เลข 136 และ 137 ถูกใช้ไปกับงานที่ดำเนินการแล้ว โดย 136 ซ่อม test guard ของ CadQuery ที่เป็น optional พร้อมอัปเดตเอกสารสถานะ และ 137 เขียนการ์ด Work 138 ด้านล่าง ส่วนบันทึกของ Work 135 เรียกงานรันฟิสิกส์ต่อบน native solids ว่า "Work 136" งานนั้นจะใช้เลขถัดไปที่ยังว่างตอนลงมือ Work 138 เป็นส่วนขยายเชิงแก้ไข เพราะ evaluator ที่ bounded campaign ใช้อ่านตัวแปรสเกล 5 ตัวแทนที่จะอ่าน geometry รูปทรงนอก template จึงให้คะแนนไม่ได้ ส่วน Work 139 (เปิด grammar รูปทรงอิสระให้ candidate ของรถ) และ Work 140 (ป้อนผล evaluator เข้าสู่เวลาแข่ง) ถูกระบุชื่อไว้ในการ์ดนั้นแต่ยังไม่ได้เขียนสเปก
 
 dependency ในตารางหมายถึงความสามารถขาเข้าที่ต้องใช้สำหรับขอบเขตครบ ไม่ใช่ต้องรอก่อนเริ่มเตรียมงานทุกอย่าง Work 110 เริ่ม B-rep ได้ก่อน representation ใหม่พร้อม Work 112 เดินต่อหลัง spatial geometry ขณะพัฒนา meshing ได้ search ย่อยของ Work 124 เริ่มหลัง Work 117 ได้ ส่วนโหมดรถต้องมี Work 123 เพิ่ม ห้ามอ้าง package ครบถ้าส่วนจำเป็นที่ประกาศยังขาด
 

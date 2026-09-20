@@ -47,6 +47,9 @@ Each linked plan includes entry evidence, proposed files, ordered implementation
 | 132 | 131 | [Authorized subsystem correlation and endurance](work132-physical_subsystem_correlation.md) | 131 |
 | 133 | 132 | [Authorized whole-vehicle validation program](work133-physical_vehicle_validation.md) | 128, 129, 130, 131, 132 |
 | 135 | — | [Native detailed vehicle realization](work135-native_detailed_vehicle_realization.md) | 108, 110, 112–123, 125, 126, 129, 130 |
+| 138 | — | [Geometry-general structural evaluator](work138-geometry_general_evaluator.md) | 062, 078, 092, 110, 111, 135 |
+
+Numbers 136 and 137 were consumed by executed work items: 136 repaired the CadQuery-optional test guard and the status documents, and 137 authored the Work 138 card below. The Work 135 records name "Work 136" for the downstream physics rerun on native solids; that rerun keeps the next unused number at execution time. Work 138 is a forward corrective extension: the evaluator used by the bounded campaign reads five scale variables rather than geometry, so no shape outside its template can be scored. Work 139 (open the free-form grammar to vehicle candidates) and Work 140 (feed evaluator output into race time) are named in that card but are not yet specified.
 
 Dependencies in this table denote the complete scope's capability inputs, not a requirement to wait before all preparatory work. Work 110 may start on B-rep before the new representation branch is ready; Work 112 may proceed after spatial geometry while meshing develops; local Work 124 search can start after Work 117, while its vehicle mode also requires Work 123. Never claim a complete package while its declared required branch is missing.
 
