@@ -4,10 +4,12 @@ import unittest
 from pathlib import Path
 
 from formula_ultimate.experiments.independent_claim_validation import IndependentClaimViolation, detect_known_omission, independent_analysis, validate_protocol
+from tests.artifact_requirements import requires_artifacts
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@requires_artifacts("artifacts/work128/run_a/telemetry.json")
 class IndependentClaimValidationTests(unittest.TestCase):
     def setUp(self):
         self.raw = json.loads((ROOT / "config/development/independent_claim_validation_v1.json").read_text(encoding="utf-8"))
