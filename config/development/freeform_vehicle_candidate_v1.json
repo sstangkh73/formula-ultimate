@@ -1,0 +1,213 @@
+{
+  "protocol_version": "freeform_vehicle_candidate_v1",
+  "units": "SI_m_kg_s_N_Pa",
+  "runtimes": [
+    {"runtime_id": "cadquery_python", "path": ".tools/cadquery-mcp/Scripts/python.exe", "version": "3.12.14"},
+    {"runtime_id": "gmsh", "path": "C:/Program Files/FreeCAD 1.1/bin/gmsh.exe", "version": "4.15.0"},
+    {"runtime_id": "ccx", "path": "C:/Program Files/FreeCAD 1.1/bin/ccx.exe", "version": "2.22"}
+  ],
+  "corpus": {
+    "solid_config": "config/cad/freeform_brep_solid_grammar_v2.json",
+    "wire_config": "config/cad/freeform_wire_grammar_v2.json",
+    "declaration_sha256": "a0e1c47ee15dbebac9dce2183a502c26199197b751fe427c74c2824dd1b4ad8a",
+    "admitted_candidate_ids": ["curved_branch_001", "organic_load_bridge_001", "lofted_rotary_member_001"]
+  },
+  "envelope": {"minimum_m": [-0.4, -0.2, 0.0], "maximum_m": [0.4, 0.2, 0.3]},
+  "keep_outs": [
+    {"keep_out_id": "protected", "minimum_m": [-0.04, -0.04, 0.23], "maximum_m": [0.04, 0.04, 0.28]}
+  ],
+  "required_function_tags": ["external_load_receiver", "energy_source", "propulsion", "ground_contact"],
+  "materials": {
+    "light": {"density_kg_m3": 2700.0, "evidence_class": "synthetic_geometry_only"},
+    "dense": {"density_kg_m3": 5000.0, "evidence_class": "synthetic_geometry_only"}
+  },
+  "packaging": {
+    "maximum_pairwise_intersection_m3": 1e-09,
+    "minimum_keep_out_clearance_m": 0.001,
+    "declared_mass_relative": 0.05
+  },
+  "evaluation": {
+    "protocol_version": "geometry_general_evaluator_v1",
+    "units": "SI_m_kg_s_N_Pa",
+    "runtimes": [
+      {"runtime_id": "gmsh", "path": "C:/Program Files/FreeCAD 1.1/bin/gmsh.exe", "version": "4.15.0"},
+      {"runtime_id": "ccx", "path": "C:/Program Files/FreeCAD 1.1/bin/ccx.exe", "version": "2.22"}
+    ],
+    "materials": {
+      "light": {
+        "youngs_modulus_pa": 69000000000.0,
+        "poisson_ratio": 0.33,
+        "density_kg_m3": 2700.0,
+        "allowable_von_mises_pa": 240000000.0,
+        "evidence_class": "synthetic_geometry_only"
+      },
+      "dense": {
+        "youngs_modulus_pa": 110000000000.0,
+        "poisson_ratio": 0.3,
+        "density_kg_m3": 5000.0,
+        "allowable_von_mises_pa": 200000000.0,
+        "evidence_class": "synthetic_geometry_only"
+      }
+    },
+    "mesh_levels": [
+      {"level_id": "coarse", "characteristic_size_scale": 1.0},
+      {"level_id": "medium", "characteristic_size_scale": 0.7},
+      {"level_id": "fine", "characteristic_size_scale": 0.5}
+    ],
+    "convergence": {"displacement_relative": 0.05, "stress_relative": 0.2},
+    "budget": {"maximum_nodes": 250000, "maximum_solver_seconds": 900.0, "mesh_retries": 0},
+    "residuals": {"reaction_relative": 0.02, "declared_mass_relative": 0.05},
+    "controls": [
+      "analytical_benchmark",
+      "under_refined_mesh",
+      "unsupported_representation",
+      "declared_mass_contradiction",
+      "removed_load_case",
+      "post_observation_allowable",
+      "deterministic_restatement",
+      "work062_refined_disagreement_reevaluated"
+    ],
+    "experiment": {
+      "independent_variables": ["component geometry", "mesh refinement level"],
+      "dependent_variables": ["mass properties", "maximum displacement", "von Mises stress", "reaction balance", "registered status"],
+      "controls": ["Work 138 controls are exercised by the Work 138 runner"],
+      "success_criteria": ["one registered status per component"],
+      "failure_criteria": ["silent component loss"]
+    }
+  },
+  "candidates": [
+    {
+      "candidate_id": "primitive_baseline_139",
+      "role": "primitive_baseline",
+      "components": [
+        {
+          "component_id": "core",
+          "function_tags": ["external_load_receiver"],
+          "material_id": "light",
+          "geometry": {"kind": "primitive", "primitive_type": "box", "dimensions_m": [0.4, 0.2, 0.1]},
+          "placement": {"translation_m": [0.0, 0.0, 0.15], "rotation_deg_xyz": [0.0, 0.0, 0.0]},
+          "load_case": {
+            "case_id": "core_vertical",
+            "boundary": {"axis": "x", "side": "minimum", "tolerance_m": 0.001},
+            "selection": {"axis": "x", "side": "maximum", "tolerance_m": 0.001},
+            "force_n": [0.0, 0.0, -2000.0]
+          }
+        },
+        {
+          "component_id": "source",
+          "function_tags": ["energy_source"],
+          "material_id": "dense",
+          "geometry": {"kind": "primitive", "primitive_type": "box", "dimensions_m": [0.1, 0.1, 0.1]},
+          "placement": {"translation_m": [-0.25, 0.0, 0.15], "rotation_deg_xyz": [0.0, 0.0, 0.0]},
+          "load_case": {
+            "case_id": "source_vertical",
+            "boundary": {"axis": "z", "side": "minimum", "tolerance_m": 0.001},
+            "selection": {"axis": "z", "side": "maximum", "tolerance_m": 0.001},
+            "force_n": [0.0, 0.0, -500.0]
+          }
+        },
+        {
+          "component_id": "propulsor",
+          "function_tags": ["propulsion"],
+          "material_id": "light",
+          "geometry": {"kind": "primitive", "primitive_type": "box", "dimensions_m": [0.1, 0.1, 0.1]},
+          "placement": {"translation_m": [0.25, 0.0, 0.15], "rotation_deg_xyz": [0.0, 0.0, 0.0]},
+          "load_case": {
+            "case_id": "propulsor_transverse",
+            "boundary": {"axis": "z", "side": "minimum", "tolerance_m": 0.005},
+            "selection": {"axis": "z", "side": "maximum", "tolerance_m": 0.01},
+            "force_n": [200.0, 0.0, 0.0]
+          }
+        },
+        {
+          "component_id": "contact_alpha",
+          "function_tags": ["ground_contact"],
+          "material_id": "light",
+          "geometry": {"kind": "primitive", "primitive_type": "cylinder_z", "dimensions_m": [0.04, 0.1]},
+          "placement": {"translation_m": [0.0, 0.06, 0.05], "rotation_deg_xyz": [0.0, 0.0, 0.0]},
+          "load_case": {
+            "case_id": "contact_vertical",
+            "boundary": {"axis": "z", "side": "minimum", "tolerance_m": 0.001},
+            "selection": {"axis": "z", "side": "maximum", "tolerance_m": 0.001},
+            "force_n": [0.0, 0.0, -1000.0]
+          }
+        }
+      ]
+    },
+    {
+      "candidate_id": "freeform_variant_139",
+      "role": "freeform_variant",
+      "components": [
+        {
+          "component_id": "core",
+          "function_tags": ["external_load_receiver"],
+          "material_id": "light",
+          "geometry": {"kind": "primitive", "primitive_type": "box", "dimensions_m": [0.4, 0.2, 0.1]},
+          "placement": {"translation_m": [0.0, 0.0, 0.15], "rotation_deg_xyz": [0.0, 0.0, 0.0]},
+          "load_case": {
+            "case_id": "core_vertical",
+            "boundary": {"axis": "x", "side": "minimum", "tolerance_m": 0.001},
+            "selection": {"axis": "x", "side": "maximum", "tolerance_m": 0.001},
+            "force_n": [0.0, 0.0, -2000.0]
+          }
+        },
+        {
+          "component_id": "source",
+          "function_tags": ["energy_source"],
+          "material_id": "dense",
+          "geometry": {"kind": "primitive", "primitive_type": "box", "dimensions_m": [0.1, 0.1, 0.1]},
+          "placement": {"translation_m": [-0.25, 0.0, 0.15], "rotation_deg_xyz": [0.0, 0.0, 0.0]},
+          "load_case": {
+            "case_id": "source_vertical",
+            "boundary": {"axis": "z", "side": "minimum", "tolerance_m": 0.001},
+            "selection": {"axis": "z", "side": "maximum", "tolerance_m": 0.001},
+            "force_n": [0.0, 0.0, -500.0]
+          }
+        },
+        {
+          "component_id": "propulsor",
+          "function_tags": ["propulsion"],
+          "material_id": "light",
+          "geometry": {"kind": "freeform_reference", "corpus_candidate_id": "curved_branch_001"},
+          "placement": {"translation_m": [0.25, 0.0, 0.1], "rotation_deg_xyz": [0.0, 0.0, 0.0]},
+          "load_case": {
+            "case_id": "propulsor_transverse",
+            "boundary": {"axis": "z", "side": "minimum", "tolerance_m": 0.005},
+            "selection": {"axis": "z", "side": "maximum", "tolerance_m": 0.01},
+            "force_n": [200.0, 0.0, 0.0]
+          }
+        },
+        {
+          "component_id": "contact_alpha",
+          "function_tags": ["ground_contact"],
+          "material_id": "light",
+          "geometry": {"kind": "primitive", "primitive_type": "cylinder_z", "dimensions_m": [0.04, 0.1]},
+          "placement": {"translation_m": [0.0, 0.06, 0.05], "rotation_deg_xyz": [0.0, 0.0, 0.0]},
+          "load_case": {
+            "case_id": "contact_vertical",
+            "boundary": {"axis": "z", "side": "minimum", "tolerance_m": 0.001},
+            "selection": {"axis": "z", "side": "maximum", "tolerance_m": 0.001},
+            "force_n": [0.0, 0.0, -1000.0]
+          }
+        }
+      ]
+    }
+  ],
+  "controls": [
+    "component_outside_envelope",
+    "components_intersect",
+    "missing_required_function_tag",
+    "corpus_hash_mismatch",
+    "unadmitted_corpus_member",
+    "declared_mass_contradiction",
+    "no_discovery_claim",
+    "exact_replay"
+  ],
+  "experiment": {
+    "independent_variables": ["component representation: primitive versus admitted free-form solid"],
+    "dependent_variables": ["packaging gates", "candidate mass", "per-component registered status", "per-component utilization"],
+    "controls": ["envelope", "pairwise intersection", "function coverage", "corpus identity", "admitted membership", "declared mass", "claim boundary", "replay"],
+    "success_criteria": ["both candidates build", "packaging measured on built solids", "one registered status per component", "exact replay"],
+    "failure_criteria": ["free-form component replaced by a primitive", "packaging gate waived", "component dropped from accounting", "discovery claimed"]
+  }
+}
