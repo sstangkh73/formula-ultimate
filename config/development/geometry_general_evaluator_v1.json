@@ -1,0 +1,233 @@
+{
+  "protocol_version": "geometry_general_evaluator_v1",
+  "units": "SI_m_kg_s_N_Pa",
+  "runtimes": [
+    {
+      "runtime_id": "gmsh",
+      "path": "C:/Program Files/FreeCAD 1.1/bin/gmsh.exe",
+      "version": "4.15.0"
+    },
+    {
+      "runtime_id": "ccx",
+      "path": "C:/Program Files/FreeCAD 1.1/bin/ccx.exe",
+      "version": "2.22"
+    }
+  ],
+  "materials": {
+    "aluminum_geometry": {
+      "youngs_modulus_pa": 69000000000.0,
+      "poisson_ratio": 0.33,
+      "density_kg_m3": 2700.0,
+      "allowable_von_mises_pa": 240000000.0,
+      "evidence_class": "synthetic_geometry_only"
+    },
+    "steel_geometry": {
+      "youngs_modulus_pa": 210000000000.0,
+      "poisson_ratio": 0.3,
+      "density_kg_m3": 7800.0,
+      "allowable_von_mises_pa": 350000000.0,
+      "evidence_class": "synthetic_geometry_only"
+    }
+  },
+  "mesh_levels": [
+    {
+      "level_id": "coarse",
+      "characteristic_size_scale": 1.0
+    },
+    {
+      "level_id": "medium",
+      "characteristic_size_scale": 0.7
+    },
+    {
+      "level_id": "fine",
+      "characteristic_size_scale": 0.5
+    }
+  ],
+  "convergence": {
+    "displacement_relative": 0.05,
+    "stress_relative": 0.2
+  },
+  "budget": {
+    "maximum_nodes": 250000,
+    "maximum_solver_seconds": 900.0,
+    "mesh_retries": 0
+  },
+  "residuals": {
+    "reaction_relative": 0.02,
+    "declared_mass_relative": 0.05
+  },
+  "candidates": [
+    {
+      "candidate_id": "cantilever_benchmark",
+      "source": "work138_analytical_benchmark",
+      "geometry": {
+        "kind": "benchmark_box",
+        "length_m": 0.5,
+        "width_m": 0.05,
+        "height_m": 0.02,
+        "analytical_tip_displacement_tolerance": 0.1
+      },
+      "material_id": "steel_geometry",
+      "length_unit_m": 1.0,
+      "boundary": {
+        "axis": "x",
+        "side": "minimum",
+        "tolerance_m": 1e-06
+      },
+      "load_cases": [
+        {
+          "case_id": "tip_transverse",
+          "selection": {
+            "axis": "x",
+            "side": "maximum",
+            "tolerance_m": 1e-06
+          },
+          "force_n": [
+            0.0,
+            0.0,
+            -100.0
+          ]
+        }
+      ],
+      "declared_mass_kg": 3.9
+    },
+    {
+      "candidate_id": "work135_frame_spine",
+      "source": "work135_native_detailed_vehicle:frame_spine",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/instances/frame_spine.step"
+      },
+      "material_id": "aluminum_geometry",
+      "length_unit_m": 0.001,
+      "boundary": {
+        "axis": "x",
+        "side": "minimum",
+        "tolerance_m": 0.001
+      },
+      "load_cases": [
+        {
+          "case_id": "rear_vertical",
+          "selection": {
+            "axis": "x",
+            "side": "maximum",
+            "tolerance_m": 0.001
+          },
+          "force_n": [
+            0.0,
+            0.0,
+            -10000.0
+          ]
+        }
+      ],
+      "declared_mass_kg": 153.1054258531542
+    },
+    {
+      "candidate_id": "work092_curved_branch",
+      "source": "work092_freeform_solid_corpus:curved_branch_001",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work092/run_e/curved_branch_001.step"
+      },
+      "material_id": "aluminum_geometry",
+      "length_unit_m": 0.001,
+      "boundary": {
+        "axis": "z",
+        "side": "minimum",
+        "tolerance_m": 0.005
+      },
+      "load_cases": [
+        {
+          "case_id": "branch_transverse",
+          "selection": {
+            "axis": "z",
+            "side": "maximum",
+            "tolerance_m": 0.01
+          },
+          "force_n": [
+            200.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "declared_mass_kg": null
+    },
+    {
+      "candidate_id": "work062_cut_candidate_core",
+      "source": "work062_refined_disagreement:candidate-000847d87c0270ab:core",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work138/inputs/work062_step/core.step"
+      },
+      "material_id": "aluminum_geometry",
+      "length_unit_m": 0.001,
+      "boundary": {
+        "axis": "x",
+        "side": "minimum",
+        "tolerance_m": 0.001
+      },
+      "load_cases": [
+        {
+          "case_id": "core_vertical",
+          "selection": {
+            "axis": "x",
+            "side": "maximum",
+            "tolerance_m": 0.001
+          },
+          "force_n": [
+            0.0,
+            0.0,
+            -2000.0
+          ]
+        }
+      ],
+      "declared_mass_kg": null
+    }
+  ],
+  "controls": [
+    "analytical_benchmark",
+    "under_refined_mesh",
+    "unsupported_representation",
+    "declared_mass_contradiction",
+    "removed_load_case",
+    "post_observation_allowable",
+    "deterministic_restatement",
+    "work062_refined_disagreement_reevaluated"
+  ],
+  "experiment": {
+    "independent_variables": [
+      "candidate geometry",
+      "mesh refinement level"
+    ],
+    "dependent_variables": [
+      "mesh mass properties",
+      "maximum displacement",
+      "von Mises stress",
+      "reaction balance",
+      "registered status"
+    ],
+    "controls": [
+      "analytical benchmark",
+      "under-refined mesh",
+      "unsupported representation",
+      "declared mass contradiction",
+      "unbalanced reaction",
+      "post-observation allowable",
+      "deterministic restatement",
+      "Work 062 cut candidate"
+    ],
+    "success_criteria": [
+      "benchmark within tolerance",
+      "all controls rejected",
+      "one registered status per candidate",
+      "exact replay"
+    ],
+    "failure_criteria": [
+      "silent candidate loss",
+      "solver limitation recorded as a physical verdict",
+      "benchmark outside tolerance",
+      "replay mismatch"
+    ]
+  }
+}
