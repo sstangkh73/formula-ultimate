@@ -108,7 +108,7 @@ def build(vehicle: dict[str, Any], mesh_size_factor: float, upgrade: bool = Fals
     parts.sort(key=lambda item: item["part_id"])
 
     identity = {"translation_m": [0.0, 0.0, 0.0], "rotation_deg_xyz": [0.0, 0.0, 0.0]}
-    return {
+    declaration = {
         "protocol_version": "part_resolution_gate_v1",
         "units": "SI_m",
         "runtimes": [
@@ -147,9 +147,14 @@ def build(vehicle: dict[str, Any], mesh_size_factor: float, upgrade: bool = Fals
             "success_criteria": ["every material definition carries one registered status", "all controls rejected", "exact replay"],
             "failure_criteria": ["a definition dropped from the survey", "a requirement relaxed after seeing a result"],
             "excluded_void_definitions": excluded,
-            "upgraded_definitions": sorted(UPGRADES) if upgrade else [],
         },
     }
+    if upgrade:
+        # Only an upgrade run carries this key, so regenerating the Work 141
+        # declaration still reproduces the file its admitted result was
+        # hashed from.
+        declaration["experiment"]["upgraded_definitions"] = sorted(UPGRADES)
+    return declaration
 
 
 def main() -> int:
@@ -169,7 +174,7 @@ def main() -> int:
         "status": "generated",
         "part_count": len(declaration["parts"]),
         "excluded_void_definitions": declaration["experiment"]["excluded_void_definitions"],
-        "upgraded_definitions": declaration["experiment"]["upgraded_definitions"],
+        "upgraded_definitions": declaration["experiment"].get("upgraded_definitions", []),
         "class_counts": dict(sorted(counts.items())),
     }, sort_keys=True))
     return 0
