@@ -38,21 +38,34 @@ CI รันครั้งล่าสุดกับ commit `2c2bf36` (7 ก�
 | เครื่องพัฒนา Windows, Python 3.14 | `Ran 794 tests` — **OK (skipped=8)** |
 | CI, Ubuntu, Python 3.11 และ 3.14 | `Ran 794 tests` — **OK (skipped=32)** |
 
-commit หลัง `2c2bf36` (Works 108–136) อยู่ในประวัติบนเครื่องเท่านั้นและยังไม่ได้ push
-จึงยังไม่มีผล CI ของ commit เหล่านี้ ผลที่วัดบนเครื่องวันที่ 20 กันยายน 2569
-ด้วยชุด dependency เดียวกับ CI (`pip install -e .` ซึ่งไม่มี CadQuery) เป็นดังนี้
+Works 108–143 ถูก push เมื่อวันที่ 20 กันยายน 2569 และ CI ได้รันกับงานเหล่านี้เป็นครั้งแรก
+การรันครั้งแรกนั้นแดง และการซ่อมถูกบันทึกไว้ที่นี่แทนการกลบเกลื่อน
+
+| การรัน | Commit | ผล |
+| --- | --- | --- |
+| `35523292349` | `04e6421` (Work 141) | `Ran 1022 tests` — **FAILED (errors=6, skipped=38)** |
+| `35524051329` | `6624a96` (Work 143) | `Ran 1022 tests` — **success** |
+
+error ทั้งหกข้อมาจากความผิดพลาดเดียว คือ `tests/test_independent_claim_validation.py`
+อ่าน `artifacts/work128/run_a/telemetry.json` ระหว่าง `setUp` ขณะที่ `.gitignore` ตัด
+`artifacts/` ออก ไฟล์จึงไม่มีบน checkout ที่สะอาดใด ๆ Work 143 จึงใส่ guard
+`requires_artifacts` ที่ repository มีอยู่แล้ว ทำให้การยืนยันเหล่านั้นรันทุกที่ที่มีหลักฐานที่บันทึกไว้
+และข้ามพร้อมระบุชื่อที่ใดที่ไม่มี
+
+ผลที่วัดบนเครื่องด้วยชุด dependency เดียวกัน (`pip install -e .` ซึ่งไม่มี CadQuery)
 
 | สภาพแวดล้อม | Commit | ผล |
 | --- | --- | --- |
 | เครื่องพัฒนา Windows, Python 3.14.3, ไม่มี CadQuery | `ed5dae3` (Work 135) | `Ran 956 tests` — **FAILED (errors=1, skipped=8)** |
 | เครื่องพัฒนา Windows, Python 3.14.3, ไม่มี CadQuery | Work 136 | `Ran 964 tests` — **OK (skipped=11)** |
+| เครื่องพัฒนา Windows, Python 3.14.3, ไม่มี CadQuery | Work 143 | `Ran 1022 tests` — **OK (skipped=11)** |
 
 error ของ Work 135 เกิดจาก `import cadquery` ที่ถูกเรียกตอน import
 `tests/test_native_detailed_vehicle.py` แต่ CadQuery เป็น optional extra
 (`pip install -e .[cad]`) การทดสอบ kernel ที่ต้องใช้มันจึงต้องข้ามเมื่อไม่ได้ติดตั้ง
 Work 136 ย้ายการทดสอบเหล่านั้นไปไว้หลัง guard ดังกล่าว และใน environment CadQuery
 ที่ pin ไว้ การทดสอบยังรันและผ่านครบ (`Ran 9 tests` — OK)
-การ push commit เหล่านี้ครั้งแรกจะเป็นครั้งแรกที่ CI ได้รันกับมัน
+การ push commit เหล่านี้ครั้งแรกคือครั้งแรกที่ CI ได้รันกับมัน และพบความผิดพลาดข้างต้น
 
 จำนวนที่ข้ามเพิ่มบน CI คือการทดสอบที่ต้องเล่นซ้ำหลักฐานใน `artifacts/`
 ซึ่ง `.gitignore` ตัดออกเพราะขนาดใหญ่ การทดสอบเหล่านี้จะข้ามพร้อมระบุชื่อไฟล์ที่ขาด

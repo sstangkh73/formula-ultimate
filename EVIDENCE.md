@@ -38,21 +38,37 @@ on both platforms:
 | Local, Windows, Python 3.14 | `Ran 794 tests` — **OK (skipped=8)** |
 | CI, Ubuntu, Python 3.11 and 3.14 | `Ran 794 tests` — **OK (skipped=32)** |
 
-Commits after `2c2bf36` (Works 108–136) are in the local history and have not
-been pushed, so no CI run exists for them yet. Measured locally on 20 September
-2026 with the CI dependency set (`pip install -e .`, so no CadQuery):
+Works 108–143 were pushed on 20 September 2026, and CI ran over them for the
+first time. That first run was red, and the repair is recorded here rather than
+smoothed over:
+
+| Run | Commit | Result |
+| --- | --- | --- |
+| `35523292349` | `04e6421` (Work 141) | `Ran 1022 tests` — **FAILED (errors=6, skipped=38)** |
+| `35524051329` | `6624a96` (Work 143) | `Ran 1022 tests` — **success** |
+
+All six errors were one fault: `tests/test_independent_claim_validation.py`
+read `artifacts/work128/run_a/telemetry.json` during `setUp`, and `.gitignore`
+excludes `artifacts/`, so the file is absent on any clean checkout. Work 143
+applied the repository's existing `requires_artifacts` guard, so those
+assertions run wherever the recorded evidence exists and skip by name where it
+does not.
+
+Measured locally on the same dependency set (`pip install -e .`, so no
+CadQuery):
 
 | Environment | Commit | Result |
 | --- | --- | --- |
 | Local, Windows, Python 3.14.3, no CadQuery | `ed5dae3` (Work 135) | `Ran 956 tests` — **FAILED (errors=1, skipped=8)** |
 | Local, Windows, Python 3.14.3, no CadQuery | Work 136 | `Ran 964 tests` — **OK (skipped=11)** |
+| Local, Windows, Python 3.14.3, no CadQuery | Work 143 | `Ran 1022 tests` — **OK (skipped=11)** |
 
 The Work 135 error was an import-time `import cadquery` reached from
 `tests/test_native_detailed_vehicle.py`. CadQuery is an optional extra
 (`pip install -e .[cad]`), so the kernel tests that need it must skip when it is
 absent. Work 136 moved them behind that guard. In the pinned CadQuery
 environment they still run and pass (`Ran 9 tests` — OK). The first push of
-these commits is the first time CI will see them.
+these commits was the first time CI saw them, and it found the fault above.
 
 The extra skips on CI are the tests that replay recorded evidence from
 `artifacts/`, which `.gitignore` excludes because of its size. They skip with a
