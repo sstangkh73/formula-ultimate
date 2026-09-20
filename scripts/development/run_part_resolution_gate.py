@@ -139,7 +139,18 @@ def run_controls(raw: dict[str, Any], parts: list[dict[str, Any]], joints: list[
     verdict = evaluate_part(subject, requirement, resolution, coarse)
     record("primitive_below_resolution_requirement", verdict["status"] == "insufficient_resolution", verdict["cause"] or "")
 
-    under_meshed = copy.deepcopy(measured)
+    # If no subject clears the geometry gates, the mesh control still has to be
+    # testable, so it runs against a measurement lifted above the requirement.
+    liftable = copy.deepcopy(measured)
+    if subject["part_id"] not in passing:
+        liftable["face_count"] = max(liftable["face_count"], requirement["minimum_faces"])
+        liftable["curved_face_count"] = max(liftable["curved_face_count"], requirement["minimum_curved_faces"])
+        liftable["edge_count"] = max(liftable["edge_count"], requirement["minimum_edges"])
+        liftable["edge_lengths_m"] = [
+            liftable["feature_scale_m"] * 10.0 ** power
+            for power in range(requirement["minimum_distinct_feature_scales"])
+        ]
+    under_meshed = copy.deepcopy(liftable)
     under_meshed["mesh"] = {
         "status": "meshed", "node_count": 10, "tetrahedron_count": 4,
         "characteristic_length_m": measured["feature_scale_m"] * 10.0, "mesh_sha256": "0" * 64,

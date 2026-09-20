@@ -1,0 +1,538 @@
+{
+  "protocol_version": "part_resolution_gate_v1",
+  "units": "SI_m",
+  "runtimes": [
+    {
+      "runtime_id": "cadquery_python",
+      "path": ".tools/cadquery-mcp/Scripts/python.exe",
+      "version": "3.12.14"
+    },
+    {
+      "runtime_id": "gmsh",
+      "path": "C:/Program Files/FreeCAD 1.1/bin/gmsh.exe",
+      "version": "4.15.0"
+    }
+  ],
+  "resolution": {
+    "minimum_feature_m": 5e-05,
+    "minimum_elements_across_feature": 1,
+    "mesh_size_factor": 0.15
+  },
+  "part_classes": {
+    "fastener_or_seal": {
+      "minimum_faces": 12,
+      "minimum_curved_faces": 4,
+      "minimum_distinct_feature_scales": 3,
+      "minimum_edges": 20
+    },
+    "rotating_or_bearing": {
+      "minimum_faces": 8,
+      "minimum_curved_faces": 3,
+      "minimum_distinct_feature_scales": 2,
+      "minimum_edges": 14
+    },
+    "electronics_module": {
+      "minimum_faces": 8,
+      "minimum_curved_faces": 1,
+      "minimum_distinct_feature_scales": 2,
+      "minimum_edges": 14
+    },
+    "fluid_or_conductor_route": {
+      "minimum_faces": 4,
+      "minimum_curved_faces": 2,
+      "minimum_distinct_feature_scales": 2,
+      "minimum_edges": 6
+    },
+    "structure_or_housing": {
+      "minimum_faces": 8,
+      "minimum_curved_faces": 0,
+      "minimum_distinct_feature_scales": 2,
+      "minimum_edges": 14
+    }
+  },
+  "parts": [
+    {
+      "part_id": "active_stack",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:active_stack",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/active_stack.step"
+      }
+    },
+    {
+      "part_id": "bolt",
+      "part_class": "fastener_or_seal",
+      "source": "work135_native_detailed_vehicle:bolt",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/bolt.step"
+      }
+    },
+    {
+      "part_id": "busbar",
+      "part_class": "fluid_or_conductor_route",
+      "source": "work135_native_detailed_vehicle:busbar",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/busbar.step"
+      }
+    },
+    {
+      "part_id": "carrier_plate",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:carrier_plate",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/carrier_plate.step"
+      }
+    },
+    {
+      "part_id": "cold_plate",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:cold_plate",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/cold_plate.step"
+      }
+    },
+    {
+      "part_id": "connector",
+      "part_class": "electronics_module",
+      "source": "work135_native_detailed_vehicle:connector",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/connector.step"
+      }
+    },
+    {
+      "part_id": "contactor",
+      "part_class": "electronics_module",
+      "source": "work135_native_detailed_vehicle:contactor",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/contactor.step"
+      }
+    },
+    {
+      "part_id": "controller_board",
+      "part_class": "electronics_module",
+      "source": "work135_native_detailed_vehicle:controller_board",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/controller_board.step"
+      }
+    },
+    {
+      "part_id": "controller_case",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:controller_case",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/controller_case.step"
+      }
+    },
+    {
+      "part_id": "coolant_return_tube",
+      "part_class": "fluid_or_conductor_route",
+      "source": "work135_native_detailed_vehicle:coolant_return_tube",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/coolant_return_tube.step"
+      }
+    },
+    {
+      "part_id": "coolant_supply_tube",
+      "part_class": "fluid_or_conductor_route",
+      "source": "work135_native_detailed_vehicle:coolant_supply_tube",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/coolant_supply_tube.step"
+      }
+    },
+    {
+      "part_id": "drive_coupling",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:drive_coupling",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/drive_coupling.step"
+      }
+    },
+    {
+      "part_id": "energy_lid",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:energy_lid",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/energy_lid.step"
+      }
+    },
+    {
+      "part_id": "energy_tray",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:energy_tray",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/energy_tray.step"
+      }
+    },
+    {
+      "part_id": "fan",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:fan",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/fan.step"
+      }
+    },
+    {
+      "part_id": "floor_panel",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:floor_panel",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/floor_panel.step"
+      }
+    },
+    {
+      "part_id": "front_axle",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:front_axle",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/front_axle.step"
+      }
+    },
+    {
+      "part_id": "front_bushing",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:front_bushing",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/front_bushing.step"
+      }
+    },
+    {
+      "part_id": "front_crosshead",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:front_crosshead",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/front_crosshead.step"
+      }
+    },
+    {
+      "part_id": "front_fork_rail",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:front_fork_rail",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/front_fork_rail.step"
+      }
+    },
+    {
+      "part_id": "front_hub",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:front_hub",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/front_hub.step"
+      }
+    },
+    {
+      "part_id": "ground_tire",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:ground_tire",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/ground_tire.step"
+      }
+    },
+    {
+      "part_id": "motor_housing",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:motor_housing",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/motor_housing.step"
+      }
+    },
+    {
+      "part_id": "motor_rotor",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:motor_rotor",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/motor_rotor.step"
+      }
+    },
+    {
+      "part_id": "nose_intake_frame",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:nose_intake_frame",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/nose_intake_frame.step"
+      }
+    },
+    {
+      "part_id": "nut",
+      "part_class": "fastener_or_seal",
+      "source": "work135_native_detailed_vehicle:nut",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/nut.step"
+      }
+    },
+    {
+      "part_id": "pack_gasket",
+      "part_class": "fastener_or_seal",
+      "source": "work135_native_detailed_vehicle:pack_gasket",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/pack_gasket.step"
+      }
+    },
+    {
+      "part_id": "power_harness",
+      "part_class": "fluid_or_conductor_route",
+      "source": "work135_native_detailed_vehicle:power_harness",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/power_harness.step"
+      }
+    },
+    {
+      "part_id": "pump",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:pump",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/pump.step"
+      }
+    },
+    {
+      "part_id": "radiator",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:radiator",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/radiator.step"
+      }
+    },
+    {
+      "part_id": "ratio_ring",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:ratio_ring",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/ratio_ring.step"
+      }
+    },
+    {
+      "part_id": "rear_axle",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:rear_axle",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/rear_axle.step"
+      }
+    },
+    {
+      "part_id": "rear_beam",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:rear_beam",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/rear_beam.step"
+      }
+    },
+    {
+      "part_id": "rear_bushing",
+      "part_class": "rotating_or_bearing",
+      "source": "work135_native_detailed_vehicle:rear_bushing",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/rear_bushing.step"
+      }
+    },
+    {
+      "part_id": "rear_hub",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:rear_hub",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/rear_hub.step"
+      }
+    },
+    {
+      "part_id": "retention_bar",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:retention_bar",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/retention_bar.step"
+      }
+    },
+    {
+      "part_id": "sensor",
+      "part_class": "electronics_module",
+      "source": "work135_native_detailed_vehicle:sensor",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/sensor.step"
+      }
+    },
+    {
+      "part_id": "side_panel",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:side_panel",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/side_panel.step"
+      }
+    },
+    {
+      "part_id": "signal_harness",
+      "part_class": "fluid_or_conductor_route",
+      "source": "work135_native_detailed_vehicle:signal_harness",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/signal_harness.step"
+      }
+    },
+    {
+      "part_id": "spine_frame",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:spine_frame",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/spine_frame.step"
+      }
+    },
+    {
+      "part_id": "support_bracket",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:support_bracket",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/support_bracket.step"
+      }
+    },
+    {
+      "part_id": "terminal_post",
+      "part_class": "fluid_or_conductor_route",
+      "source": "work135_native_detailed_vehicle:terminal_post",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/terminal_post.step"
+      }
+    },
+    {
+      "part_id": "top_panel",
+      "part_class": "structure_or_housing",
+      "source": "work135_native_detailed_vehicle:top_panel",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/top_panel.step"
+      }
+    },
+    {
+      "part_id": "washer",
+      "part_class": "fastener_or_seal",
+      "source": "work135_native_detailed_vehicle:washer",
+      "geometry": {
+        "kind": "step_file",
+        "path": "artifacts/work135/run_a/cad/parts/washer.step"
+      }
+    }
+  ],
+  "joints": [
+    {
+      "joint_id": "work135_pack_threaded",
+      "technology": "threaded",
+      "parts": [
+        "bolt",
+        "nut"
+      ],
+      "placement": {
+        "bolt": {
+          "translation_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_deg_xyz": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "nut": {
+          "translation_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_deg_xyz": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "fit_range_m": [
+        0.0,
+        0.0005
+      ],
+      "minimum_overlap_area_m2": 1e-06
+    }
+  ],
+  "controls": [
+    "sliver_below_manufacturing_floor",
+    "primitive_below_resolution_requirement",
+    "mesh_too_coarse_for_feature",
+    "joint_without_measurable_interface",
+    "fit_outside_declared_range",
+    "technology_outside_registry",
+    "no_discovery_claim",
+    "exact_replay"
+  ],
+  "experiment": {
+    "independent_variables": [
+      "part class as assigned by the vehicle's own occurrence classes"
+    ],
+    "dependent_variables": [
+      "face, edge and curved-face counts",
+      "smallest feature",
+      "modelled feature scale",
+      "registered part status"
+    ],
+    "controls": [
+      "sliver floor",
+      "resolution requirement",
+      "mesh adequacy",
+      "empty interface",
+      "out-of-range fit",
+      "unregistered technology",
+      "claim boundary",
+      "replay"
+    ],
+    "success_criteria": [
+      "every material definition carries one registered status",
+      "all controls rejected",
+      "exact replay"
+    ],
+    "failure_criteria": [
+      "a definition dropped from the survey",
+      "a requirement relaxed after seeing a result"
+    ],
+    "excluded_void_definitions": [
+      "coolant_supply_void",
+      "coolant_return_void",
+      "service_void",
+      "aero_opening_void"
+    ]
+  }
+}
