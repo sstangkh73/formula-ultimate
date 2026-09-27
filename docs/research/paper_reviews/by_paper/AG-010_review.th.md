@@ -1,0 +1,66 @@
+# AG-010: Engineering.ai: A Platform for Teams of AI Engineers in Computational Design
+
+English source: `AG-010_review.md`
+
+## ระเบียนบรรณานุกรมและการอ่าน
+
+| รายการ | ค่า |
+|---|---|
+| ผู้เขียน | Ran Xu, Yu-Peng Qi, Jing-Sen Feng, Xu Chu |
+| ปี | 2025 |
+| แหล่งตีพิมพ์ | arXiv.org |
+| DOI | Not recorded |
+| arXiv | 2511.00122 |
+| ระเบียน canonical | [https://arxiv.org/abs/2511.00122](https://arxiv.org/abs/2511.00122) |
+| หัวข้อในคลัง | AI agent สำหรับการออกแบบวิศวกรรมและวิทยาศาสตร์ |
+| ความสัมพันธ์กับโครงการ | `direct` |
+| ระดับการทบทวน | full-text transfer record |
+| ต้นฉบับ | [PDF ในเครื่อง](../../../../papers/02_ai_agents_engineering/AG-010_Xu2025_engineering-ai-a-platform-for-teams-of-ai-engineer.pdf) |
+| SHA-256 ของต้นฉบับ | `aacd350933973e53e5fbf345c054e5c3171502e2c59e6168fb3a52883466080e` |
+| coverage ของ full text | 25/25 หน้า (100.00%); สกัดได้ 11,416 คำ |
+
+## คำถามวิจัย
+
+agent หรือ generative method ใน Engineering.ai: A Platform for Teams of AI Engineers in Computational Design สร้าง artifact วิศวกรรมที่ผ่านการตรวจ geometry และ physics แบบรันได้หรือไม่?
+
+## วิธีและหลักฐาน
+
+ประมวลผล PDF ทั้งฉบับทีละหน้า heuristic evidence profile คือ **ชุดข้อมูล/benchmark, หลักฐานการทดสอบกายภาพ, หลักฐานเชิงประจักษ์/การทดลอง, หลักฐาน simulation/เชิงตัวเลข** ป้ายนี้ใช้ช่วยนำทาง ไม่ใช่ evidence grade ส่วนที่หาได้จาก heading คือ methods และคำเทคนิคที่พบบ่อย ได้แก่ design, engineering, engineer, optimization, analysis, structural, system, computational วิธีหรือผลเฉพาะ paper ที่เลือกมาประเมินการถ่ายโอนคือ **LLM agent ที่รัน CAD, meshing, การจำลองหลายสาขา และ optimization ในวงปิด เป็นระบบที่เทียบกันได้สำหรับทำ benchmark**
+
+## ผลสำคัญ
+
+- **ผลจาก paper (ถอดความแบบระมัดระวัง):** LLM agent ที่รัน CAD, meshing, การจำลองหลายสาขา และ optimization ในวงปิด เป็นระบบที่เทียบกันได้สำหรับทำ benchmark
+- **การตีความของผู้ทบทวน:** ทำให้ข้อค้นพบ 'LLM agent ที่รัน CAD, meshing, การจำลองหลายสาขา และ optimization ในวงปิด เป็นระบบที่เทียบกันได้สำหรับทำ benchmark' กลายเป็นสมมติฐานที่ทดสอบได้ในหัวข้อAI agent สำหรับการออกแบบวิศวกรรมและวิทยาศาสตร์
+- **ความมั่นใจ:** ปานกลางสำหรับการระบุแนวคิดที่ถ่ายโอนได้ ยังไม่ได้ replicate ผลอย่างอิสระ
+
+## ประเด็นที่น่าสนใจ
+
+**จุดเด่น:** ทำให้ข้อค้นพบ 'LLM agent ที่รัน CAD, meshing, การจำลองหลายสาขา และ optimization ในวงปิด เป็นระบบที่เทียบกันได้สำหรับทำ benchmark' กลายเป็นสมมติฐานที่ทดสอบได้ในหัวข้อAI agent สำหรับการออกแบบวิศวกรรมและวิทยาศาสตร์ โดยเป็นความเชื่อมโยงชนิด `direct` ซึ่งให้กลไก ชุดข้อมูล ตัวเปรียบเทียบ หรือคำเตือนที่แปลงเป็นการทดสอบหักล้างได้ แทนการเทียบจากรูปลักษณ์
+
+## ข้อจำกัดและขอบเขตการถ่ายโอน
+
+benchmark agent มักวัดการทำงานจบหรือรูปลักษณ์แทน functional correctness และการประเมินตนเองอาจทำ task leakage หรือให้รางวัล proxy ผิวเผิน การตรวจ heading แบบอัตโนมัติ **ไม่พบเป็น heading แยก** `Limitations` section อย่างไรก็ตาม paper นี้ไม่ validate รถ Formula Ultimate ทั้งคัน และห้ามยกระดับชั้นหลักฐานโดยไม่มี verification, uncertainty analysis และ physical correlation เฉพาะโครงการ
+
+## ความเชื่อมโยงกับ Formula Ultimate
+
+สมมติฐานการถ่ายโอนเชิงสาเหตุคือ หาก **LLM agent ที่รัน CAD, meshing, การจำลองหลายสาขา และ optimization ในวงปิด เป็นระบบที่เทียบกันได้สำหรับทำ benchmark** ยังเป็นจริงภายใต้ geometry, load, budget และสนาม held-out ของ Formula Ultimate ก็ควรเพิ่มผลหรือช่วยลดความเสี่ยงของ **agent proposal pipeline, ชุด verifier CAD/CAE และ experiment provenance ledger** อย่างวัดได้ ขณะนี้สมมติฐานนี้ยังไม่ถูกยืนยัน และต้องทำตามกฎ fixed task, fair budget, provenance และ promotion ของ Whole-Vehicle Technology Discovery Protocol
+
+## ข้อเสนอปรับปรุงโครงการ
+
+| ช่องการถ่ายโอน | ข้อเสนอจาก paper |
+|---|---|
+| artifact/module เป้าหมาย | agent proposal pipeline, ชุด verifier CAD/CAE และ experiment provenance ledger |
+| การเปลี่ยนแปลงที่เสนอ | สร้าง matched-control pilot เพื่อทดสอบกลไกโดยตรงจากข้อค้นพบ 'LLM agent ที่รัน CAD, meshing, การจำลองหลายสาขา และ optimization ในวงปิด เป็นระบบที่เทียบกันได้สำหรับทำ benchmark' ใน target ที่ระบุด้านล่าง |
+| experiment และ control | ใช้โจทย์ CAD/CAE และ negative control ที่ซ่อน เปรียบเทียบการรัน artifact, geometry validity, physics check, ค่า repair และ verifier false positive กับ scripted baseline ปัจจุบัน |
+| หลักฐานผ่านและล้มเหลว | ยอมรับเฉพาะคุณภาพ artifact ที่ verifier ยืนยันภายใต้งบ token/tool/compute ที่ประกาศ ข้อความลื่นไหล การให้คะแนนตนเอง หรือ render similarity ใช้ผ่านไม่ได้ |
+
+ส่วนนี้เป็นข้อเสนอโครงการ ไม่ใช่ผลจาก paper หากเปลี่ยนกฎฟิสิกส์ solver dataset split หรือ admission rule ต้องสร้าง identity ใหม่และรัน control ที่ยุติธรรมใหม่
+
+## หลักฐานการอ่าน
+
+- สกัดครบทั้งไฟล์: 25 หน้า, 79,734 ตัวอักษร, 11,416 คำ
+- หน้าที่มีข้อความสกัดได้ในระดับสาระ: 25/25
+- หน้าตัวอย่าง high-information cue ที่กระจายทั่ว paper: 1, 2, 3, 15, 17, 18, 19, 20 เป็นตำแหน่งนำทาง ไม่แทน pinpoint citation audit
+- heading ที่ระบุตำแหน่งได้: methods
+- extraction error: 0; มีแนวโน้มเป็นสแกน: `false`
+- รายงานนี้แยกผลจาก paper การตีความของผู้ทบทวน และข้อเสนอโครงการ ไม่ได้ทำซ้ำเนื้อหา paper หรืออ้างว่า replicate ผลอย่างอิสระ
