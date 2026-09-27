@@ -1,0 +1,162 @@
+{
+ "category": {
+  "key": "TY",
+  "folder": "09_tyres_friction",
+  "title_en": "Tyres, rubber friction and tyre identification",
+  "title_th": "ยาง แรงเสียดทานของยาง และการระบุพารามิเตอร์ยาง",
+  "scope_en": "Tyre force models, transient and thermal behaviour, wear and degradation, rubber friction physics, and identification from test or track data. Tyres/contact is a priority-A gap in the Work 102 review; the current kernel uses a friction envelope and a tanh slip route.",
+  "scope_th": "แบบจำลองแรงยาง พฤติกรรม transient และความร้อน การสึกและการเสื่อม ฟิสิกส์แรงเสียดทานของยาง และการระบุพารามิเตอร์จากข้อมูลทดสอบหรือสนาม ยาง/contact เป็นช่องว่างระดับ A ในการทบทวนของ Work 102 ขณะที่ kernel ปัจจุบันใช้ friction envelope และเส้นทาง slip แบบ tanh"
+ },
+ "papers": [
+  {
+   "id": "TY-001",
+   "prior_catalog_id": "P43",
+   "title": "Tyre Modelling for Use in Vehicle Dynamics Studies",
+   "year": 1987,
+   "relation": "direct",
+   "why_en": "The original Magic Formula; the steady-state force model to replace the constant-friction envelope.",
+   "why_th": "Magic Formula ฉบับแรก เป็นแบบจำลองแรงแบบ steady-state ที่จะแทน friction envelope ค่าคงที่"
+  },
+  {
+   "id": "TY-002",
+   "prior_catalog_id": "P44",
+   "title": "Magic Formula Tyre Model with Transient Properties",
+   "doi": "10.1080/00423119708969658",
+   "year": 1997,
+   "relation": "direct",
+   "why_en": "Adds relaxation-length transients to the Magic Formula; needed for transient manoeuvres near the limit.",
+   "why_th": "เพิ่ม transient แบบ relaxation length ให้ Magic Formula จำเป็นสำหรับการขับแบบ transient ใกล้ขีดจำกัด"
+  },
+  {
+   "id": "TY-003",
+   "prior_catalog_id": "P45",
+   "title": "An improved Magic Formula/Swift tyre model that can handle inflation pressure changes",
+   "year": 2010,
+   "pdf_url": "https://pure.tue.nl/ws/files/3139490/Metis245615.pdf",
+   "relation": "direct",
+   "why_en": "Pressure-dependent Magic Formula (MF 6.1 basis); defines the applicability envelope of tyre coefficients.",
+   "why_th": "Magic Formula ที่ขึ้นกับความดันลมยาง (ฐานของ MF 6.1) กำหนดขอบเขตการใช้ได้ของสัมประสิทธิ์ยาง"
+  },
+  {
+   "id": "TY-004",
+   "prior_catalog_id": "P46",
+   "title": "TRT: thermo racing tyre a physical model to predict the tyre temperature distribution",
+   "doi": "10.1007/s11012-013-9821-9",
+   "year": 2014,
+   "relation": "direct",
+   "why_en": "Physical racing-tyre thermal model compared with telemetry; the architecture for a tyre temperature state.",
+   "why_th": "แบบจำลองความร้อนของยางแข่งเชิงฟิสิกส์ที่เทียบกับ telemetry เป็นสถาปัตยกรรมของ state อุณหภูมิยาง"
+  },
+  {
+   "id": "TY-005",
+   "prior_catalog_id": "P38",
+   "title": "Optimal tyre usage for a Formula One car",
+   "doi": "10.1080/00423114.2016.1213861",
+   "year": 2016,
+   "relation": "direct",
+   "why_en": "Couples tyre thermal state and wear into minimum-time control over a stint; the race-long tyre problem.",
+   "why_th": "เชื่อมสถานะความร้อนและการสึกของยางเข้ากับการควบคุมเวลาต่ำสุดตลอด stint เป็นปัญหายางตลอดการแข่ง"
+  },
+  {
+   "id": "TY-006",
+   "prior_catalog_id": "P61",
+   "title": "The Formula SAE Tire Test Consortium-Tire Testing and Data Handling",
+   "year": 2006,
+   "relation": "data",
+   "why_en": "How the FSAE TTC measured and distributes tyre data; the most accessible real racing-tyre data source to request.",
+   "why_th": "วิธีที่ FSAE TTC วัดและแจกจ่ายข้อมูลยาง เป็นแหล่งข้อมูลยางแข่งจริงที่เข้าถึงได้ง่ายที่สุดสำหรับขอใช้"
+  },
+  {
+   "id": "TY-007",
+   "title": "Theory of rubber friction and contact mechanics",
+   "year": 2001,
+   "relation": "indirect",
+   "why_en": "Persson's viscoelastic rubber friction theory on rough surfaces; physics behind grip dependence on speed, temperature and road texture.",
+   "why_th": "ทฤษฎีแรงเสียดทานยางแบบ viscoelastic บนผิวขรุขระของ Persson เป็นฟิสิกส์เบื้องหลังการยึดเกาะที่ขึ้นกับความเร็ว อุณหภูมิ และพื้นผิวถนน"
+  },
+  {
+   "id": "TY-008",
+   "title": "Rubber friction on road surfaces: Experiment and theory for low sliding speeds",
+   "year": 2015,
+   "relation": "data",
+   "why_en": "Measured rubber friction on road surfaces compared with theory; data on how far first-principles friction can be trusted.",
+   "why_th": "แรงเสียดทานยางบนผิวถนนที่วัดได้เทียบกับทฤษฎี เป็นข้อมูลว่าแรงเสียดทานจากหลักการพื้นฐานเชื่อได้แค่ไหน"
+  },
+  {
+   "id": "TY-009",
+   "title": "TMeasy - The Handling Tire Model for All Driving Situations",
+   "year": 2013,
+   "relation": "indirect",
+   "why_en": "Semi-physical tyre model with few, interpretable parameters; a middle-fidelity option when full Magic Formula data is unavailable.",
+   "why_th": "แบบจำลองยางกึ่งฟิสิกส์ที่มีพารามิเตอร์น้อยและตีความได้ เป็นทางเลือก fidelity กลางเมื่อไม่มีข้อมูล Magic Formula ครบ"
+  },
+  {
+   "id": "TY-010",
+   "title": "Tire Modeling and Friction Estimation",
+   "year": 2007,
+   "pdf_url": "https://lucris.lub.lu.se/ws/files/4401399/27004.pdf",
+   "relation": "indirect",
+   "why_en": "Thesis on brush-type tyre models and friction estimation; a physical basis for combined-slip behaviour.",
+   "why_th": "วิทยานิพนธ์เรื่องแบบจำลองยางแบบ brush และการประมาณแรงเสียดทาน เป็นฐานทางฟิสิกส์ของพฤติกรรม combined slip"
+  },
+  {
+   "id": "TY-011",
+   "title": "Bayesian Optimization-based Tire Parameter and Uncertainty Estimation for Real-World Data",
+   "arxiv": "2504.20863",
+   "year": 2025,
+   "relation": "direct",
+   "why_en": "Identifies tyre parameters with uncertainty from real vehicle data; directly relevant to calibrating tyres with declared uncertainty.",
+   "why_th": "ระบุพารามิเตอร์ยางพร้อมความไม่แน่นอนจากข้อมูลรถจริง เกี่ยวข้องโดยตรงกับการสอบเทียบยางพร้อมระบุความไม่แน่นอน"
+  },
+  {
+   "id": "TY-012",
+   "title": "A State-Space Approach to Modeling Tire Degradation in Formula 1 Racing",
+   "arxiv": "2512.00640",
+   "year": 2025,
+   "relation": "data",
+   "why_en": "Bayesian state-space tyre degradation estimated from real 2025 F1 lap times; data-driven degradation rates for race-length simulation.",
+   "why_th": "การเสื่อมของยางแบบ state-space เชิง Bayesian ที่ประมาณจากเวลาต่อรอบ F1 จริงปี 2025 เป็นอัตราการเสื่อมจากข้อมูลสำหรับจำลองระยะการแข่ง"
+  },
+  {
+   "id": "TY-013",
+   "title": "Extended Pacejka Tire Model for Enhanced Vehicle",
+   "arxiv": "2305.18422",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Extends the Pacejka model with additional effects for vehicle simulation; a comparator for tyre-model extensions.",
+   "why_th": "ขยายแบบจำลอง Pacejka ด้วยผลเพิ่มเติมสำหรับการจำลองรถ เป็นตัวเทียบของการขยายแบบจำลองยาง"
+  },
+  {
+   "id": "TY-014",
+   "title": "TRIP-ID: A tool for a smart and interactive identification of Magic Formula tyre model parameters from experimental data acquired on track",
+   "year": 2019,
+   "relation": "indirect",
+   "why_en": "Identifies Magic Formula parameters from on-track data rather than test rigs; the practical route when rig data is unavailable.",
+   "why_th": "ระบุพารามิเตอร์ Magic Formula จากข้อมูลบนสนามแทนแท่นทดสอบ เป็นเส้นทางที่ใช้ได้จริงเมื่อไม่มีข้อมูลแท่นทดสอบ"
+  },
+  {
+   "id": "TY-015",
+   "title": "Tyre wear model: Validation and sensitivity analysis",
+   "year": 2006,
+   "relation": "indirect",
+   "why_en": "Physical tyre wear model with validation; a starting point for a wear state over a race.",
+   "why_th": "แบบจำลองการสึกของยางเชิงฟิสิกส์พร้อมการตรวจสอบ เป็นจุดเริ่มของ state การสึกตลอดการแข่ง"
+  },
+  {
+   "id": "TY-016",
+   "title": "Estimation of tire-road friction coefficient and its application in chassis control systems",
+   "year": 2015,
+   "relation": "indirect",
+   "why_en": "Review of tyre-road friction estimation; relevant to friction uncertainty bounds on held-out tracks.",
+   "why_th": "ทบทวนการประมาณสัมประสิทธิ์แรงเสียดทานยาง-ถนน เกี่ยวข้องกับขอบเขตความไม่แน่นอนของแรงเสียดทานบนสนาม held-out"
+  },
+  {
+   "id": "TY-017",
+   "title": "Tire multiphysical modeling for the analysis of thermal and wear sensitivity on vehicle objective dynamics and racing performances",
+   "year": 2022,
+   "relation": "direct",
+   "why_en": "Couples tyre thermal and wear models to vehicle dynamics and lap performance; the multiphysics tyre evaluator the project lacks.",
+   "why_th": "เชื่อมแบบจำลองความร้อนและการสึกของยางกับพลวัตรถและสมรรถนะต่อรอบ เป็นตัวประเมินยางหลายฟิสิกส์ที่โครงการยังขาด"
+  }
+ ]
+}

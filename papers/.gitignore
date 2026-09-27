@@ -1,0 +1,4 @@
+# Downloaded papers stay local: most are not redistributable under the
+# repository licence. Metadata lives in docs/research/paper_library/.
+*
+!.gitignore

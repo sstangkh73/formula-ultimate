@@ -1,0 +1,150 @@
+{
+ "category": {
+  "key": "DS",
+  "folder": "15_design_synthesis_novelty",
+  "title_en": "Computational design synthesis, functional representation, assembly synthesis and novelty measurement",
+  "title_th": "การสังเคราะห์การออกแบบเชิงคำนวณ การแทนค่าเชิงหน้าที่ การสังเคราะห์การประกอบ และการวัดความใหม่",
+  "scope_en": "Engineering-design research on generating architectures from functions with grammars, decomposing structures into joined parts, and measuring whether a design is actually novel. Relevant to typed interfaces, the physical interface graph, part resolution and the project's definition of a discovery.",
+  "scope_th": "งานวิจัยการออกแบบวิศวกรรมเรื่องการสร้างสถาปัตยกรรมจากหน้าที่ด้วย grammar การแยกโครงสร้างเป็นชิ้นส่วนที่ต่อกัน และการวัดว่าการออกแบบใหม่จริงหรือไม่ เกี่ยวข้องกับ typed interface, physical interface graph, part resolution และนิยามการค้นพบของโครงการ"
+ },
+ "papers": [
+  {
+   "id": "DS-001",
+   "title": "Computational Synthesis of Product Architectures Based on Object-Oriented Graph Grammars",
+   "year": 2012,
+   "relation": "direct",
+   "why_en": "Object-oriented graph grammars over function-behaviour-structure models, validated on hybrid powertrain synthesis; the closest engineering-design precedent to our typed topology genome.",
+   "why_th": "graph grammar เชิงวัตถุบนแบบจำลอง function-behaviour-structure ตรวจสอบด้วยการสังเคราะห์ powertrain ไฮบริด เป็นงานก่อนหน้าด้านการออกแบบวิศวกรรมที่ใกล้กับ typed topology genome ของเรามากที่สุด"
+  },
+  {
+   "id": "DS-002",
+   "title": "A framework for computational design synthesis based on graph-grammars and function-behavior-structure",
+   "year": 2009,
+   "relation": "direct",
+   "why_en": "The framework paper behind DS-001; defines how functional requirements drive grammar-based architecture generation.",
+   "why_th": "paper กรอบงานเบื้องหลัง DS-001 นิยามว่าข้อกำหนดเชิงหน้าที่ขับการสร้างสถาปัตยกรรมด้วย grammar อย่างไร"
+  },
+  {
+   "id": "DS-003",
+   "title": "Comparing Strategies for Topologic and Parametric Rule Application in Automated Computational Design Synthesis",
+   "year": 2016,
+   "relation": "direct",
+   "why_en": "Compares how topological and parametric grammar rules should be interleaved in search; directly relevant to mutation scheduling.",
+   "why_th": "เปรียบเทียบว่ากฎ grammar เชิง topology และเชิงพารามิเตอร์ควรสลับกันอย่างไรในการค้นหา เกี่ยวข้องโดยตรงกับการจัดตารางการกลายพันธุ์"
+  },
+  {
+   "id": "DS-004",
+   "title": "Computer-Based Design Synthesis Research: An Overview",
+   "year": 2011,
+   "relation": "indirect",
+   "why_en": "Overview of computational design synthesis methods and their evaluation; places the project within prior synthesis research.",
+   "why_th": "ภาพรวมของวิธีสังเคราะห์การออกแบบเชิงคำนวณและการประเมิน วางตำแหน่งโครงการในงานวิจัยการสังเคราะห์ที่ผ่านมา"
+  },
+  {
+   "id": "DS-005",
+   "title": "A Framework for Computational Design Synthesis: Model and Applications",
+   "year": 2005,
+   "relation": "indirect",
+   "why_en": "Representation-generation-evaluation-guidance model of design synthesis; a vocabulary for separating our generator from evaluators.",
+   "why_th": "แบบจำลองการสังเคราะห์การออกแบบแบบ representation-generation-evaluation-guidance เป็นศัพท์สำหรับแยกตัวสร้างออกจากตัวประเมินของเรา"
+  },
+  {
+   "id": "DS-006",
+   "title": "A functional basis for engineering design: Reconciling and evolving previous efforts",
+   "year": 2002,
+   "relation": "direct",
+   "why_en": "Standard taxonomy of functions and flows (material, energy, signal); a basis for typed functional interfaces independent of form.",
+   "why_th": "อนุกรมวิธานมาตรฐานของหน้าที่และการไหล (วัสดุ พลังงาน สัญญาณ) เป็นฐานของ interface เชิงหน้าที่แบบมีชนิดที่ไม่ขึ้นกับรูปทรง"
+  },
+  {
+   "id": "DS-007",
+   "title": "Development of a Functional Basis for Design",
+   "year": 2000,
+   "relation": "indirect",
+   "why_en": "The first functional-basis vocabulary; background for DS-006.",
+   "why_th": "คำศัพท์ functional basis ฉบับแรก เป็นพื้นหลังของ DS-006"
+  },
+  {
+   "id": "DS-008",
+   "title": "Design prototypes: a knowledge representation schema for design",
+   "year": 1990,
+   "landing_url": "https://aaai.org/ojs/index.php/aimagazine/article/view/854",
+   "relation": "indirect",
+   "why_en": "Function-behaviour-structure framing; separates what a part does from how it is built, as our discovery criteria require.",
+   "why_th": "กรอบ function-behaviour-structure แยกสิ่งที่ชิ้นส่วนทำออกจากวิธีที่สร้าง ตามที่เกณฑ์การค้นพบของเราต้องการ"
+  },
+  {
+   "id": "DS-009",
+   "title": "Automated synthesis of electromechanical design configurations from empirical analysis of function to form mapping",
+   "year": 2009,
+   "relation": "indirect",
+   "why_en": "Learns function-to-component mappings from real products to synthesise configurations; a data-driven grammar source.",
+   "why_th": "เรียนรู้การจับคู่จากหน้าที่สู่ชิ้นส่วนจากผลิตภัณฑ์จริงเพื่อสังเคราะห์โครงร่าง เป็นแหล่ง grammar ที่ขับด้วยข้อมูล"
+  },
+  {
+   "id": "DS-010",
+   "title": "Metrics for measuring ideation effectiveness",
+   "year": 2003,
+   "relation": "direct",
+   "why_en": "Novelty, variety, quality and quantity metrics for design ideas; operational definitions for measuring novelty of generated architectures.",
+   "why_th": "ตัวชี้วัด novelty, variety, quality และ quantity ของแนวคิดการออกแบบ เป็นนิยามเชิงปฏิบัติสำหรับวัดความใหม่ของสถาปัตยกรรมที่สร้างขึ้น"
+  },
+  {
+   "id": "DS-011",
+   "title": "Assessing design creativity",
+   "year": 2011,
+   "relation": "indirect",
+   "why_en": "Combines novelty and usefulness into a creativity measure; relevant to separating novel-but-useless from useful discoveries.",
+   "why_th": "รวมความใหม่และประโยชน์เป็นตัววัดความสร้างสรรค์ เกี่ยวข้องกับการแยกสิ่งใหม่แต่ไร้ประโยชน์ออกจากการค้นพบที่มีประโยชน์"
+  },
+  {
+   "id": "DS-012",
+   "title": "Measuring technological novelty with patent-based indicators",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "Patent-based measures of new combinations and new functions; an external reference for what counts as a technology-level novelty.",
+   "why_th": "ตัววัดจากสิทธิบัตรของการผสมใหม่และหน้าที่ใหม่ เป็นแหล่งอ้างอิงภายนอกว่าอะไรนับเป็นความใหม่ระดับเทคโนโลยี"
+  },
+  {
+   "id": "DS-013",
+   "title": "Decomposition-Based Assembly Synthesis of Space Frame Structures Using Joint Library",
+   "year": 2005,
+   "relation": "direct",
+   "why_en": "Decomposes a frame into parts and chooses joints from a library under structural and manufacturing objectives; the same problem as part resolution with joint systems (Works 140-142).",
+   "why_th": "แยกเฟรมเป็นชิ้นส่วนและเลือกข้อต่อจากคลังภายใต้วัตถุประสงค์ด้านโครงสร้างและการผลิต เป็นปัญหาเดียวกับ part resolution พร้อมระบบข้อต่อ (Works 140-142)"
+  },
+  {
+   "id": "DS-014",
+   "title": "Decomposition-Based Assembly Synthesis Based on Structural Considerations",
+   "year": 2002,
+   "relation": "direct",
+   "why_en": "Earlier decomposition-based assembly synthesis driven by stiffness; method basis for DS-013.",
+   "why_th": "การสังเคราะห์การประกอบแบบแยกส่วนที่ขับด้วยความแข็งเกร็งรุ่นก่อน เป็นฐานวิธีของ DS-013"
+  },
+  {
+   "id": "DS-015",
+   "title": "Multi-component topology and material orientation design of composite structures (MTO-C)",
+   "year": 2018,
+   "relation": "direct",
+   "why_en": "Simultaneously optimises structural topology and its decomposition into manufacturable composite components; closes the gap between topology and part count.",
+   "why_th": "optimize topology ของโครงสร้างพร้อมการแยกเป็นชิ้นส่วนคอมโพสิตที่ผลิตได้ในคราวเดียว ปิดช่องว่างระหว่าง topology กับจำนวนชิ้นส่วน"
+  },
+  {
+   "id": "DS-016",
+   "title": "Patterns in System Architecture Decisions",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "Classifies architecture decisions (assigning, partitioning, connecting) into patterns with search formulations; a formal view of vehicle-architecture choices.",
+   "why_th": "จำแนกการตัดสินใจเชิงสถาปัตยกรรม (การกำหนด การแบ่ง การเชื่อม) เป็นแบบแผนพร้อมสูตรการค้นหา เป็นมุมมองเชิงรูปนัยของการเลือกสถาปัตยกรรมรถ"
+  },
+  {
+   "id": "DS-017",
+   "title": "Generative Transformers for Design Concept Generation",
+   "arxiv": "2211.03468",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Transformer-based concept generation from design knowledge; a text-level proposal route before geometry.",
+   "why_th": "การสร้างแนวคิดการออกแบบด้วย transformer จากความรู้การออกแบบ เป็นเส้นทางเสนอแบบระดับข้อความก่อนเรขาคณิต"
+  }
+ ]
+}

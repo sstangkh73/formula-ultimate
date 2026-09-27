@@ -1,0 +1,298 @@
+{
+ "category": {
+  "key": "VV",
+  "folder": "13_validation_statistics_claims",
+  "title_en": "Verification, validation, calibration, statistics, reproducibility and claim discipline",
+  "title_th": "Verification, validation, การสอบเทียบ สถิติ การทำซ้ำได้ และวินัยในการอ้างผล",
+  "scope_en": "How to show a solver solves its equations, how to show a model predicts reality, how to compare stochastic search methods honestly, and how optimisers exploit objectives and simulators. Grounds the evidence tiers, fidelity gates and review discipline in AGENTS.md.",
+  "scope_th": "วิธีแสดงว่า solver แก้สมการของตัวเองได้ถูก วิธีแสดงว่าแบบจำลองทำนายความจริงได้ วิธีเปรียบเทียบวิธีค้นหาเชิงสุ่มอย่างซื่อตรง และวิธีที่ optimizer ใช้ช่องโหว่ของวัตถุประสงค์และตัวจำลอง เป็นรากฐานของระดับหลักฐาน fidelity gate และวินัยการรีวิวใน AGENTS.md"
+ },
+ "papers": [
+  {
+   "id": "VV-001",
+   "prior_catalog_id": "P59",
+   "title": "Verification and Validation in Computational Fluid Dynamics",
+   "year": 2002,
+   "pdf_url": "https://www.osti.gov/servlets/purl/793406",
+   "deadline_s": 600,
+   "relation": "direct",
+   "why_en": "Separates verification (solving equations right) from validation (right equations); the foundation of the project's evidence-tier language.",
+   "why_th": "แยก verification (แก้สมการถูก) ออกจาก validation (สมการถูก) เป็นรากฐานของภาษาระดับหลักฐานของโครงการ"
+  },
+  {
+   "id": "VV-002",
+   "prior_catalog_id": "P58",
+   "title": "Bayesian calibration of computer models",
+   "doi": "10.1111/1467-9868.00294",
+   "year": 2001,
+   "relation": "direct",
+   "why_en": "Kennedy-O'Hagan calibration with an explicit model-discrepancy term; the plan for calibrating subsystems against measurements.",
+   "why_th": "การสอบเทียบของ Kennedy-O'Hagan ที่มีเทอมความคลาดเคลื่อนของแบบจำลองชัดเจน เป็นแผนการสอบเทียบระบบย่อยกับการวัด"
+  },
+  {
+   "id": "VV-003",
+   "prior_catalog_id": "P60",
+   "title": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+   "arxiv": "2108.13264",
+   "year": 2021,
+   "relation": "direct",
+   "why_en": "Interval estimates and robust aggregates for few-run comparisons; the reporting standard for seed-limited search campaigns.",
+   "why_th": "การประมาณช่วงและค่ารวมที่ทนทานสำหรับการเทียบที่มีจำนวนรันน้อย เป็นมาตรฐานการรายงานของแคมเปญค้นหาที่จำนวน seed จำกัด"
+  },
+  {
+   "id": "VV-004",
+   "title": "Code Verification by the Method of Manufactured Solutions",
+   "year": 2000,
+   "pdf_url": "https://www.osti.gov/servlets/purl/759450",
+   "deadline_s": 600,
+   "relation": "direct",
+   "why_en": "Manufactured solutions to verify order of accuracy of PDE codes; the method for independent solver verification (Work 138).",
+   "why_th": "manufactured solution สำหรับตรวจอันดับความแม่นยำของโค้ด PDE เป็นวิธีตรวจ solver อย่างอิสระ (Work 138)"
+  },
+  {
+   "id": "VV-005",
+   "title": "A comprehensive framework for verification, validation, and uncertainty quantification in scientific computing",
+   "year": 2011,
+   "doi": "10.1016/j.cma.2011.03.016",
+   "relation": "direct",
+   "why_en": "End-to-end VVUQ framework including numerical, input and model-form uncertainty; structure for the fidelity-promotion evidence.",
+   "why_th": "กรอบ VVUQ ครบวงจรรวมถึงความไม่แน่นอนเชิงตัวเลข ข้อมูลเข้า และรูปแบบแบบจำลอง เป็นโครงสร้างของหลักฐานการเลื่อน fidelity"
+  },
+  {
+   "id": "VV-006",
+   "title": "Procedure for Estimation and Reporting of Uncertainty Due to Discretization in CFD Applications",
+   "year": 2008,
+   "relation": "direct",
+   "why_en": "Grid convergence index procedure with three refinement levels; the reporting rule for mesh convergence claims.",
+   "why_th": "ขั้นตอน grid convergence index ที่ใช้การปรับละเอียดสามระดับ เป็นกฎการรายงาน claim การลู่เข้าของ mesh"
+  },
+  {
+   "id": "VV-007",
+   "title": "Perspective: A Method for Uniform Reporting of Grid Refinement Studies",
+   "year": 1994,
+   "relation": "indirect",
+   "why_en": "Roache's original grid convergence index; background for VV-006.",
+   "why_th": "grid convergence index ต้นฉบับของ Roache เป็นพื้นหลังของ VV-006"
+  },
+  {
+   "id": "VV-008",
+   "title": "Verification, validation, and predictive capability in computational engineering and physics",
+   "year": 2004,
+   "relation": "direct",
+   "why_en": "Defines predictive capability beyond validated conditions; relevant to extrapolating to novel architectures.",
+   "why_th": "นิยามความสามารถในการทำนายนอกเงื่อนไขที่ตรวจสอบแล้ว เกี่ยวข้องกับการขยายผลไปยังสถาปัตยกรรมใหม่"
+  },
+  {
+   "id": "VV-009",
+   "title": "Verification and validation of simulation models",
+   "year": 2010,
+   "relation": "indirect",
+   "why_en": "Operational validation techniques for simulation models; practical checks for the race simulation itself.",
+   "why_th": "เทคนิค validation เชิงปฏิบัติของแบบจำลองการจำลอง เป็นการตรวจที่ใช้ได้จริงกับการจำลองการแข่งเอง"
+  },
+  {
+   "id": "VV-010",
+   "title": "Combining field data and computer simulations for calibration and prediction",
+   "year": 2004,
+   "relation": "indirect",
+   "why_en": "Practical Bayesian calibration with field data and discrepancy; implementation detail for VV-002.",
+   "why_th": "การสอบเทียบแบบ Bayesian ที่ใช้ได้จริงกับข้อมูลภาคสนามและความคลาดเคลื่อน เป็นรายละเอียดการ implement ของ VV-002"
+  },
+  {
+   "id": "VV-011",
+   "title": "Learning about physical parameters: the importance of model discrepancy",
+   "year": 2014,
+   "relation": "direct",
+   "why_en": "Shows calibrated parameters are wrong unless discrepancy is modelled with prior knowledge; a warning for tyre and aero calibration.",
+   "why_th": "แสดงว่าพารามิเตอร์ที่สอบเทียบจะผิดหากไม่จำลองความคลาดเคลื่อนด้วยความรู้ก่อนหน้า เป็นคำเตือนสำหรับการสอบเทียบยางและ aero"
+  },
+  {
+   "id": "VV-012",
+   "title": "How Many Random Seeds? Statistical Power Analysis in Deep Reinforcement Learning Experiments",
+   "arxiv": "1806.08295",
+   "year": 2018,
+   "relation": "direct",
+   "why_en": "Power analysis for choosing seed counts; directly applicable to sizing paired-seed search campaigns.",
+   "why_th": "การวิเคราะห์ power สำหรับเลือกจำนวน seed ใช้ได้โดยตรงกับการกำหนดขนาดแคมเปญค้นหาแบบ paired seed"
+  },
+  {
+   "id": "VV-013",
+   "title": "Deep Reinforcement Learning that Matters",
+   "arxiv": "1709.06560",
+   "year": 2018,
+   "relation": "indirect",
+   "why_en": "Shows seeds, implementations and hyperparameters can flip conclusions; motivates full replay metadata.",
+   "why_th": "แสดงว่า seed การ implement และ hyperparameter พลิกข้อสรุปได้ เป็นเหตุผลของ metadata การ replay ครบถ้วน"
+  },
+  {
+   "id": "VV-014",
+   "title": "Statistical Comparisons of Classifiers over Multiple Data Sets",
+   "year": 2006,
+   "pdf_url": "https://www.jmlr.org/papers/volume7/demsar06a/demsar06a.pdf",
+   "relation": "indirect",
+   "why_en": "Non-parametric tests for comparing algorithms across many tasks; applicable to comparing search methods across circuits.",
+   "why_th": "การทดสอบแบบไม่อิงพารามิเตอร์สำหรับเทียบอัลกอริทึมข้ามหลายงาน ใช้กับการเทียบวิธีค้นหาข้ามหลายสนามได้"
+  },
+  {
+   "id": "VV-015",
+   "title": "Time for a Change: a Tutorial for Comparing Multiple Classifiers Through Bayesian Analysis",
+   "arxiv": "1606.04316",
+   "year": 2017,
+   "relation": "indirect",
+   "why_en": "Bayesian comparison with a region of practical equivalence; a way to say 'no practical difference' rather than 'not significant'.",
+   "why_th": "การเปรียบเทียบแบบ Bayesian ที่มีช่วงความเท่ากันเชิงปฏิบัติ เป็นวิธีบอกว่า 'ไม่ต่างในทางปฏิบัติ' แทน 'ไม่มีนัยสำคัญ'"
+  },
+  {
+   "id": "VV-016",
+   "title": "Benchmarking in Optimization: Best Practice and Open Issues",
+   "arxiv": "2007.03488",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "Community best practice for benchmarking optimisers (budgets, baselines, reporting); a checklist for our campaign protocols.",
+   "why_th": "แนวปฏิบัติที่ดีของชุมชนในการ benchmark optimizer (งบ baseline การรายงาน) เป็น checklist ของระเบียบแคมเปญเรา"
+  },
+  {
+   "id": "VV-017",
+   "title": "COCO: A Platform for Comparing Continuous Optimizers in a Black-Box Setting",
+   "arxiv": "1603.08785",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "Budget-based anytime performance comparison of optimisers; a model for reporting quality versus evaluations.",
+   "why_th": "การเปรียบเทียบสมรรถนะ optimizer ตามงบแบบ anytime เป็นแบบการรายงานคุณภาพเทียบกับจำนวนการประเมิน"
+  },
+  {
+   "id": "VV-018",
+   "title": "The preregistration revolution",
+   "doi": "10.1073/pnas.1708274114",
+   "year": 2018,
+   "relation": "direct",
+   "why_en": "Case for preregistering hypotheses and analyses; the rationale behind the project's frozen protocols before campaigns.",
+   "why_th": "เหตุผลของการลงทะเบียนสมมติฐานและการวิเคราะห์ล่วงหน้า เป็นเหตุผลเบื้องหลังระเบียบที่ตรึงไว้ก่อนแคมเปญของโครงการ"
+  },
+  {
+   "id": "VV-019",
+   "title": "Improving Reproducibility in Machine Learning Research (A Report from the NeurIPS 2019 Reproducibility Program)",
+   "arxiv": "2003.12206",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "Reproducibility checklist and findings; complements the replay metadata requirement.",
+   "why_th": "checklist และข้อค้นพบด้านการทำซ้ำได้ เสริมข้อกำหนด metadata การ replay"
+  },
+  {
+   "id": "VV-020",
+   "title": "Troubling Trends in Machine Learning Scholarship",
+   "arxiv": "1807.03341",
+   "year": 2018,
+   "relation": "indirect",
+   "why_en": "Catalogues overclaiming, speculation presented as explanation and ablation gaps; a reviewer's checklist for our own reports.",
+   "why_th": "รวบรวมการอ้างเกินจริง การคาดเดาที่นำเสนอเป็นคำอธิบาย และช่องว่างของ ablation เป็น checklist ผู้รีวิวสำหรับรายงานของเราเอง"
+  },
+  {
+   "id": "VV-021",
+   "title": "The Surprising Creativity of Digital Evolution: A Collection of Anecdotes from the Evolutionary Computation and Artificial Life Research Communities",
+   "arxiv": "1803.03453",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "Dozens of cases where evolution exploited simulator bugs and loopholes; the evidence behind treating numerical exploits as an alternative explanation.",
+   "why_th": "หลายสิบกรณีที่วิวัฒนาการใช้บั๊กของตัวจำลองและช่องโหว่ เป็นหลักฐานเบื้องหลังการถือว่าการใช้ช่องโหว่เชิงตัวเลขเป็นคำอธิบายทางเลือก"
+  },
+  {
+   "id": "VV-022",
+   "title": "Concrete Problems in AI Safety",
+   "arxiv": "1606.06565",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "Defines reward hacking and side effects; vocabulary for objective loopholes in design search.",
+   "why_th": "นิยาม reward hacking และผลข้างเคียง เป็นศัพท์ของช่องโหว่วัตถุประสงค์ในการค้นหาการออกแบบ"
+  },
+  {
+   "id": "VV-023",
+   "title": "Defining and Characterizing Reward Hacking",
+   "arxiv": "2209.13085",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Formal definition of when a proxy objective is hackable; relevant to Level-0 race time as a proxy for real race time.",
+   "why_th": "นิยามเชิงรูปนัยว่าเมื่อใดวัตถุประสงค์แทนถูกใช้ช่องโหว่ได้ เกี่ยวข้องกับเวลาแข่ง Level-0 ในฐานะตัวแทนเวลาแข่งจริง"
+  },
+  {
+   "id": "VV-024",
+   "title": "Leakage and the reproducibility crisis in machine-learning-based science",
+   "arxiv": "2207.07048",
+   "year": 2023,
+   "relation": "direct",
+   "why_en": "Taxonomy of data leakage that inflates results; applicable to held-out tracks and surrogate training data.",
+   "why_th": "อนุกรมวิธานของ data leakage ที่ทำให้ผลดูดีเกินจริง ใช้กับสนาม held-out และข้อมูลฝึก surrogate"
+  },
+  {
+   "id": "VV-025",
+   "title": "The garden of forking paths: Why multiple comparisons can be a problem, even when there is no fishing expedition or p-hacking and the research hypothesis was posited ahead of time",
+   "year": 2013,
+   "pdf_url": "https://sites.stat.columbia.edu/gelman/research/unpublished/p_hacking.pdf",
+   "relation": "indirect",
+   "why_en": "Data-dependent analysis choices inflate false positives even without intent; supports freezing analyses before results.",
+   "why_th": "การเลือกการวิเคราะห์ตามข้อมูลเพิ่ม false positive แม้ไม่ตั้งใจ สนับสนุนการตรึงการวิเคราะห์ก่อนเห็นผล"
+  },
+  {
+   "id": "VV-026",
+   "title": "The ASA Statement on p-Values: Context, Process, and Purpose",
+   "doi": "10.1080/00031305.2016.1154108",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "What p-values do and do not mean; relevant to reporting the non-significant campaign comparisons honestly.",
+   "why_th": "p-value หมายถึงอะไรและไม่ได้หมายถึงอะไร เกี่ยวข้องกับการรายงานผลเทียบแคมเปญที่ไม่มีนัยสำคัญอย่างซื่อตรง"
+  },
+  {
+   "id": "VV-027",
+   "title": "Noise and the reality gap: The use of simulation in evolutionary robotics",
+   "year": 1995,
+   "relation": "direct",
+   "why_en": "Adding the right noise to simulation to stop evolution exploiting simulator artefacts; an early reality-gap remedy.",
+   "why_th": "เพิ่มสัญญาณรบกวนที่เหมาะสมในการจำลองเพื่อไม่ให้วิวัฒนาการใช้สิ่งแปลกปลอมของตัวจำลอง เป็นวิธีแก้ reality gap ยุคแรก"
+  },
+  {
+   "id": "VV-028",
+   "title": "Robot Learning from Randomized Simulations: A Review",
+   "arxiv": "2111.00956",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Reviews domain randomisation for sim-to-real; relevant to robustness across uncertain parameters.",
+   "why_th": "ทบทวน domain randomization สำหรับ sim-to-real เกี่ยวข้องกับความทนทานข้ามพารามิเตอร์ที่ไม่แน่นอน"
+  },
+  {
+   "id": "VV-029",
+   "title": "Domain Randomization for Transferring Deep Neural Networks from Simulation to the Real World",
+   "arxiv": "1703.06907",
+   "year": 2017,
+   "relation": "indirect",
+   "why_en": "Randomising simulator parameters to transfer to reality; a robustness tactic for held-out conditions.",
+   "why_th": "สุ่มพารามิเตอร์ตัวจำลองเพื่อถ่ายโอนสู่ความจริง เป็นกลยุทธ์ความทนทานสำหรับเงื่อนไข held-out"
+  },
+  {
+   "id": "VV-030",
+   "title": "Estimating the reproducibility of psychological science",
+   "doi": "10.1126/science.aac4716",
+   "year": 2015,
+   "relation": "indirect",
+   "why_en": "Large replication effort showing weaker effects on replication; background for expecting shrinkage when promoted candidates are re-run.",
+   "why_th": "ความพยายามทำซ้ำขนาดใหญ่ที่แสดงว่าผลอ่อนลงเมื่อทำซ้ำ เป็นพื้นหลังของการคาดว่าผลจะหดเมื่อรันผู้สมัครที่เลื่อนระดับอีกครั้ง"
+  },
+  {
+   "id": "VV-031",
+   "title": "A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification",
+   "arxiv": "2107.07511",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "Distribution-free prediction intervals for any surrogate; a simple way to bound surrogate error in promotion decisions.",
+   "why_th": "ช่วงการทำนายที่ไม่ขึ้นกับการกระจายสำหรับ surrogate ใด ๆ เป็นวิธีง่ายในการจำกัดความคลาดเคลื่อนของ surrogate ในการตัดสินเลื่อนระดับ"
+  },
+  {
+   "id": "VV-032",
+   "title": "SALib: An open-source Python library for Sensitivity Analysis",
+   "doi": "10.21105/joss.00097",
+   "year": 2017,
+   "relation": "indirect",
+   "why_en": "Global sensitivity analysis tooling (Sobol, Morris); for finding which parameters drive race-time rankings.",
+   "why_th": "เครื่องมือวิเคราะห์ความไวแบบ global (Sobol, Morris) สำหรับหาว่าพารามิเตอร์ใดขับการจัดอันดับเวลาแข่ง"
+  }
+ ]
+}

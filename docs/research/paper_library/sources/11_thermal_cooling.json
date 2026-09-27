@@ -1,0 +1,30 @@
+{
+ "category": {
+  "key": "TH",
+  "folder": "11_thermal_cooling",
+  "title_en": "Thermal management, heat generation and cooling design",
+  "title_th": "การจัดการความร้อน การเกิดความร้อน และการออกแบบการระบายความร้อน",
+  "scope_en": "Heat-generation and thermal-network models for batteries and electric machines, and geometry-level cooling design. Supports the lumped thermal physics, coupled thermal-solid and flow/heat-exchange work (Works 014, 115, 121).",
+  "scope_th": "แบบจำลองการเกิดความร้อนและเครือข่ายความร้อนของแบตเตอรี่และเครื่องจักรไฟฟ้า และการออกแบบการระบายความร้อนระดับเรขาคณิต สนับสนุนงานฟิสิกส์ความร้อนแบบ lumped, thermal-solid แบบเชื่อมโยง และ flow/heat exchange (Works 014, 115, 121)"
+ },
+ "papers": [
+  {"id": "TH-001", "title": "A General Energy Balance for Battery Systems", "year": 1985, "relation": "direct",
+   "why_en": "Bernardi's battery heat-generation equation (irreversible plus entropic heat); the source term for any battery thermal state.",
+   "why_th": "สมการการเกิดความร้อนของแบตเตอรี่ของ Bernardi (ความร้อนไม่ผันกลับบวกความร้อนเชิง entropy) เป็นเทอมแหล่งของ state ความร้อนแบตเตอรี่ใด ๆ"},
+  {"id": "TH-002", "title": "Lumped-parameter electro-thermal model for cylindrical batteries", "year": 2014, "relation": "direct",
+   "why_en": "Two-state core/surface thermal model identified from data; the right fidelity for race-long battery temperature.",
+   "why_th": "แบบจำลองความร้อนสองสถานะแกน/ผิวที่ระบุจากข้อมูล เป็น fidelity ที่เหมาะกับอุณหภูมิแบตเตอรี่ตลอดการแข่ง"},
+  {"id": "TH-003", "title": "Evolution and Modern Approaches for Thermal Analysis of Electrical Machines", "year": 2009, "relation": "direct",
+   "why_en": "Review of lumped thermal networks and CFD for electric machines; basis for motor derating in the powertrain model.",
+   "why_th": "ทบทวนเครือข่ายความร้อนแบบ lumped และ CFD ของเครื่องจักรไฟฟ้า เป็นฐานของการลดกำลังมอเตอร์ในแบบจำลอง powertrain"},
+  {"id": "TH-004", "title": "Large scale three-dimensional topology optimisation of heat sinks cooled by natural convection", "arxiv": "1508.04596", "year": 2016, "relation": "indirect",
+   "why_en": "Full 3D conjugate-heat-transfer topology optimisation producing non-intuitive heat sinks; a precedent for discovered cooling geometry.",
+   "why_th": "topology optimization การถ่ายเทความร้อนร่วม 3 มิติเต็มรูปแบบที่ได้ heat sink ไม่คุ้นตา เป็นงานก่อนหน้าของเรขาคณิตระบายความร้อนที่ค้นพบ"},
+  {"id": "TH-005", "title": "A review about the engineering design of optimal heat transfer systems using topology optimization", "year": 2017, "relation": "indirect",
+   "why_en": "Review of topology optimisation for heat transfer devices; a map of methods for cooling-path discovery.",
+   "why_th": "ทบทวน topology optimization ของอุปกรณ์ถ่ายเทความร้อน เป็นแผนที่วิธีสำหรับการค้นพบเส้นทางระบายความร้อน"},
+  {"id": "TH-006", "title": "Analysis of heat conduction in a disk brake system", "year": 2009, "relation": "indirect",
+   "why_en": "Transient brake-disc heat conduction; relevant to brake thermal limits and energy dissipated by friction braking.",
+   "why_th": "การนำความร้อนแบบ transient ในจานเบรก เกี่ยวข้องกับขีดจำกัดความร้อนของเบรกและพลังงานที่เบรกเสียดทานสลายไป"}
+ ]
+}

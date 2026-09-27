@@ -1,0 +1,197 @@
+{
+ "category": {
+  "key": "SI",
+  "folder": "06_simulation_infrastructure",
+  "title_en": "Simulation, optimal-control and MDO infrastructure, coupling and integrators",
+  "title_th": "โครงสร้างพื้นฐานการจำลอง optimal control และ MDO การเชื่อมโยง และ integrator",
+  "scope_en": "Engines, solvers and modelling languages the project could adopt or cross-check against: multibody dynamics, differentiable simulation, co-simulation coupling, acausal energy-port modelling, structure-preserving integrators and nonlinear-programming solvers used for minimum-time problems.",
+  "scope_th": "engine solver และภาษาแบบจำลองที่โครงการอาจนำมาใช้หรือใช้ตรวจทาน: multibody dynamics การจำลองแบบ differentiable การเชื่อมโยง co-simulation การจำลองแบบ energy port ไม่มีทิศเหตุ integrator ที่รักษาโครงสร้าง และ solver nonlinear programming ที่ใช้กับปัญหาเวลาต่ำสุด"
+ },
+ "papers": [
+  {
+   "id": "SI-001",
+   "prior_catalog_id": "P08",
+   "title": "DiffTaichi: Differentiable Programming for Physical Simulation",
+   "arxiv": "1910.00935",
+   "year": 2020,
+   "relation": "indirect",
+   "why_en": "Differentiable simulation language; a route to gradient refinement inside an admitted topology, with the caveat that gradients do not prove accuracy.",
+   "why_th": "ภาษาการจำลองแบบ differentiable เป็นเส้นทางสู่การปรับละเอียดด้วย gradient ภายใน topology ที่ผ่านแล้ว โดย gradient ไม่ได้พิสูจน์ความแม่นยำ"
+  },
+  {
+   "id": "SI-002",
+   "prior_catalog_id": "P54",
+   "title": "Chrono: An Open Source Multi-physics Dynamics Engine",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "Open multibody and contact engine; candidate independent backend for cross-checking vehicle dynamics.",
+   "why_th": "engine multibody และ contact แบบเปิด เป็น backend อิสระตัวเลือกสำหรับตรวจทานพลวัตของรถ"
+  },
+  {
+   "id": "SI-003",
+   "prior_catalog_id": "P55",
+   "title": "Chrono::Vehicle: template-based ground vehicle modelling and simulation",
+   "year": 2019,
+   "relation": "direct",
+   "why_en": "Template vehicle models in an open engine; the most practical public route to a reproduced conventional baseline.",
+   "why_th": "แบบจำลองรถแบบ template ใน engine เปิด เป็นเส้นทางสาธารณะที่ใช้ได้จริงที่สุดสู่ baseline แบบเดิมที่ทำซ้ำได้"
+  },
+  {
+   "id": "SI-004",
+   "prior_catalog_id": "P56",
+   "title": "MuJoCo: A physics engine for model-based control",
+   "year": 2012,
+   "pdf_url": "https://homes.cs.washington.edu/~todorov/papers/TodorovIROS12.pdf",
+   "relation": "indirect",
+   "why_en": "Fast contact-rich dynamics for control learning; useful for driver-policy training, not as calibrated tyre or aero evidence.",
+   "why_th": "พลวัตที่มี contact มากและเร็วสำหรับการเรียนรู้การควบคุม ใช้ฝึก policy ผู้ขับได้ แต่ไม่ใช่หลักฐานยางหรือ aero ที่สอบเทียบแล้ว"
+  },
+  {
+   "id": "SI-005",
+   "prior_catalog_id": "P57",
+   "title": "OpenMDAO: an open-source framework for multidisciplinary design, analysis, and optimization",
+   "doi": "10.1007/s00158-019-02211-z",
+   "year": 2019,
+   "relation": "indirect",
+   "why_en": "Coupled-analysis orchestration with derivatives; a pattern for design/control/energy/structure coupling.",
+   "why_th": "การจัดการการวิเคราะห์แบบเชื่อมโยงพร้อมอนุพันธ์ เป็นแบบสำหรับการเชื่อมการออกแบบ/การควบคุม/พลังงาน/โครงสร้าง"
+  },
+  {
+   "id": "SI-006",
+   "title": "preCICE v2: A sustainable and user-friendly coupling library",
+   "arxiv": "2109.14470",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Partitioned multiphysics coupling (fluid-structure, conjugate heat) with convergence acceleration; relevant to coupled thermal-solid work (Work 115).",
+   "why_th": "การเชื่อม multiphysics แบบแบ่งส่วน (ของไหล-โครงสร้าง ความร้อนร่วม) พร้อมการเร่งการลู่เข้า เกี่ยวข้องกับงาน thermal-solid แบบเชื่อมโยง (Work 115)"
+  },
+  {
+   "id": "SI-007",
+   "title": "DOLFINx: The next generation FEniCS problem solving environment",
+   "year": 2023,
+   "pdf_url": "https://zenodo.org/records/10447666/files/main.pdf?download=1",
+   "relation": "indirect",
+   "why_en": "Open finite-element environment; candidate independent solver for geometry-general evaluation (Work 138).",
+   "why_th": "สภาพแวดล้อม finite element แบบเปิด เป็น solver อิสระตัวเลือกสำหรับการประเมินเรขาคณิตทั่วไป (Work 138)"
+  },
+  {
+   "id": "SI-008",
+   "title": "The Pinocchio C++ library: A fast and flexible implementation of rigid body dynamics algorithms and their analytical derivatives",
+   "year": 2019,
+   "relation": "indirect",
+   "why_en": "Rigid-body dynamics with analytical derivatives; useful for linkage and suspension kinematics with gradients.",
+   "why_th": "พลวัตวัตถุแข็งพร้อมอนุพันธ์เชิงวิเคราะห์ ใช้กับจลนศาสตร์ linkage และระบบกันสะเทือนที่ต้องการ gradient"
+  },
+  {
+   "id": "SI-009",
+   "title": "Brax: A Differentiable Physics Engine for Large Scale Rigid Body Simulation",
+   "arxiv": "2106.13281",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "Massively parallel accelerator physics; relevant to the compute ledger when comparing search algorithms by wall time.",
+   "why_th": "ฟิสิกส์บน accelerator แบบขนานจำนวนมาก เกี่ยวข้องกับบัญชีการคำนวณเมื่อเทียบอัลกอริทึมค้นหาด้วยเวลาจริง"
+  },
+  {
+   "id": "SI-010",
+   "title": "Dojo: A Differentiable Physics Engine for Robotics",
+   "arxiv": "2203.00806",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Differentiable contact via interior-point complementarity; a gradient-through-contact option for ground interaction.",
+   "why_th": "contact แบบ differentiable ด้วย interior-point complementarity เป็นทางเลือก gradient ผ่าน contact สำหรับ ground interaction"
+  },
+  {
+   "id": "SI-011",
+   "title": "A pressure field model for fast, robust approximation of net contact force and moment between nominally rigid objects",
+   "arxiv": "1904.11433",
+   "year": 2019,
+   "relation": "indirect",
+   "why_en": "Hydroelastic contact giving distributed pressure rather than point forces; relevant to contact patches of arbitrary ground-contact endpoints.",
+   "why_th": "contact แบบ hydroelastic ที่ให้ความดันกระจายแทนแรงจุด เกี่ยวข้องกับ contact patch ของจุดสัมผัสพื้นแบบใดก็ได้"
+  },
+  {
+   "id": "SI-012",
+   "title": "Discrete mechanics and variational integrators",
+   "year": 2001,
+   "relation": "direct",
+   "why_en": "Structure-preserving integrators with bounded energy error; the theory behind treating energy residuals as observable outputs.",
+   "why_th": "integrator ที่รักษาโครงสร้างโดยมีความคลาดเคลื่อนพลังงานมีขอบเขต เป็นทฤษฎีเบื้องหลังการถือ residual พลังงานเป็นผลลัพธ์ที่สังเกตได้"
+  },
+  {
+   "id": "SI-013",
+   "title": "Port-Hamiltonian Systems Theory: An Introductory Overview",
+   "year": 2014,
+   "relation": "direct",
+   "why_en": "Energy-port formalism where interconnection conserves power by construction; a rigorous basis for the typed energy graph and its conservation audit (Works 012-013).",
+   "why_th": "รูปแบบ energy port ที่การเชื่อมต่ออนุรักษ์กำลังโดยโครงสร้าง เป็นฐานที่เข้มงวดของ typed energy graph และการตรวจการอนุรักษ์ (Works 012-013)"
+  },
+  {
+   "id": "SI-014",
+   "title": "Physical system modeling with Modelica",
+   "year": 1998,
+   "doi": "10.1016/S0967-0661(98)00047-1",
+   "relation": "indirect",
+   "why_en": "Acausal, equation-based component modelling with typed connectors; the established design of typed physical ports.",
+   "why_th": "การจำลองชิ้นส่วนแบบสมการที่ไม่มีทิศเหตุพร้อม connector ที่มีชนิด เป็นการออกแบบ port ทางกายภาพแบบมีชนิดที่เป็นที่ยอมรับ"
+  },
+  {
+   "id": "SI-015",
+   "title": "Bond-graph modeling",
+   "year": 2007,
+   "relation": "indirect",
+   "why_en": "Tutorial on bond graphs for multi-domain energy flow; a compact notation for checking power-conserving connections.",
+   "why_th": "tutorial ของ bond graph สำหรับการไหลของพลังงานหลายโดเมน เป็นสัญกรณ์กระชับสำหรับตรวจการเชื่อมต่อที่อนุรักษ์กำลัง"
+  },
+  {
+   "id": "SI-016",
+   "title": "The Functional Mockup Interface for Tool independent Exchange of Simulation Models",
+   "year": 2011,
+   "relation": "indirect",
+   "why_en": "FMI co-simulation standard; relevant if subsystem models from other tools are coupled into the race simulation.",
+   "why_th": "มาตรฐาน co-simulation FMI เกี่ยวข้องหากเชื่อมแบบจำลองระบบย่อยจากเครื่องมืออื่นเข้ากับการจำลองการแข่ง"
+  },
+  {
+   "id": "SI-017",
+   "title": "CasADi: a software framework for nonlinear optimization and optimal control",
+   "year": 2019,
+   "relation": "direct",
+   "why_en": "The standard open tool for direct-collocation minimum-lap-time problems; needed for optimised driver baselines.",
+   "why_th": "เครื่องมือเปิดมาตรฐานสำหรับปัญหาเวลาต่อรอบต่ำสุดแบบ direct collocation จำเป็นสำหรับ baseline ผู้ขับที่ optimize แล้ว"
+  },
+  {
+   "id": "SI-018",
+   "title": "On the implementation of an interior-point filter line-search algorithm for large-scale nonlinear programming",
+   "year": 2006,
+   "relation": "indirect",
+   "why_en": "IPOPT, the NLP solver used by most published minimum-lap-time work; know its convergence behaviour before trusting a lap.",
+   "why_th": "IPOPT เป็น solver NLP ที่งานเวลาต่อรอบต่ำสุดส่วนใหญ่ใช้ ควรรู้พฤติกรรมการลู่เข้าก่อนเชื่อผลรอบ"
+  },
+  {
+   "id": "SI-019",
+   "title": "GPOPS-II: A MATLAB Software for Solving Multiple-Phase Optimal Control Problems Using hp-Adaptive Gaussian Quadrature Collocation Methods and Sparse Nonlinear Programming",
+   "year": 2014,
+   "doi": "10.1145/2558904",
+   "relation": "indirect",
+   "why_en": "hp-adaptive collocation used in the Limebeer F1 optimal-control papers; explains their mesh refinement.",
+   "why_th": "collocation แบบ hp-adaptive ที่ใช้ใน paper optimal control F1 ของ Limebeer อธิบายการปรับ mesh ของงานเหล่านั้น"
+  },
+  {
+   "id": "SI-020",
+   "title": "Energy conservation and power bonds in co-simulations: non-iterative adaptive step size control and error estimation",
+   "arxiv": "1602.06434",
+   "year": 2017,
+   "relation": "direct",
+   "why_en": "Measures energy residuals at co-simulation power bonds and uses them to control step size; directly relevant to observable conservation residuals in the coupled race step.",
+   "why_th": "วัด residual พลังงานที่ power bond ของ co-simulation และใช้ควบคุมขนาดก้าว เกี่ยวข้องโดยตรงกับ residual การอนุรักษ์ที่สังเกตได้ในก้าวการแข่งแบบเชื่อมโยง"
+  },
+  {
+   "id": "SI-021",
+   "title": "Co-simulation: State of the art",
+   "year": 2018,
+   "arxiv": "1702.00686",
+   "relation": "indirect",
+   "why_en": "Survey of co-simulation orchestration, stability and accuracy; background for coupling many subsystem models.",
+   "why_th": "survey การจัดการ ความเสถียร และความแม่นยำของ co-simulation เป็นพื้นหลังของการเชื่อมแบบจำลองระบบย่อยจำนวนมาก"
+  }
+ ]
+}
