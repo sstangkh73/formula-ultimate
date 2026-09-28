@@ -169,6 +169,7 @@ config/                         ค่า simulation และ experiment ที
 docs/
   3d/                           CAD environment และ constrained 3D grammar
   DESIGN_LANGUAGE_BOUNDARY.md  สิ่งที่ระบบค้นหาสามารถและไม่สามารถค้นพบได้
+  MATERIAL_DATA_POLICY.md       ขอบเขตสิทธิ์ของแหล่งสำหรับ material record
   PHYSICS_SYSTEM_PLAN.md       domain, contract, solver และ roadmap ฟิสิกส์
   RESEARCH_CHARTER.md           คำถามวิจัย สมมติฐาน และขอบเขต
   VALIDATION_STRATEGY.md        หลักฐานที่ต้องมีก่อนนำไปใช้ทางวิทยาศาสตร์
@@ -195,6 +196,7 @@ result record ภาษาอังกฤษและภาษาไทยแย
 
 ```powershell
 python -m pip install -e .
+python scripts/validation/check_material_publication_boundary.py
 python -m unittest discover -s tests -v
 ```
 
@@ -212,9 +214,10 @@ physical validation ต้องพยายามหักล้างสมม
 ## สัญญาอนุญาต
 
 - **โค้ด** ใช้สัญญาอนุญาต MIT ดู [`LICENSE`](LICENSE)
-- **เอกสาร ข้อมูล และภาพประกอบ** ใช้ Creative Commons Attribution 4.0
-  International (CC BY 4.0) ดู [`LICENSE-DATA.md`](LICENSE-DATA.md)
-  ครอบคลุม `docs/`, `config/` และรายงานที่สร้างขึ้น
+- **เอกสาร ข้อมูล และภาพประกอบต้นฉบับที่โครงการสร้าง** ใช้ Creative Commons
+  Attribution 4.0 International (CC BY 4.0) เฉพาะในขอบเขตที่เจ้าของโครงการ
+  มีอำนาจให้สิทธิ์ ดู [`LICENSE-DATA.th.md`](LICENSE-DATA.th.md) โดยไม่รวม
+  material ของบุคคลที่สาม, private, restricted และ material ที่ใช้ licence แยก
 
 การให้เครดิต: Chisanupong Injun (2026)
 [ORCID 0009-0000-2979-1916](https://orcid.org/0009-0000-2979-1916)

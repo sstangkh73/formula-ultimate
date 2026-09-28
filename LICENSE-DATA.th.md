@@ -1,21 +1,37 @@
-# สัญญาอนุญาตสำหรับข้อมูล รายงาน และภาพประกอบ
+# สัญญาอนุญาตสำหรับข้อมูล รายงาน และภาพที่โครงการสร้าง
 
-ฉบับภาษาไทยของ `LICENSE-DATA.md`
+ฉบับภาษาอังกฤษ: `LICENSE-DATA.md`
 
-ซอร์สโค้ดใน repository นี้เผยแพร่ภายใต้สัญญาอนุญาต MIT (ดู `LICENSE`)
+Source code ใน repository นี้ใช้ MIT License (ดู `LICENSE`)
 
-ข้อมูลวิจัย บันทึกการทดลอง รายงาน และภาพประกอบใน repository นี้
-— รวมถึงเนื้อหาในโฟลเดอร์ `reports/`, `data/`, `docs/` และ `output/` เท่าที่มีอยู่ —
-เผยแพร่ภายใต้สัญญาอนุญาต
-**Creative Commons Attribution 4.0 International (CC BY 4.0)**
+เว้นแต่ notice เฉพาะไฟล์ระบุเป็นอย่างอื่น ข้อมูลวิจัย experiment log รายงาน
+และภาพที่โครงการสร้างขึ้นเองใน repository นี้เผยแพร่ภายใต้
+**Creative Commons Attribution 4.0 International (CC BY 4.0)** เฉพาะในขอบเขต
+ที่เจ้าของ repository มีอำนาจให้สิทธิ์เหล่านั้น
 
-คุณสามารถแบ่งปันและดัดแปลงเนื้อหานี้เพื่อวัตถุประสงค์ใดก็ได้ รวมถึงเชิงพาณิชย์
-โดยต้องให้เครดิตอย่างเหมาะสมและระบุหากมีการเปลี่ยนแปลง
+คุณสามารถเผยแพร่และดัดแปลง material ที่ได้รับ licence นี้เพื่อวัตถุประสงค์ใดก็ได้
+รวมถึงเชิงพาณิชย์ เมื่อให้เครดิตอย่างเหมาะสมและระบุว่ามีการเปลี่ยนแปลงหรือไม่
+ข้อความ licence ฉบับเต็ม: https://creativecommons.org/licenses/by/4.0/
 
-ข้อความสัญญาอนุญาตฉบับเต็ม: https://creativecommons.org/licenses/by/4.0/
+เครดิต: Chisanupong Injun (2026) ดึงจาก repository นี้
 
-การให้เครดิต: Chisanupong Injun (2026) เข้าถึงจาก repository นี้
+## สิ่งที่ไม่รวมและเงื่อนไขแยก
 
-เอกสารของบุคคลที่สามที่จัดเก็บไว้ในโฟลเดอร์ `papers/` (เท่าที่มี) **ไม่อยู่** ภายใต้
-สัญญาอนุญาตนี้ และยังคงอยู่ภายใต้เงื่อนไขของสำนักพิมพ์ต้นทาง
-สิ่งที่เผยแพร่ในที่นี้มีเพียงรายการอ่านและบทสรุปที่ผู้พัฒนา repository เขียนขึ้นเองเท่านั้น
+Notice CC BY 4.0 นี้ **ไม่** relicense สิ่งต่อไปนี้:
+
+- Paper, standard, handbook, datasheet, database content, extract, table, image
+  หรือ material อื่นของบุคคลที่สาม
+- Restricted/private material data และ source document ใต้ `/private/`
+- Material ที่มี licence notice เฉพาะไฟล์หรือเฉพาะแหล่ง
+- ชื่อ เครื่องหมาย สิทธิ์ความเป็นส่วนตัว/ภาพลักษณ์ patent, contract,
+  database right หรือสิทธิ์อื่นที่เจ้าของ repository ไม่มีอำนาจให้
+
+Paper ของบุคคลที่สามที่เก็บในเครื่องใต้ `papers/` ไม่ใช่เนื้อหาที่ version
+ใน repository และยังอยู่ภายใต้เงื่อนไขของ publisher การเผยแพร่ reading list,
+citation และ summary ที่โครงการเขียนไม่ได้เปลี่ยน licence ของ source work
+
+สำหรับข้อมูลวัสดุ ให้ปฏิบัติตาม
+[`docs/MATERIAL_DATA_POLICY.th.md`](docs/MATERIAL_DATA_POLICY.th.md) และทะเบียน
+แบบลงวันที่
+[`docs/MATERIAL_SOURCE_RIGHTS_REGISTER.th.md`](docs/MATERIAL_SOURCE_RIGHTS_REGISTER.th.md)
+หาก notice เฉพาะไฟล์ขัดกับ notice ทั่วไปนี้ ให้ notice เฉพาะควบคุม material ที่เกี่ยวข้อง

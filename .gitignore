@@ -26,3 +26,6 @@ runs/
 .agents/
 Thumbs.db
 .DS_Store
+
+# Private material data and material-value reports (never publish)
+/private/
