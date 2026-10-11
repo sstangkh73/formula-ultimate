@@ -67,3 +67,31 @@
   ภายใต้ CadQuery: ขนาดจาก `characteristic_length_m`, export STL หน่วยเมตร, มวลและ CoM จาก mesh
   ที่ export และสัดส่วนเต็มกล่อง <= 25% (ให้ Codex ทำส่วน CadQuery โดยให้สเปกชัดเจน)
   ให้แยกขั้นตอนนี้เป็นสองส่วนถ้าใหญ่เกิน: (ก) สร้างและ export ชิ้นเดียวพร้อมวัดมวล, (ข) วางตำแหน่ง
+
+### Work 151 (รอบที่ 3): การสร้างเรขาคณิตของชิ้นส่วนใบ, Completed
+
+- สิ่งที่ทำ: `src/formula_ultimate/hierarchy/leaf_geometry.py` (Python ล้วน):
+  `leaf_program(rng, L, placement, leaf_id)` สุ่ม profile รูปดาวแบบ Work 091 (polyline ปิดหรือ
+  B-spline แบบ periodic) ที่ extrude ตรงตาม +z ท้องถิ่น (Work 092 `section -> extrude -> transform...`);
+  ฝาเรียบที่ z=0 และ z=`contact.height_m` ท้องถิ่น พร้อม `contact.inscribed_radius_m` /
+  `outer_radius_m` ที่ประกาศ `placement_transforms(axis, flip, spin, translation)`,
+  `with_placement`, `transform_points` (แบบจำลอง Python ล้วนของการวางใน CAD),
+  `stl_bytes`/`read_binary_stl`, `closure_problems`, `measure_mesh` (มวลและ CoM จากสามเหลี่ยม float32
+  ที่อ่านกลับ ใช้สูตรเดียวกับ acceptance)
+  `scripts/hierarchy/leaf_realization.py` (CAD runtime): `realize_leaf(program, stl_path, density)`
+  ใช้ `execute_candidate` โดยไม่แก้ไข แบ่ง mesh ที่ 2e-3 L และเขียน STL แบบ binary ที่ determinate หน่วยเมตร
+  เทสต์: `tests/test_hierarchy_leaf_geometry.py` (9, ส่วน CAD รันผ่าน subprocess)
+- ผู้ทำ: Claude
+- Gate: Gate 1 PASS. Gate 2 `Ran 1074 tests`, `OK (skipped=11)`. Gate 3 ตก 13/13 (ยังไม่มี generator)
+- หลักฐาน: ใบสุ่ม 600 ชิ้น (L 0.004..4 m) ปิดทั้งหมด ใช้เวลารวม 18.9 s (~30 ms ต่อใบ),
+  box-fill <= 0.858, เส้นทแยงกล่อง 0.44..1.50 L
+- ปัญหา: หน้าข้างเบี่ยงได้ถึงค่าความคลาดเคลื่อนเชิงเส้น (2e-3 L) การสัมผัสจึงต้องเป็นฝาต่อฝา (เรียบ ตรงตัว)
+  การแบ่ง mesh ใหม่ของรูปทรงที่วางแล้วต่างจากแบบท้องถิ่นได้ถึงค่าความคลาดเคลื่อนนั้น
+- ถัดไป (milestone 4, การวางตำแหน่ง): แนวทางที่เสนอ ให้ AABB ของใบไม่ซ้อนกันเป็นคู่ (แตะกันได้):
+  การทดสอบการทะลุของ acceptance ตรวจเฉพาะคู่ที่ AABB ซ้อนกันเกิน `contact_tolerance_m`
+  การสัมผัสของ interface: วางฝาของใบที่เล็กกว่าราบบนฝาของใบที่ใหญ่กว่า โดยให้อยู่กึ่งกลางจน outer radius
+  อยู่ภายใน inscribed radius ของอีกฝั่ง (จุดยอดบนฝาจะมีระยะ 0) กราฟ attachment ของ Work 150
+  เป็น spanning tree บนใบ (ผลรวม (ลูก-1) = ใบ-1) แต่เป้าหมายแบบสุ่มที่อยู่ลึกใน subtree ของ anchor
+  อาจเข้าถึงไม่ได้โดยไม่ชน ให้พิจารณาเลือกเป้าหมายตอนจัดเลย์เอาต์จากใบที่ยังมีฝาว่าง (บันทึกกระบวนการ)
+  และค้นหาตำแหน่งแบบตรวจการชนตามทิศของฝา ให้การวางแผนตำแหน่งอยู่ใน Python ล้วน
+  (`transform_points`, ข้อมูล contact) แล้วค่อยสร้างใน CAD

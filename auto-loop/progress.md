@@ -80,3 +80,39 @@ the same commit.
   export in metres, mass and CoM from the exported mesh, box-fill fraction
   <= 25 % (hand the CadQuery part to Codex with a precise spec). Split it if
   too big: (a) build and export one leaf and measure its mass, (b) placement.
+
+### Work 151 (iteration 3): leaf geometry realization, Completed
+
+- Done: `src/formula_ultimate/hierarchy/leaf_geometry.py` (pure Python):
+  `leaf_program(rng, L, placement, leaf_id)` draws a star-shaped Work 091
+  profile (closed polyline or periodic B-spline) extruded straight along
+  local +z (Work 092 `section -> extrude -> transform...`); flat caps at local
+  z=0 and z=`contact.height_m` with declared `contact.inscribed_radius_m` /
+  `outer_radius_m`. `placement_transforms(axis, flip, spin, translation)`,
+  `with_placement`, `transform_points` (pure replica of the CAD placement),
+  `stl_bytes`/`read_binary_stl`, `closure_problems`, `measure_mesh` (mass and
+  CoM from re-read float32 triangles, acceptance formulas).
+  `scripts/hierarchy/leaf_realization.py` (CAD runtime): `realize_leaf(program,
+  stl_path, density)` reuses `execute_candidate` unchanged, tessellates at
+  2e-3 L, writes a deterministic binary STL in metres. Tests:
+  `tests/test_hierarchy_leaf_geometry.py` (9, CAD part via subprocess).
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1074 tests`, `OK (skipped=11)`. Gate 3
+  fails 13/13 (no generator yet).
+- Evidence: 600 random leaves (L 0.004..4 m) all closed, 18.9 s total (~30 ms
+  per leaf), box-fill <= 0.858, bbox diagonal 0.44..1.50 L.
+- Problems: side faces deviate up to the linear tolerance (2e-3 L), so contact
+  must be cap-to-cap (flat, exact). Fresh tessellation of a placed shape
+  differs from the local one by up to that tolerance.
+- Next (milestone 4, placement): suggested design. Make leaf AABBs pairwise
+  disjoint (touching allowed): the acceptance penetration test only checks
+  pairs whose AABBs overlap by more than `contact_tolerance_m`. Interface
+  contact: put the smaller leaf's cap flat on the larger leaf's cap, centred so
+  its outer radius fits inside the other's inscribed radius (then its cap
+  vertices are at distance 0). The attachment graph of Work 150 is a spanning
+  tree over leaves (sum of (children-1) = leaves-1), but random targets deep
+  inside the anchor subtree may be unreachable without collisions; consider
+  choosing the target at layout time among leaves with a free cap (record the
+  procedure), and a collision-checked candidate search over cap directions.
+  Keep placement planning in pure Python (`transform_points`, contact data),
+  then realize in CAD.
