@@ -116,3 +116,41 @@ the same commit.
   procedure), and a collision-checked candidate search over cap directions.
   Keep placement planning in pure Python (`transform_points`, contact data),
   then realize in CAD.
+
+### Work 152 (iteration 4): leaf layout planner, Completed
+
+- Done: `src/formula_ultimate/hierarchy/layout.py` (pure Python). `layout(tree)`
+  places every leaf axis-aligned. Contact faces (`leaf_faces`): 2 caps plus
+  one flush polyline hull side face per polyline leaf, made axis-aligned by
+  choosing the spin. Growth: the anchor child first, then each satellite's
+  anchor leaf goes cap-first onto a face of any leaf already placed in the same
+  assembly. Fit rules "inside" and "around". A fresh source may be resized
+  0.004 m..4x planned. Boxes are interior-disjoint. A room-keeping claim box
+  pass, then a plain pass. Up to 16 deterministic attempts.
+  `layout_problems` re-checks everything from the programs. `PlannedInterface`
+  carries `a_face`/`b_face`/`mode`. Tests: `tests/test_hierarchy_layout.py` (8).
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1082 tests`, `OK (skipped=11)`. Gate 3
+  fails 13/13 (no generator yet).
+- Evidence: seeds 0..62 all lay out except seed 4 (`LayoutFailure`, crowding).
+  CAD spot check (`artifacts/work152/cad_spot_check.py`, run under the CAD
+  python) for seeds 11/23/37 using the acceptance helpers: every interface
+  gap <= 8.5e-18 m, 0 overlapping mesh-box pairs (tol 1e-4), box-like
+  fraction 0, diagonal ratio 139/179/267. About 10-14 s to realize about 229
+  leaves.
+- Problems found: cap-only contact made every leaf inherit the root axis (one
+  column, every seed failed), so side faces were added. Shrink-only fitting
+  cascaded, so "around" enlarging was added. A lone anchor leaf has only 2 caps,
+  so targets now cover the whole assembly. `sed -i` and `awk` pipelines need
+  approval; use the Edit tool or Python heredocs.
+- Next: the generator CLI `scripts/hierarchy/generate_hierarchical_vehicle.py`
+  (CAD runtime): `decompose` -> `layout` -> `realize_leaf` per leaf ->
+  manifest with the exact contract fields (`contact_tolerance_m` e.g. 1e-4;
+  interfaces `id,a,b,kind` only; part `generator={grammar_version: LEAF_GRAMMAR_VERSION,
+  program, program_sha256}`; `git_commit` from `git rev-parse HEAD`;
+  `config_sha256` over decomposition + layout config), roll-up via
+  `part_tree.roll_up` from measured leaf masses. Materials: catalog-only ids;
+  check how the existing code exposes catalog material ids and densities without
+  copying private values into tracked files (densities only in `artifacts/`
+  output). Seed 4 needs a declared fallback such as the next decomposition attempt.
+  Do not special-case the acceptance seeds.

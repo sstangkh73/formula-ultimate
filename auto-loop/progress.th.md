@@ -95,3 +95,28 @@
   อาจเข้าถึงไม่ได้โดยไม่ชน ให้พิจารณาเลือกเป้าหมายตอนจัดเลย์เอาต์จากใบที่ยังมีฝาว่าง (บันทึกกระบวนการ)
   และค้นหาตำแหน่งแบบตรวจการชนตามทิศของฝา ให้การวางแผนตำแหน่งอยู่ใน Python ล้วน
   (`transform_points`, ข้อมูล contact) แล้วค่อยสร้างใน CAD
+
+### Work 152 (รอบที่ 4): ตัววางผังชิ้นส่วนใบ, Completed
+
+- ทำแล้ว: `src/formula_ultimate/hierarchy/layout.py` (Python ล้วน) `layout(tree)` วางทุกใบให้ตรงแนวแกน หน้าสัมผัส
+  (`leaf_faces`): หน้าปลาย 2 หน้า และหน้าข้างบน hull แบบเรียบเสมอหนึ่งหน้าต่อใบ polyline ซึ่งทำให้ตรงแนวแกนด้วยการเลือก spin
+  การเติบโต: วาง anchor child ก่อน แล้ว anchor leaf ของ satellite แต่ละตัวต่อด้วยหน้าปลายเข้ากับหน้าของใบใดก็ได้ที่วางแล้วใน
+  assembly เดียวกัน กฎความพอดีแบบ "inside" และ "around" ใบต้นทางใหม่ปรับขนาดได้ 0.004 m..4 เท่าของที่วางแผน กล่องไม่ซ้อนทับ
+  ภายใน มีรอบกล่องจองพื้นที่ แล้วตามด้วยรอบธรรมดา และพยายามแบบกำหนดผลได้สูงสุด 16 ครั้ง `layout_problems` ตรวจซ้ำทุกอย่างจาก
+  โปรแกรม `PlannedInterface` มี `a_face`/`b_face`/`mode` เทสต์: `tests/test_hierarchy_layout.py` (8)
+- ผู้ทำ: Claude
+- Gate: Gate 1 PASS. Gate 2 `Ran 1082 tests`, `OK (skipped=11)`. Gate 3 ตก 13/13 (ยังไม่มี generator)
+- หลักฐาน: seed 0..62 วางผังได้ทั้งหมด ยกเว้น seed 4 (`LayoutFailure`, แออัด) การตรวจ CAD แบบสุ่มดู
+  (`artifacts/work152/cad_spot_check.py` รันด้วย python ของ CAD) สำหรับ seed 11/23/37 ด้วยฟังก์ชันของ acceptance:
+  ช่องว่างทุก interface <= 8.5e-18 m, คู่กล่อง mesh ซ้อนกัน 0 คู่ (tol 1e-4), สัดส่วนที่เป็นกล่อง 0,
+  อัตราส่วนเส้นทแยง 139/179/267 ใช้เวลาสร้างประมาณ 229 ใบราว 10-14 s
+- ปัญหาที่พบ: การสัมผัสแบบหน้าปลายอย่างเดียวทำให้ทุกใบสืบทอดแกนของ root (เป็นเสาเดียว ทุก seed ล้มเหลว) จึงเพิ่มหน้าข้าง
+  การพอดีแบบย่ออย่างเดียวลามต่อเนื่อง จึงเพิ่มการขยายแบบ "around" anchor leaf เดี่ยวมีหน้าปลายแค่ 2 หน้า เป้าหมายจึงครอบคลุมทั้ง
+  assembly คำสั่ง `sed -i` และ pipeline `awk` ต้องขออนุมัติ ให้ใช้ Edit tool หรือ heredoc ของ Python
+- ถัดไป: generator CLI `scripts/hierarchy/generate_hierarchical_vehicle.py` (CAD runtime): `decompose` -> `layout`
+  -> `realize_leaf` ต่อใบ -> manifest ที่มีฟิลด์ตามสัญญาพอดี (`contact_tolerance_m` เช่น 1e-4; interface มีแค่ `id,a,b,kind`;
+  part `generator={grammar_version: LEAF_GRAMMAR_VERSION, program, program_sha256}`; `git_commit` จาก `git rev-parse HEAD`;
+  `config_sha256` ครอบ config ของ decomposition + layout), roll-up ด้วย `part_tree.roll_up` จากมวลใบที่วัดได้ วัสดุ: ใช้ id
+  จากแคตตาล็อกเท่านั้น ตรวจว่าโค้ดเดิมเปิดเผย id และความหนาแน่นของวัสดุในแคตตาล็อกอย่างไรโดยไม่คัดลอกค่าส่วนตัวลงไฟล์ที่ track
+  (ความหนาแน่นอยู่เฉพาะในผลลัพธ์ `artifacts/`) seed 4 ต้องมี fallback ที่ประกาศไว้ เช่น decomposition attempt ถัดไป
+  ห้ามทำกรณีพิเศษให้ seed ของ acceptance
