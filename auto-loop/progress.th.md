@@ -48,3 +48,22 @@
   (ไม่มีเรขาคณิต) ครอบคลุมทั้ง 9 capability: subtree สูงอย่างน้อย 2 และมีใบอย่างน้อย 5 ใบ
   ต่อ capability, อย่างน้อย 4 ระดับ, อย่างน้อย 150 ใบ และ topology ต่างกันสำหรับ seed 11, 23 และ 37
   โดยไม่ใช้แคตตาล็อกชิ้นส่วนแบบดั้งเดิม
+
+### Work 150 (รอบที่ 2): การแตกโครงสร้างแบบนามธรรมที่ขับด้วย seed, Completed
+
+- สิ่งที่ทำ: `src/formula_ultimate/hierarchy/decomposition.py` มี `decompose(seed, config)`
+  จัดกลุ่มความสามารถ (เดี่ยว/คู่), แบ่งงบใบแบบ random composition แบบ recursive, anchor child
+  = ลูกที่งบมากที่สุด, `characteristic_length_m` ต่อ node (เป้าหมายการวางแผน), attachment นามธรรม
+  (anchor leaf ของ satellite -> ใบที่ seed เลือกใน subtree ของ anchor) พร้อมชนิดรอยต่อ,
+  การค้นหาแบบปฏิเสธที่ตรวจด้วย `constraint_violations` root ไม่มี functions; sub-assembly
+  สืบทอด functions ของกลุ่ม; ใบไม่มี functions id มีรูปแบบ `vehicle`, `g<i>-<caps>`,
+  `<parent>.a<i>` (assembly) / `<parent>.p<i>` (part) เทสต์: `tests/test_hierarchy_decomposition.py` (12)
+- ผู้ทำ: Claude (การออกแบบต้องใช้บริบทเต็ม)
+- Gate: Gate 1 PASS. Gate 2 `Ran 1065 tests`, `OK (skipped=11)`. Gate 3 ตก 13/13 (ยังไม่มี generator)
+- หลักฐาน: seed 0..39: 175..229 ใบ, 7..8 ชั้น, อัตราส่วนความยาวใบตามแผน 103..277, fan-out สูงสุด 12
+- ปัญหา: `sed -i` และคำสั่งที่มี prefix ตัวแปรแวดล้อมต้องขออนุมัติ ใช้ Edit tool แทน
+  แพ็กเกจติดตั้งแล้ว จึงรัน `python -c "from formula_ultimate..."` ได้โดยไม่ต้องตั้ง PYTHONPATH
+- ถัดไป: Milestone 3 สร้างเรขาคณิตใบด้วย `components/freeform_solid_grammar.py` / `scripts/cad/*`
+  ภายใต้ CadQuery: ขนาดจาก `characteristic_length_m`, export STL หน่วยเมตร, มวลและ CoM จาก mesh
+  ที่ export และสัดส่วนเต็มกล่อง <= 25% (ให้ Codex ทำส่วน CadQuery โดยให้สเปกชัดเจน)
+  ให้แยกขั้นตอนนี้เป็นสองส่วนถ้าใหญ่เกิน: (ก) สร้างและ export ชิ้นเดียวพร้อมวัดมวล, (ข) วางตำแหน่ง

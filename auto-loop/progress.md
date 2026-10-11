@@ -55,3 +55,28 @@ the same commit.
   >= 2 and >= 5 leaves per capability, >= 4 levels, >= 150 leaves, and
   different topologies for seeds 11, 23 and 37, with no conventional part
   catalogue.
+
+### Work 150 (iteration 2): seed-driven abstract decomposition, Completed
+
+- Done: `src/formula_ultimate/hierarchy/decomposition.py` with
+  `decompose(seed, config)`: capability grouping (single or pairs), recursive
+  random-composition leaf budgets, anchor child = largest-budget child,
+  per-node `characteristic_length_m` (planning target), abstract attachments
+  (satellite's anchor leaf -> seed-chosen leaf of the anchor subtree) with a
+  joint kind, and a rejection search checked by `constraint_violations`. The
+  root has no functions; sub-assemblies inherit their group's functions;
+  leaves have none. Ids: `vehicle`, `g<i>-<caps>`, `<parent>.a<i>` (assembly)
+  / `<parent>.p<i>` (part). Tests: `tests/test_hierarchy_decomposition.py` (12).
+- Who: Claude (the design needed full context).
+- Gates: Gate 1 PASS. Gate 2 `Ran 1065 tests`, `OK (skipped=11)`. Gate 3
+  fails 13/13 (no generator yet).
+- Evidence: seeds 0..39: 175..229 leaves, 7..8 levels, planned leaf length
+  ratio 103..277, maximum fan-out 12.
+- Problems: `sed -i` and commands with an env-var prefix need approval; use
+  the Edit tool instead. The package is installed, so
+  `python -c "from formula_ultimate..."` works without PYTHONPATH.
+- Next: Milestone 3, leaf geometry via `components/freeform_solid_grammar.py`
+  / `scripts/cad/*` under CadQuery: size from `characteristic_length_m`, STL
+  export in metres, mass and CoM from the exported mesh, box-fill fraction
+  <= 25 % (hand the CadQuery part to Codex with a precise spec). Split it if
+  too big: (a) build and export one leaf and measure its mass, (b) placement.
