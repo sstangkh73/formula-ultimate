@@ -154,3 +154,35 @@ the same commit.
   copying private values into tracked files (densities only in `artifacts/`
   output). Seed 4 needs a declared fallback such as the next decomposition attempt.
   Do not special-case the acceptance seeds.
+
+### Work 153 (iteration 5): generator CLI, Completed
+
+- Done: `src/formula_ultimate/hierarchy/composition.py` (`plan_vehicle`:
+  decompose -> layout -> `layout_problems`; on `LayoutFailure` continue from
+  the next decomposition attempt via the new `decompose(..., start_attempt)`,
+  at most 8 plan attempts, rejections recorded; material draw per leaf;
+  `composition_config_sha256`; `build_manifest`; deterministic
+  `manifest_bytes`). `scripts/hierarchy/generate_hierarchical_vehicle.py`
+  (contract entry point, meshes in `DIR/meshes/<leaf id>.stl`, masses from
+  the re-read STL). Tests: `tests/test_hierarchy_composition.py` (12).
+- Material decision: v1 reads the existing synthetic record
+  `synthetic_aluminium_like_verification_v1`
+  (`config/materials/engineering_material_manufacturing_v1.json`) at run
+  time; no material value is written to tracked files.
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1094 tests`, `OK (skipped=11)`. Gate 3
+  `Ran 13 tests`, `OK`. `ALL GATES PASSED` (run before commit on the dirty
+  tree; `git_commit` equals HEAD at run time, so a rerun after commit should
+  still pass).
+- Evidence: seed 11 226 leaves in 13.8 s; seed 4 needed the fallback (two
+  rejected attempts) and generated 180 leaves; planning sweep seeds 0..39 had
+  0 failures.
+- Problems: `${PIPESTATUS[0]}` and `cmd; echo $?` need approval; pipe
+  `pwsh ... verify.ps1 2>&1 | grep -a -E ...` alone, which prints
+  `ALL GATES PASSED` when it passes.
+- Next: the goal is met. Remaining iterations: confirm `verify.ps1` on the
+  clean committed tree. Possible hardening (each its own work item): replace
+  the single synthetic material with a catalogue-only choice whose values are
+  read at run time from gitignored data (with a synthetic fallback for clean
+  clones), add `interference_m` handling, and speed up
+  `tests/test_hierarchy_composition.py` (86 s).

@@ -349,13 +349,21 @@ def constraint_violations(tree: AbstractTree, config: DecompositionConfig) -> li
     return problems
 
 
-def decompose(seed: int, config: DecompositionConfig = DEFAULT_CONFIG) -> AbstractTree:
-    """Return the first attempt for seed that satisfies every declared constraint."""
+def decompose(seed: int, config: DecompositionConfig = DEFAULT_CONFIG,
+              start_attempt: int = 0) -> AbstractTree:
+    """Return the first attempt >= start_attempt that satisfies every declared constraint.
+
+    ``start_attempt`` lets a later stage (layout) reject an accepted tree and
+    continue the same declared search; at most ``config.max_attempts``
+    attempts are tried from there.
+    """
 
     if isinstance(seed, bool) or not isinstance(seed, int):
         raise TypeError("seed must be an int")
+    if isinstance(start_attempt, bool) or not isinstance(start_attempt, int) or start_attempt < 0:
+        raise ValueError("start_attempt must be a non-negative int")
     last: list[str] = []
-    for attempt in range(config.max_attempts):
+    for attempt in range(start_attempt, start_attempt + config.max_attempts):
         tree = _attempt(seed, attempt, config)
         last = constraint_violations(tree, config)
         if not last:

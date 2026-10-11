@@ -120,3 +120,23 @@
   จากแคตตาล็อกเท่านั้น ตรวจว่าโค้ดเดิมเปิดเผย id และความหนาแน่นของวัสดุในแคตตาล็อกอย่างไรโดยไม่คัดลอกค่าส่วนตัวลงไฟล์ที่ track
   (ความหนาแน่นอยู่เฉพาะในผลลัพธ์ `artifacts/`) seed 4 ต้องมี fallback ที่ประกาศไว้ เช่น decomposition attempt ถัดไป
   ห้ามทำกรณีพิเศษให้ seed ของ acceptance
+
+### Work 153 (รอบที่ 5): generator CLI, Completed
+
+- ทำแล้ว: `src/formula_ultimate/hierarchy/composition.py` (`plan_vehicle`: decompose -> layout -> `layout_problems`
+  เมื่อเกิด `LayoutFailure` ให้ค้นต่อจาก decomposition attempt ถัดไปผ่าน `decompose(..., start_attempt)` ที่เพิ่มใหม่
+  สูงสุด 8 plan attempt และบันทึกการปฏิเสธ; สุ่มวัสดุต่อใบ; `composition_config_sha256`; `build_manifest`;
+  `manifest_bytes` แบบกำหนดผลได้) `scripts/hierarchy/generate_hierarchical_vehicle.py` (จุดเข้าใช้งานตามสัญญา mesh อยู่ที่
+  `DIR/meshes/<leaf id>.stl` มวลจาก STL ที่อ่านกลับ) เทสต์: `tests/test_hierarchy_composition.py` (12)
+- การตัดสินใจเรื่องวัสดุ: v1 อ่านระเบียนสังเคราะห์ที่มีอยู่ `synthetic_aluminium_like_verification_v1`
+  (`config/materials/engineering_material_manufacturing_v1.json`) ตอนรัน ไม่มีค่าวัสดุถูกเขียนลงไฟล์ที่ track
+- ผู้ทำ: Claude
+- Gate: Gate 1 PASS. Gate 2 `Ran 1094 tests`, `OK (skipped=11)`. Gate 3 `Ran 13 tests`, `OK`.
+  `ALL GATES PASSED` (รันก่อน commit บน tree ที่ยังไม่สะอาด `git_commit` เท่ากับ HEAD ตอนรัน จึงควรผ่านอีกเมื่อรันหลัง commit)
+- หลักฐาน: seed 11 ได้ 226 ใบใน 13.8 s; seed 4 ต้องใช้ fallback (ปฏิเสธ 2 attempt) และสร้างได้ 180 ใบ;
+  ไล่วางแผน seed 0..39 ล้มเหลว 0
+- ปัญหา: `${PIPESTATUS[0]}` และ `cmd; echo $?` ต้องขออนุมัติ ให้ใช้ `pwsh ... verify.ps1 2>&1 | grep -a -E ...`
+  เพียงอย่างเดียว ซึ่งจะพิมพ์ `ALL GATES PASSED` เมื่อผ่าน
+- ถัดไป: เป้าหมายบรรลุแล้ว รอบที่เหลือ: ยืนยัน `verify.ps1` บน tree ที่ commit แล้วและสะอาด งานเสริมความแข็งแรงที่เป็นไปได้
+  (แยกเป็น work item ละหนึ่ง): แทนวัสดุสังเคราะห์ชนิดเดียวด้วยการเลือกจากแคตตาล็อกเท่านั้นซึ่งอ่านค่าตอนรันจากข้อมูลที่ gitignore
+  (มี fallback สังเคราะห์สำหรับ clone ใหม่), รองรับ `interference_m`, และเร่ง `tests/test_hierarchy_composition.py` (86 s)
