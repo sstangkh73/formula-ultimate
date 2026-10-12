@@ -223,3 +223,30 @@
   (กล่องของสลักกับ leaf ที่มีรูแยกกันไม่ได้: การตรวจการทะลุของ acceptance วัดเฉพาะความลึก
   สลักในรูที่มีระยะเผื่อจึงใช้ได้ แต่กฎกล่องของ `layout_problems` เป็นของ v1 เท่านั้น
   ให้แยกสลักออกจากการตรวจนั้นหรือเพิ่มการตรวจซ้ำของ v2)
+
+### Work 158 (v2 รอบที่ 4): ตัวยึดแบบรูหกเหลี่ยมเป็นรอยต่อ threaded, Completed
+
+- ทำแล้ว: `src/formula_ultimate/hierarchy/fasteners.py` (Python ล้วน): หลังรูเจาะของ
+  Work 157 leaf ทุกตัวที่ไม่ได้เจาะจะลองใส่รูหกเหลี่ยมด้านเท่าตามแนวแกนหนึ่งรู (loop ชนิด `hole`
+  ของ profile ที่ extrude, grammar `func-leaf-socketed-v2`, พ้น contact patch บนฝา)
+  แต่ละรูได้ leaf หมุดใหม่ `<holed>.pin` (การ extrude หกเหลี่ยมแบบ v1, apothem และความสูง
+  หดด้วยระยะเผื่อ 2.5e-5 m, เป็นลูกของ assembly แม่ของ leaf ที่มีรู) และ interface
+  `threaded` ชื่อ `<pin>.thread` ที่มีแกนเป็นแกนของรูที่กึ่งกลางความหนา
+  `fastener_problems` ตรวจซ้ำ `functional.with_threaded_axes` เขียนแกนลง manifest
+  `functional_realization` ตรวจด้วย `validate_v2_program` เทสต์:
+  `tests/test_hierarchy_fasteners.py` (10)
+- ผู้ทำ: Claude
+- Gate: Gate 1 PASS. Gate 2 `Ran 1123 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=10)`: v1 13/13; v2 ผ่าน Tier A ทั้งหมดและ TierB10 ผ่าน
+  (seed 11: 22 รอยต่อ, ช่องว่างมากสุด 2.5e-5 m, ไม่ทะลุ); B1-B9 และ C1 ยังล้ม
+- หลักฐาน: รอยต่อต่อ seed 11/23/37/0/10 = 22/18/21/14/10 config แรก (p 0.6, สุ่ม 12 ครั้ง,
+  apothem ต่ำสุด 1 mm) ได้ 7 ใน seed 23 จึงขยายก่อนรัน acceptance ใดๆ
+- ปัญหา: ไม่มีที่ติดขัด หมายเหตุสำหรับ B1-B9: `evidence()` ตรวจก่อนว่ามี key ของ
+  `function_evidence` ครบเก้าตัว จึงไม่มีเทสต์ B1-B9 ใดผ่านจนกว่าทั้งเก้า capability มีหลักฐาน
+  อย่าลดจำนวน leaf ที่ไม่ได้เจาะ (เจาะเพิ่ม) โดยไม่ตรวจจำนวนรอยต่อใหม่ (seed 10 มีเพียง 10)
+- ถัดไป: evaluator ของ Tier C1 `scripts/hierarchy/evaluate_level0.py` ไม่ขึ้นกับเรขาคณิต
+  (ใช้มวลราก ขอบเขตด้านหน้าจาก mesh, `physics/race.py` ที่มีอยู่, config ที่มีเวอร์ชัน)
+  เหมาะเป็นงานของ Codex จากนั้นโมดูล capability ของ B (ออกแบบรวมกัน: ล้อที่ z ต่ำสุดพร้อม
+  bearing, การเลี้ยว, จานเบรก + stator, ภาชนะที่มีช่องว่าง, ห้อง + ชิ้นที่เคลื่อนที่,
+  กล่องที่มีชิ้นภายใน, ผิวครีบ, โครงหลัก) อาจเป็น subassembly เฉพาะที่วางใต้ subtree ของ
+  capability ที่ตรงกัน

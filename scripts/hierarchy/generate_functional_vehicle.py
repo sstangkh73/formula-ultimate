@@ -34,12 +34,19 @@ from formula_ultimate.hierarchy.composition import (  # noqa: E402
     mesh_path,
     plan_vehicle,
 )
+from formula_ultimate.hierarchy.fasteners import (  # noqa: E402
+    DEFAULT_FASTENER_CONFIG,
+    add_fasteners,
+    fastener_config_record,
+    fastener_problems,
+)
 from formula_ultimate.hierarchy.functional import (  # noqa: E402
     V2_DECOMPOSITION_CONFIG,
     build_functional_manifest,
     config_sha256_v2,
     mesh_inertia,
     with_leaf_grammar_versions,
+    with_threaded_axes,
 )
 from formula_ultimate.hierarchy.layout import DEFAULT_LAYOUT_CONFIG  # noqa: E402
 from formula_ultimate.hierarchy.leaf_geometry import read_binary_stl  # noqa: E402
@@ -67,6 +74,11 @@ def generate(seed: int, out: Path) -> dict:
     if problems:
         raise RuntimeError(f"seed {seed}: leaf refinement re-check failed: {problems[:5]}")
     plan = replace(plan, layout=refined)
+    fastened = add_fasteners(plan, catalogue, DEFAULT_FASTENER_CONFIG)
+    problems = fastener_problems(plan, fastened, DEFAULT_FASTENER_CONFIG)
+    if problems:
+        raise RuntimeError(f"seed {seed}: fastener re-check failed: {problems[:5]}")
+    plan = fastened.plan
     out.mkdir(parents=True, exist_ok=True)
     measurements = {}
     for leaf in plan.layout.leaves:
@@ -74,7 +86,8 @@ def generate(seed: int, out: Path) -> dict:
                                                 plan.materials[leaf.id].density_kg_m3)
     v1_config = composition_config_sha256(V2_DECOMPOSITION_CONFIG, DEFAULT_LAYOUT_CONFIG,
                                           DEFAULT_COMPOSITION_CONFIG, catalogue)
-    v1_manifest = with_leaf_grammar_versions(build_manifest(plan, measurements, v1_config, git_head()))
+    v1_manifest = with_threaded_axes(
+        with_leaf_grammar_versions(build_manifest(plan, measurements, v1_config, git_head())), fastened.axes)
     _mass, _com, inertia = mesh_inertia(
         (read_binary_stl(out / mesh_path(leaf.id)), plan.materials[leaf.id].density_kg_m3)
         for leaf in plan.layout.leaves)
@@ -82,7 +95,8 @@ def generate(seed: int, out: Path) -> dict:
     manifest = build_functional_manifest(v1_manifest, motions=[], function_evidence={},
                                          inertia_kg_m2=inertia,
                                          config_sha256=config_sha256_v2(
-                                             v1_config, refinement_config_record(DEFAULT_REFINEMENT_CONFIG)))
+                                             v1_config, refinement_config_record(DEFAULT_REFINEMENT_CONFIG),
+                                             fastener_config_record(DEFAULT_FASTENER_CONFIG)))
     (out / "manifest.json").write_bytes(manifest_bytes(manifest))
     return manifest
 

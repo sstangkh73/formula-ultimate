@@ -58,16 +58,20 @@ def mesh_inertia(meshes_and_density: Iterable[tuple[np.ndarray, float]]) -> tupl
     return float(mass), com, inertia
 
 
-def config_sha256_v2(v1_config_sha256: str, refinement: Mapping[str, Any] | None = None) -> str:
+def config_sha256_v2(v1_config_sha256: str, refinement: Mapping[str, Any] | None = None,
+                     fasteners: Mapping[str, Any] | None = None) -> str:
     """Configuration hash of the v2 generator over the v1 composition hash.
 
-    ``refinement`` is the declared leaf refinement record (Work 157), if used.
+    ``refinement`` is the declared leaf refinement record (Work 157) and
+    ``fasteners`` the declared fastener record (Work 158), if used.
     """
 
     record: dict[str, Any] = {"design_language_version": DESIGN_LANGUAGE_VERSION_V2,
                               "v1_composition_config_sha256": v1_config_sha256}
     if refinement is not None:
         record["leaf_refinement"] = dict(refinement)
+    if fasteners is not None:
+        record["fasteners"] = dict(fasteners)
     return canonical_sha256(record)
 
 
@@ -84,6 +88,28 @@ def with_leaf_grammar_versions(manifest: Mapping[str, Any]) -> dict:
             node["generator"] = generator
         nodes.append(node)
     result["nodes"] = nodes
+    return result
+
+
+def with_threaded_axes(manifest: Mapping[str, Any],
+                       axes: Mapping[str, tuple[Sequence[float], Sequence[float]]]) -> dict:
+    """A copy whose ``threaded`` interfaces carry ``axis_point_m`` and ``axis_dir``.
+
+    Every threaded interface must have a declared axis and every axis must name
+    a threaded interface; nothing is guessed.
+    """
+
+    result = dict(manifest)
+    threaded = {item["id"] for item in manifest["interfaces"] if item["kind"] == "threaded"}
+    if threaded != set(axes):
+        raise ValueError("threaded interfaces and declared axes differ")
+    interfaces = []
+    for item in manifest["interfaces"]:
+        if item["kind"] == "threaded":
+            point, direction = axes[item["id"]]
+            item = dict(item, axis_point_m=[float(v) for v in point], axis_dir=[float(v) for v in direction])
+        interfaces.append(item)
+    result["interfaces"] = interfaces
     return result
 
 

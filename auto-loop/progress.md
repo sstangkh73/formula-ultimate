@@ -285,3 +285,34 @@ the same commit.
   impossible: the acceptance penetration check only measures depth, so a pin
   inside a hole with clearance is fine, but `layout_problems` box rules are
   v1 only; keep pins out of that check or extend a v2 re-check).
+
+### Work 158 (v2 iteration 4): hex-socket fasteners as threaded joints, Completed
+
+- Done: `src/formula_ultimate/hierarchy/fasteners.py` (pure Python): after the
+  Work 157 bores, every unbored leaf tries one axial regular-hexagon socket
+  (`hole` loop of the extruded profile, grammar `func-leaf-socketed-v2`, clear
+  of cap contact patches). Each socket gets a new pin leaf `<holed>.pin` (v1
+  hexagonal extrusion, apothem and height inset by clearance 2.5e-5 m, child
+  of the holed leaf's parent) and a `threaded` interface `<pin>.thread` whose
+  axis is the socket axis at mid thickness. `fastener_problems` re-checks.
+  `functional.with_threaded_axes` writes the axes; `functional_realization`
+  validates with `validate_v2_program`. Tests:
+  `tests/test_hierarchy_fasteners.py` (10).
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1123 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=10)`: v1 13/13; v2 all Tier A pass and TierB10 passes
+  (seed 11: 22 joints, worst gap 2.5e-5 m, 0 penetration); B1-B9 and C1 fail.
+- Evidence: joints per seed 11/23/37/0/10 = 22/18/21/14/10. The first config
+  (p 0.6, 12 draws, min apothem 1 mm) gave 7 on seed 23, so it was widened
+  before any acceptance run.
+- Problems: none blocking. Note for B1-B9: `evidence()` asserts all nine
+  `function_evidence` keys first, so no B1-B9 test passes until all nine
+  capabilities have evidence. Do not reduce the unbored leaf pool (more bores)
+  without re-checking joint counts (seed 10 has only 10).
+- Next: Tier C1 evaluator `scripts/hierarchy/evaluate_level0.py` is
+  independent of the geometry (needs root mass, mesh frontal extent, the
+  existing `physics/race.py`, a versioned config); good Codex task. Then the
+  B capability modules (design them together: wheels at the lowest z with
+  bearings, steering, brake rotor + stator, vessel with void, chamber +
+  moving member, housing with contents, finned surface, backbone), possibly
+  as dedicated subassemblies placed under the matching capability subtrees.
