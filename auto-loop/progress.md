@@ -316,3 +316,30 @@ the same commit.
   bearings, steering, brake rotor + stator, vessel with void, chamber +
   moving member, housing with contents, finned surface, backbone), possibly
   as dedicated subassemblies placed under the matching capability subtrees.
+
+### Work 159 (v2 iteration 5): Level-0 evaluator on the existing kernel, Completed
+
+- Done: `src/formula_ultimate/hierarchy/level0.py`,
+  `config/hierarchy/level0_race_v1.json` (monza_2026, frontal-box drag
+  coefficient 1.0, C_rr 0.015, 4000 N, 4e9 J, dt 1 s, timeout 36000 s) and
+  `scripts/hierarchy/evaluate_level0.py`. Mass = manifest root `mass_kg` as
+  written; drag area = 1.0 x leaf-mesh y-z extent. Tests:
+  `tests/test_hierarchy_level0.py` (7).
+- Who: Claude (too small to delegate).
+- Gates: Gate 1 PASS. Gate 2 `Ran 1130 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=9)`: v1 13/13; v2 Tier A, B10 and C1 pass; B1-B9 fail.
+- Evidence: seed 11 `finished` 8563.9 s; root mass x1.5 gives 8593.2 s
+  (small effect, drag-dominated with a 5.0 m^2 frontal box). Evaluator ~3 s.
+- Problems: `cp -r` and grep patterns with `$` need approval; use Python
+  `shutil` and the grep pattern `"== |PASS|FAIL|Ran |OK \(|ALL GATES"`.
+  C1 adds mass/drag through the root node only, so adding capability modules
+  later must keep root mass and finishing intact (re-run the evaluator).
+- Next: B1-B9. All nine `function_evidence` entries are needed before any of
+  them passes, so plan a design item first (one work item: a module
+  framework + the simplest capability, e.g. B8 finned heat surface or B9
+  housing with contents), then add one capability per item, emitting
+  evidence only for those done and keeping A-tier tests green. Consider
+  placing dedicated mechanism subassemblies (wheels at lowest z with
+  bearings, steering, brake rotor/stator, vessel, chamber+piston, housing)
+  under the matching capability subtrees, below the v1 layout's lowest z for
+  wheels so only they touch the ground band.

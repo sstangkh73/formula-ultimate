@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "config_id": "hierarchy-level0-race-v1",
+  "race_kernel": "race-level0-v1",
+  "circuit_catalog": "config/circuits/real_circuits_v1.json",
+  "circuit_id": "monza_2026",
+  "drag": {
+    "frontal_box_coefficient": 1.0,
+    "note": "drag_area_m2 = frontal_box_coefficient * extent_y_m * extent_z_m over all leaf mesh vertices; a bound, not a derived drag"
+  },
+  "vehicle": {
+    "rolling_resistance_coefficient": 0.015,
+    "commanded_tractive_force_n": 4000.0,
+    "initial_onboard_energy_j": 4.0e9,
+    "waste_heat_power_w": 0.0,
+    "auxiliary_power_w": 0.0,
+    "initial_temperature_k": 300.0,
+    "thermal": {
+      "heat_capacity_j_per_k": 1.0e9,
+      "passive_conductance_w_per_k": 0.0,
+      "active_conductance_w_per_k": 0.0,
+      "derating_start_temperature_k": 1000.0,
+      "failure_temperature_k": 2000.0
+    }
+  },
+  "control": {
+    "time_step_s": 1.0,
+    "timeout_s": 36000.0,
+    "ambient_temperature_k": 300.0,
+    "active_cooling_command": 0.0,
+    "random_seed": 0,
+    "event_bisection_iterations": 64
+  }
+}
