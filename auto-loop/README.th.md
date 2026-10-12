@@ -34,8 +34,8 @@ run-loop.ps1 ──► claude -p (อ่าน PROMPT.md) ที่ root ขอ�
 ## ต่างจาก template เดิมอย่างไร
 
 - รันจาก root ของ repository และไม่ `git init` เด็ดขาด
-- ไม่ยอมรันบน `main` จะสร้างหรือสลับไป `loop/hierarchical-composition`
-  (เปลี่ยนชื่อได้ด้วย `-Branch`) และหยุดถ้า `main` ขยับ
+- ไม่ยอมรันบน `main` จะสร้างหรือสลับไป `loop/functional-composition-v2`
+  (เปลี่ยนชื่อได้ด้วย `-Branch` ส่วนเป้าหมาย v1 รันบน `loop/hierarchical-composition`) และหยุดถ้า `main` ขยับ
 - ไม่ stage และไม่ commit เอง แต่ละรอบทำตาม `AGENTS.md` คือมีบันทึก plan/result สองภาษา
   `git add <files>` แบบระบุไฟล์ และ commit หลัง Gate 1 และ 2 ผ่านเท่านั้น
 - agent ที่รันแบบ headless ถูกห้าม stage แบบเหมารวม, amend, reset, rebase, สลับ branch, push และใช้ web tool

@@ -1,9 +1,9 @@
 <#
-  Claude + Codex autonomous loop for Formula Ultimate (Work 148).
+  Claude + Codex autonomous loop for Formula Ultimate (Work 148, goal v2 by Work 154).
 
   Usage (from anywhere):
-    pwsh -File auto-loop/run-loop.ps1 [-MaxIterations 20] [-MaxHours 8] [-MaxTurnsPerIteration 120]
-                                      [-Branch loop/hierarchical-composition] [-PreflightOnly]
+    pwsh -File auto-loop/run-loop.ps1 [-MaxIterations 20] [-MaxHours 8] [-MaxTurnsPerIteration 150]
+                                      [-Branch loop/functional-composition-v2] [-PreflightOnly]
   Stop:  create auto-loop/STOP (checked before each iteration) or press Ctrl+C.
 
   The loop, not Claude, decides when the goal is met: verify.ps1 must exit 0 on a
@@ -14,8 +14,8 @@
 param(
     [int]$MaxIterations = 20,
     [double]$MaxHours = 8,
-    [int]$MaxTurnsPerIteration = 120,
-    [string]$Branch = 'loop/hierarchical-composition',
+    [int]$MaxTurnsPerIteration = 150,
+    [string]$Branch = 'loop/functional-composition-v2',
     [switch]$PreflightOnly
 )
 

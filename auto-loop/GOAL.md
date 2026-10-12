@@ -1,138 +1,149 @@
-# Loop Goal: Hierarchical Free-Form Composition v1
+# Loop Goal v2: Functional Composition
 
 Thai companion: `GOAL.th.md`
 
-Protected: the loop stops if this file changes. Set by Work 148.
+Protected: the loop stops if this file changes. Set by Work 154. It replaces
+goal v1, which Works 149–153 met.
 
 ## What the project owner wants
 
-The system designs parts freely, with no prescribed shapes. It designs them
-from the smallest parts upward and composes them, so small parts become
-subassemblies, subassemblies become systems, and systems become the vehicle.
-An engine-like converter, for example, would have chambers, moving members,
-metering parts and fasteners. This must hold for **every** part of the
-vehicle, not only the energy converter. The system is **not** required to
-reproduce a conventional engine or any conventional part list. Whatever
-decomposition it chooses must be its own, and it must be measurable.
+The system designs every part of the vehicle freely, from the smallest
+fastener up to whole systems, with no prescribed shapes and no conventional
+part list. Goal v1 built the hierarchy, but its parts were straight
+extrusions and its function labels did not change any geometry. Goal v2
+requires **function to show up in geometry and motion**. Storage must hold
+volume. A converter must have a member that moves inside a chamber. Wheels or
+other ground contacts must turn and carry the car stably. Fasteners must pass
+through holes. The vehicle must then run the existing Level-0 race. How each
+function is realized is the system's own choice. The contract below only
+says what must be measurably true.
 
 ## Done means
 
 `pwsh -NoProfile -File auto-loop/verify.ps1` exits 0 on a clean, committed tree:
 
-1. Gate 1: `scripts/validation/check_material_publication_boundary.py` passes.
-2. Gate 2: the whole repository suite `python -m unittest discover -s tests` passes.
-3. Gate 3: `python -m unittest discover -s auto-loop/acceptance` passes.
+1. Gate 1: the material publication boundary passes.
+2. Gate 2: the whole repository suite passes. This includes the tests from
+   Works 149–153, which are protected, so the v1 API must keep working.
+3. Gate 3: both acceptance suites pass. The v1 suite
+   (`test_hierarchical_composition.py`) still checks the v1 generator. The v2
+   suite (`test_functional_composition.py`) checks the new v2 generator.
 
-## The contract Gate 3 checks
+## Time box and expected result
 
-Entry point, run under the pinned CadQuery runtime:
+The loop is sized for about 8 hours. The v1 run averaged about 25 min per
+iteration, and verification is slower now, so expect about 16 iterations
+against an estimated 15–20 work items. The v2 tests are grouped in tiers, and
+`auto-loop/.loop/last-verify.txt` shows which tiers pass:
+
+| Tier | Content | Estimate |
+|---|---|---|
+| A | v1 contract on the v2 package, geometry language, motions with sweeps, inertia | 5–6 items, expected to pass |
+| B | evidence for each function, threaded through-holes, static ground stability | 8–10 items, mostly expected |
+| C | Level-0 race on the existing kernel, with a mass-sensitivity check | 2–3 items, possible |
+
+Suggested order: A, then B, then C. Commit a working state at every step.
+
+## Entry points
 
 ```text
-.tools/cadquery-mcp/Scripts/python.exe scripts/hierarchy/generate_hierarchical_vehicle.py --seed S --out DIR
+.tools/cadquery-mcp/Scripts/python.exe scripts/hierarchy/generate_functional_vehicle.py --seed S --out DIR
+python scripts/hierarchy/evaluate_level0.py --manifest DIR/manifest.json --out RESULT.json
 ```
 
-`DIR` may not exist yet. The generator creates it, exits 0 within 20 minutes,
-and writes:
+The generator must finish within 30 minutes per seed. The evaluator must
+finish within 10 minutes and be deterministic. The v1 entry point
+`generate_hierarchical_vehicle.py` must keep passing the v1 suite. The v2
+generator may reuse and extend v1 modules, but it must not break their tests.
 
-- `DIR/manifest.json`
-- one STL mesh (binary or ASCII) per leaf part, in **metres**, placed in
-  vehicle coordinates and referenced by a relative path inside `DIR`.
+## v2 manifest contract
 
-`manifest.json` has exactly these top-level fields:
+Everything in the v1 contract applies (see the v1 acceptance suite and the
+Work 148 records). The changes are as follows.
 
-| Field | Meaning |
-|---|---|
-| `design_language_version` | non-empty string |
-| `seed` | the integer passed in |
-| `config_sha256` | 64-hex hash of the configuration used |
-| `git_commit` | `git rev-parse HEAD` at run time |
-| `length_unit`, `mass_unit` | `"m"`, `"kg"` |
-| `contact_tolerance_m` | `0 < tol <= 5e-4` |
-| `root` | id of the vehicle assembly node |
-| `nodes` | list of assembly and part nodes |
-| `interfaces` | list of joints between leaf parts |
+The top-level fields are the v1 fields plus `up_axis` (`"z"`), `motions`,
+`function_evidence` and `vehicle_inertia_kg_m2` (3x3, about the vehicle
+centre of mass, in kg m^2).
 
-An assembly node has exactly `id, kind="assembly", children, functions, mass_kg,
-center_of_mass_m`. A part node has exactly `id, kind="part", mesh,
-material_id, density_kg_m3, mass_kg, center_of_mass_m, generator`, where
-`generator = {grammar_version, program, program_sha256}` and `program_sha256`
-is the SHA-256 of canonical JSON (`sort_keys`, separators `(",", ":")`,
-`ensure_ascii`, no NaN) of `program`. An interface has `id, a, b, kind` and an
-optional `interference_m`. `a` and `b` are leaf parts. `kind` is one of
-`threaded, welded, bonded, interference, integral` (Work 140). `interference_m`
-is allowed only for `interference`, with `0 < x <= 1e-4`.
+Interface kinds are the v1 kinds plus `bearing`, `guide` and `rolling`. A
+`threaded` interface must also carry `axis_point_m` and a unit `axis_dir`.
+The axis point must lie within the holed part's thickness.
 
-Acceptance criteria, checked independently from the meshes:
+A motion is
+`{id, parts, type: "revolute", axis_point_m, axis_dir, range_rad}` or
+`{id, parts, type: "prismatic", axis_point_m, axis_dir, stroke_m}`. `parts`
+are leaf ids that move rigidly together, and a leaf belongs to at most one
+motion. A revolute sweep covers `[-range/2, +range/2]`. A prismatic sweep
+covers `[0, stroke]` along `axis_dir`.
 
-1. **Replay.** The same seed gives a byte-identical file set. Metadata fields
-   are valid, and `git_commit` equals HEAD.
-2. **Hierarchy.** There is a single root, every node has one parent, there are
-   no cycles, and every node is reachable. There are at least **4 levels** and
-   at least **150 leaf parts**. The largest leaf's bounding-box diagonal is at
-   least **100x** the smallest.
-3. **Every function.** Each of the nine capabilities in
-   `formula_ultimate.topology.functional_vehicle.REQUIRED_CAPABILITIES` is
-   named in `functions` of an assembly whose subtree height is at least 2 and
-   which has at least 5 leaves.
-4. **Geometry and mass.** Every leaf mesh is closed and consistently oriented,
-   with positive volume. Leaf `mass_kg` equals mesh volume times
-   `density_kg_m3` within a relative 1e-5. Centre of mass is within 1e-5 m.
-   Assembly mass and centre of mass roll up exactly from the children.
-5. **Free form.** At most 25 % of leaves fill at least 99.9 % of their
-   axis-aligned bounding box. Every leaf's program hash matches.
-6. **Interfaces.** Inside every assembly, the children are connected through
-   interfaces. Every interface shows measured surface contact within
-   `contact_tolerance_m`. No sampled point of one leaf lies inside another
-   deeper than the tolerance, or deeper than the declared `interference_m`.
-7. **No fixed template.** Seeds 11, 23 and 37 give pairwise different tree
-   topologies, and every capability has at least two distinct subtree
-   topologies across them.
+`function_evidence` has exactly the nine capabilities:
 
-## Boundaries the loop must respect
+| Capability | Fields | Checked |
+|---|---|---|
+| `energy_storage` | `vessel`, `stored_volume_m3` | vessel's internal void volume >= declared >= 0.01 m^3 |
+| `energy_converter` | `chamber`, `motion` | the chamber has a bore (genus >= 1) or a cavity; >= 50 % of the moving member's samples lie inside the chamber's box and outside its material |
+| `power_transmission` | `chain` | >= 2 full-turn revolute motions, consecutive members joined by an interface |
+| `ground_propulsion` | `motions` | >= 2 full-turn revolute motions; only their parts touch the ground band (lowest z + 1 mm); the CoM lies >= 0.05 m inside the support polygon |
+| `direction_control` | `motion` | revolute, range >= 0.2 rad, axis >= 30 deg from every ground-propulsion axis |
+| `braking` | `rotor_motion`, `stator` | full-turn rotor; a non-moving stator within 2 mm of the rotor |
+| `load_structure` | `members` | members are connected by interfaces; every other capability has an interface to a member |
+| `heat_rejection` | `surfaces` | total area >= 3x the area of a sphere of the same total volume |
+| `controller` | `housing`, `contents` | the housing has a cavity, and >= 2 content parts lie entirely inside it |
 
-- `AGENTS.md` applies in full: one numbered work item per iteration,
-  bilingual plan/result records, explicit staging, a commit only after
-  validation passes, SI units, tests with every new model.
-- Materials come from the catalog only, with no new compositions. Real
-  material values stay in gitignored `/private/`. Never commit them, and never
-  print them into tracked files. Densities in generated artifacts are fine
-  because `artifacts/` is gitignored. Synthetic placeholder materials must be
-  labelled synthetic and `design_use_allowed=false`.
-- Reuse the existing free-form grammar (`components/freeform_solid_grammar.py`,
-  `scripts/cad/*`), the part-resolution and joint gates (`assembly/part_resolution.py`)
-  and the functional vocabulary (`topology/functional_vehicle.py`). Do not
-  replace them with something unrelated.
-- No conventional part names may be hard-coded as required building blocks.
-  The decomposition must come from a declared generative or search procedure
-  driven by the seed and the declared constraints.
+Every part named in the evidence and every motion part used for a capability
+must lie in a subtree that is tagged with that capability.
+
+## Further checks
+
+- At least 25 % of leaves are non-prismatic: no single direction leaves 99 %
+  of the area parallel or perpendicular to it. At least 5 % of leaves have a
+  through-hole (genus >= 1).
+- Every motion has a `bearing` (revolute) or `guide` (prismatic) interface
+  between a moving part and a fixed part. Sweeping each motion over its range
+  in 8–16 poses must not bring sampled points deeper than 1 mm into any other
+  leaf.
+- `vehicle_inertia_kg_m2` must match the meshes within a relative 1e-5.
+- There are at least 8 `threaded` joints. Each one's axis passes through a
+  hole of one part (no material on the axis line, material in every one of 8
+  radial directions) and through the material of the other part.
+- Level-0, on the seed-11 vehicle: the output fields are exactly
+  `manifest_sha256, mass_kg, drag_area_m2, outcome, race_time_s,
+  consumed_energy_j, terminal_energy_boundary_residual_j, circuit_id,
+  race_kernel`, with `race_kernel = "race-level0-v1"` (the existing
+  `physics/race.py` kernel). `outcome = "finished"`. `mass_kg` equals the root
+  mass. `0 < drag_area_m2 <= 1.5` x the frontal (y-z) extent. The energy
+  residual is at most 1 J. Two runs give byte-identical output. **Falsification
+  check:** the same package with the root mass raised by 50 % must race slower
+  or fail to finish.
+
+## Boundaries
+
+The v1 boundaries all still apply: `AGENTS.md`, catalog-only materials, no
+material values in tracked files, reuse of the existing grammar, gates and
+vocabulary, and no hard-coded conventional part list. In addition:
+
+- Do not special-case seeds 11, 23 or 37, and do not special-case the
+  acceptance code.
+- Use the existing `physics/race.py` kernel for Level-0. Do not write a
+  substitute race model. Declare the circuit, energy budget and control
+  settings in a versioned config. Physical assumptions use SI units and are
+  written in the work logs.
+- Separate new code as `src/formula_ultimate/hierarchy/` modules plus tests.
+  Never edit an existing tracked test.
 
 ## What passing does NOT mean
 
-Passing is a **geometry and assembly representation gate**. It is not
-physical validation. It does not show that the parts work, carry load,
-survive heat, or make the car faster, and it does not show that the
-decompositions are useful. Coupling the hierarchy to Level-0 physics and the
-race kernel is a later goal.
+Passing is a representation, kinematic-clearance and Level-0 coupling gate.
+It does not show that a part carries load, that a chamber holds pressure, or
+that a thread is a real helix. It does not show that the vehicle is fast or
+better than a baseline. Level-0 uses lumped mass and drag only, and the
+contract's choice of function evidence is itself a design-language bias,
+toward recognisable mechanisms.
 
-Known limitations of the checks:
+## Known limitations of the checks
 
-- Interpenetration samples vertices and triangle centroids, so some crossing
-  overlaps can escape detection.
-- The box fraction is a proxy for free form.
-- Topology diversity across three seeds rules out one fixed template. It does
-  not measure usefulness.
-
-## Suggested milestones (the loop may reorder them)
-
-1. A recursive part-tree data model with validation and tests (pure Python,
-   no CAD).
-2. A seed-driven decomposition procedure over the nine capabilities that does
-   not depend on a part catalogue.
-3. A leaf-geometry realization through the existing free-form grammar and
-   CadQuery, with STL export in metres and mass from the exported mesh.
-4. Interface placement that produces measurable contact without
-   interpenetration.
-5. A generator CLI, a manifest, and replay determinism (CadQuery parallel
-   booleans off).
-6. Scale-up to at least 150 leaves and at least a 100x size span, and
-   satisfying Gate 3 on all three seeds.
+- Contact, penetration and sweep checks sample vertices and triangle
+  centroids.
+- "Non-prismatic" and the heat area ratio are proxies.
+- Threads are checked as through-holes only.
+- The drag area is only bounded, not derived.

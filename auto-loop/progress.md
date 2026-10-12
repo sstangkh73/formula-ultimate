@@ -186,3 +186,21 @@ the same commit.
   read at run time from gitignored data (with a synthetic fallback for clean
   clones), add `interference_m` handling, and speed up
   `tests/test_hierarchy_composition.py` (86 s).
+
+## Goal v2 starting state (Work 154)
+
+- Goal v1 was met in Works 149–153. `auto-loop/GOAL.md` is now goal v2,
+  functional composition. Read it in full.
+- Gates 1 and 2 pass. In Gate 3, the v1 suite passes and the v2 suite fails
+  because `scripts/hierarchy/generate_functional_vehicle.py` and
+  `scripts/hierarchy/evaluate_level0.py` do not exist yet.
+- The v2 tests are tiered (`TierA*`, `TierB*`, `TierC*`). Work A, then B,
+  then C, and use `last-verify.txt` to see which tiers pass.
+- The tests from Works 149–153 are now protected. Keep the v1 API and the v1
+  generator working, and add v2 modules beside them.
+- Lessons from v1 (see the log above): pass Codex tasks through a task file
+  under `auto-loop/.loop/`; tell Codex not to write work logs; keep each Bash
+  call to one pipeline; use the Edit tool instead of `sed -i`.
+- Next free work number: 155.
+
+## Log (goal v2)

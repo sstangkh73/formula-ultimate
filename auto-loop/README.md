@@ -35,8 +35,8 @@ every test that is tracked in git, and stops if any of them changes.
 ## How it differs from the original template
 
 - Runs from the repository root and never runs `git init`.
-- Refuses to run on `main`. It creates or switches to `loop/hierarchical-composition`
-  (`-Branch` to change), and stops if `main` moves.
+- Refuses to run on `main`. It creates or switches to `loop/functional-composition-v2`
+  (`-Branch` to change; goal v1 ran on `loop/hierarchical-composition`), and stops if `main` moves.
 - Never stages or commits by itself. Each iteration follows `AGENTS.md`:
   bilingual plan/result records, explicit `git add <files>`, and a commit only
   after Gates 1 and 2 pass.

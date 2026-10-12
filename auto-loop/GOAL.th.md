@@ -1,119 +1,131 @@
-# เป้าหมายของลูป: การประกอบชิ้นส่วน free-form แบบลำดับชั้น v1
+# เป้าหมายของลูป v2: การประกอบตามหน้าที่
 
 ฉบับภาษาอังกฤษ: `GOAL.md`
 
-ไฟล์นี้ห้ามแก้ ถ้าถูกแก้ลูปจะหยุด กำหนดโดย Work 148
+ไฟล์นี้ห้ามแก้ ถ้าถูกแก้ลูปจะหยุด กำหนดโดย Work 154 ใช้แทนเป้าหมาย v1 ซึ่ง Work 149–153 ทำสำเร็จแล้ว
 
 ## สิ่งที่เจ้าของโครงการต้องการ
 
-ระบบออกแบบชิ้นส่วนได้อิสระโดยไม่กำหนดรูปร่างไว้ก่อน ออกแบบตั้งแต่ชิ้นที่เล็กที่สุดขึ้นไปแล้วประกอบเข้าด้วยกัน
-ชิ้นเล็กประกอบเป็นชุดย่อย ชุดย่อยประกอบเป็นระบบ ระบบประกอบเป็นรถ
-เช่น ตัวแปลงพลังงานคล้ายเครื่องยนต์ก็จะมีห้อง ชิ้นที่เคลื่อนที่ ชิ้นจ่ายเชื้อเพลิง และตัวยึด
-ต้องเป็นแบบนี้กับชิ้นส่วน**ทุกชิ้น**ของรถ ไม่ใช่เฉพาะตัวแปลงพลังงาน
-ระบบ**ไม่จำเป็น**ต้องสร้างเครื่องยนต์แบบดั้งเดิมหรือรายการชิ้นส่วนแบบเดิมขึ้นมาใหม่
-ไม่ว่าจะแยกส่วนแบบไหน ต้องเป็นการเลือกของระบบเอง และต้องวัดผลได้
+ระบบออกแบบชิ้นส่วนทุกชิ้นของรถได้อิสระ ตั้งแต่ตัวยึดชิ้นเล็กที่สุดไปจนถึงทั้งระบบ
+โดยไม่กำหนดรูปทรงไว้ก่อนและไม่มีรายการชิ้นส่วนแบบดั้งเดิม v1 สร้างลำดับชั้นได้แล้ว
+แต่ชิ้นส่วนเป็นแค่การ extrude ตรงๆ และป้ายหน้าที่ไม่ได้ทำให้เรขาคณิตเปลี่ยน
+v2 บังคับให้**หน้าที่ต้องปรากฏออกมาในเรขาคณิตและการเคลื่อนที่**
+ที่เก็บพลังงานต้องจุปริมาตรได้จริง ตัวแปลงพลังงานต้องมีชิ้นที่เคลื่อนที่อยู่ในห้อง
+ล้อหรือจุดสัมผัสพื้นแบบอื่นต้องหมุนได้และรับรถได้อย่างเสถียร ตัวยึดต้องลอดผ่านรู
+จากนั้นรถต้องวิ่ง race ระดับ Level-0 ที่มีอยู่ได้ จะทำแต่ละหน้าที่ด้วยวิธีไหนให้ระบบเลือกเอง
+สัญญาข้างล่างกำหนดแค่ว่าอะไรต้องเป็นจริงและวัดได้
 
 ## "เสร็จ" หมายถึง
 
 `pwsh -NoProfile -File auto-loop/verify.ps1` exit 0 บน tree ที่สะอาดและ commit แล้ว
 
-1. Gate 1: `scripts/validation/check_material_publication_boundary.py` ผ่าน
-2. Gate 2: เทสต์ทั้ง repository `python -m unittest discover -s tests` ผ่าน
-3. Gate 3: `python -m unittest discover -s auto-loop/acceptance` ผ่าน
+1. Gate 1: ผ่านการตรวจขอบเขตการเผยแพร่ข้อมูลวัสดุ
+2. Gate 2: เทสต์ทั้ง repository ผ่าน ซึ่งรวมเทสต์ของ Work 149–153 ที่ถูกป้องกันไว้
+   API ของ v1 จึงต้องยังทำงานได้
+3. Gate 3: acceptance ทั้งสองชุดผ่าน ชุด v1 (`test_hierarchical_composition.py`)
+   ยังตรวจ generator v1 ส่วนชุด v2 (`test_functional_composition.py`) ตรวจ generator v2 ตัวใหม่
 
-## สัญญาที่ Gate 3 ตรวจ
+## กรอบเวลาและผลที่คาด
 
-entry point ที่รันด้วย CadQuery runtime ที่ pin ไว้
+ลูปนี้กำหนดขนาดไว้ราว 8 ชั่วโมง รอบ v1 ใช้เฉลี่ยราว 25 นาทีต่อรอบ และตอนนี้การตรวจช้าลง
+จึงคาดได้ราว 16 รอบ เทียบกับงานที่ประมาณไว้ 15–20 ชิ้น เทสต์ v2 แบ่งเป็นชั้น
+และ `auto-loop/.loop/last-verify.txt` จะแสดงว่าชั้นไหนผ่านแล้ว
+
+| ชั้น | เนื้อหา | ประมาณการ |
+|---|---|---|
+| A | สัญญา v1 บน package ของ v2, ภาษาเรขาคณิต, การเคลื่อนที่พร้อม sweep, inertia | 5–6 ชิ้น คาดว่าผ่าน |
+| B | หลักฐานของแต่ละหน้าที่, รูทะลุสำหรับเกลียว, เสถียรภาพสถิตบนพื้น | 8–10 ชิ้น คาดว่าผ่านส่วนใหญ่ |
+| C | race ระดับ Level-0 บน kernel ที่มีอยู่ พร้อมการตรวจความไวต่อมวล | 2–3 ชิ้น อาจผ่าน |
+
+ลำดับที่แนะนำคือ A แล้ว B แล้ว C และ commit สถานะที่ใช้งานได้ทุกขั้น
+
+## Entry point
 
 ```text
-.tools/cadquery-mcp/Scripts/python.exe scripts/hierarchy/generate_hierarchical_vehicle.py --seed S --out DIR
+.tools/cadquery-mcp/Scripts/python.exe scripts/hierarchy/generate_functional_vehicle.py --seed S --out DIR
+python scripts/hierarchy/evaluate_level0.py --manifest DIR/manifest.json --out RESULT.json
 ```
 
-`DIR` อาจยังไม่มี generator สร้างเอง ต้อง exit 0 ภายใน 20 นาที และเขียน
+generator ต้องเสร็จภายใน 30 นาทีต่อ seed ส่วน evaluator ต้องเสร็จภายใน 10 นาทีและ deterministic
+entry point ของ v1 `generate_hierarchical_vehicle.py` ต้องยังผ่านชุด v1
+generator v2 นำโมดูล v1 มาใช้ซ้ำหรือขยายต่อได้ แต่ห้ามทำให้เทสต์ของ v1 พัง
 
-- `DIR/manifest.json`
-- STL mesh (binary หรือ ASCII) หนึ่งไฟล์ต่อชิ้นส่วน leaf หน่วยเป็น**เมตร**
-  วางในพิกัดของรถ และอ้างถึงด้วย path แบบสัมพัทธ์ภายใน `DIR`
+## สัญญาของ manifest v2
 
-`manifest.json` มี top-level field ตามนี้เท่านั้น
+ทุกข้อในสัญญา v1 ยังใช้อยู่ (ดูชุด acceptance v1 และบันทึกของ Work 148) ส่วนที่เปลี่ยนมีดังนี้
 
-| Field | ความหมาย |
-|---|---|
-| `design_language_version` | string ที่ไม่ว่าง |
-| `seed` | จำนวนเต็มที่ส่งเข้ามา |
-| `config_sha256` | hash แบบ hex 64 ตัวของ configuration ที่ใช้ |
-| `git_commit` | `git rev-parse HEAD` ตอนรัน |
-| `length_unit`, `mass_unit` | `"m"`, `"kg"` |
-| `contact_tolerance_m` | `0 < tol <= 5e-4` |
-| `root` | id ของ node assembly ที่เป็นตัวรถ |
-| `nodes` | รายการ node ของ assembly และ part |
-| `interfaces` | รายการรอยต่อระหว่างชิ้น leaf |
+top-level field คือ field ของ v1 บวก `up_axis` (`"z"`), `motions`, `function_evidence`
+และ `vehicle_inertia_kg_m2` (3x3 รอบจุดศูนย์กลางมวลของรถ หน่วย kg m^2)
 
-node แบบ assembly มี field `id, kind="assembly", children, functions, mass_kg,
-center_of_mass_m` เท่านั้น node แบบ part มี `id, kind="part", mesh,
-material_id, density_kg_m3, mass_kg, center_of_mass_m, generator` เท่านั้น โดย
-`generator = {grammar_version, program, program_sha256}` และ `program_sha256`
-คือ SHA-256 ของ JSON แบบ canonical (`sort_keys`, separators `(",", ":")`,
-`ensure_ascii`, ไม่มี NaN) ของ `program`
-interface มี `id, a, b, kind` และมี `interference_m` ได้ถ้าต้องการ
-`a` และ `b` ต้องเป็นชิ้น leaf ส่วน `kind` เป็นหนึ่งใน `threaded, welded, bonded, interference, integral` (Work 140)
-`interference_m` ใช้ได้กับ `interference` เท่านั้น และต้อง `0 < x <= 1e-4`
+ชนิด interface คือชนิดของ v1 บวก `bearing`, `guide` และ `rolling`
+interface ชนิด `threaded` ต้องมี `axis_point_m` และ `axis_dir` ที่เป็น unit vector ด้วย
+และจุดบนแกนต้องอยู่ภายในความหนาของชิ้นที่มีรู
 
-เกณฑ์การยอมรับ ตรวจจาก mesh อย่างอิสระ
+motion มีรูปแบบ
+`{id, parts, type: "revolute", axis_point_m, axis_dir, range_rad}` หรือ
+`{id, parts, type: "prismatic", axis_point_m, axis_dir, stroke_m}` โดย `parts`
+คือ id ของ leaf ที่เคลื่อนที่ไปด้วยกันแบบแข็งเกร็ง และ leaf หนึ่งอยู่ได้ไม่เกินหนึ่ง motion
+การ sweep แบบ revolute ครอบคลุม `[-range/2, +range/2]` ส่วนแบบ prismatic ครอบคลุม
+`[0, stroke]` ตาม `axis_dir`
 
-1. **Replay** seed เดียวกันต้องได้ชุดไฟล์เหมือนกันทุก byte field metadata ถูกต้อง
-   และ `git_commit` ตรงกับ HEAD
-2. **ลำดับชั้น** มี root เดียว ทุก node มี parent ตัวเดียว ไม่มีวงวน และเข้าถึงได้ทุก node
-   มีอย่างน้อย **4 ระดับ** และชิ้น leaf อย่างน้อย **150 ชิ้น** เส้นทแยงของ bounding box
-   ของ leaf ที่ใหญ่ที่สุดต้องยาวอย่างน้อย **100 เท่า** ของชิ้นที่เล็กที่สุด
-3. **ทุกหน้าที่** ความสามารถทั้งเก้าใน
-   `formula_ultimate.topology.functional_vehicle.REQUIRED_CAPABILITIES`
-   ต้องถูกระบุใน `functions` ของ assembly ที่ subtree สูงอย่างน้อย 2 และมี leaf อย่างน้อย 5 ชิ้น
-4. **เรขาคณิตและมวล** mesh ของ leaf ทุกชิ้นปิดและหันทิศทางสม่ำเสมอ ปริมาตรเป็นบวก
-   `mass_kg` ของ leaf เท่ากับปริมาตร mesh คูณ `density_kg_m3` ภายใน relative 1e-5
-   จุดศูนย์กลางมวลคลาดไม่เกิน 1e-5 m มวลและจุดศูนย์กลางมวลของ assembly ต้องรวมขึ้นมาจากลูกได้ตรง
-5. **Free form** leaf ที่กิน bounding box แนวแกนของตัวเองตั้งแต่ 99.9 % ขึ้นไป มีได้ไม่เกิน 25 %
-   hash ของโปรแกรมของ leaf ทุกชิ้นต้องตรง
-6. **Interface** ภายใน assembly ทุกตัว ลูกต้องเชื่อมกันผ่าน interface
-   interface ทุกตัวต้องมีการสัมผัสของพื้นผิวที่วัดได้ภายใน `contact_tolerance_m`
-   จุดที่สุ่มของ leaf หนึ่งต้องไม่อยู่ในอีกชิ้นลึกเกิน tolerance หรือเกิน `interference_m` ที่ประกาศ
-7. **ไม่มี template ตายตัว** seed 11, 23 และ 37 ต้องได้โครงสร้างต้นไม้ต่างกันทุกคู่
-   และทุกความสามารถต้องมีโครงสร้าง subtree อย่างน้อย 2 แบบในสาม seed นั้น
+`function_evidence` มีครบเก้าความสามารถพอดี
 
-## ขอบเขตที่ลูปต้องเคารพ
+| ความสามารถ | Field | สิ่งที่ตรวจ |
+|---|---|---|
+| `energy_storage` | `vessel`, `stored_volume_m3` | ปริมาตรช่องว่างภายในของ vessel >= ค่าที่ประกาศ >= 0.01 m^3 |
+| `energy_converter` | `chamber`, `motion` | chamber มีรูทะลุ (genus >= 1) หรือช่องว่างภายใน และจุดตัวอย่างของชิ้นที่เคลื่อนที่ >= 50 % อยู่ในกล่องของ chamber แต่อยู่นอกเนื้อวัสดุ |
+| `power_transmission` | `chain` | motion แบบ revolute หมุนได้รอบเต็มอย่างน้อย 2 ตัว และชิ้นที่อยู่ติดกันในโซ่ต้องเชื่อมกันด้วย interface |
+| `ground_propulsion` | `motions` | motion แบบ revolute หมุนได้รอบเต็มอย่างน้อย 2 ตัว มีแค่ชิ้นของ motion เหล่านี้ที่แตะแถบพื้น (z ต่ำสุด + 1 mm) และ CoM ต้องอยู่ลึกเข้าไปในรูปหลายเหลี่ยมฐานรองรับอย่างน้อย 0.05 m |
+| `direction_control` | `motion` | แบบ revolute ช่วงอย่างน้อย 0.2 rad และแกนทำมุมอย่างน้อย 30 องศากับแกนของ ground propulsion ทุกตัว |
+| `braking` | `rotor_motion`, `stator` | rotor หมุนได้รอบเต็ม และมี stator ที่ไม่เคลื่อนที่อยู่ห่างจาก rotor ไม่เกิน 2 mm |
+| `load_structure` | `members` | members เชื่อมถึงกันด้วย interface และทุกความสามารถอื่นต้องมี interface ถึง member |
+| `heat_rejection` | `surfaces` | พื้นที่รวม >= 3 เท่าของพื้นที่ทรงกลมที่มีปริมาตรรวมเท่ากัน |
+| `controller` | `housing`, `contents` | housing มีช่องว่างภายใน และชิ้น content อย่างน้อย 2 ชิ้นอยู่ข้างในทั้งชิ้น |
 
-- ใช้ `AGENTS.md` ทั้งหมด: หนึ่ง work item ที่มีเลขกำกับต่อรอบ, บันทึก plan/result สองภาษา,
-  stage แบบระบุไฟล์, commit หลัง validation ผ่านเท่านั้น, หน่วย SI และมีเทสต์กับ model ใหม่ทุกตัว
-- วัสดุมาจาก catalog เท่านั้น ไม่ออกแบบส่วนผสมใหม่ ค่าวัสดุจริงอยู่ใน `/private/` ที่อยู่ใน gitignore
-  ห้าม commit และห้ามพิมพ์ลงในไฟล์ที่ track ค่าความหนาแน่นใน artifact ที่ generator สร้างใช้ได้
-  เพราะ `artifacts/` อยู่ใน gitignore วัสดุ placeholder สังเคราะห์ต้องติดป้ายว่าสังเคราะห์
-  และ `design_use_allowed=false`
-- ใช้ของที่มีอยู่ซ้ำ ได้แก่ free-form grammar (`components/freeform_solid_grammar.py`,
-  `scripts/cad/*`), ด่าน part-resolution และ joint (`assembly/part_resolution.py`)
-  และคำศัพท์หน้าที่ (`topology/functional_vehicle.py`) ห้ามแทนด้วยของที่ไม่เกี่ยวกัน
-- ห้าม hard-code ชื่อชิ้นส่วนแบบดั้งเดิมเป็นชิ้นส่วนบังคับ การแยกส่วนต้องมาจากขั้นตอน generative
-  หรือ search ที่ประกาศไว้ ซึ่งขับเคลื่อนด้วย seed และข้อจำกัดที่ประกาศ
+ชิ้นที่อ้างถึงใน evidence และชิ้นของ motion ที่ใช้กับความสามารถใด ต้องอยู่ใน subtree
+ที่ติดป้ายความสามารถนั้น
+
+## การตรวจเพิ่มเติม
+
+- leaf อย่างน้อย 25 % ต้องไม่ใช่ปริซึม คือไม่มีทิศเดียวที่ทำให้พื้นที่ 99 % ขนานหรือตั้งฉากกับทิศนั้น
+  และ leaf อย่างน้อย 5 % ต้องมีรูทะลุ (genus >= 1)
+- motion ทุกตัวต้องมี interface ชนิด `bearing` (revolute) หรือ `guide` (prismatic)
+  ระหว่างชิ้นที่เคลื่อนที่กับชิ้นที่อยู่กับที่ และเมื่อ sweep แต่ละ motion ตลอดช่วงใน 8–16 ท่า
+  จุดที่สุ่มต้องไม่จมเข้าไปใน leaf อื่นลึกเกิน 1 mm
+- `vehicle_inertia_kg_m2` ต้องตรงกับที่คำนวณจาก mesh ภายใน relative 1e-5
+- มีรอยต่อ `threaded` อย่างน้อย 8 จุด แต่ละจุดต้องมีแกนลอดผ่านรูของชิ้นหนึ่ง
+  (บนเส้นแกนไม่มีเนื้อวัสดุ และมีเนื้อวัสดุครบทั้ง 8 ทิศในแนวรัศมี) และผ่านเนื้อวัสดุของอีกชิ้น
+- Level-0 บนรถของ seed 11: output field ต้องเป็น `manifest_sha256, mass_kg, drag_area_m2,
+  outcome, race_time_s, consumed_energy_j, terminal_energy_boundary_residual_j, circuit_id,
+  race_kernel` เท่านั้น โดย `race_kernel = "race-level0-v1"` (kernel `physics/race.py` ที่มีอยู่)
+  `outcome = "finished"` `mass_kg` เท่ากับมวลของ root `0 < drag_area_m2 <= 1.5`
+  เท่าของขนาดด้านหน้า (y-z) ส่วนที่คลาดของพลังงานไม่เกิน 1 J และรันสองครั้งต้องได้ output
+  เหมือนกันทุก byte **การทดสอบหักล้าง:** package เดิมที่เพิ่มมวลของ root ขึ้น 50 %
+  ต้องวิ่งช้าลงหรือวิ่งไม่จบ
+
+## ขอบเขต
+
+ขอบเขตของ v1 ยังใช้ทั้งหมด ได้แก่ `AGENTS.md`, วัสดุจาก catalog เท่านั้น,
+ห้ามมีค่าวัสดุในไฟล์ที่ track, ใช้ grammar, gate และคำศัพท์ที่มีอยู่ซ้ำ
+และห้าม hard-code รายการชิ้นส่วนแบบดั้งเดิม เพิ่มเติมคือ
+
+- ห้ามทำกรณีพิเศษให้ seed 11, 23 หรือ 37 และห้ามดักโค้ดของ acceptance เป็นกรณีพิเศษ
+- ใช้ kernel `physics/race.py` ที่มีอยู่สำหรับ Level-0 ห้ามเขียน race model มาแทน
+  ประกาศ circuit, งบพลังงาน และค่าควบคุมไว้ใน config ที่มี version
+  สมมติฐานทางฟิสิกส์ใช้หน่วย SI และบันทึกไว้ใน work log
+- แยกโค้ดใหม่เป็นโมดูลใน `src/formula_ultimate/hierarchy/` พร้อมเทสต์
+  ห้ามแก้เทสต์ที่ track อยู่แล้วเด็ดขาด
 
 ## การผ่าน "ไม่ได้" หมายความว่า
 
-การผ่านคือ**ด่าน representation ของเรขาคณิตและการประกอบ** ไม่ใช่การยืนยันทางฟิสิกส์
-ไม่ได้แสดงว่าชิ้นส่วนทำงานได้ รับแรงได้ ทนความร้อนได้ หรือทำให้รถเร็วขึ้น
-และไม่ได้แสดงว่าการแยกส่วนนั้นมีประโยชน์ การเชื่อมลำดับชั้นเข้ากับ physics Level-0
-และ race kernel เป็นเป้าหมายรอบหลัง
+การผ่านคือด่าน representation, ระยะว่างทางจลนศาสตร์ และการเชื่อมกับ Level-0
+ไม่ได้แสดงว่าชิ้นส่วนรับแรงได้ ห้องทนแรงดันได้ หรือเกลียวเป็นเกลียวจริง
+และไม่ได้แสดงว่ารถเร็วหรือดีกว่า baseline Level-0 ใช้แค่มวลรวมและ drag
+และการที่สัญญาเลือกหลักฐานของหน้าที่แบบนี้ก็เป็นอคติของภาษาการออกแบบเอง ไปทางกลไกที่คุ้นตา
 
-ข้อจำกัดของการตรวจที่รู้อยู่แล้ว
+## ข้อจำกัดของการตรวจที่รู้อยู่แล้ว
 
-- การตรวจชิ้นทะลุกันสุ่มดูเฉพาะ vertex และจุดศูนย์กลางของสามเหลี่ยม การซ้อนทับแบบตัดผ่านบางกรณีจึงอาจหลุด
-- สัดส่วนกล่องเป็นแค่ตัวแทนของ free form
-- ความหลากหลายของโครงสร้างจากสาม seed ตัดกรณี template ตายตัวแบบเดียวได้
-  แต่ไม่ได้วัดว่ามีประโยชน์หรือไม่
-
-## Milestone ที่แนะนำ (ลูปเรียงใหม่ได้)
-
-1. data model ของต้นไม้ชิ้นส่วนแบบ recursive พร้อม validation และเทสต์ (Python ล้วน ไม่ใช้ CAD)
-2. ขั้นตอนแยกส่วนที่ขับเคลื่อนด้วย seed ครอบคลุมทั้งเก้าความสามารถ โดยไม่พึ่ง catalog ชิ้นส่วน
-3. สร้างเรขาคณิตของ leaf ผ่าน free-form grammar ที่มีอยู่และ CadQuery
-   export STL หน่วยเมตร และคำนวณมวลจาก mesh ที่ export ออกมา
-4. วาง interface ให้เกิดการสัมผัสที่วัดได้โดยไม่ทะลุกัน
-5. generator CLI, manifest และความ deterministic ของ replay (ปิด parallel boolean ของ CadQuery)
-6. ขยายให้ได้อย่างน้อย 150 leaf และช่วงขนาดอย่างน้อย 100 เท่า แล้วผ่าน Gate 3 ครบทั้งสาม seed
+- การตรวจสัมผัส การทะลุ และ sweep สุ่มดูเฉพาะ vertex และจุดศูนย์กลางของสามเหลี่ยม
+- "ไม่ใช่ปริซึม" และอัตราส่วนพื้นที่ระบายความร้อนเป็นแค่ตัวแทน
+- ตรวจเกลียวแค่ว่าเป็นรูทะลุ
+- drag area ถูกจำกัดขอบเขตไว้เท่านั้น ไม่ได้คำนวณออกมาจริง
