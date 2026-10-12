@@ -7,7 +7,8 @@ Run under the pinned CadQuery runtime:
 
 Writes ``DIR/manifest.json`` and one metre-scale binary STL per leaf under
 ``DIR/meshes/``. The v1 cluster is realized first; the mechanism layer
-(Work 160) is planned around the cluster box measured from its re-read meshes.
+(Work 160) is planned around the cluster box measured from its re-read meshes,
+with wheel-and-brake ground-contact corners on the deck (Work 161).
 Leaf masses, centres of mass and the vehicle inertia tensor are measured from
 the re-read exported meshes. The same seed and commit give a
 byte-identical package. Representation only, not physical validation.
@@ -49,6 +50,12 @@ from formula_ultimate.hierarchy.functional import (  # noqa: E402
     mesh_inertia,
     with_leaf_grammar_versions,
     with_threaded_axes,
+)
+from formula_ultimate.hierarchy.ground_contacts import (  # noqa: E402
+    DEFAULT_GROUND_CONTACT_CONFIG,
+    add_ground_contacts,
+    ground_contact_config_record,
+    ground_contact_problems,
 )
 from formula_ultimate.hierarchy.layout import DEFAULT_LAYOUT_CONFIG  # noqa: E402
 from formula_ultimate.hierarchy.leaf_geometry import read_binary_stl  # noqa: E402
@@ -98,7 +105,9 @@ def generate(seed: int, out: Path) -> dict:
         densities[leaf.id] = plan.materials[leaf.id].density_kg_m3
     bounds = measure_cluster(meshes)
     layer = plan_mechanisms(seed, bounds, catalogue, DEFAULT_MECHANISM_CONFIG)
-    problems = mechanism_problems(layer, bounds, list(meshes))
+    layer = add_ground_contacts(layer, seed, catalogue, DEFAULT_GROUND_CONTACT_CONFIG)
+    problems = mechanism_problems(layer, bounds, list(meshes)) + ground_contact_problems(
+        layer, DEFAULT_GROUND_CONTACT_CONFIG)
     if problems:
         raise RuntimeError(f"seed {seed}: mechanism layer re-check failed: {problems[:5]}")
     for part in layer.parts:
@@ -118,7 +127,9 @@ def generate(seed: int, out: Path) -> dict:
                                          config_sha256=config_sha256_v2(
                                              v1_config, refinement_config_record(DEFAULT_REFINEMENT_CONFIG),
                                              fastener_config_record(DEFAULT_FASTENER_CONFIG),
-                                             mechanism_config_record(DEFAULT_MECHANISM_CONFIG)))
+                                             {**mechanism_config_record(DEFAULT_MECHANISM_CONFIG),
+                                              "ground_contacts": ground_contact_config_record(
+                                                  DEFAULT_GROUND_CONTACT_CONFIG)}))
     (out / "manifest.json").write_bytes(manifest_bytes(manifest))
     return manifest
 

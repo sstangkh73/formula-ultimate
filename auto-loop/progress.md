@@ -391,3 +391,37 @@ the same commit.
     cavity floor, comb-profile fin plates (area ratio >= 3).
 - Next: the ground-contact + braking item above (B4, B6 evidence; also
   direction_control can follow quickly).
+
+### Work 161 (v2 iteration 7): wheel-and-brake ground-contact corners, Completed
+
+- Done: `src/formula_ultimate/hierarchy/ground_contacts.py` (pure Python).
+  `add_ground_contacts(layer, seed, catalogue)` extends the Work 160 layer
+  (`plan_mechanisms` unchanged: its protected test asserts the deck-only
+  layer) with four root-level corners `m1..m4-ground_propulsion_braking`
+  tagged `[ground_propulsion, braking]`: axle (flat top, seated on the deck
+  side face, `bonded`), stator pad on the axle top (`bonded`), rotor
+  (`bonded` to wheel), wheel (vertex down, `bearing` to axle); motion
+  `<corner>.spin` = {wheel, rotor}, revolute 2 pi. `y_prism` maps a world
+  (dx, dz) profile to an outward-y extrusion on either side.
+  `ground_contact_problems` re-checks. Evidence adds `ground_propulsion` and
+  `braking`. Tests: `tests/test_hierarchy_ground_contacts.py` (8).
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1148 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=9)`: only B1-B9 (nine-key check); A, B10, C1 green.
+  A local run of the acceptance classes with the key-set check relaxed
+  (`artifacts/work161/check.py`, gitignored) passes B4 and B6 on 11/23/37.
+- Evidence: CoM margin 1.198/1.087/0.591 m; brake gap 5.0e-4 m; seed 11
+  Level-0 `finished` 10757 s, 1988 kg.
+- Problems (lesson for later modules): the acceptance contact test samples
+  only vertices and triangle centroids, so every interface needs a vertex of
+  one part ON the other's surface. A stator overhanging a face and an
+  N_a-gon bore around an N_a-gon axle both failed (gaps 5e-4 and 1.5e-3 m).
+  Fixes: a narrow stator foot inside the face, and a 48-gon bore of apothem
+  r_a + c with a vertex at each axle vertex direction. Shell `for` loops with
+  `$s` need approval; run one generator call per Bash call.
+- Next: direction control (z-axis steering post + arm in the deck bay at
+  `backbone.bay_x0..core_x1`, `bearing`, range >= 0.2 rad, its own root
+  assembly tagged `direction_control`, attached to the deck). Then
+  transmission rollers (`rolling`), converter (chamber + piston `guide`),
+  vessel/housing voids, heat fins. All nine keys are needed before B1-B9
+  can pass in the real suite.
