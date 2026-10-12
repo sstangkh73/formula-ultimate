@@ -33,8 +33,8 @@ from formula_ultimate.hierarchy.composition import (  # noqa: E402
     mesh_path,
     plan_vehicle,
 )
-from formula_ultimate.hierarchy.decomposition import DEFAULT_CONFIG  # noqa: E402
 from formula_ultimate.hierarchy.functional import (  # noqa: E402
+    V2_DECOMPOSITION_CONFIG,
     build_functional_manifest,
     config_sha256_v2,
     mesh_inertia,
@@ -51,7 +51,7 @@ def git_head() -> str:
 
 def generate(seed: int, out: Path) -> dict:
     catalogue = load_leaf_materials(ROOT / DEFAULT_MATERIAL_CATALOGUE)
-    plan = plan_vehicle(seed, catalogue)
+    plan = plan_vehicle(seed, catalogue, V2_DECOMPOSITION_CONFIG)
     for note in plan.rejected:
         print(f"rejected plan: {note}", file=sys.stderr)
     out.mkdir(parents=True, exist_ok=True)
@@ -59,7 +59,7 @@ def generate(seed: int, out: Path) -> dict:
     for leaf in plan.layout.leaves:
         measurements[leaf.id] = realize_leaf(leaf.program, out / mesh_path(leaf.id),
                                              plan.materials[leaf.id].density_kg_m3)
-    v1_config = composition_config_sha256(DEFAULT_CONFIG, DEFAULT_LAYOUT_CONFIG,
+    v1_config = composition_config_sha256(V2_DECOMPOSITION_CONFIG, DEFAULT_LAYOUT_CONFIG,
                                           DEFAULT_COMPOSITION_CONFIG, catalogue)
     v1_manifest = build_manifest(plan, measurements, v1_config, git_head())
     _mass, _com, inertia = mesh_inertia(

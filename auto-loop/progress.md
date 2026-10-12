@@ -230,3 +230,24 @@ the same commit.
   (wheels at the lowest z with bearings, steering, brake disc + stator, vessel
   with void, chamber + piston/rotor, housing with contents, finned surfaces,
   backbone) placed by a v2 layout, then the Level-0 evaluator.
+
+### Work 156 (v2 iteration 2): v2 flush-contact joint kinds, Completed
+
+- Done: `functional.py` adds `FLUSH_JOINT_KINDS` (v1 kinds minus `threaded`)
+  and `V2_DECOMPOSITION_CONFIG`; the v2 generator plans with it and hashes it.
+  Decision: flat cap/side contacts have no hole or axis, so v2 never labels
+  them `threaded`; `threaded` is reserved for future hole-and-pin fasteners.
+  v1 is unchanged. Tests: `tests/test_hierarchy_functional_joints.py` (4).
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1104 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=12)`: v1 13/13; v2 all Tier A0 pass (Interfaces fixed),
+  A2 (vacuous), A3 pass; A1, B1–B10, C1 fail. B10 now fails on count 0 < 8.
+- Problems: `cd "..." && git ...` triggers an approval prompt; run git from
+  the default working directory without `cd`.
+- Next: Tier A1 geometry language in a v2 leaf grammar (new module beside
+  `leaf_geometry.py`): >= 25 % non-prismatic leaves (e.g. tapered extrusion
+  or loft; note the acceptance check rejects a shape whose faces are 99 %
+  parallel/perpendicular to one direction, so a straight extrusion of any
+  profile is prismatic) and >= 5 % with a through-hole (genus >= 1). Keep the
+  flat contact caps so the v1 layout still works. Then fasteners: a holed
+  plate leaf plus a pin leaf through it as `threaded` with axis (>= 8/seed).

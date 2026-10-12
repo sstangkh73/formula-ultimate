@@ -8,15 +8,24 @@ estimated. Representation only; nothing here is physical validation.
 
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import Any, Iterable, Mapping, Sequence
 
 import numpy as np
 
-from .part_tree import canonical_sha256
+from .decomposition import DEFAULT_CONFIG
+from .part_tree import JOINT_KINDS, canonical_sha256
 
 
 DESIGN_LANGUAGE_VERSION_V2 = "func-composition-v2"
 UP_AXIS = "z"
+
+# The v1 layout joins leaves by flat cap or side-face contact, which has no
+# hole and no axis. In v2 a `threaded` interface must carry an axis through a
+# real hole, so flush contacts draw only the axis-free kinds; `threaded` is
+# reserved for hole-and-pin fastener joints realized with geometry.
+FLUSH_JOINT_KINDS = tuple(kind for kind in JOINT_KINDS if kind != "threaded")
+V2_DECOMPOSITION_CONFIG = replace(DEFAULT_CONFIG, joint_kinds=FLUSH_JOINT_KINDS)
 
 # Second moments of the unit tetrahedron (0, e1, e2, e3): integral of x_i x_j
 # over it equals CANONICAL[i, j] times the frame determinant.
