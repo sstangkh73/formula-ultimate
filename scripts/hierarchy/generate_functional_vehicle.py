@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import subprocess
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -38,10 +39,17 @@ from formula_ultimate.hierarchy.functional import (  # noqa: E402
     build_functional_manifest,
     config_sha256_v2,
     mesh_inertia,
+    with_leaf_grammar_versions,
 )
 from formula_ultimate.hierarchy.layout import DEFAULT_LAYOUT_CONFIG  # noqa: E402
 from formula_ultimate.hierarchy.leaf_geometry import read_binary_stl  # noqa: E402
-from leaf_realization import realize_leaf  # noqa: E402
+from formula_ultimate.hierarchy.leaf_refinement import (  # noqa: E402
+    DEFAULT_REFINEMENT_CONFIG,
+    refine_layout,
+    refinement_config_record,
+    refinement_problems,
+)
+from functional_realization import realize_program  # noqa: E402
 
 
 def git_head() -> str:
@@ -54,20 +62,27 @@ def generate(seed: int, out: Path) -> dict:
     plan = plan_vehicle(seed, catalogue, V2_DECOMPOSITION_CONFIG)
     for note in plan.rejected:
         print(f"rejected plan: {note}", file=sys.stderr)
+    refined = refine_layout(plan.layout, DEFAULT_REFINEMENT_CONFIG)
+    problems = refinement_problems(plan.layout, refined)
+    if problems:
+        raise RuntimeError(f"seed {seed}: leaf refinement re-check failed: {problems[:5]}")
+    plan = replace(plan, layout=refined)
     out.mkdir(parents=True, exist_ok=True)
     measurements = {}
     for leaf in plan.layout.leaves:
-        measurements[leaf.id] = realize_leaf(leaf.program, out / mesh_path(leaf.id),
-                                             plan.materials[leaf.id].density_kg_m3)
+        measurements[leaf.id] = realize_program(leaf.program, out / mesh_path(leaf.id),
+                                                plan.materials[leaf.id].density_kg_m3)
     v1_config = composition_config_sha256(V2_DECOMPOSITION_CONFIG, DEFAULT_LAYOUT_CONFIG,
                                           DEFAULT_COMPOSITION_CONFIG, catalogue)
-    v1_manifest = build_manifest(plan, measurements, v1_config, git_head())
+    v1_manifest = with_leaf_grammar_versions(build_manifest(plan, measurements, v1_config, git_head()))
     _mass, _com, inertia = mesh_inertia(
         (read_binary_stl(out / mesh_path(leaf.id)), plan.materials[leaf.id].density_kg_m3)
         for leaf in plan.layout.leaves)
     # Skeleton (Work 155): no motion or capability evidence is claimed yet.
     manifest = build_functional_manifest(v1_manifest, motions=[], function_evidence={},
-                                         inertia_kg_m2=inertia, config_sha256=config_sha256_v2(v1_config))
+                                         inertia_kg_m2=inertia,
+                                         config_sha256=config_sha256_v2(
+                                             v1_config, refinement_config_record(DEFAULT_REFINEMENT_CONFIG)))
     (out / "manifest.json").write_bytes(manifest_bytes(manifest))
     return manifest
 

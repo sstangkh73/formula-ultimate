@@ -251,3 +251,37 @@ the same commit.
   profile is prismatic) and >= 5 % with a through-hole (genus >= 1). Keep the
   flat contact caps so the v1 layout still works. Then fasteners: a holed
   plate leaf plus a pin leaf through it as `threaded` with axis (>= 8/seed).
+
+### Work 157 (v2 iteration 3): v2 leaf through-bores, Completed
+
+- Done: `src/formula_ultimate/hierarchy/leaf_refinement.py` (post-layout,
+  pure Python): for a seed-chosen subset (p = 0.8) of placed leaves, one
+  oblique cylindrical bore (tilt 5-40 deg, drawn lateral axis offset) is cut
+  from the local extrusion before the placement transforms
+  (`section -> extrude -> bore -> transforms`, grammar `func-leaf-bored-v2`).
+  The bore stays inside the inscribed cylinder (material removal only, so no
+  new interpenetration and unchanged boxes) and its cap exits keep clear of
+  the contact patches each cap receives (`contact_patches`).
+  `refinement_problems` re-checks everything. `scripts/hierarchy/functional_realization.py`
+  realizes v1 or refined programs. The v2 generator records each leaf's
+  grammar version and hashes the refinement config. Tests:
+  `tests/test_hierarchy_leaf_refinement.py` (9).
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1113 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=11)`: v1 13/13; v2 all of Tier A passes (A1 fixed;
+  seed 11: 92/226 holed, 160 non-prismatic, worst interface gap 2e-18 m);
+  B1-B10 and C1 fail.
+- Problems: centred bores were blocked on 104/110 leaves with received
+  patches, so a lateral axis offset was added. Note that A1's non-prismatic
+  share already passed before (the proxy samples the 20 largest triangles).
+- Next: Tier B10 fasteners (>= 8 `threaded` joints per seed, axis through a
+  hole of one part and the material of the other, axis point inside the holed
+  part's thickness). Suggested: new pin leaves (inside the tree, under the
+  same subtree as the holed part so capability tagging holds) with a shaft
+  along an axial (tilt 0) bore of a holed leaf and a flat head resting on the
+  cap; interface `threaded` between holed leaf and pin with `axis_point_m` at
+  the mid-plane. Adding leaves changes the tree, so check part_tree validation,
+  roll-up and the A0 tests (box disjointness of the pin vs. the holed leaf is
+  impossible: the acceptance penetration check only measures depth, so a pin
+  inside a hole with clearance is fine, but `layout_problems` box rules are
+  v1 only; keep pins out of that check or extend a v2 re-check).

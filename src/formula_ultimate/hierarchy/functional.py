@@ -58,11 +58,33 @@ def mesh_inertia(meshes_and_density: Iterable[tuple[np.ndarray, float]]) -> tupl
     return float(mass), com, inertia
 
 
-def config_sha256_v2(v1_config_sha256: str) -> str:
-    """Configuration hash of the v2 generator over the v1 composition hash."""
+def config_sha256_v2(v1_config_sha256: str, refinement: Mapping[str, Any] | None = None) -> str:
+    """Configuration hash of the v2 generator over the v1 composition hash.
 
-    return canonical_sha256({"design_language_version": DESIGN_LANGUAGE_VERSION_V2,
-                             "v1_composition_config_sha256": v1_config_sha256})
+    ``refinement`` is the declared leaf refinement record (Work 157), if used.
+    """
+
+    record: dict[str, Any] = {"design_language_version": DESIGN_LANGUAGE_VERSION_V2,
+                              "v1_composition_config_sha256": v1_config_sha256}
+    if refinement is not None:
+        record["leaf_refinement"] = dict(refinement)
+    return canonical_sha256(record)
+
+
+def with_leaf_grammar_versions(manifest: Mapping[str, Any]) -> dict:
+    """A copy whose part generators name each program's own leaf grammar."""
+
+    result = dict(manifest)
+    nodes = []
+    for node in manifest["nodes"]:
+        if node.get("kind") == "part":
+            node = dict(node)
+            generator = dict(node["generator"])
+            generator["grammar_version"] = generator["program"]["leaf_grammar_version"]
+            node["generator"] = generator
+        nodes.append(node)
+    result["nodes"] = nodes
+    return result
 
 
 def build_functional_manifest(v1_manifest: Mapping[str, Any], motions: Sequence[Mapping[str, Any]],
