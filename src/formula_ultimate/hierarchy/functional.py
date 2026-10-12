@@ -59,11 +59,13 @@ def mesh_inertia(meshes_and_density: Iterable[tuple[np.ndarray, float]]) -> tupl
 
 
 def config_sha256_v2(v1_config_sha256: str, refinement: Mapping[str, Any] | None = None,
-                     fasteners: Mapping[str, Any] | None = None) -> str:
+                     fasteners: Mapping[str, Any] | None = None,
+                     mechanisms: Mapping[str, Any] | None = None) -> str:
     """Configuration hash of the v2 generator over the v1 composition hash.
 
     ``refinement`` is the declared leaf refinement record (Work 157) and
-    ``fasteners`` the declared fastener record (Work 158), if used.
+    ``fasteners`` the declared fastener record (Work 158) and ``mechanisms``
+    the declared mechanism-layer record (Work 160), if used.
     """
 
     record: dict[str, Any] = {"design_language_version": DESIGN_LANGUAGE_VERSION_V2,
@@ -72,6 +74,8 @@ def config_sha256_v2(v1_config_sha256: str, refinement: Mapping[str, Any] | None
         record["leaf_refinement"] = dict(refinement)
     if fasteners is not None:
         record["fasteners"] = dict(fasteners)
+    if mechanisms is not None:
+        record["mechanisms"] = dict(mechanisms)
     return canonical_sha256(record)
 
 

@@ -6,8 +6,10 @@ Run under the pinned CadQuery runtime:
     python generate_functional_vehicle.py --seed S --out DIR
 
 Writes ``DIR/manifest.json`` and one metre-scale binary STL per leaf under
-``DIR/meshes/``. Leaf masses, centres of mass and the vehicle inertia tensor
-are measured from the re-read exported meshes. The same seed and commit give a
+``DIR/meshes/``. The v1 cluster is realized first; the mechanism layer
+(Work 160) is planned around the cluster box measured from its re-read meshes.
+Leaf masses, centres of mass and the vehicle inertia tensor are measured from
+the re-read exported meshes. The same seed and commit give a
 byte-identical package. Representation only, not physical validation.
 """
 
@@ -50,6 +52,14 @@ from formula_ultimate.hierarchy.functional import (  # noqa: E402
 )
 from formula_ultimate.hierarchy.layout import DEFAULT_LAYOUT_CONFIG  # noqa: E402
 from formula_ultimate.hierarchy.leaf_geometry import read_binary_stl  # noqa: E402
+from formula_ultimate.hierarchy.mechanisms import (  # noqa: E402
+    DEFAULT_MECHANISM_CONFIG,
+    measure_cluster,
+    mechanism_config_record,
+    mechanism_problems,
+    merge_mechanism_layer,
+    plan_mechanisms,
+)
 from formula_ultimate.hierarchy.leaf_refinement import (  # noqa: E402
     DEFAULT_REFINEMENT_CONFIG,
     refine_layout,
@@ -80,23 +90,35 @@ def generate(seed: int, out: Path) -> dict:
         raise RuntimeError(f"seed {seed}: fastener re-check failed: {problems[:5]}")
     plan = fastened.plan
     out.mkdir(parents=True, exist_ok=True)
-    measurements = {}
+    measurements, meshes, densities = {}, {}, {}
     for leaf in plan.layout.leaves:
         measurements[leaf.id] = realize_program(leaf.program, out / mesh_path(leaf.id),
                                                 plan.materials[leaf.id].density_kg_m3)
+        meshes[leaf.id] = read_binary_stl(out / mesh_path(leaf.id))
+        densities[leaf.id] = plan.materials[leaf.id].density_kg_m3
+    bounds = measure_cluster(meshes)
+    layer = plan_mechanisms(seed, bounds, catalogue, DEFAULT_MECHANISM_CONFIG)
+    problems = mechanism_problems(layer, bounds, list(meshes))
+    if problems:
+        raise RuntimeError(f"seed {seed}: mechanism layer re-check failed: {problems[:5]}")
+    for part in layer.parts:
+        measurements[part.id] = realize_program(part.program, out / mesh_path(part.id),
+                                                part.material.density_kg_m3)
+        meshes[part.id] = read_binary_stl(out / mesh_path(part.id))
+        densities[part.id] = part.material.density_kg_m3
     v1_config = composition_config_sha256(V2_DECOMPOSITION_CONFIG, DEFAULT_LAYOUT_CONFIG,
                                           DEFAULT_COMPOSITION_CONFIG, catalogue)
     v1_manifest = with_threaded_axes(
         with_leaf_grammar_versions(build_manifest(plan, measurements, v1_config, git_head())), fastened.axes)
-    _mass, _com, inertia = mesh_inertia(
-        (read_binary_stl(out / mesh_path(leaf.id)), plan.materials[leaf.id].density_kg_m3)
-        for leaf in plan.layout.leaves)
-    # Skeleton (Work 155): no motion or capability evidence is claimed yet.
-    manifest = build_functional_manifest(v1_manifest, motions=[], function_evidence={},
+    merged = merge_mechanism_layer(v1_manifest, layer, measurements, mesh_path)
+    _mass, _com, inertia = mesh_inertia((meshes[i], densities[i]) for i in sorted(meshes))
+    manifest = build_functional_manifest(merged, motions=list(layer.motions),
+                                         function_evidence=layer.evidence,
                                          inertia_kg_m2=inertia,
                                          config_sha256=config_sha256_v2(
                                              v1_config, refinement_config_record(DEFAULT_REFINEMENT_CONFIG),
-                                             fastener_config_record(DEFAULT_FASTENER_CONFIG)))
+                                             fastener_config_record(DEFAULT_FASTENER_CONFIG),
+                                             mechanism_config_record(DEFAULT_MECHANISM_CONFIG)))
     (out / "manifest.json").write_bytes(manifest_bytes(manifest))
     return manifest
 

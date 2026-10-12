@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Realize one v1, bored or socketed (goal v2) leaf program as a metre-scale binary STL.
+"""Realize one v1, bored, socketed or mechanism (goal v2) leaf program as a metre-scale binary STL.
 
 Run under the pinned CadQuery runtime:
 
     python functional_realization.py PROGRAM.json OUT.stl DENSITY_KG_M3
 
-The program is checked by ``fasteners.validate_v2_program``, then
+The program is checked by ``fasteners.validate_v2_program`` (or
+``mechanisms.validate_mechanism_program`` for mechanism prisms), then
 built with the unchanged Work 092 executor and tessellated like a v1 leaf.
 Mass and centre of mass are measured from the re-read float32 STL.
 """
@@ -24,11 +25,18 @@ for entry in (str(ROOT / "src"), str(ROOT), str(Path(__file__).resolve().parent)
 
 from formula_ultimate.hierarchy.leaf_geometry import measure_mesh, read_binary_stl, stl_bytes  # noqa: E402
 from formula_ultimate.hierarchy.fasteners import validate_v2_program  # noqa: E402
+from formula_ultimate.hierarchy.mechanisms import (  # noqa: E402
+    MECHANISM_GRAMMAR_VERSION,
+    validate_mechanism_program,
+)
 from leaf_realization import execute_candidate, tessellate_m  # noqa: E402
 
 
 def build_program_shape(program: Mapping[str, Any]):
-    validate_v2_program(program)
+    if program.get("leaf_grammar_version") == MECHANISM_GRAMMAR_VERSION:
+        validate_mechanism_program(program)
+    else:
+        validate_v2_program(program)
     profiles = {program["profile"]["profile_id"]: program["profile"]}
     shape, _trace = execute_candidate(program["candidate"], profiles)
     return shape

@@ -343,3 +343,51 @@ the same commit.
   bearings, steering, brake rotor/stator, vessel, chamber+piston, housing)
   under the matching capability subtrees, below the v1 layout's lowest z for
   wheels so only they touch the ground band.
+
+### Work 160 (v2 iteration 6): mechanism layer framework and structural deck, Completed
+
+- Done: `src/formula_ultimate/hierarchy/mechanisms.py` (pure Python). After the
+  v1 cluster is realized, the generator re-reads its meshes (`measure_cluster`:
+  box + lowest leaf/vertex) and plans a mechanism layer: root-level assemblies
+  `m<k>-<capability>`; mechanism leaf grammar `func-leaf-mechanism-v2`
+  (`prism_program`: polygon outer + hole loops -> straight extrude -> rigid
+  transforms, flat faces only). First member: deck `m0-load_structure.deck`, a
+  chamfered octagon with its top at the cluster's lowest z `Z0`, footprint =
+  cluster + margin, a +x bay (0.8-1.2 m) for later modules and a 0.14 m x lip
+  on both ends for the ground-contact lines; `bonded` seat interface to the
+  cluster's lowest leaf. `merge_mechanism_layer` appends nodes under the root,
+  re-rolls masses (same arithmetic as `part_tree.roll_up`) and appends
+  interfaces at manifest level (so v2 kinds bypass the v1 `PartTree`
+  validator). `Backbone` dataclass carries the deck frame (x0/x1/y0/y1, z_top,
+  thickness, core_x0/core_x1, bay_x0) for later modules. Evidence emitted:
+  `load_structure` only. Tests: `tests/test_hierarchy_mechanisms.py` (10).
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1140 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=9)`: only B1-B9 (key set incomplete); A, B10, C1 green.
+- Evidence: seed 11 249 leaves, 25 s; Level-0 `finished` 9682 s; root mass
+  528 -> 1766 kg (deck ~1240 kg, synthetic density). Consider a thinner deck
+  or lightening holes later.
+- Planned design for the next items (record deviations):
+  - Ground contacts + braking (one item, group tagged
+    `[ground_propulsion, braking]`, per-corner sub-assemblies): wheel centre
+    lines at x = core_x0 - 0.06 and core_x1 + 0.06 (deck lip covers them, so
+    the CoM stays >= 0.06 m inside the support rectangle when everything else
+    is symmetric or inside the core); wheels outside the deck in y, axis y,
+    regular N-gon disc with an N-gon bore, a vertex pointing straight down so
+    the band points sit at the wheel centre x. Fixed axle: N-gon prism along y,
+    cap seated on the deck side face (radius < t/2 - 2 mm), flat top face.
+    Bearing: bore apothem = axle circumradius + c (c = 2.5e-5), bore phase
+    offset pi/N so the static gap is c and no rotation can penetrate. Rotor
+    disc between deck and wheel in the same motion as the wheel (motion parts
+    {wheel, rotor}, `bonded` to the wheel); stator block on the axle's flat top
+    face and the deck side face, 0.5 mm from the rotor face. Wheels must be the
+    only parts within 1 mm of the lowest z (rotor radius <= R - 1 cm).
+  - Bay modules on the deck top: steering post + arm (z axis, range >= 0.2),
+    two or three rollers on vertical posts with rims c apart (`rolling`),
+    tube with flat bottom + piston (prismatic `guide`, stroke inside the tube),
+    vessel and controller housing as outer prism minus an inner scaled prism
+    (needs a void option: `boolean_subtract`; verify CadQuery tessellation
+    orients the inner shell inward), contents floating 5e-5 m above the
+    cavity floor, comb-profile fin plates (area ratio >= 3).
+- Next: the ground-contact + braking item above (B4, B6 evidence; also
+  direction_control can follow quickly).
