@@ -425,3 +425,32 @@ the same commit.
   transmission rollers (`rolling`), converter (chamber + piston `guide`),
   vessel/housing voids, heat fins. All nine keys are needed before B1-B9
   can pass in the real suite.
+
+### Work 162 (v2 iteration 8): steering post and arm, Completed
+
+- Done: `src/formula_ultimate/hierarchy/direction_control.py` (pure Python).
+  `add_direction_control(layer, seed, catalogue)` adds root assembly
+  `m5-direction_control` tagged `[direction_control]` at the +x end of the
+  deck bay: boss (`bonded` to deck), post (`bonded` to boss), arm (convex
+  hull of hub + tip polygons, 96-gon bore apothem r_p + c, floats c above the
+  boss, `bearing` to post). Motion `<assembly>.steer` = {arm}, revolute +z,
+  range 0.3-0.8 rad. The full sweep circle stays 0.02 m inside the bay and
+  deck sides; the -x part of the bay (`bay_x0` up to
+  `steer x - reach - 0.02`) is still free. `direction_control_problems`
+  re-checks. Tests: `tests/test_hierarchy_direction_control.py` (8).
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1156 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=9)`: only B1-B9 (nine-key check); A, B10, C1 green.
+  Local relaxed check (`artifacts/work162/check.py`) passes A0/A1/A2/A3, B4,
+  B5, B6 on 11/23/37.
+- Evidence: ranges 0.743/0.792/0.393 rad; seed 11 Level-0 `finished`
+  10757 s, 1988 kg.
+- Problems: none. Copy the relaxed check script to each new artifacts dir.
+- Next: power transmission (B3): two or more full-turn revolute members, each
+  consecutive pair linked by an interface (e.g. two vertical-axis rollers on
+  posts on the deck bay's free -x part, rims c apart with a `rolling`
+  interface; each roller `bearing` to its post, posts `bonded` to deck;
+  watch the sweep: a full-turn polygon roller sweeps its circumcircle, so the
+  partner's vertices must stay outside it, e.g. gear-free discs with a
+  vertex-to-face gap of c via matched polygons, or one roller as a 96-gon).
+  Then converter, vessel/housing voids, fins, B7.

@@ -330,3 +330,27 @@
   `direction_control` ต่อกับแผ่นพื้น) จากนั้นลูกกลิ้งส่งกำลัง (`rolling`), ตัวแปลงพลังงาน
   (ห้อง + ลูกสูบ `guide`), ช่องว่างของภาชนะ/กล่อง และครีบระบายความร้อน ต้องมีคีย์ครบเก้า
   ก่อน B1-B9 จึงจะผ่านในชุดทดสอบจริง
+
+### Work 162 (v2 รอบที่ 8): เสาบังคับเลี้ยวและแขน, Completed
+
+- ทำแล้ว: `src/formula_ultimate/hierarchy/direction_control.py` (Python ล้วน)
+  `add_direction_control(layer, seed, catalogue)` เพิ่ม assembly ระดับราก
+  `m5-direction_control` ติดแท็ก `[direction_control]` ที่ปลาย +x ของ bay บน deck:
+  boss (`bonded` กับ deck), post (`bonded` กับ boss), arm (convex hull ของ hub + tip
+  polygon รูเจาะ 96 เหลี่ยม apothem r_p + c ลอยเหนือ boss เป็นระยะ c, `bearing` กับ post)
+  motion `<assembly>.steer` = {arm} แบบ revolute รอบ +z ช่วง 0.3-0.8 rad วงกลมกวาด
+  เต็มรอบอยู่ภายใน bay และขอบ deck 0.02 m ส่วน -x ของ bay (`bay_x0` ถึง
+  `steer x - reach - 0.02`) ยังว่าง `direction_control_problems` ตรวจซ้ำ
+  เทสต์: `tests/test_hierarchy_direction_control.py` (8)
+- ผู้ทำ: Claude
+- Gate: Gate 1 PASS. Gate 2 `Ran 1156 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=9)`: เฉพาะ B1-B9 (การตรวจเก้าคีย์); A, B10, C1 ผ่าน
+  การตรวจแบบผ่อนในเครื่อง (`artifacts/work162/check.py`) ผ่าน A0/A1/A2/A3, B4, B5, B6
+  บน 11/23/37
+- หลักฐาน: ช่วง 0.743/0.792/0.393 rad; seed 11 Level-0 `finished` 10757 s, 1988 kg
+- ปัญหา: ไม่มี ให้คัดลอกสคริปต์ตรวจแบบผ่อนไปยังไดเรกทอรี artifacts ใหม่ทุกครั้ง
+- ถัดไป: การส่งกำลัง (B3): ชิ้นหมุนเต็มรอบแบบ revolute อย่างน้อยสองชิ้น แต่ละคู่ที่ติดกัน
+  เชื่อมด้วย interface (เช่น ลูกกลิ้งแกนตั้งสองตัวบนเสาในส่วน -x ที่ว่างของ bay ขอบห่างกัน c
+  มี interface `rolling`; ลูกกลิ้งแต่ละตัว `bearing` กับเสา เสา `bonded` กับ deck; ระวังการกวาด:
+  ลูกกลิ้งหลายเหลี่ยมที่หมุนเต็มรอบกวาดวงกลมล้อมรอบ จุดยอดของคู่ต้องอยู่นอกวงนั้น เช่น
+  ใช้ลูกกลิ้งหนึ่งตัวเป็น 96 เหลี่ยม) จากนั้นตัวแปลงพลังงาน ช่องว่างภาชนะ/กล่อง ครีบ และ B7

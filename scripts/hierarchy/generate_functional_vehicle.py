@@ -8,7 +8,8 @@ Run under the pinned CadQuery runtime:
 Writes ``DIR/manifest.json`` and one metre-scale binary STL per leaf under
 ``DIR/meshes/``. The v1 cluster is realized first; the mechanism layer
 (Work 160) is planned around the cluster box measured from its re-read meshes,
-with wheel-and-brake ground-contact corners on the deck (Work 161).
+with wheel-and-brake ground-contact corners on the deck (Work 161) and a
+steering post and arm in the deck bay (Work 162).
 Leaf masses, centres of mass and the vehicle inertia tensor are measured from
 the re-read exported meshes. The same seed and commit give a
 byte-identical package. Representation only, not physical validation.
@@ -36,6 +37,12 @@ from formula_ultimate.hierarchy.composition import (  # noqa: E402
     manifest_bytes,
     mesh_path,
     plan_vehicle,
+)
+from formula_ultimate.hierarchy.direction_control import (  # noqa: E402
+    DEFAULT_DIRECTION_CONTROL_CONFIG,
+    add_direction_control,
+    direction_control_config_record,
+    direction_control_problems,
 )
 from formula_ultimate.hierarchy.fasteners import (  # noqa: E402
     DEFAULT_FASTENER_CONFIG,
@@ -106,8 +113,10 @@ def generate(seed: int, out: Path) -> dict:
     bounds = measure_cluster(meshes)
     layer = plan_mechanisms(seed, bounds, catalogue, DEFAULT_MECHANISM_CONFIG)
     layer = add_ground_contacts(layer, seed, catalogue, DEFAULT_GROUND_CONTACT_CONFIG)
-    problems = mechanism_problems(layer, bounds, list(meshes)) + ground_contact_problems(
-        layer, DEFAULT_GROUND_CONTACT_CONFIG)
+    layer = add_direction_control(layer, seed, catalogue, DEFAULT_DIRECTION_CONTROL_CONFIG)
+    problems = (mechanism_problems(layer, bounds, list(meshes))
+                + ground_contact_problems(layer, DEFAULT_GROUND_CONTACT_CONFIG)
+                + direction_control_problems(layer, DEFAULT_DIRECTION_CONTROL_CONFIG))
     if problems:
         raise RuntimeError(f"seed {seed}: mechanism layer re-check failed: {problems[:5]}")
     for part in layer.parts:
@@ -129,7 +138,9 @@ def generate(seed: int, out: Path) -> dict:
                                              fastener_config_record(DEFAULT_FASTENER_CONFIG),
                                              {**mechanism_config_record(DEFAULT_MECHANISM_CONFIG),
                                               "ground_contacts": ground_contact_config_record(
-                                                  DEFAULT_GROUND_CONTACT_CONFIG)}))
+                                                  DEFAULT_GROUND_CONTACT_CONFIG),
+                                              "direction_control": direction_control_config_record(
+                                                  DEFAULT_DIRECTION_CONTROL_CONFIG)}))
     (out / "manifest.json").write_bytes(manifest_bytes(manifest))
     return manifest
 
