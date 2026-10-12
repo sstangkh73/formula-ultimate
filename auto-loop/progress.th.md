@@ -354,3 +354,29 @@
   มี interface `rolling`; ลูกกลิ้งแต่ละตัว `bearing` กับเสา เสา `bonded` กับ deck; ระวังการกวาด:
   ลูกกลิ้งหลายเหลี่ยมที่หมุนเต็มรอบกวาดวงกลมล้อมรอบ จุดยอดของคู่ต้องอยู่นอกวงนั้น เช่น
   ใช้ลูกกลิ้งหนึ่งตัวเป็น 96 เหลี่ยม) จากนั้นตัวแปลงพลังงาน ช่องว่างภาชนะ/กล่อง ครีบ และ B7
+
+### Work 163 (v2 รอบที่ 9-10): โซ่ลูกกลิ้งส่งกำลัง, Completed
+
+- ทำแล้ว: `src/formula_ultimate/hierarchy/power_transmission.py` (Python ล้วน)
+  `add_power_transmission(layer, seed, catalogue)` เพิ่ม assembly ระดับราก
+  `m6-power_transmission` ติดแท็ก `[power_transmission]` ในแถบว่างด้าน -x ของ bay
+  บน deck: 2-3 สถานีเรียงตามแนว y แต่ละสถานีมี boss (`bonded` กับ deck), post
+  (`bonded`), roller (N_r เหลี่ยม รูเจาะ 96 เหลี่ยม, `bearing` กับ post) roller ที่ติดกัน
+  ห่างกัน `R_i + R_j + c` โดยมีจุดยอดหันเข้าหากัน (`rolling`) motion
+  `<assembly>.r<i>` หมุนเต็มรอบรอบ +z หลักฐาน `chain`
+  `power_transmission_problems` ตรวจซ้ำ เทสต์:
+  `tests/test_hierarchy_power_transmission.py` (7)
+- ผู้ทำ: Claude (เขียนโค้ดในรอบที่ 19 commit ในรอบที่ 20 หลังตรวจซ้ำ เพราะรอบก่อน
+  จบก่อน commit)
+- Gate: Gate 1 PASS. Gate 2 `Ran 1163 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=9)`: เฉพาะ B1-B9 (การตรวจเก้าคีย์); A, B10, C1 ผ่าน
+  การตรวจแบบผ่อนในเครื่อง (`artifacts/work163/check.py`) ผ่าน A0 interfaces, A1, A2,
+  A3, B3, B4, B5, B6 บน 11/23/37
+- หลักฐาน: โซ่ 3/2/3 roller; seed 11 Level-0 `finished` 10758 s, 1993 kg
+- ปัญหา: คำสั่ง Bash ที่มี `python -` อ่าน stdin ค้างจนหมดเวลา 30 นาที ให้เก็บสคริปต์
+  ช่วยไว้ในไฟล์ใต้ `artifacts/`
+- ถัดไป: ตัวแปลงพลังงาน (B2): ชิ้นห้องที่มีรูเจาะ (genus >= 1) และชิ้นลูกสูบบน motion
+  แบบ prismatic ที่มี interface `guide` กับห้อง ตัวอย่างของลูกสูบตลอดช่วงชัก >= 50 %
+  ต้องอยู่ในกล่องของห้องและนอกเนื้อวัสดุ จากนั้นภาชนะเก็บพลังงานและกล่องตัวควบคุมที่มี
+  ช่องว่างภายใน (B1, B9), ครีบระบายความร้อน (B8) และการตรวจ B7 ต้องมีคีย์ครบเก้าก่อน
+  B1-B9 จึงจะผ่านในชุดทดสอบ

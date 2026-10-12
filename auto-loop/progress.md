@@ -454,3 +454,30 @@ the same commit.
   partner's vertices must stay outside it, e.g. gear-free discs with a
   vertex-to-face gap of c via matched polygons, or one roller as a 96-gon).
   Then converter, vessel/housing voids, fins, B7.
+
+### Work 163 (v2 iterations 9-10): power-transmission roller chain, Completed
+
+- Done: `src/formula_ultimate/hierarchy/power_transmission.py` (pure Python).
+  `add_power_transmission(layer, seed, catalogue)` adds root assembly
+  `m6-power_transmission` tagged `[power_transmission]` in the free -x strip
+  of the deck bay: 2-3 stations along y, each boss (`bonded` to deck), post
+  (`bonded`), roller (N_r-gon, 96-gon bore, `bearing` to post). Consecutive
+  rollers are `R_i + R_j + c` apart with facing vertices (`rolling`).
+  Motions `<assembly>.r<i>`, full turn about +z; evidence `chain`.
+  `power_transmission_problems` re-checks. Tests:
+  `tests/test_hierarchy_power_transmission.py` (7).
+- Who: Claude (code written in iteration 19, committed in iteration 20 after
+  re-validation; the earlier iteration ended before committing).
+- Gates: Gate 1 PASS. Gate 2 `Ran 1163 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=9)`: only B1-B9 (nine-key check); A, B10, C1 green.
+  Local relaxed check (`artifacts/work163/check.py`) passes A0 interfaces,
+  A1, A2, A3, B3, B4, B5, B6 on 11/23/37.
+- Evidence: chain 3/2/3 rollers; seed 11 Level-0 `finished` 10758 s, 1993 kg.
+- Problems: a Bash call with a stray `python -` reading stdin hung until the
+  30 min timeout; keep helper scripts in files under `artifacts/`.
+- Next: energy converter (B2): a chamber leaf with a bore (genus >= 1) and a
+  piston leaf on a prismatic motion with a `guide` interface to the chamber;
+  >= 50 % of the piston's samples over the stroke must lie inside the
+  chamber box and outside its material. Then energy-storage vessel and
+  controller housing with internal voids (B1, B9), heat fins (B8), and the
+  B7 reach check. All nine keys are needed before B1-B9 pass in the suite.

@@ -74,6 +74,12 @@ from formula_ultimate.hierarchy.mechanisms import (  # noqa: E402
     merge_mechanism_layer,
     plan_mechanisms,
 )
+from formula_ultimate.hierarchy.power_transmission import (  # noqa: E402
+    DEFAULT_POWER_TRANSMISSION_CONFIG,
+    add_power_transmission,
+    power_transmission_config_record,
+    power_transmission_problems,
+)
 from formula_ultimate.hierarchy.leaf_refinement import (  # noqa: E402
     DEFAULT_REFINEMENT_CONFIG,
     refine_layout,
@@ -114,9 +120,11 @@ def generate(seed: int, out: Path) -> dict:
     layer = plan_mechanisms(seed, bounds, catalogue, DEFAULT_MECHANISM_CONFIG)
     layer = add_ground_contacts(layer, seed, catalogue, DEFAULT_GROUND_CONTACT_CONFIG)
     layer = add_direction_control(layer, seed, catalogue, DEFAULT_DIRECTION_CONTROL_CONFIG)
+    layer = add_power_transmission(layer, seed, catalogue, DEFAULT_POWER_TRANSMISSION_CONFIG)
     problems = (mechanism_problems(layer, bounds, list(meshes))
                 + ground_contact_problems(layer, DEFAULT_GROUND_CONTACT_CONFIG)
-                + direction_control_problems(layer, DEFAULT_DIRECTION_CONTROL_CONFIG))
+                + direction_control_problems(layer, DEFAULT_DIRECTION_CONTROL_CONFIG)
+                + power_transmission_problems(layer, DEFAULT_POWER_TRANSMISSION_CONFIG))
     if problems:
         raise RuntimeError(f"seed {seed}: mechanism layer re-check failed: {problems[:5]}")
     for part in layer.parts:
@@ -140,7 +148,9 @@ def generate(seed: int, out: Path) -> dict:
                                               "ground_contacts": ground_contact_config_record(
                                                   DEFAULT_GROUND_CONTACT_CONFIG),
                                               "direction_control": direction_control_config_record(
-                                                  DEFAULT_DIRECTION_CONTROL_CONFIG)}))
+                                                  DEFAULT_DIRECTION_CONTROL_CONFIG),
+                                              "power_transmission": power_transmission_config_record(
+                                                  DEFAULT_POWER_TRANSMISSION_CONFIG)}))
     (out / "manifest.json").write_bytes(manifest_bytes(manifest))
     return manifest
 
