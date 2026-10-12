@@ -204,3 +204,29 @@ the same commit.
 - Next free work number: 155.
 
 ## Log (goal v2)
+
+### Work 155 (v2 iteration 1): v2 generator skeleton with measured inertia, Completed
+
+- Done: `src/formula_ultimate/hierarchy/functional.py` (`mesh_inertia`,
+  `config_sha256_v2`, `build_functional_manifest`, version
+  `func-composition-v2`) and `scripts/hierarchy/generate_functional_vehicle.py`
+  (v1 plan + realization unchanged, STL re-read, inertia, `up_axis`,
+  `motions = []`, `function_evidence = {}`). Tests:
+  `tests/test_hierarchy_functional.py` (6).
+- Who: Claude.
+- Gates: Gate 1 PASS. Gate 2 `Ran 1100 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=13, errors=1)`: v1 suite 13/13 pass; v2 passes TierA0
+  except Interfaces, TierA2 (vacuous, no motions) and TierA3.
+- Problems: TierA0Interfaces fails because v1 layout emits `threaded`
+  interfaces (49 in seed 11) without `axis_point_m`/`axis_dir`; TierB10 errors
+  on the same. A grep pattern ending in `$` (e.g. `ok$`) triggers an approval
+  prompt; use the pattern from Work 149 exactly.
+- Next (suggested roadmap, record deviations): (1) v2 interface kinds: in the
+  v2 package, give threaded joints a real hole in one leaf and a pin through
+  it, or relabel v1 contacts that cannot carry an axis to another v1 kind
+  (decide; keep >= 8 real threaded joints for TierB10); (2) TierA1 geometry
+  language: non-prismatic leaves (e.g. tapered/lofted or revolved profiles) for
+  >= 25 % and holed leaves for >= 5 %; (3) per-capability functional modules
+  (wheels at the lowest z with bearings, steering, brake disc + stator, vessel
+  with void, chamber + piston/rotor, housing with contents, finned surfaces,
+  backbone) placed by a v2 layout, then the Level-0 evaluator.

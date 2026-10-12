@@ -157,3 +157,24 @@
 - เลข work ถัดไปที่ว่าง: 155
 
 ## Log (เป้าหมาย v2)
+
+### Work 155 (v2 รอบที่ 1): โครงตัวสร้าง v2 พร้อมความเฉื่อยที่วัดได้, Completed
+
+- ทำแล้ว: `src/formula_ultimate/hierarchy/functional.py` (`mesh_inertia`,
+  `config_sha256_v2`, `build_functional_manifest`, เวอร์ชัน `func-composition-v2`) และ
+  `scripts/hierarchy/generate_functional_vehicle.py` (แผนและการสร้างรูปทรงของ v1 ไม่แก้ไข, อ่าน STL กลับ,
+  ความเฉื่อย, `up_axis`, `motions = []`, `function_evidence = {}`) เทสต์:
+  `tests/test_hierarchy_functional.py` (6)
+- ผู้ทำ: Claude
+- Gate: Gate 1 PASS. Gate 2 `Ran 1100 tests`, `OK (skipped=11)`. Gate 3
+  `FAILED (failures=13, errors=1)`: ชุด v1 ผ่าน 13/13; v2 ผ่าน TierA0 ยกเว้น Interfaces, TierA2
+  (ผ่านแบบว่างเปล่า ไม่มีการเคลื่อนที่) และ TierA3
+- ปัญหา: TierA0Interfaces ตกเพราะ layout ของ v1 สร้าง interface ชนิด `threaded` (49 ตัวใน seed 11)
+  โดยไม่มี `axis_point_m`/`axis_dir` และ TierB10 error ด้วยสาเหตุเดียวกัน รูปแบบ grep ที่ลงท้ายด้วย `$`
+  (เช่น `ok$`) ทำให้ต้องขออนุมัติ ให้ใช้รูปแบบจาก Work 149 ตามเดิม
+- ถัดไป (แผนที่แนะนำ บันทึกหากเปลี่ยน): (1) ชนิด interface ของ v2: ในแพ็กเกจ v2 ให้ข้อต่อเกลียวมีรูจริงในใบหนึ่ง
+  และสลักทะลุรูนั้น หรือเปลี่ยนป้ายการสัมผัสของ v1 ที่ไม่มีแกนเป็นชนิด v1 อื่น (ตัดสินใจ; ต้องมีข้อต่อเกลียวจริง >= 8
+  สำหรับ TierB10); (2) ภาษารูปทรง TierA1: ใบไม่ใช่ปริซึม (เช่น เรียว/loft หรือ revolve) >= 25 %
+  และใบมีรู >= 5 %; (3) โมดูลเชิงฟังก์ชันต่อความสามารถ (ล้อที่ z ต่ำสุดพร้อม bearing, การบังคับเลี้ยว,
+  จานเบรกกับ stator, ภาชนะมีช่องว่าง, ห้องกับลูกสูบ/โรเตอร์, เปลือกหุ้มพร้อมชิ้นภายใน, พื้นผิวครีบ, โครงหลัก)
+  วางด้วย layout ของ v2 แล้วจึงทำตัวประเมิน Level-0
