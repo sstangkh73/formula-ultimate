@@ -1,0 +1,136 @@
+{
+ "category": {
+  "key": "MA",
+  "folder": "12_materials_joints_manufacturing",
+  "title_en": "Materials, material data, fasteners and joints, crash structures, manufacturing and tolerances",
+  "title_th": "วัสดุ ข้อมูลวัสดุ ตัวยึดและข้อต่อ โครงสร้างรับการชน การผลิต และพิกัดความเผื่อ",
+  "scope_en": "Where real material and joint behaviour comes from, and how manufacturing and tolerances constrain designs. The project picks catalog materials only (no new composition design); real material values stay in private/ under the material data policy.",
+  "scope_th": "แหล่งที่มาของพฤติกรรมวัสดุและข้อต่อจริง และการที่การผลิตกับพิกัดความเผื่อจำกัดการออกแบบ โครงการเลือกเฉพาะวัสดุในแค็ตตาล็อก (ไม่ออกแบบส่วนผสมใหม่) และค่าวัสดุจริงอยู่ใน private/ ตามนโยบายข้อมูลวัสดุ"
+ },
+ "papers": [
+  {
+   "id": "MA-001",
+   "title": "On the engineering properties of materials",
+   "year": 1989,
+   "relation": "direct",
+   "why_en": "Ashby's material property charts and performance indices; the principled way to choose among catalog materials for a function.",
+   "why_th": "แผนภูมิสมบัติวัสดุและดัชนีสมรรถนะของ Ashby เป็นวิธีที่มีหลักการในการเลือกวัสดุในแค็ตตาล็อกตามหน้าที่"
+  },
+  {
+   "id": "MA-002",
+   "title": "Commentary: The Materials Project: A materials genome approach to accelerating materials innovation",
+   "doi": "10.1063/1.4812323",
+   "year": 2013,
+   "relation": "data",
+   "why_en": "Open computed materials database; context and possible source for element-level properties, not for engineering allowables.",
+   "why_th": "ฐานข้อมูลวัสดุที่คำนวณแบบเปิด เป็นบริบทและแหล่งที่อาจใช้สำหรับสมบัติระดับธาตุ ไม่ใช่ค่าที่ยอมให้ทางวิศวกรรม"
+  },
+  {
+   "id": "MA-003",
+   "title": "Exploration of data science techniques to predict fatigue strength of steel from composition and processing parameters",
+   "doi": "10.1186/2193-9772-3-8",
+   "year": 2014,
+   "relation": "data",
+   "why_en": "Uses the NIMS fatigue data set of steels with composition and processing; an open fatigue data source and a model of its limits.",
+   "why_th": "ใช้ชุดข้อมูลความล้าของเหล็กจาก NIMS พร้อมส่วนผสมและกระบวนการ เป็นแหล่งข้อมูลความล้าแบบเปิดและตัวอย่างข้อจำกัดของข้อมูล"
+  },
+  {
+   "id": "MA-004",
+   "title": "New Criteria for Self-Loosening of Fasteners Under Vibration",
+   "year": 1969,
+   "relation": "direct",
+   "why_en": "Junker's transverse-vibration loosening mechanism; the physics any bolted-joint gate must address.",
+   "why_th": "กลไกการคลายตัวจากการสั่นตามขวางของ Junker เป็นฟิสิกส์ที่ gate ข้อต่อสลักเกลียวต้องจัดการ"
+  },
+  {
+   "id": "MA-005",
+   "title": "Three-dimensional finite element analysis of tightening and loosening mechanism of threaded fastener",
+   "year": 2005,
+   "relation": "direct",
+   "why_en": "3D FE of thread contact during tightening and loosening; a verification reference for detailed connection contact (Work 113).",
+   "why_th": "FE 3 มิติของการสัมผัสเกลียวระหว่างขันและคลาย เป็นเอกสารอ้างอิงการตรวจสอบของ detailed connection contact (Work 113)"
+  },
+  {
+   "id": "MA-006",
+   "title": "Composite materials technology in formula 1 motor racing",
+   "year": 2008,
+   "relation": "data",
+   "why_en": "Describes F1 composite structures, processes and failure considerations from a team engineer; context for composite part assumptions.",
+   "why_th": "อธิบายโครงสร้างคอมโพสิต กระบวนการ และการพังใน F1 จากวิศวกรของทีม เป็นบริบทของสมมติฐานชิ้นส่วนคอมโพสิต"
+  },
+  {
+   "id": "MA-007",
+   "title": "Repair of composite structures on Formula 1 race cars",
+   "year": 2010,
+   "relation": "indirect",
+   "why_en": "Damage and repair of F1 composite parts; relevant to reliability and damage-tolerance assumptions.",
+   "why_th": "ความเสียหายและการซ่อมชิ้นส่วนคอมโพสิต F1 เกี่ยวข้องกับสมมติฐานความน่าเชื่อถือและ damage tolerance"
+  },
+  {
+   "id": "MA-008",
+   "title": "Crash Simulation of an F1 Racing Car Front Impact Structure",
+   "year": 2009,
+   "relation": "direct",
+   "why_en": "Explicit crash simulation of an F1 composite nose against the homologation test; a template for a future crash gate.",
+   "why_th": "การจำลองการชนแบบ explicit ของจมูกคอมโพสิต F1 เทียบกับการทดสอบรับรอง เป็นแม่แบบของ gate การชนในอนาคต"
+  },
+  {
+   "id": "MA-009",
+   "title": "A survey of research in the application of tolerance analysis to the design of mechanical assemblies",
+   "year": 1991,
+   "relation": "direct",
+   "why_en": "Worst-case versus statistical tolerance stack-up in assemblies; the method basis for the manufacturing tolerance handoff (Work 130).",
+   "why_th": "การสะสมพิกัดความเผื่อแบบกรณีเลวร้ายที่สุดเทียบกับเชิงสถิติในการประกอบ เป็นฐานวิธีของ manufacturing tolerance handoff (Work 130)"
+  },
+  {
+   "id": "MA-010",
+   "title": "A comprehensive review of tolerancing research",
+   "year": 2002,
+   "relation": "indirect",
+   "why_en": "Broad review of tolerance representation, analysis and synthesis; context for tolerance-aware geometry.",
+   "why_th": "ทบทวนกว้างเรื่องการแทน การวิเคราะห์ และการสังเคราะห์พิกัดความเผื่อ เป็นบริบทของเรขาคณิตที่คำนึงถึงพิกัดความเผื่อ"
+  },
+  {
+   "id": "MA-011",
+   "title": "Design for additive manufacturing: Trends, opportunities, considerations, and constraints",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "Constraints and opportunities of additive manufacturing; inputs for the declared manufacturing language.",
+   "why_th": "ข้อจำกัดและโอกาสของการผลิตแบบเติมเนื้อ เป็นข้อมูลเข้าของภาษาการผลิตที่ประกาศไว้"
+  },
+  {
+   "id": "MA-012",
+   "title": "Scaling deep learning for materials discovery",
+   "doi": "10.1038/s41586-023-06735-9",
+   "year": 2023,
+   "relation": "direct",
+   "why_en": "GNoME's large-scale 'discovery' claim; paired with MA-013 as a case study in how discovery claims are challenged.",
+   "why_th": "claim การค้นพบขนาดใหญ่ของ GNoME ใช้คู่กับ MA-013 เป็นกรณีศึกษาของการโต้แย้ง claim การค้นพบ"
+  },
+  {
+   "id": "MA-013",
+   "title": "Artificial Intelligence Driving Materials Discovery? Perspective on the Article: Scaling Deep Learning for Materials Discovery",
+   "doi": "10.1021/acs.chemmater.4c00643",
+   "year": 2024,
+   "relation": "direct",
+   "why_en": "Critique showing many 'discovered' materials were not novel, useful or credible; a model for our distinction between generated, validated and discovered.",
+   "why_th": "บทวิจารณ์ที่แสดงว่าวัสดุที่ 'ค้นพบ' จำนวนมากไม่ใหม่ ไม่มีประโยชน์ หรือไม่น่าเชื่อ เป็นแบบของการแยก generated, validated และ discovered ของเรา"
+  },
+  {
+   "id": "MA-014",
+   "title": "A statistical distribution function of wide applicability",
+   "year": 1951,
+   "relation": "indirect",
+   "why_en": "Weibull distribution for strength scatter; relevant to probabilistic failure of brittle and composite parts.",
+   "why_th": "การกระจายแบบ Weibull สำหรับการกระจายของความแข็งแรง เกี่ยวข้องกับการพังเชิงความน่าจะเป็นของชิ้นส่วนเปราะและคอมโพสิต"
+  },
+  {
+   "id": "MA-015",
+   "title": "A comparison of the predictive capabilities of current failure theories for composite laminates, judged against experimental evidence",
+   "year": 2002,
+   "relation": "data",
+   "why_en": "World-Wide Failure Exercise: composite failure theories scored blind against experiments; evidence of how uncertain composite failure prediction is.",
+   "why_th": "World-Wide Failure Exercise: ทฤษฎีการพังของคอมโพสิตถูกให้คะแนนแบบปิดตาเทียบกับการทดลอง เป็นหลักฐานว่าการทำนายการพังของคอมโพสิตไม่แน่นอนเพียงใด"
+  }
+ ]
+}

@@ -175,6 +175,7 @@ config/                         Versioned simulation and experiment settings
 docs/
   3d/                           CAD environments and constrained 3D grammars
   DESIGN_LANGUAGE_BOUNDARY.md  What the search can and cannot discover
+  MATERIAL_DATA_POLICY.md       Source-rights boundary for material records
   PHYSICS_SYSTEM_PLAN.md       Physics domains, contracts, solvers, and roadmap
   RESEARCH_CHARTER.md           Research question, hypotheses, and scope
   VALIDATION_STRATEGY.md        Evidence required before scientific use
@@ -202,6 +203,7 @@ Run the current repository checks with:
 
 ```powershell
 python -m pip install -e .
+python scripts/validation/check_material_publication_boundary.py
 python -m unittest discover -s tests -v
 ```
 
@@ -221,9 +223,11 @@ each promotion stage.
 ## License
 
 - **Code** — MIT License, see [`LICENSE`](LICENSE).
-- **Documents, data, and figures** — Creative Commons Attribution 4.0
-  International (CC BY 4.0), see [`LICENSE-DATA.md`](LICENSE-DATA.md). This
-  covers `docs/`, `config/`, and any generated reports.
+- **Original project-authored documents, data, and figures** — Creative Commons
+  Attribution 4.0 International (CC BY 4.0), but only to the extent the project
+  owner has authority to grant those rights. See
+  [`LICENSE-DATA.md`](LICENSE-DATA.md). Third-party, private, restricted, and
+  separately licensed material is excluded.
 
 Attribution: Chisanupong Injun (2026).
 [ORCID 0009-0000-2979-1916](https://orcid.org/0009-0000-2979-1916).

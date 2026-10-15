@@ -1,0 +1,287 @@
+{
+ "category": {
+  "key": "LT",
+  "folder": "07_lap_time_vehicle_dynamics",
+  "title_en": "Minimum-lap-time optimal control, vehicle dynamics, tracks and design/control co-optimisation",
+  "title_th": "Optimal control เวลาต่อรอบต่ำสุด พลวัตยานยนต์ สนามแข่ง และการ optimize การออกแบบร่วมกับการควบคุม",
+  "scope_en": "How race vehicles are driven optimally and how design parameters are optimised together with that driving. This is the evaluator side of the project: an unconventional vehicle can only be judged fairly with an optimised driver on a spatial track.",
+  "scope_th": "วิธีขับรถแข่งอย่างเหมาะที่สุด และวิธี optimize พารามิเตอร์การออกแบบร่วมกับการขับนั้น เป็นฝั่งตัวประเมินของโครงการ รถที่ไม่ธรรมดาจะถูกตัดสินอย่างยุติธรรมได้ก็ต่อเมื่อมีผู้ขับที่ optimize แล้วบนสนามเชิงพื้นที่"
+ },
+ "papers": [
+  {
+   "id": "LT-001",
+   "prior_catalog_id": "P31",
+   "title": "Optimal control for a Formula One car with variable parameters",
+   "year": 2014,
+   "relation": "direct",
+   "why_en": "Minimum-lap-time control with vehicle parameters as optimisation variables; the template for design/driver fairness.",
+   "why_th": "การควบคุมเวลาต่อรอบต่ำสุดโดยให้พารามิเตอร์รถเป็นตัวแปร optimize เป็นแม่แบบของความยุติธรรมระหว่างการออกแบบกับผู้ขับ"
+  },
+  {
+   "id": "LT-002",
+   "prior_catalog_id": "P32",
+   "title": "Optimal control of a Formula One car on a three-dimensional track-part 1: track modeling and identification",
+   "year": 2015,
+   "relation": "direct",
+   "why_en": "Builds and identifies a 3D track ribbon (curvature, elevation, banking) from data; the guide for replacing our synthetic tracks.",
+   "why_th": "สร้างและระบุ ribbon ของสนาม 3 มิติ (ความโค้ง ความสูง ความเอียง) จากข้อมูล เป็นคู่มือการแทนที่สนามสังเคราะห์ของเรา"
+  },
+  {
+   "id": "LT-003",
+   "prior_catalog_id": "P33",
+   "title": "Optimal Control of a Formula One Car on a Three-Dimensional Track - Part 2: Optimal Control",
+   "year": 2015,
+   "relation": "direct",
+   "why_en": "Solves minimum-lap-time on the 3D track and shows the lap-time effect of 3D geometry.",
+   "why_th": "แก้ปัญหาเวลาต่อรอบต่ำสุดบนสนาม 3 มิติ และแสดงผลของเรขาคณิต 3 มิติต่อเวลาต่อรอบ"
+  },
+  {
+   "id": "LT-004",
+   "prior_catalog_id": "P34",
+   "title": "Minimum time optimal control simulation of a GP2 race car",
+   "year": 2018,
+   "relation": "direct",
+   "why_en": "14-DOF car, nonlinear tyres, ride-height aero and telemetry comparison; the nearest public coupled-model target.",
+   "why_th": "รถ 14 DOF ยางไม่เชิงเส้น aero ตามความสูงตัวถัง และเทียบกับ telemetry เป็นเป้าหมายแบบจำลองเชื่อมโยงสาธารณะที่ใกล้ที่สุด"
+  },
+  {
+   "id": "LT-005",
+   "prior_catalog_id": "P35",
+   "title": "Optimizing the aero-suspension interactions in a Formula One car",
+   "year": 2016,
+   "relation": "direct",
+   "why_en": "Suspension geometry and ride-height-dependent aero optimised together; the coupled benchmark for aero-chassis coupling (Work 024).",
+   "why_th": "optimize เรขาคณิตระบบกันสะเทือนและ aero ที่ขึ้นกับความสูงตัวถังร่วมกัน เป็น benchmark ของ aero-chassis coupling (Work 024)"
+  },
+  {
+   "id": "LT-006",
+   "prior_catalog_id": "P39",
+   "title": "Minimum curvature trajectory planning and control for an autonomous race car",
+   "year": 2020,
+   "relation": "indirect",
+   "why_en": "Practical raceline optimisation with open code and track data; a fast baseline raceline, not a minimum-time one.",
+   "why_th": "การ optimize เส้นแข่งที่ใช้ได้จริงพร้อมโค้ดและข้อมูลสนามแบบเปิด เป็นเส้นแข่ง baseline ที่เร็ว ไม่ใช่เส้นเวลาต่ำสุด"
+  },
+  {
+   "id": "LT-007",
+   "title": "Time-optimal control of the race car: a numerical method to emulate the ideal driver",
+   "year": 2010,
+   "relation": "direct",
+   "why_en": "Transient minimum-time driver emulation; an early optimal-driver formulation to compare against steady-state methods.",
+   "why_th": "การเลียนแบบผู้ขับเวลาต่ำสุดแบบ transient เป็นสูตรผู้ขับที่เหมาะที่สุดยุคแรกสำหรับเทียบกับวิธี steady-state"
+  },
+  {
+   "id": "LT-008",
+   "title": "Vehicle dynamics applications of optimal control theory",
+   "year": 2011,
+   "relation": "indirect",
+   "why_en": "Review of optimal control in vehicle dynamics; orientation for choosing driver models of different fidelity.",
+   "why_th": "ทบทวน optimal control ในพลวัตยานยนต์ เป็นแนวทางการเลือกแบบจำลองผู้ขับที่ fidelity ต่างกัน"
+  },
+  {
+   "id": "LT-009",
+   "title": "Lap time optimisation of a racing go-kart",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "Minimum-lap-time for a vehicle without a differential or suspension; evidence that the method transfers to unconventional chassis.",
+   "why_th": "เวลาต่อรอบต่ำสุดของรถที่ไม่มีเฟืองท้ายหรือระบบกันสะเทือน เป็นหลักฐานว่าวิธีนี้ใช้กับแชสซีที่ไม่ธรรมดาได้"
+  },
+  {
+   "id": "LT-010",
+   "title": "A Curvilinear Abscissa Approach for the Lap Time Optimization of Racing Vehicles",
+   "year": 2014,
+   "pdf_url": "https://skoge.folk.ntnu.no/prost/proceedings/ifac2014/media/files/0868.pdf",
+   "relation": "indirect",
+   "why_en": "Curvilinear-coordinate formulation used by most modern lap-time solvers; needed to pose our track-relative dynamics.",
+   "why_th": "สูตรพิกัดเชิงเส้นโค้งที่ solver เวลาต่อรอบยุคใหม่ส่วนใหญ่ใช้ จำเป็นสำหรับตั้งพลวัตที่อิงกับสนามของเรา"
+  },
+  {
+   "id": "LT-011",
+   "title": "A free-trajectory quasi-steady-state optimal-control method for minimum lap-time of race vehicles",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "Quasi-steady-state optimal control with a free racing line and g-g maps; fast enough to evaluate many candidate vehicles.",
+   "why_th": "optimal control แบบกึ่งคงตัวที่เส้นแข่งเป็นอิสระและใช้แผนที่ g-g เร็วพอจะประเมินรถหลายแบบ"
+  },
+  {
+   "id": "LT-012",
+   "title": "A three-dimensional free-trajectory quasi-steady-state optimal-control method for minimum-lap-time of race vehicles",
+   "year": 2022,
+   "relation": "direct",
+   "why_en": "Extends LT-011 to 3D tracks with g-g-g diagrams; the fast evaluator matching our 3D circuit corridor (Work 010).",
+   "why_th": "ขยาย LT-011 สู่สนาม 3 มิติด้วยแผนภาพ g-g-g เป็นตัวประเมินที่เร็วซึ่งเข้ากับ 3D circuit corridor ของเรา (Work 010)"
+  },
+  {
+   "id": "LT-013",
+   "title": "Online Time-Optimal Trajectory Planning on Three-Dimensional Race Tracks",
+   "arxiv": "2304.10954",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Point-mass time-optimal planning on 3D tracks with open code; a cheap lower-fidelity rung of the ladder.",
+   "why_th": "การวางแผนเวลาต่ำสุดแบบมวลจุดบนสนาม 3 มิติพร้อมโค้ดเปิด เป็นขั้น fidelity ต่ำราคาถูกของบันได"
+  },
+  {
+   "id": "LT-014",
+   "title": "Time-optimal trajectory planning for a race car considering variable tyre-road friction coefficients",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "Spatially varying friction in minimum-time planning; relevant to track-surface uncertainty.",
+   "why_th": "แรงเสียดทานที่แปรตามตำแหน่งในการวางแผนเวลาต่ำสุด เกี่ยวข้องกับความไม่แน่นอนของผิวสนาม"
+  },
+  {
+   "id": "LT-015",
+   "title": "GripMap: An Efficient, Spatially Resolved Constraint Framework for Offline and Online Trajectory Planning in Autonomous Racing",
+   "arxiv": "2504.12115",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "Spatially resolved grip constraints for planning; a data structure for track-position-dependent grip.",
+   "why_th": "ข้อจำกัดการยึดเกาะที่แยกตามตำแหน่งสำหรับการวางแผน เป็นโครงสร้างข้อมูลของการยึดเกาะที่ขึ้นกับตำแหน่งบนสนาม"
+  },
+  {
+   "id": "LT-016",
+   "title": "A quasi steady state approach to race car lap simulation in order to understand the effects of racing line and centre of gravity location",
+   "year": 2005,
+   "relation": "indirect",
+   "why_en": "Quasi-steady-state lap simulation studying centre-of-gravity effects; a classic reference for low-fidelity lap models.",
+   "why_th": "การจำลองรอบแบบกึ่งคงตัวที่ศึกษาผลของจุดศูนย์ถ่วง เป็นเอกสารคลาสสิกของแบบจำลองรอบ fidelity ต่ำ"
+  },
+  {
+   "id": "LT-017",
+   "title": "Lap Time Simulation: Comparison of Steady State, Quasi-Static and Transient Racing Car Cornering Strategies",
+   "year": 2000,
+   "relation": "direct",
+   "why_en": "Direct comparison of lap-simulation fidelities; evidence on when steady-state ranking differs from transient ranking (H4).",
+   "why_th": "เปรียบเทียบ fidelity ของการจำลองรอบโดยตรง เป็นหลักฐานว่าเมื่อใดการจัดอันดับแบบ steady-state ต่างจากแบบ transient (H4)"
+  },
+  {
+   "id": "LT-018",
+   "title": "On minimum time vehicle manoeuvring: the theoretical optimal lap",
+   "year": 2000,
+   "pdf_urls": [
+    "https://core.ac.uk/download/pdf/138004.pdf"
+   ],
+   "landing_url": "https://dspace.lib.cranfield.ac.uk/handle/1826/1091",
+   "relation": "direct",
+   "why_en": "Casanova's thesis solving the full transient optimal lap and studying vehicle parameter sensitivities.",
+   "why_th": "วิทยานิพนธ์ของ Casanova ที่แก้รอบที่เหมาะที่สุดแบบ transient เต็มรูปแบบและศึกษาความไวต่อพารามิเตอร์รถ"
+  },
+  {
+   "id": "LT-019",
+   "title": "Minimum-lap-time optimisation and simulation",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "Recent review of minimum-lap-time methods by leading authors; orientation for choosing formulation and solver.",
+   "why_th": "ทบทวนวิธีเวลาต่อรอบต่ำสุดล่าสุดโดยผู้เชี่ยวชาญ เป็นแนวทางการเลือกสูตรและ solver"
+  },
+  {
+   "id": "LT-020",
+   "title": "Comparison of direct and indirect methods for minimum lap time optimal control problems",
+   "year": 2019,
+   "relation": "indirect",
+   "why_en": "Compares direct and indirect solution of the same lap problem; evidence on solver-induced differences in lap time.",
+   "why_th": "เปรียบเทียบการแก้ปัญหารอบเดียวกันด้วยวิธีตรงและอ้อม เป็นหลักฐานเรื่องความต่างของเวลาต่อรอบที่เกิดจาก solver"
+  },
+  {
+   "id": "LT-021",
+   "title": "Optimal control of motorsport differentials",
+   "year": 2015,
+   "relation": "direct",
+   "why_en": "Optimises differential behaviour for minimum lap time; relevant to differential and independent wheel dynamics (Works 070-071).",
+   "why_th": "optimize พฤติกรรมเฟืองท้ายเพื่อเวลาต่อรอบต่ำสุด เกี่ยวข้องกับพลวัตเฟืองท้ายและล้ออิสระ (Works 070-071)"
+  },
+  {
+   "id": "LT-022",
+   "title": "A Convex Optimization Framework for Minimum Lap Time Design and Control of Electric Race Cars",
+   "year": 2021,
+   "relation": "direct",
+   "why_en": "Jointly sizes the electric powertrain and computes the minimum-lap-time strategy by convex optimisation; a direct design/control co-optimisation method.",
+   "why_th": "กำหนดขนาด powertrain ไฟฟ้าและคำนวณกลยุทธ์เวลาต่อรอบต่ำสุดร่วมกันด้วย convex optimization เป็นวิธี co-optimization ของการออกแบบ/การควบคุมโดยตรง"
+  },
+  {
+   "id": "LT-023",
+   "title": "Minimum-lap-time Control Strategies for All-wheel Drive Electric Race Cars via Convex Optimization",
+   "arxiv": "2111.04650",
+   "year": 2022,
+   "relation": "direct",
+   "why_en": "Per-tyre grip limits with all-wheel drive in a convex lap formulation; relevant to independent-wheel torque allocation.",
+   "why_th": "ขีดจำกัดการยึดเกาะรายยางกับการขับเคลื่อนสี่ล้อในสูตรรอบแบบ convex เกี่ยวข้องกับการจัดสรรแรงบิดรายล้อ"
+  },
+  {
+   "id": "LT-024",
+   "title": "Time-optimal Design and Control of Electric Race Cars Equipped with Multi-speed Transmissions",
+   "arxiv": "2311.03545",
+   "year": 2023,
+   "relation": "direct",
+   "why_en": "Compares fixed, CVT and multi-speed transmissions with jointly optimised control; an architecture choice evaluated fairly.",
+   "why_th": "เปรียบเทียบเกียร์คงที่ CVT และหลายสปีดพร้อมการควบคุมที่ optimize ร่วม เป็นการประเมินการเลือกสถาปัตยกรรมอย่างยุติธรรม"
+  },
+  {
+   "id": "LT-025",
+   "title": "Time-optimal Control Strategies for Electric Race Cars with Different Transmission Technologies",
+   "arxiv": "2005.07592",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "Earlier transmission-technology comparison under time-optimal control; precedent for architecture comparison at equal control effort.",
+   "why_th": "การเปรียบเทียบเทคโนโลยีเกียร์ภายใต้การควบคุมเวลาต่ำสุดรุ่นก่อน เป็นงานก่อนหน้าของการเทียบสถาปัตยกรรมที่ความพยายามควบคุมเท่ากัน"
+  },
+  {
+   "id": "LT-026",
+   "title": "Joint Optimisation of Active Aerodynamics and Electric Energy Deployment for Minimum Lap Time in 2026 Formula One",
+   "year": 2026,
+   "landing_url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7045379",
+   "relation": "direct",
+   "why_en": "Schedules 2026 movable-wing modes with electric deploy and harvest by direct collocation; uses the same regulation year as our race contract.",
+   "why_th": "จัดตารางโหมดปีกขยับได้ปี 2026 ร่วมกับการปล่อยและเก็บพลังงานไฟฟ้าด้วย direct collocation ใช้ปีกติกาเดียวกับสัญญาการแข่งของเรา"
+  },
+  {
+   "id": "LT-027",
+   "title": "Kinematic and dynamic vehicle models for autonomous driving control design",
+   "year": 2015,
+   "relation": "indirect",
+   "why_en": "Compares kinematic and dynamic bicycle models against data; a small fidelity-ladder example.",
+   "why_th": "เปรียบเทียบแบบจำลองจักรยานเชิงจลนศาสตร์และเชิงพลวัตกับข้อมูล เป็นตัวอย่างบันได fidelity ขนาดเล็ก"
+  },
+  {
+   "id": "LT-028",
+   "title": "The kinematic bicycle model: A consistent model for planning feasible trajectories for autonomous vehicles?",
+   "year": 2017,
+   "relation": "indirect",
+   "why_en": "Shows when the kinematic bicycle model becomes inconsistent with physics; a caution for low-fidelity gates.",
+   "why_th": "แสดงว่าเมื่อใดแบบจำลองจักรยานเชิงจลนศาสตร์ไม่สอดคล้องกับฟิสิกส์ เป็นข้อเตือนสำหรับ gate fidelity ต่ำ"
+  },
+  {
+   "id": "LT-029",
+   "title": "A quasi-steady-state minimum lap time simulation of race motorcycles using experimental data",
+   "year": 2023,
+   "relation": "data",
+   "why_en": "Quasi-steady-state lap simulation compared against measured motorcycle data; an example of validating a lap model against telemetry.",
+   "why_th": "การจำลองรอบแบบกึ่งคงตัวเทียบกับข้อมูลวัดของรถจักรยานยนต์ เป็นตัวอย่างการตรวจสอบแบบจำลองรอบกับ telemetry"
+  },
+  {
+   "id": "LT-030",
+   "title": "Simultaneous Optimisation of Vehicle Design and Control for Improving Vehicle Performance and Energy Efficiency Using an Open Source Minimum Lap Time Simulation Framework",
+   "doi": "10.3390/wevj15080366",
+   "year": 2024,
+   "relation": "direct",
+   "why_en": "Open-source minimum-lap-time framework that optimises design parameters, active torque distribution, active aero and energy deployment together; a reproducible co-optimisation baseline.",
+   "why_th": "framework เวลาต่อรอบต่ำสุดแบบ open source ที่ optimize พารามิเตอร์การออกแบบ การกระจายแรงบิดแบบ active aero แบบ active และการปล่อยพลังงานร่วมกัน เป็น baseline co-optimization ที่ทำซ้ำได้"
+  },
+  {
+   "id": "LT-031",
+   "title": "Optimising the Performance of a Formula One Car Using a Genetic Algorithm",
+   "year": 2004,
+   "relation": "direct",
+   "why_en": "Genetic algorithm tuning 66 setup parameters of an F1 car inside a racing simulator; an early evolutionary design-in-simulator result with simulator-dependence caveats.",
+   "why_th": "genetic algorithm ปรับพารามิเตอร์ setup 66 ตัวของรถ F1 ภายในเกมจำลองการแข่ง เป็นผลยุคแรกของการออกแบบเชิงวิวัฒนาการในตัวจำลองพร้อมข้อควรระวังเรื่องการขึ้นกับตัวจำลอง"
+  },
+  {
+   "id": "LT-032",
+   "title": "A Sequential Convex Programming Approach to Free-trajectory Minimum-lap-time Optimization of Racing Cars",
+   "year": 2025,
+   "arxiv": "2511.13522",
+   "relation": "direct",
+   "why_en": "Recent efficient free-trajectory lap-time optimisation; relevant to the cost of giving every candidate an optimised driver.",
+   "why_th": "การ optimize เวลาต่อรอบแบบเส้นแข่งอิสระที่มีประสิทธิภาพล่าสุด เกี่ยวข้องกับต้นทุนการให้ผู้ขับที่ optimize แล้วแก่ทุกผู้สมัคร"
+  }
+ ]
+}

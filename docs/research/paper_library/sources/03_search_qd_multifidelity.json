@@ -1,0 +1,333 @@
+{
+ "category": {
+  "key": "QD",
+  "folder": "03_search_qd_multifidelity",
+  "title_en": "Quality diversity, search algorithms, surrogates and multifidelity",
+  "title_th": "Quality diversity อัลกอริทึมค้นหา surrogate และ multifidelity",
+  "scope_en": "Algorithms for spending evaluation budget on diverse, high-quality and credible candidates: MAP-Elites and descendants, novelty search, evolution strategies, Bayesian and multifidelity optimisation, and sim-to-real transferability.",
+  "scope_th": "อัลกอริทึมสำหรับใช้งบประเมินกับผู้สมัครที่หลากหลาย คุณภาพสูง และน่าเชื่อถือ: MAP-Elites และสายต่อยอด novelty search, evolution strategy, Bayesian และ multifidelity optimization และความถ่ายโอนได้จากจำลองสู่ของจริง"
+ },
+ "papers": [
+  {
+   "id": "QD-001",
+   "prior_catalog_id": "P11",
+   "title": "Illuminating search spaces by mapping elites",
+   "arxiv": "1504.04909",
+   "year": 2015,
+   "relation": "direct",
+   "why_en": "MAP-Elites: keeps the best design per behaviour cell; the base algorithm of the executable morphology archive (Work 099).",
+   "why_th": "MAP-Elites: เก็บแบบที่ดีที่สุดต่อหนึ่งช่องพฤติกรรม เป็นอัลกอริทึมพื้นฐานของ executable morphology archive (Work 099)"
+  },
+  {
+   "id": "QD-002",
+   "prior_catalog_id": "P12",
+   "title": "Quality Diversity: A New Frontier for Evolutionary Computation",
+   "doi": "10.3389/frobt.2016.00040",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "Defines quality diversity and separates coverage, novelty and quality; vocabulary for the design-diversity contract (Work 090).",
+   "why_th": "นิยาม quality diversity และแยก coverage, novelty และ quality เป็นศัพท์สำหรับสัญญา design diversity (Work 090)"
+  },
+  {
+   "id": "QD-003",
+   "prior_catalog_id": "P13",
+   "title": "Data-Efficient Design Exploration through Surrogate-Assisted Illumination",
+   "arxiv": "1806.05865",
+   "year": 2018,
+   "relation": "direct",
+   "why_en": "SAIL combines Gaussian-process surrogates with MAP-Elites on aerodynamic shapes; the direct method for expensive-evaluator illumination.",
+   "why_th": "SAIL รวม surrogate แบบ Gaussian process กับ MAP-Elites บนรูปทรงอากาศพลศาสตร์ เป็นวิธีโดยตรงสำหรับ illumination ที่ตัวประเมินแพง"
+  },
+  {
+   "id": "QD-004",
+   "prior_catalog_id": "P14",
+   "title": "Covariance Matrix Adaptation MAP-Annealing",
+   "arxiv": "2205.10752",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "CMA-MAE improves continuous QD search; a stronger continuous-parameter baseline once basic MAP-Elites works.",
+   "why_th": "CMA-MAE ปรับปรุงการค้นหา QD แบบต่อเนื่อง เป็น baseline พารามิเตอร์ต่อเนื่องที่แข็งกว่าเมื่อ MAP-Elites พื้นฐานใช้ได้แล้ว"
+  },
+  {
+   "id": "QD-005",
+   "prior_catalog_id": "P15",
+   "title": "Survey of multifidelity methods in uncertainty propagation, inference, and optimization",
+   "arxiv": "1806.10761",
+   "year": 2018,
+   "relation": "direct",
+   "why_en": "The reference for combining cheap and expensive models without trusting the cheap one; underpins the fidelity ladder and promotion audits.",
+   "why_th": "เอกสารอ้างอิงของการรวมแบบจำลองถูกและแพงโดยไม่เชื่อแบบถูก เป็นรากฐานของบันได fidelity และการตรวจการเลื่อนระดับ"
+  },
+  {
+   "id": "QD-006",
+   "prior_catalog_id": "P16",
+   "title": "Multi-fidelity Bayesian Optimisation with Continuous Approximations",
+   "arxiv": "1703.06240",
+   "year": 2017,
+   "relation": "indirect",
+   "why_en": "BOCA chooses both candidate and fidelity by cost; relevant when mesh size or time step is a controllable fidelity.",
+   "why_th": "BOCA เลือกทั้งผู้สมัครและ fidelity ตามต้นทุน เกี่ยวข้องเมื่อขนาด mesh หรือ time step เป็น fidelity ที่ควบคุมได้"
+  },
+  {
+   "id": "QD-007",
+   "prior_catalog_id": "P17",
+   "title": "Crossing the Reality Gap: a Short Introduction to the Transferability Approach",
+   "arxiv": "1307.1870",
+   "year": 2013,
+   "relation": "direct",
+   "why_en": "Learns which simulated behaviours transfer to reality and optimises for transferability; a model for promotion-aware selection.",
+   "why_th": "เรียนรู้ว่าพฤติกรรมจำลองใดถ่ายโอนสู่ของจริงได้และ optimize ความถ่ายโอนได้ เป็นแบบสำหรับการคัดเลือกที่คำนึงถึงการเลื่อนระดับ"
+  },
+  {
+   "id": "QD-008",
+   "title": "The Transferability Approach: Crossing the Reality Gap in Evolutionary Robotics",
+   "year": 2013,
+   "relation": "direct",
+   "why_en": "Full journal version of the transferability approach with experiments; the evidence behind QD-007.",
+   "why_th": "ฉบับวารสารเต็มของ transferability approach พร้อมการทดลอง เป็นหลักฐานเบื้องหลัง QD-007"
+  },
+  {
+   "id": "QD-009",
+   "title": "Abandoning Objectives: Evolution Through the Search for Novelty Alone",
+   "year": 2011,
+   "relation": "direct",
+   "why_en": "Novelty search escapes deceptive objectives; relevant when race time alone traps search in conventional layouts.",
+   "why_th": "novelty search หลุดจากวัตถุประสงค์ที่หลอกลวงได้ เกี่ยวข้องเมื่อเวลาแข่งเพียงอย่างเดียวทำให้การค้นหาติดอยู่กับ layout แบบเดิม"
+  },
+  {
+   "id": "QD-010",
+   "title": "Evolving a diversity of virtual creatures through novelty search and local competition",
+   "year": 2011,
+   "relation": "direct",
+   "why_en": "Novelty search with local competition on morphologies; the direct precedent for diverse-yet-competitive vehicle archives.",
+   "why_th": "novelty search กับการแข่งขันเฉพาะที่บนรูปร่าง เป็นงานก่อนหน้าโดยตรงของคลังรถที่หลากหลายแต่ยังแข่งขันได้"
+  },
+  {
+   "id": "QD-011",
+   "title": "Using Centroidal Voronoi Tessellations to Scale Up the Multidimensional Archive of Phenotypic Elites Algorithm",
+   "arxiv": "1610.05729",
+   "year": 2018,
+   "relation": "indirect",
+   "why_en": "CVT-MAP-Elites keeps archive size fixed in high-dimensional descriptor spaces; needed if vehicle descriptors grow.",
+   "why_th": "CVT-MAP-Elites คงขนาดคลังในพื้นที่ descriptor หลายมิติ จำเป็นเมื่อ descriptor ของรถเพิ่มขึ้น"
+  },
+  {
+   "id": "QD-012",
+   "title": "Covariance Matrix Adaptation for the Rapid Illumination of Behavior Space",
+   "arxiv": "1912.02400",
+   "year": 2020,
+   "relation": "indirect",
+   "why_en": "CMA-ME: CMA-ES emitters inside MAP-Elites; a standard QD comparator.",
+   "why_th": "CMA-ME: emitter แบบ CMA-ES ภายใน MAP-Elites เป็นตัวเทียบ QD มาตรฐาน"
+  },
+  {
+   "id": "QD-013",
+   "title": "pyribs: A Bare-Bones Python Library for Quality Diversity Optimization",
+   "arxiv": "2303.00191",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Reference QD library with archives and emitters; a tested implementation to cross-check our archive code.",
+   "why_th": "ไลบรารี QD อ้างอิงที่มี archive และ emitter เป็นการ implement ที่ทดสอบแล้วสำหรับตรวจทานโค้ด archive ของเรา"
+  },
+  {
+   "id": "QD-014",
+   "title": "Accelerated Quality-Diversity through Massive Parallelism",
+   "arxiv": "2202.01258",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "QDax: QD on accelerators with large batches; relevant to compute-ledger comparisons of batch size and evaluations.",
+   "why_th": "QDax: QD บน accelerator ด้วย batch ใหญ่ เกี่ยวข้องกับการเทียบบัญชีการคำนวณระหว่างขนาด batch กับจำนวนการประเมิน"
+  },
+  {
+   "id": "QD-015",
+   "title": "Multi-Objective Quality Diversity Optimization",
+   "arxiv": "2202.03057",
+   "year": 2022,
+   "relation": "direct",
+   "why_en": "MOME keeps a Pareto front per cell; fits H2's race time/energy/mass/reliability trade-offs inside a diverse archive.",
+   "why_th": "MOME เก็บ Pareto front ต่อช่อง เหมาะกับการแลกเปลี่ยนเวลาแข่ง/พลังงาน/มวล/ความน่าเชื่อถือของ H2 ภายในคลังที่หลากหลาย"
+  },
+  {
+   "id": "QD-016",
+   "title": "Quality Diversity for Multi-task Optimization",
+   "arxiv": "2003.04407",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "One search solving many related tasks with shared elites; maps directly onto one design search across many race environments.",
+   "why_th": "การค้นหาเดียวแก้หลายงานที่เกี่ยวข้องโดยแบ่งปัน elite ตรงกับการค้นหาการออกแบบเดียวข้ามหลายสภาพสนามแข่ง"
+  },
+  {
+   "id": "QD-017",
+   "title": "Multi-Task Multi-Behavior MAP-Elites",
+   "arxiv": "2305.01264",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Extends multi-task QD to diverse behaviours per task; relevant to environment-specialised archives (H3).",
+   "why_th": "ขยาย QD หลายงานให้มีพฤติกรรมหลากหลายต่องาน เกี่ยวข้องกับคลังที่เฉพาะตามสภาพแวดล้อม (H3)"
+  },
+  {
+   "id": "QD-018",
+   "title": "BOP-Elites, a Bayesian Optimisation algorithm for Quality-Diversity search",
+   "arxiv": "2005.04320",
+   "year": 2020,
+   "relation": "indirect",
+   "why_en": "Bayesian optimisation for QD with very few evaluations; relevant when each evaluation is a CFD or FE run.",
+   "why_th": "Bayesian optimization สำหรับ QD ที่ใช้การประเมินน้อยมาก เกี่ยวข้องเมื่อการประเมินแต่ละครั้งคือการรัน CFD หรือ FE"
+  },
+  {
+   "id": "QD-019",
+   "title": "Designing Air Flow with Surrogate-assisted Phenotypic Niching",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "Surrogate-assisted QD for air-flow design with phenotypic niching; direct method for diverse aero/cooling geometry.",
+   "why_th": "QD ที่ใช้ surrogate ช่วยสำหรับการออกแบบการไหลของอากาศด้วย phenotypic niching เป็นวิธีโดยตรงสำหรับเรขาคณิต aero/การระบายความร้อนที่หลากหลาย"
+  },
+  {
+   "id": "QD-020",
+   "title": "Prototype Discovery using Quality-Diversity",
+   "year": 2018,
+   "relation": "indirect",
+   "why_en": "Clusters a QD archive into prototypes for human review; useful for summarising which architecture families emerged.",
+   "why_th": "จัดกลุ่มคลัง QD เป็นต้นแบบให้มนุษย์ตรวจ ใช้สรุปว่าตระกูลสถาปัตยกรรมใดเกิดขึ้น"
+  },
+  {
+   "id": "QD-021",
+   "title": "Robots that can adapt like animals",
+   "arxiv": "1407.3501",
+   "year": 2015,
+   "relation": "indirect",
+   "why_en": "A precomputed MAP-Elites archive is reused for fast recovery after damage; a pattern for reusing archives under degraded conditions.",
+   "why_th": "คลัง MAP-Elites ที่คำนวณไว้ถูกนำกลับมาใช้ฟื้นตัวเร็วหลังเสียหาย เป็นแบบการใช้คลังซ้ำเมื่อสภาพเสื่อมลง"
+  },
+  {
+   "id": "QD-022",
+   "title": "Open-ended search for environments and adapted agents using MAP-Elites",
+   "arxiv": "2305.01153",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "MAP-Elites over environments and agents together; relevant to curricula over tracks and conditions.",
+   "why_th": "MAP-Elites บนสภาพแวดล้อมและ agent ร่วมกัน เกี่ยวข้องกับ curriculum ของสนามและสภาพ"
+  },
+  {
+   "id": "QD-023",
+   "title": "The CMA Evolution Strategy: A Tutorial",
+   "arxiv": "1604.00772",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "Authoritative CMA-ES tutorial; the default continuous optimiser for tuned fixed-topology baselines.",
+   "why_th": "tutorial CMA-ES ที่เชื่อถือได้ เป็น optimizer ต่อเนื่องค่าเริ่มต้นสำหรับ baseline topology คงที่ที่ปรับแล้ว"
+  },
+  {
+   "id": "QD-024",
+   "title": "A fast and elitist multiobjective genetic algorithm: NSGA-II",
+   "year": 2002,
+   "doi": "10.1109/4235.996017",
+   "relation": "indirect",
+   "why_en": "NSGA-II, the standard multi-objective baseline that any new search method should be compared against.",
+   "why_th": "NSGA-II เป็น baseline หลายวัตถุประสงค์มาตรฐานที่วิธีค้นหาใหม่ควรถูกเทียบด้วย"
+  },
+  {
+   "id": "QD-025",
+   "title": "Practical Bayesian Optimization of Machine Learning Algorithms",
+   "arxiv": "1206.2944",
+   "year": 2012,
+   "relation": "indirect",
+   "why_en": "Practical Gaussian-process Bayesian optimisation including cost-aware acquisition; a baseline for expensive parameter tuning.",
+   "why_th": "Bayesian optimization ด้วย Gaussian process แบบใช้งานจริงรวมถึง acquisition ที่คำนึงต้นทุน เป็น baseline สำหรับการปรับพารามิเตอร์ที่แพง"
+  },
+  {
+   "id": "QD-026",
+   "title": "A Tutorial on Bayesian Optimization",
+   "arxiv": "1807.02811",
+   "year": 2018,
+   "relation": "indirect",
+   "why_en": "Clear tutorial of Bayesian optimisation including multi-fidelity and noisy settings.",
+   "why_th": "tutorial ที่ชัดเจนของ Bayesian optimization รวมถึงกรณี multi-fidelity และมีสัญญาณรบกวน"
+  },
+  {
+   "id": "QD-027",
+   "title": "Scalable Global Optimization via Local Bayesian Optimization",
+   "arxiv": "1910.01739",
+   "year": 2019,
+   "relation": "indirect",
+   "why_en": "TuRBO trust-region Bayesian optimisation for higher dimensions; a strong baseline for tuning conventional vehicles.",
+   "why_th": "TuRBO Bayesian optimization แบบ trust region สำหรับมิติสูง เป็น baseline ที่แข็งสำหรับปรับรถแบบเดิม"
+  },
+  {
+   "id": "QD-028",
+   "title": "Bayesian Optimization of Combinatorial Structures",
+   "arxiv": "1806.08838",
+   "year": 2018,
+   "relation": "indirect",
+   "why_en": "BOCS handles discrete, combinatorial design variables; relevant to discrete topology choices.",
+   "why_th": "BOCS จัดการตัวแปรออกแบบแบบไม่ต่อเนื่องเชิงการจัด เกี่ยวข้องกับการเลือก topology แบบไม่ต่อเนื่อง"
+  },
+  {
+   "id": "QD-029",
+   "title": "Multi-fidelity optimization via surrogate modelling",
+   "doi": "10.1098/rspa.2007.1900",
+   "year": 2007,
+   "relation": "direct",
+   "why_en": "Co-kriging multi-fidelity surrogate optimisation with an aerodynamic example; the classic engineering formulation.",
+   "why_th": "optimization แบบ multi-fidelity ด้วย co-kriging พร้อมตัวอย่างอากาศพลศาสตร์ เป็นสูตรทางวิศวกรรมแบบคลาสสิก"
+  },
+  {
+   "id": "QD-030",
+   "title": "Predicting the output from a complex computer code when fast approximations are available",
+   "year": 2000,
+   "relation": "indirect",
+   "why_en": "Autoregressive multi-fidelity Gaussian-process model; the statistical basis of co-kriging across fidelity levels.",
+   "why_th": "แบบจำลอง Gaussian process multi-fidelity แบบ autoregressive เป็นฐานทางสถิติของ co-kriging ข้ามระดับ fidelity"
+  },
+  {
+   "id": "QD-031",
+   "title": "Nonlinear information fusion algorithms for data-efficient multi-fidelity modelling",
+   "year": 2017,
+   "relation": "indirect",
+   "why_en": "Nonlinear multi-fidelity Gaussian processes for when cheap and expensive models disagree non-linearly, as Level 0 and refined models do.",
+   "why_th": "Gaussian process multi-fidelity แบบไม่เชิงเส้นสำหรับกรณีแบบถูกและแบบแพงไม่ตรงกันแบบไม่เชิงเส้น เช่น Level 0 กับแบบละเอียด"
+  },
+  {
+   "id": "QD-032",
+   "title": "A composite neural network that learns from multi-fidelity data: Application to function approximation and inverse PDE problems",
+   "arxiv": "1903.00104",
+   "year": 2020,
+   "relation": "indirect",
+   "why_en": "Neural multi-fidelity model; an alternative to Gaussian processes at larger data sizes.",
+   "why_th": "แบบจำลองโครงข่ายประสาท multi-fidelity เป็นทางเลือกแทน Gaussian process เมื่อข้อมูลมาก"
+  },
+  {
+   "id": "QD-033",
+   "title": "Efficient Global Optimization of Expensive Black-Box Functions",
+   "year": 1998,
+   "relation": "indirect",
+   "why_en": "EGO and expected improvement; the foundation of surrogate-based optimisation of expensive simulations.",
+   "why_th": "EGO และ expected improvement เป็นรากฐานของ optimization ด้วย surrogate สำหรับการจำลองที่แพง"
+  },
+  {
+   "id": "QD-034",
+   "title": "Dominated Novelty Search: Rethinking Local Competition in Quality-Diversity",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "Replaces grid archives with competition-based fitness transformation; an archive-free QD alternative for unbounded descriptor spaces.",
+   "why_th": "แทน archive แบบตารางด้วยการแปลงค่า fitness ตามการแข่งขัน เป็นทางเลือก QD ที่ไม่ต้องใช้ archive สำหรับพื้นที่ descriptor ไร้ขอบเขต"
+  },
+  {
+   "id": "QD-035",
+   "title": "Aerodynamic Design Exploration through Surrogate-Assisted Illumination",
+   "year": 2017,
+   "relation": "direct",
+   "why_en": "The aerodynamic application paper of SAIL, with 2D airfoil CFD; closest to diverse aero-surface search.",
+   "why_th": "paper ด้านอากาศพลศาสตร์ของ SAIL ใช้ CFD ของ airfoil 2 มิติ ใกล้ที่สุดกับการค้นหาพื้นผิว aero ที่หลากหลาย"
+  },
+  {
+   "id": "QD-036",
+   "title": "Physics Informed Deep Learning (Part I): Data-driven Solutions of Nonlinear Partial Differential Equations",
+   "arxiv": "1711.10561",
+   "year": 2017,
+   "relation": "indirect",
+   "why_en": "Physics-informed neural networks; a surrogate family that embeds governing equations, relevant when data is scarce.",
+   "why_th": "physics-informed neural network เป็นตระกูล surrogate ที่ฝังสมการควบคุม เกี่ยวข้องเมื่อข้อมูลมีน้อย"
+  }
+ ]
+}

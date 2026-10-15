@@ -1,0 +1,43 @@
+"""Hierarchical vehicle part-tree representation."""
+
+from .part_tree import (
+    JOINT_KINDS,
+    MAX_CONTACT_TOLERANCE_M,
+    MAX_INTERFERENCE_M,
+    AssemblyNode,
+    Interface,
+    PartNode,
+    PartTree,
+    PartTreeViolation,
+    canonical_sha256,
+    leaf_ids,
+    levels,
+    roll_up,
+    subtree_height,
+    subtree_leaves,
+    to_manifest_interfaces,
+    to_manifest_nodes,
+    topology_signature,
+    validate_part_tree,
+)
+
+__all__ = [
+    "JOINT_KINDS",
+    "MAX_CONTACT_TOLERANCE_M",
+    "MAX_INTERFERENCE_M",
+    "AssemblyNode",
+    "Interface",
+    "PartNode",
+    "PartTree",
+    "PartTreeViolation",
+    "canonical_sha256",
+    "leaf_ids",
+    "levels",
+    "roll_up",
+    "subtree_height",
+    "subtree_leaves",
+    "to_manifest_interfaces",
+    "to_manifest_nodes",
+    "topology_signature",
+    "validate_part_tree",
+]

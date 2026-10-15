@@ -8,3 +8,5 @@
 /src/formula_ultimate/physics/functional_network_*.py text eol=lf
 /src/formula_ultimate/search/executable_morphology.py text eol=lf
 /tests/test_functional_discovery.py text eol=lf
+# Shell scripts run under bash and must keep LF line endings (Work 148).
+/auto-loop/tools/*.sh text eol=lf

@@ -1,0 +1,398 @@
+{
+ "category": {
+  "key": "AG",
+  "folder": "02_ai_agents_engineering",
+  "title_en": "LLM and AI agents for engineering design, CAD code and simulation",
+  "title_th": "LLM และ AI agent สำหรับการออกแบบทางวิศวกรรม โค้ด CAD และการจำลอง",
+  "scope_en": "Agents and generative models that propose engineering designs, write CAD programs or drive solvers, plus work on how such systems are evaluated. Relevant because Formula Ultimate's designer is an agent that writes CadQuery and is judged by independent evaluators.",
+  "scope_th": "agent และแบบจำลองเชิงกำเนิดที่เสนอการออกแบบทางวิศวกรรม เขียนโปรแกรม CAD หรือสั่ง solver รวมถึงงานเรื่องการประเมินระบบเหล่านี้ เกี่ยวข้องเพราะผู้ออกแบบของ Formula Ultimate เป็น agent ที่เขียน CadQuery และถูกตัดสินโดยตัวประเมินอิสระ"
+ },
+ "papers": [
+  {
+   "id": "AG-001",
+   "title": "Evolution through Large Models",
+   "arxiv": "2206.08896",
+   "year": 2022,
+   "relation": "direct",
+   "why_en": "LLM as the mutation operator inside MAP-Elites, generating locomoting Sodarace morphologies as code; the closest template for an LLM that mutates CadQuery vehicle programs.",
+   "why_th": "LLM เป็นตัวกลายพันธุ์ภายใน MAP-Elites สร้างรูปร่าง Sodarace ที่เคลื่อนที่ได้ในรูปโค้ด เป็นแม่แบบที่ใกล้ที่สุดของ LLM ที่กลายพันธุ์โปรแกรม CadQuery ของรถ"
+  },
+  {
+   "id": "AG-002",
+   "title": "Mathematical discoveries from program search with large language models",
+   "doi": "10.1038/s41586-023-06924-6",
+   "year": 2024,
+   "relation": "direct",
+   "why_en": "FunSearch pairs an LLM proposer with an automatic, trusted evaluator; its separation of generation from evaluation mirrors our independent-evaluator rule.",
+   "why_th": "FunSearch จับคู่ LLM ผู้เสนอกับตัวประเมินอัตโนมัติที่เชื่อถือได้ การแยกการสร้างออกจากการประเมินตรงกับกฎตัวประเมินอิสระของเรา"
+  },
+  {
+   "id": "AG-003",
+   "title": "AlphaEvolve: A coding agent for scientific and algorithmic discovery",
+   "arxiv": "2506.13131",
+   "year": 2025,
+   "relation": "direct",
+   "why_en": "Evolutionary coding agent with a MAP-Elites-style program database and machine-checkable scores, including a hardware-circuit result; a reference architecture for our design agent.",
+   "why_th": "coding agent เชิงวิวัฒนาการที่มีฐานข้อมูลโปรแกรมแบบ MAP-Elites และคะแนนที่เครื่องตรวจได้ รวมถึงผลด้านวงจรฮาร์ดแวร์ เป็นสถาปัตยกรรมอ้างอิงของ design agent ของเรา"
+  },
+  {
+   "id": "AG-004",
+   "title": "Evolution or Illusion? Rethinking Evaluation in LLM Evolutionary Search",
+   "arxiv": "2609.19799",
+   "year": 2026,
+   "relation": "direct",
+   "why_en": "Questions whether reported gains of LLM evolutionary search survive fair baselines and budgets; directly supports our falsification and matched-budget rules.",
+   "why_th": "ตั้งคำถามว่าผลดีที่รายงานของการค้นหาเชิงวิวัฒนาการด้วย LLM ยังอยู่หรือไม่เมื่อใช้ baseline และงบที่ยุติธรรม สนับสนุนกฎการพยายามหักล้างและการจับคู่งบของเราโดยตรง"
+  },
+  {
+   "id": "AG-005",
+   "title": "The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery",
+   "arxiv": "2408.06292",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "End-to-end automated research loop; useful mainly for its documented failure modes (overclaiming, weak review), which our evidence tiers are designed to block.",
+   "why_th": "วงจรวิจัยอัตโนมัติครบวง มีประโยชน์หลักจากรูปแบบความล้มเหลวที่บันทึกไว้ (อ้างเกินจริง การรีวิวอ่อน) ซึ่งระดับหลักฐานของเราออกแบบมาเพื่อกันไว้"
+  },
+  {
+   "id": "AG-006",
+   "title": "How Can Large Language Models Help Humans in Design and Manufacturing?",
+   "arxiv": "2307.14377",
+   "year": 2023,
+   "relation": "direct",
+   "why_en": "Systematic test of an LLM across CAD generation, performance evaluation, optimisation and manufacturing; maps where language models fail on geometry and physics.",
+   "why_th": "ทดสอบ LLM อย่างเป็นระบบตั้งแต่สร้าง CAD ประเมินสมรรถนะ optimize จนถึงการผลิต แสดงว่าแบบจำลองภาษาล้มเหลวตรงไหนในเรขาคณิตและฟิสิกส์"
+  },
+  {
+   "id": "AG-007",
+   "title": "Large Language Model Agent as a Mechanical Designer",
+   "arxiv": "2404.17525",
+   "year": 2024,
+   "relation": "direct",
+   "why_en": "LLM agent iterating truss designs with FEM feedback, compared against NSGA-II at equal evaluations; a direct method and fairness comparator.",
+   "why_th": "LLM agent ปรับแบบโครงถักด้วยผลจาก FEM และเทียบกับ NSGA-II ที่จำนวนการประเมินเท่ากัน เป็นทั้งวิธีและตัวเทียบความยุติธรรมโดยตรง"
+  },
+  {
+   "id": "AG-008",
+   "title": "An LLM-enabled Multi-Agent Autonomous Mechatronics Design Framework",
+   "arxiv": "2504.14681",
+   "year": 2025,
+   "relation": "direct",
+   "why_en": "Multi-agent design of a physical mechatronic prototype across mechanical, electronic and software domains; comparable to our multi-domain part-to-vehicle pipeline.",
+   "why_th": "การออกแบบต้นแบบแมคคาทรอนิกส์จริงด้วยหลาย agent ข้ามโดเมนกล อิเล็กทรอนิกส์ และซอฟต์แวร์ เทียบได้กับไปป์ไลน์ part-to-vehicle หลายโดเมนของเรา"
+  },
+  {
+   "id": "AG-009",
+   "title": "Physics-in-the-Loop: A Hybrid Agentic Architecture for Validated CAD Engineering Design",
+   "arxiv": "2605.19717",
+   "year": 2026,
+   "relation": "direct",
+   "why_en": "Generate-simulate-refine CAD agent with a validated physics tool in the loop rather than visual feedback; the same pattern as our CadQuery-to-evaluator loop.",
+   "why_th": "CAD agent แบบสร้าง-จำลอง-ปรับ ที่ใช้เครื่องมือฟิสิกส์ที่ตรวจสอบแล้วในวงแทนการดูภาพ เป็นรูปแบบเดียวกับวง CadQuery สู่ตัวประเมินของเรา"
+  },
+  {
+   "id": "AG-010",
+   "title": "Engineering.ai: A Platform for Teams of AI Engineers in Computational Design",
+   "arxiv": "2511.00122",
+   "year": 2025,
+   "relation": "direct",
+   "why_en": "LLM agents running CAD, meshing, multidisciplinary simulation and optimisation in a closed loop; a comparable system to benchmark against.",
+   "why_th": "LLM agent ที่รัน CAD, meshing, การจำลองหลายสาขา และ optimization ในวงปิด เป็นระบบที่เทียบกันได้สำหรับทำ benchmark"
+  },
+  {
+   "id": "AG-011",
+   "title": "Self-Improving CAD Generation Agents with Finite Element Analysis as Feedback",
+   "arxiv": "2605.17448",
+   "year": 2026,
+   "relation": "direct",
+   "why_en": "Uses FEA results as the feedback signal for a CAD-writing agent; directly relevant to geometry-structural coupling (Works 082, 138).",
+   "why_th": "ใช้ผล FEA เป็นสัญญาณป้อนกลับให้ agent ที่เขียน CAD เกี่ยวข้องโดยตรงกับ geometry-structural coupling (Works 082, 138)"
+  },
+  {
+   "id": "AG-012",
+   "title": "FEABench: Evaluating Language Models on Multiphysics Reasoning Ability",
+   "arxiv": "2504.06260",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "Benchmark for LLM agents driving a finite-element package end to end; a yardstick for how far agents can be trusted with solver setup.",
+   "why_th": "benchmark ของ LLM agent ที่ใช้โปรแกรม finite element ตั้งแต่ต้นจนจบ เป็นมาตรวัดว่าเชื่อ agent ในการตั้งค่า solver ได้แค่ไหน"
+  },
+  {
+   "id": "AG-013",
+   "title": "FEM-Bench: A Structured Scientific Reasoning Benchmark",
+   "arxiv": "2512.20732",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "Graduate-level FEM coding tasks with automatic checks; useful for testing any agent that writes our element or solver code.",
+   "why_th": "งานเขียนโค้ด FEM ระดับบัณฑิตศึกษาพร้อมการตรวจอัตโนมัติ ใช้ทดสอบ agent ที่เขียนโค้ด element หรือ solver ของเรา"
+  },
+  {
+   "id": "AG-014",
+   "title": "What Do CAE Simulation Agents Really Need Beyond a Generic Harness?",
+   "arxiv": "2609.03718",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "Analyses what tooling CAE agents need beyond a generic coding harness; informs the CAD/solver tool interface design.",
+   "why_th": "วิเคราะห์ว่า CAE agent ต้องการเครื่องมืออะไรนอกเหนือจาก harness เขียนโค้ดทั่วไป ให้ข้อมูลการออกแบบ interface เครื่องมือ CAD/solver"
+  },
+  {
+   "id": "AG-015",
+   "title": "VFEAgent: A Multimodal Agent Framework for End-to-End Automated Finite Element Analysis",
+   "arxiv": "2605.28978",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "Vision-augmented agent for FEA setup with an expert-graded benchmark including topology optimisation; a comparator for automated structural evaluation.",
+   "why_th": "agent ที่ใช้ภาพช่วยตั้งค่า FEA พร้อม benchmark ที่ผู้เชี่ยวชาญให้คะแนนรวมถึง topology optimization เป็นตัวเทียบของการประเมินโครงสร้างอัตโนมัติ"
+  },
+  {
+   "id": "AG-016",
+   "title": "MechAgents: Large language model multi-agent collaborations can solve mechanics problems, generate new data, and integrate knowledge",
+   "arxiv": "2311.08166",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "Multi-agent LLMs writing and checking FEniCS elasticity code; shows self-correction value and its limits.",
+   "why_th": "LLM หลาย agent เขียนและตรวจโค้ด elasticity บน FEniCS แสดงประโยชน์และข้อจำกัดของการแก้ไขตัวเอง"
+  },
+  {
+   "id": "AG-017",
+   "title": "Large Language and Text-to-3D Models for Engineering Design Optimization",
+   "arxiv": "2307.01230",
+   "year": 2023,
+   "relation": "direct",
+   "why_en": "Text-to-3D car shapes optimised for CFD drag inside an evolutionary loop; directly relevant to generating vehicle bodies scored by aerodynamics.",
+   "why_th": "รูปทรงรถจาก text-to-3D ที่ optimize แรงต้านจาก CFD ในวงวิวัฒนาการ เกี่ยวข้องโดยตรงกับการสร้างตัวถังที่ให้คะแนนด้วยอากาศพลศาสตร์"
+  },
+  {
+   "id": "AG-018",
+   "title": "Drag-guided diffusion models for vehicle image generation",
+   "arxiv": "2306.09935",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Guides a generative model with a drag surrogate; illustrates the risk that surrogate guidance rewards surrogate errors.",
+   "why_th": "นำทางแบบจำลองเชิงกำเนิดด้วย surrogate ของแรงต้าน แสดงความเสี่ยงที่การนำทางด้วย surrogate จะให้รางวัลกับความผิดพลาดของ surrogate"
+  },
+  {
+   "id": "AG-019",
+   "title": "Text-to-CadQuery: A New Paradigm for CAD Generation with Scalable Large Model Capabilities",
+   "arxiv": "2505.06507",
+   "year": 2025,
+   "relation": "direct",
+   "why_en": "Trains LLMs to emit CadQuery directly; the same CAD language our agents write, with a dataset and error statistics we can reuse.",
+   "why_th": "ฝึก LLM ให้เขียน CadQuery โดยตรง เป็นภาษา CAD เดียวกับที่ agent ของเราเขียน มีชุดข้อมูลและสถิติข้อผิดพลาดที่นำมาใช้ได้"
+  },
+  {
+   "id": "AG-020",
+   "title": "CAD-Recode: Reverse Engineering CAD Code from Point Clouds",
+   "arxiv": "2412.14042",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "Recovers CadQuery programs from point clouds with a large synthetic CadQuery corpus; useful data and a geometry-to-code check.",
+   "why_th": "กู้โปรแกรม CadQuery จาก point cloud พร้อมคลัง CadQuery สังเคราะห์ขนาดใหญ่ เป็นข้อมูลที่ใช้ได้และเป็นการตรวจจากเรขาคณิตกลับเป็นโค้ด"
+  },
+  {
+   "id": "AG-021",
+   "title": "Generating CAD Code with Vision-Language Models for 3D Designs",
+   "arxiv": "2410.05340",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "CADCodeVerify: the model renders its own CAD output and self-verifies; a cheap pre-check before our independent geometry witnesses.",
+   "why_th": "CADCodeVerify: แบบจำลองเรนเดอร์ผล CAD ของตัวเองแล้วตรวจเอง เป็นการตรวจเบื้องต้นราคาถูกก่อน geometry witness อิสระของเรา"
+  },
+  {
+   "id": "AG-022",
+   "title": "CADDesigner: Conceptual CAD Model Generation with a General-Purpose Agent",
+   "year": 2025,
+   "arxiv": "2508.01031",
+   "relation": "indirect",
+   "why_en": "General-purpose agent with structured diagnostics for failed CAD scripts; relevant to turning kernel errors into repairable feedback.",
+   "why_th": "agent อเนกประสงค์ที่ให้ข้อวินิจฉัยเป็นโครงสร้างเมื่อสคริปต์ CAD ล้มเหลว เกี่ยวข้องกับการแปลงข้อผิดพลาดของ kernel เป็นข้อมูลป้อนกลับที่ซ่อมได้"
+  },
+  {
+   "id": "AG-023",
+   "title": "Towards High-Fidelity CAD Generation via LLM-Driven Program Generation and Text-Based B-Rep Primitive Grounding",
+   "arxiv": "2603.11831",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "FutureCAD: LLM writes CadQuery and grounds references to B-rep primitives; addresses the fragile face/edge selection problem in generated CAD.",
+   "why_th": "FutureCAD: LLM เขียน CadQuery และผูกการอ้างอิงเข้ากับ primitive ของ B-rep แก้ปัญหาการเลือก face/edge ที่เปราะบางใน CAD ที่สร้างขึ้น"
+  },
+  {
+   "id": "AG-024",
+   "title": "Clarify Before You Draw: Proactive Agents for Robust Text-to-CAD Generation",
+   "arxiv": "2602.03045",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "Agents that resolve underspecified CAD requests before drawing; relevant to typed interface specifications for generated parts.",
+   "why_th": "agent ที่ถามให้ชัดก่อนวาดเมื่อคำขอ CAD ไม่ครบ เกี่ยวข้องกับข้อกำหนด interface แบบมีชนิดสำหรับชิ้นส่วนที่สร้าง"
+  },
+  {
+   "id": "AG-025",
+   "title": "Test-Time Scaling for CAD Generation via Verifier-Free Consensus Selection",
+   "arxiv": "2608.09706",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "Selects among sampled CAD programs by consensus; a cheap filter, but consensus is not a physical check.",
+   "why_th": "เลือกโปรแกรม CAD จากหลายตัวอย่างด้วยฉันทามติ เป็นตัวกรองราคาถูก แต่ฉันทามติไม่ใช่การตรวจทางฟิสิกส์"
+  },
+  {
+   "id": "AG-026",
+   "title": "CADEngBench: It Looks Like CAD, but Does It Work? Evaluating Parametric Design, Assembly Reasoning, and Physics Simulation",
+   "arxiv": "2608.09296",
+   "year": 2026,
+   "relation": "direct",
+   "why_en": "Benchmark that scores generated CAD on assembly and physics, not appearance; the same principle as our geometry-is-causal-input rule.",
+   "why_th": "benchmark ที่ให้คะแนน CAD ที่สร้างจากการประกอบและฟิสิกส์ ไม่ใช่รูปลักษณ์ เป็นหลักการเดียวกับกฎเรขาคณิตเป็น input เชิงเหตุของเรา"
+  },
+  {
+   "id": "AG-027",
+   "title": "Automated Design Optimization via Strategic Search with Large Language Models",
+   "arxiv": "2511.22651",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "LLM-guided strategic search for engineering design optimisation; a comparator for LLM-proposed parameter moves.",
+   "why_th": "การค้นหาเชิงกลยุทธ์ที่นำโดย LLM สำหรับ optimize การออกแบบ เป็นตัวเทียบของการเสนอค่าพารามิเตอร์โดย LLM"
+  },
+  {
+   "id": "AG-028",
+   "title": "Generative Reliability-Based Design Optimization Using In-Context Learning Capabilities of Large Language Models",
+   "arxiv": "2503.22401",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "LLM in-context design generation under reliability constraints; relevant to uncertainty-aware gates.",
+   "why_th": "การสร้างแบบด้วย in-context learning ของ LLM ภายใต้ข้อจำกัดความน่าเชื่อถือ เกี่ยวข้องกับ gate ที่คำนึงถึงความไม่แน่นอน"
+  },
+  {
+   "id": "AG-029",
+   "title": "From Concept to Manufacturing: Evaluating Vision-Language Models for Engineering Design",
+   "arxiv": "2311.12668",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Broad evaluation of vision-language models on engineering design tasks; documents where they cannot be trusted.",
+   "why_th": "ประเมิน vision-language model อย่างกว้างในงานออกแบบวิศวกรรม บันทึกว่าตรงไหนเชื่อไม่ได้"
+  },
+  {
+   "id": "AG-030",
+   "title": "Deep Generative Models in Engineering Design: A Review",
+   "arxiv": "2110.10863",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Review of generative models for engineering design, including validity and performance gaps; a map of methods for geometry proposal.",
+   "why_th": "ทบทวนแบบจำลองเชิงกำเนิดในการออกแบบวิศวกรรม รวมถึงช่องว่างด้านความถูกต้องและสมรรถนะ เป็นแผนที่วิธีสำหรับการเสนอเรขาคณิต"
+  },
+  {
+   "id": "AG-031",
+   "title": "Beyond Statistical Similarity: Rethinking Metrics for Deep Generative Models in Engineering Design",
+   "arxiv": "2302.02913",
+   "year": 2023,
+   "relation": "direct",
+   "why_en": "Argues generated designs must be scored on constraint satisfaction, performance and novelty rather than similarity to data; aligned with our discovery criteria.",
+   "why_th": "เสนอว่าแบบที่สร้างต้องวัดด้วยการผ่านข้อจำกัด สมรรถนะ และความใหม่ ไม่ใช่ความคล้ายกับข้อมูล สอดคล้องกับเกณฑ์การค้นพบของเรา"
+  },
+  {
+   "id": "AG-032",
+   "title": "Constraining Generative Models for Engineering Design with Negative Data",
+   "arxiv": "2306.15166",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Trains on infeasible examples to keep generators inside constraints; our rejection ledgers are exactly such negative data.",
+   "why_th": "ฝึกด้วยตัวอย่างที่ไม่ผ่านเพื่อให้ตัวสร้างอยู่ในข้อจำกัด บันทึกการปฏิเสธของเราคือข้อมูลเชิงลบแบบนี้พอดี"
+  },
+  {
+   "id": "AG-033",
+   "title": "BIKED: A Dataset for Computational Bicycle Design with Machine Learning Benchmarks",
+   "year": 2022,
+   "relation": "data",
+   "why_en": "Parametric vehicle-design dataset with structural and performance labels; a public example of vehicle design data with validity checks.",
+   "why_th": "ชุดข้อมูลการออกแบบยานพาหนะแบบพารามิเตอร์พร้อมป้ายกำกับโครงสร้างและสมรรถนะ เป็นตัวอย่างสาธารณะของข้อมูลการออกแบบยานพาหนะที่มีการตรวจความถูกต้อง"
+  },
+  {
+   "id": "AG-034",
+   "title": "The impact of AI on engineering design procedures for dynamical systems",
+   "arxiv": "2412.12230",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "Discusses how AI changes design procedures for dynamical systems, including validation obligations.",
+   "why_th": "อภิปรายว่า AI เปลี่ยนกระบวนการออกแบบระบบพลวัตอย่างไร รวมถึงภาระการตรวจสอบ"
+  },
+  {
+   "id": "AG-035",
+   "title": "Eureka: Human-Level Reward Design via Coding Large Language Models",
+   "arxiv": "2310.12931",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "LLM writes reward code for control tasks; a caution that agent-written objectives must be frozen and audited before search.",
+   "why_th": "LLM เขียนโค้ดรางวัลสำหรับงานควบคุม เป็นข้อเตือนว่าวัตถุประสงค์ที่ agent เขียนต้องถูกตรึงและตรวจก่อนค้นหา"
+  },
+  {
+   "id": "AG-036",
+   "title": "RoboMorph: Evolving Robot Morphology using Large Language Models",
+   "arxiv": "2407.08626",
+   "year": 2024,
+   "relation": "direct",
+   "why_en": "LLM-driven evolutionary search over modular robot morphologies; a direct analogue of LLM-guided topology mutation.",
+   "why_th": "การค้นหาเชิงวิวัฒนาการของรูปร่างหุ่นยนต์แบบโมดูลที่ขับด้วย LLM เป็นคู่เทียบโดยตรงของการกลายพันธุ์ topology ที่นำโดย LLM"
+  },
+  {
+   "id": "AG-037",
+   "title": "Text2Robot: Evolutionary Robot Design from Text Descriptions",
+   "arxiv": "2406.19963",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "Text to evolved, fabricated legged robots; shows the manufacturing constraints needed for generated bodies to be buildable.",
+   "why_th": "จากข้อความสู่หุ่นยนต์ขาที่วิวัฒนาการแล้วสร้างจริง แสดงข้อจำกัดการผลิตที่ต้องมีเพื่อให้ร่างที่สร้างขึ้นสร้างได้จริง"
+  },
+  {
+   "id": "AG-038",
+   "title": "Large Language Models as Optimizers",
+   "arxiv": "2309.03409",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "OPRO: LLMs propose solutions from a scored history; a baseline for LLM-as-optimiser behaviour.",
+   "why_th": "OPRO: LLM เสนอคำตอบจากประวัติที่มีคะแนน เป็น baseline ของพฤติกรรม LLM ในบทบาท optimizer"
+  },
+  {
+   "id": "AG-039",
+   "title": "CodeEvolve: an open-source evolutionary framework for algorithmic discovery and optimization",
+   "arxiv": "2510.14150",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "Open-source AlphaEvolve-style framework; a runnable reference implementation for LLM evolutionary search.",
+   "why_th": "framework แบบ AlphaEvolve ที่เป็น open source เป็นตัวอ้างอิงที่รันได้ของการค้นหาเชิงวิวัฒนาการด้วย LLM"
+  },
+  {
+   "id": "AG-040",
+   "title": "OMNI: Open-endedness via Models of human Notions of Interestingness",
+   "arxiv": "2306.01711",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Uses a foundation model to judge which tasks are interesting; relevant to deciding which novel mechanisms deserve evaluation budget.",
+   "why_th": "ใช้ foundation model ตัดสินว่างานใดน่าสนใจ เกี่ยวข้องกับการตัดสินว่ากลไกใหม่ใดควรได้งบประเมิน"
+  },
+  {
+   "id": "AG-041",
+   "title": "Towards Scientific Intelligence: A Survey of LLM-based Scientific Agents",
+   "arxiv": "2503.24047",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "Survey of LLM scientific agents; context for positioning an engineering-discovery agent.",
+   "why_th": "survey ของ LLM scientific agent เป็นบริบทสำหรับวางตำแหน่ง agent ค้นพบทางวิศวกรรม"
+  },
+  {
+   "id": "AG-042",
+   "title": "LLEMA: Evolutionary Search with LLMs for Multi-Objective Materials Discovery",
+   "year": 2025,
+   "arxiv": "2510.22503",
+   "relation": "indirect",
+   "why_en": "LLM-guided evolutionary search in materials; the project restricts itself to catalog materials, so this is context rather than a method to adopt.",
+   "why_th": "การค้นหาเชิงวิวัฒนาการที่นำโดย LLM ด้านวัสดุ โครงการจำกัดตัวเองไว้ที่วัสดุในแค็ตตาล็อก จึงเป็นบริบทมากกว่าวิธีที่จะนำมาใช้"
+  },
+  {
+   "id": "AG-043",
+   "title": "Physical Design using Differentiable Learned Simulators",
+   "arxiv": "2202.00728",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Optimises designs through learned graph-network simulators (airfoils, fluid tools); shows both the speed and the surrogate-exploitation risk.",
+   "why_th": "optimize การออกแบบผ่านตัวจำลองแบบ graph network ที่เรียนรู้ (airfoil เครื่องมือของไหล) แสดงทั้งความเร็วและความเสี่ยงที่จะถูกใช้ช่องโหว่ของ surrogate"
+  }
+ ]
+}

@@ -1,0 +1,256 @@
+{
+ "category": {
+  "key": "AR",
+  "folder": "14_autonomous_racing_strategy",
+  "title_en": "Autonomous racing control, learned drivers, real telemetry and race strategy",
+  "title_th": "การควบคุมการแข่งอัตโนมัติ ผู้ขับที่เรียนรู้ telemetry จริง และกลยุทธ์การแข่ง",
+  "scope_en": "Controllers and learned drivers that can drive each candidate near its limit, public real-car racing data, model identification from track data, and race-level strategy simulation. A weak driver makes good mechanics look bad, so driver quality is part of fairness.",
+  "scope_th": "ตัวควบคุมและผู้ขับที่เรียนรู้ซึ่งขับผู้สมัครแต่ละคันใกล้ขีดจำกัดได้ ข้อมูลการแข่งรถจริงแบบสาธารณะ การระบุแบบจำลองจากข้อมูลสนาม และการจำลองกลยุทธ์ระดับการแข่ง ผู้ขับที่อ่อนทำให้กลไกที่ดีดูแย่ ดังนั้นคุณภาพผู้ขับเป็นส่วนหนึ่งของความยุติธรรม"
+ },
+ "papers": [
+  {
+   "id": "AR-001",
+   "prior_catalog_id": "P40",
+   "title": "Outracing champion Gran Turismo drivers with deep reinforcement learning",
+   "doi": "10.1038/s41586-021-04357-7",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Learned driver beating top humans in a high-fidelity game; a method for strong per-design drivers, not physical validation.",
+   "why_th": "ผู้ขับที่เรียนรู้ชนะมนุษย์ระดับสูงสุดในเกม fidelity สูง เป็นวิธีสร้างผู้ขับที่แข็งต่อแต่ละแบบ ไม่ใช่การยืนยันทางกายภาพ"
+  },
+  {
+   "id": "AR-002",
+   "prior_catalog_id": "P41",
+   "title": "Optimization-Based Autonomous Racing of 1:43 Scale RC Cars",
+   "arxiv": "1711.07300",
+   "year": 2015,
+   "relation": "indirect",
+   "why_en": "Model predictive contouring control for racing; an implementable controller baseline with explicit horizon and actuator limits.",
+   "why_th": "model predictive contouring control สำหรับการแข่ง เป็น baseline ตัวควบคุมที่ implement ได้พร้อมขอบฟ้าและขีดจำกัด actuator ชัดเจน"
+  },
+  {
+   "id": "AR-003",
+   "prior_catalog_id": "P42",
+   "title": "Analyzing the Impact of Simulation Fidelity on the Evaluation of Autonomous Driving Motion Control",
+   "arxiv": "2602.07984",
+   "year": 2024,
+   "relation": "direct",
+   "why_en": "Ablates simulation fidelity against real autonomous-racing telemetry; the template for testing H4 fidelity survival.",
+   "why_th": "ตัด fidelity ของการจำลองทีละส่วนเทียบกับ telemetry การแข่งอัตโนมัติจริง เป็นแม่แบบของการทดสอบ H4"
+  },
+  {
+   "id": "AR-004",
+   "prior_catalog_id": "P62",
+   "title": "Autonomous Racing using Learning Model Predictive Control",
+   "arxiv": "1610.06534",
+   "year": 2016,
+   "relation": "indirect",
+   "why_en": "Iterative learning MPC improves lap time from previous laps; a controller that approaches each vehicle's limit.",
+   "why_th": "MPC ที่เรียนรู้ซ้ำจากรอบก่อนหน้าเพื่อลดเวลาต่อรอบ เป็นตัวควบคุมที่เข้าใกล้ขีดจำกัดของรถแต่ละคัน"
+  },
+  {
+   "id": "AR-005",
+   "title": "Autonomous Vehicles on the Edge: A Survey on Autonomous Vehicle Racing",
+   "arxiv": "2202.07008",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Survey of perception, planning, control and simulation in autonomous racing; a map of tools and datasets.",
+   "why_th": "survey การรับรู้ การวางแผน การควบคุม และการจำลองในการแข่งอัตโนมัติ เป็นแผนที่เครื่องมือและชุดข้อมูล"
+  },
+  {
+   "id": "AR-006",
+   "title": "Indy Autonomous Challenge - Autonomous Race Cars at the Handling Limits",
+   "arxiv": "2202.03807",
+   "year": 2022,
+   "relation": "data",
+   "why_en": "Full-scale autonomous racing at the handling limit with real vehicle behaviour; a reference for model-reality gaps at speed.",
+   "why_th": "การแข่งอัตโนมัติเต็มสเกลที่ขีดจำกัดการควบคุมพร้อมพฤติกรรมรถจริง เป็นเอกสารอ้างอิงของช่องว่างแบบจำลอง-ความจริงที่ความเร็วสูง"
+  },
+  {
+   "id": "AR-007",
+   "title": "TUM Autonomous Motorsport: An Autonomous Racing Software for the Indy Autonomous Challenge",
+   "arxiv": "2205.15979",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Complete open autonomous racing stack with planning and control; reusable components for a driver baseline.",
+   "why_th": "ชุดซอฟต์แวร์การแข่งอัตโนมัติแบบเปิดครบวงรวมการวางแผนและการควบคุม เป็นชิ้นส่วนที่นำมาใช้กับ baseline ผู้ขับได้"
+  },
+  {
+   "id": "AR-008",
+   "title": "RACECAR -- The Dataset for High-Speed Autonomous Racing",
+   "arxiv": "2306.03252",
+   "year": 2023,
+   "relation": "data",
+   "why_en": "Open multi-sensor data from full-scale autonomous Indy cars up to 273 km/h including banked tracks; real data for vehicle-model validation.",
+   "why_th": "ข้อมูลหลายเซนเซอร์แบบเปิดจากรถ Indy อัตโนมัติเต็มสเกลถึง 273 km/h รวมสนามเอียง เป็นข้อมูลจริงสำหรับตรวจสอบแบบจำลองรถ"
+  },
+  {
+   "id": "AR-009",
+   "title": "AMZ Driverless: The Full Autonomous Racing System",
+   "arxiv": "1905.05150",
+   "year": 2020,
+   "relation": "indirect",
+   "why_en": "Complete Formula Student driverless system with vehicle models and MPC; a well-documented reference implementation.",
+   "why_th": "ระบบไร้คนขับ Formula Student ครบวงพร้อมแบบจำลองรถและ MPC เป็นการ implement อ้างอิงที่มีเอกสารดี"
+  },
+  {
+   "id": "AR-010",
+   "title": "Learning-Based Model Predictive Control for Autonomous Racing",
+   "year": 2019,
+   "relation": "indirect",
+   "why_en": "Gaussian-process correction of a nominal vehicle model inside MPC; a pattern for model-discrepancy learning in the driver.",
+   "why_th": "การแก้แบบจำลองรถด้วย Gaussian process ภายใน MPC เป็นแบบการเรียนรู้ความคลาดเคลื่อนของแบบจำลองในผู้ขับ"
+  },
+  {
+   "id": "AR-011",
+   "title": "Super-Human Performance in Gran Turismo Sport Using Deep Reinforcement Learning",
+   "arxiv": "2008.07971",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "RL driver reaching super-human lap times in time trials; a learned-driver baseline method.",
+   "why_th": "ผู้ขับ RL ที่ทำเวลาต่อรอบเหนือมนุษย์ใน time trial เป็นวิธี baseline ของผู้ขับที่เรียนรู้"
+  },
+  {
+   "id": "AR-012",
+   "title": "Reaching the Limit in Autonomous Racing: Optimal Control versus Reinforcement Learning",
+   "arxiv": "2310.10943",
+   "year": 2023,
+   "relation": "direct",
+   "why_en": "Compares optimal control and RL for drone racing at the limit; evidence for choosing driver methods under model mismatch.",
+   "why_th": "เปรียบเทียบ optimal control กับ RL สำหรับการแข่งโดรนที่ขีดจำกัด เป็นหลักฐานสำหรับการเลือกวิธีผู้ขับเมื่อแบบจำลองไม่ตรง"
+  },
+  {
+   "id": "AR-013",
+   "title": "Champion-level drone racing using deep reinforcement learning",
+   "doi": "10.1038/s41586-023-06419-4",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Learned policy beating human champions in the real world with residual models from real data; an example of closing the sim-to-real gap.",
+   "why_th": "policy ที่เรียนรู้ชนะแชมป์มนุษย์ในโลกจริงโดยใช้แบบจำลอง residual จากข้อมูลจริง เป็นตัวอย่างการปิดช่องว่างจากจำลองสู่ของจริง"
+  },
+  {
+   "id": "AR-014",
+   "title": "Application of Monte Carlo Methods to Consider Probabilistic Effects in a Race Simulation for Circuit Motorsport",
+   "doi": "10.3390/app10124229",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "Race simulation with probabilistic events (safety cars, failures) via Monte Carlo; relevant to total race time rather than one lap.",
+   "why_th": "การจำลองการแข่งที่มีเหตุการณ์เชิงความน่าจะเป็น (safety car ความเสียหาย) ด้วย Monte Carlo เกี่ยวข้องกับเวลาแข่งรวมแทนเวลาหนึ่งรอบ"
+  },
+  {
+   "id": "AR-015",
+   "title": "Virtual Strategy Engineer: Using Artificial Neural Networks for Making Race Strategy Decisions in Circuit Motorsport",
+   "doi": "10.3390/app10217805",
+   "year": 2020,
+   "relation": "indirect",
+   "why_en": "Learned pit and compound strategy decisions in a race simulation; strategy is part of total race time.",
+   "why_th": "การตัดสินใจกลยุทธ์พิทและชนิดยางที่เรียนรู้ในการจำลองการแข่ง กลยุทธ์เป็นส่วนหนึ่งของเวลาแข่งรวม"
+  },
+  {
+   "id": "AR-016",
+   "title": "A Race Simulation for Strategy Decisions in Circuit Motorsports",
+   "year": 2018,
+   "relation": "direct",
+   "why_en": "Lap-by-lap race simulation with tyre degradation and fuel mass; a public model of race-length (not lap-length) time.",
+   "why_th": "การจำลองการแข่งทีละรอบพร้อมการเสื่อมของยางและมวลเชื้อเพลิง เป็นแบบจำลองสาธารณะของเวลาระยะการแข่ง (ไม่ใช่ระยะรอบ)"
+  },
+  {
+   "id": "AR-017",
+   "title": "Towards Learning-Based Formula 1 Race Strategies",
+   "arxiv": "2512.21570",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "Learning-based F1 strategy; recent context for race-level decision making.",
+   "why_th": "กลยุทธ์ F1 แบบเรียนรู้ เป็นบริบทล่าสุดของการตัดสินใจระดับการแข่ง"
+  },
+  {
+   "id": "AR-018",
+   "title": "Game Theory in Formula 1: From Physical to Strategic Interactions",
+   "arxiv": "2503.05421",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "Game-theoretic view of F1 interactions; relevant only if multi-car races enter the environment.",
+   "why_th": "มุมมองทฤษฎีเกมของปฏิสัมพันธ์ใน F1 เกี่ยวข้องเฉพาะเมื่อการแข่งหลายคันเข้ามาในสภาพแวดล้อม"
+  },
+  {
+   "id": "AR-019",
+   "title": "Opponent State Inference Under Partial Observability: An HMM-POMDP Framework for 2026 Formula 1 Energy Strategy",
+   "arxiv": "2603.01290",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "Models 2026-regulation energy strategy including Override Mode; context for the regulation profile our race contract pins.",
+   "why_th": "จำลองกลยุทธ์พลังงานตามติกาปี 2026 รวมถึง Override Mode เป็นบริบทของโปรไฟล์ติกาที่สัญญาการแข่งของเราตรึงไว้"
+  },
+  {
+   "id": "AR-020",
+   "title": "Bridging RL and MPC for mixed-integer optimal control with application to Formula 1 race strategies",
+   "arxiv": "2604.00826",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "Combines RL and MPC for mixed-integer race strategy; relevant to discrete strategy choices.",
+   "why_th": "รวม RL กับ MPC สำหรับกลยุทธ์การแข่งแบบ mixed-integer เกี่ยวข้องกับการเลือกกลยุทธ์แบบไม่ต่อเนื่อง"
+  },
+  {
+   "id": "AR-021",
+   "title": "Mission Performance: Automatic and Adaptive Race Pace Progression for Autonomous Racing",
+   "arxiv": "2609.12292",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "Adaptive pace progression towards the limit; relevant to safely finding each candidate's achievable pace.",
+   "why_th": "การเพิ่มจังหวะความเร็วแบบปรับตัวสู่ขีดจำกัด เกี่ยวข้องกับการหาจังหวะที่ทำได้ของผู้สมัครแต่ละคันอย่างปลอดภัย"
+  },
+  {
+   "id": "AR-022",
+   "title": "Learning-Based On-Track System Identification for Scaled Autonomous Racing in Under a Minute",
+   "arxiv": "2411.17508",
+   "year": 2024,
+   "relation": "direct",
+   "why_en": "Identifies tyre/vehicle models from about 30 s of driving data; a fast calibration route for physical correlation.",
+   "why_th": "ระบุแบบจำลองยาง/รถจากข้อมูลขับประมาณ 30 วินาที เป็นเส้นทางการสอบเทียบที่เร็วสำหรับ physical correlation"
+  },
+  {
+   "id": "AR-023",
+   "title": "Deep Dynamics: Vehicle Dynamics Modeling with a Physics-Informed Neural Network for Autonomous Racing",
+   "arxiv": "2312.04374",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "Physics-informed network that estimates interpretable vehicle parameters from data; a hybrid model-identification option.",
+   "why_th": "โครงข่ายที่มีฟิสิกส์กำกับซึ่งประมาณพารามิเตอร์รถที่ตีความได้จากข้อมูล เป็นทางเลือกการระบุแบบจำลองแบบผสม"
+  },
+  {
+   "id": "AR-024",
+   "title": "F1TENTH: An Open-source Evaluation Environment for Continuous Control and Reinforcement Learning",
+   "year": 2020,
+   "pdf_url": "https://proceedings.mlr.press/v123/o-kelly20a/o-kelly20a.pdf",
+   "relation": "indirect",
+   "why_en": "Open scaled-racing evaluation environment with physical cars; a low-cost physical testbed idea.",
+   "why_th": "สภาพแวดล้อมประเมินการแข่งแบบย่อส่วนที่เปิดพร้อมรถจริง เป็นแนวคิดแท่นทดสอบจริงราคาถูก"
+  },
+  {
+   "id": "AR-025",
+   "title": "Real-Time Adaptive Velocity Optimization for Autonomous Electric Cars at the Limits of Handling",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "Real-time velocity planning with energy and friction limits on an electric racecar; a driver component for energy-limited races.",
+   "why_th": "การวางแผนความเร็วแบบเวลาจริงที่มีขีดจำกัดพลังงานและแรงเสียดทานบนรถแข่งไฟฟ้า เป็นชิ้นส่วนผู้ขับสำหรับการแข่งที่พลังงานจำกัด"
+  },
+  {
+   "id": "AR-026",
+   "title": "Efficient Trajectory Optimization for Autonomous Racing via Formula-1 Data-Driven Initialization",
+   "arxiv": "2603.07126",
+   "year": 2026,
+   "relation": "data",
+   "why_en": "Uses real Formula 1 trajectory data to initialise racing-line optimisation; a source of public F1 line data and a warm-start method.",
+   "why_th": "ใช้ข้อมูลเส้นทาง Formula 1 จริงเป็นค่าเริ่มต้นของการ optimize เส้นแข่ง เป็นแหล่งข้อมูลเส้นแข่ง F1 สาธารณะและวิธี warm start"
+  },
+  {
+   "id": "AR-027",
+   "title": "Unifying F1TENTH Autonomous Racing: Survey, Methods and Benchmarks",
+   "arxiv": "2402.18558",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "Benchmarks of racing planners and controllers on a common platform; a reference for fair controller comparisons.",
+   "why_th": "benchmark ตัววางแผนและตัวควบคุมการแข่งบนแพลตฟอร์มเดียวกัน เป็นแหล่งอ้างอิงของการเทียบตัวควบคุมอย่างยุติธรรม"
+  }
+ ]
+}

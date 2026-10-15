@@ -1,0 +1,306 @@
+{
+ "category": {
+  "key": "AE",
+  "folder": "10_aerodynamics",
+  "title_en": "Aerodynamics, CFD validation, aero datasets and neural surrogates",
+  "title_th": "อากาศพลศาสตร์ การตรวจสอบ CFD ชุดข้อมูล aero และ neural surrogate",
+  "scope_en": "Race-car aerodynamic mechanisms (ground effect, wheels, wakes), experimentally anchored CFD cases, adjoint shape optimisation, open automotive CFD datasets, and neural surrogates with their out-of-distribution limits. Aero is an A/B gap: there is no validated geometry-to-aero-map route yet.",
+  "scope_th": "กลไกอากาศพลศาสตร์ของรถแข่ง (ground effect ล้อ wake) กรณี CFD ที่ยึดกับการทดลอง การ optimize รูปทรงแบบ adjoint ชุดข้อมูล CFD ยานยนต์แบบเปิด และ neural surrogate พร้อมข้อจำกัดนอกการกระจายข้อมูล aero เป็นช่องว่างระดับ A/B เพราะยังไม่มีเส้นทางจากเรขาคณิตสู่แผนที่ aero ที่ตรวจสอบแล้ว"
+ },
+ "papers": [
+  {
+   "id": "AE-001",
+   "prior_catalog_id": "P47",
+   "title": "Aerodynamics of Race Cars",
+   "doi": "10.1146/annurev.fluid.38.050304.092016",
+   "year": 2006,
+   "relation": "direct",
+   "why_en": "Review of race-car aero mechanisms, ground effect and component interactions; which causal effects an aero model must capture.",
+   "why_th": "ทบทวนกลไก aero ของรถแข่ง ground effect และปฏิสัมพันธ์ระหว่างชิ้นส่วน บอกว่าแบบจำลอง aero ต้องจับผลเชิงเหตุใดบ้าง"
+  },
+  {
+   "id": "AE-002",
+   "prior_catalog_id": "P48",
+   "title": "Spectral/hp element simulation of flow past a Formula One front wing: validation against experiments",
+   "arxiv": "1909.06701",
+   "year": 2019,
+   "relation": "data",
+   "why_en": "Experimentally validated F1 front-wing CFD case; a public benchmark to validate any aero solver before whole-car use.",
+   "why_th": "กรณี CFD ปีกหน้า F1 ที่ตรวจสอบกับการทดลองแล้ว เป็น benchmark สาธารณะสำหรับตรวจ solver aero ก่อนใช้กับทั้งคัน"
+  },
+  {
+   "id": "AE-003",
+   "prior_catalog_id": "P49",
+   "title": "DAFoam: An Open-Source Adjoint Framework for Multidisciplinary Design Optimization with OpenFOAM",
+   "year": 2020,
+   "relation": "indirect",
+   "why_en": "Adjoint CFD gradients for shape optimisation on OpenFOAM; a local aero refinement tool inside an admitted topology.",
+   "why_th": "gradient CFD แบบ adjoint สำหรับ optimize รูปทรงบน OpenFOAM เป็นเครื่องมือปรับ aero เฉพาะที่ภายใน topology ที่ผ่านแล้ว"
+  },
+  {
+   "id": "AE-004",
+   "prior_catalog_id": "P50",
+   "title": "Stanford University Unstructured (SU2): An open-source integrated computational environment for multi-physics simulation and design",
+   "year": 2013,
+   "pdf_url": "https://su2code.github.io/documents/SU2_AIAA_ASM2013.pdf",
+   "relation": "indirect",
+   "why_en": "Open CFD and adjoint design suite; an independent second solver for aero cross-checks.",
+   "why_th": "ชุด CFD และการออกแบบ adjoint แบบเปิด เป็น solver ตัวที่สองที่อิสระสำหรับตรวจทาน aero"
+  },
+  {
+   "id": "AE-005",
+   "prior_catalog_id": "P51",
+   "title": "DrivAerNet: A Parametric Car Dataset for Data-Driven Aerodynamic Design and Prediction",
+   "arxiv": "2403.08055",
+   "year": 2024,
+   "relation": "data",
+   "why_en": "Thousands of parametric car CFD results; training/validation data for drag surrogates, limited to road-car shapes.",
+   "why_th": "ผล CFD รถแบบพารามิเตอร์หลายพันชุด เป็นข้อมูลฝึก/ตรวจสอบ surrogate แรงต้าน จำกัดที่รูปทรงรถถนน"
+  },
+  {
+   "id": "AE-006",
+   "prior_catalog_id": "P52",
+   "title": "DrivAerNet++: A Large-Scale Multimodal Car Dataset with Computational Fluid Dynamics Simulations and Deep Learning Benchmarks",
+   "arxiv": "2406.09624",
+   "year": 2024,
+   "relation": "data",
+   "why_en": "8,000+ multimodal car CFD cases with benchmarks; the largest open automotive aero dataset.",
+   "why_th": "กรณี CFD รถหลายรูปแบบกว่า 8,000 กรณีพร้อม benchmark เป็นชุดข้อมูล aero ยานยนต์แบบเปิดที่ใหญ่ที่สุด"
+  },
+  {
+   "id": "AE-007",
+   "prior_catalog_id": "P53",
+   "title": "CarBench: A Comprehensive Benchmark for Neural Surrogates on High-Fidelity 3D Car Aerodynamics",
+   "arxiv": "2512.07847",
+   "year": 2025,
+   "relation": "direct",
+   "why_en": "Benchmarks surrogate accuracy, physical consistency, cost and uncertainty including unseen categories; the evaluation protocol for any aero surrogate we use.",
+   "why_th": "benchmark ความแม่นยำ ความสอดคล้องทางฟิสิกส์ ต้นทุน และความไม่แน่นอนของ surrogate รวมถึงหมวดที่ไม่เคยเห็น เป็นระเบียบการประเมินของ surrogate aero ที่เราจะใช้"
+  },
+  {
+   "id": "AE-008",
+   "title": "DrivAerML: High-Fidelity Computational Fluid Dynamics Dataset for Road-Car External Aerodynamics",
+   "arxiv": "2408.11969",
+   "year": 2024,
+   "relation": "data",
+   "why_en": "500 DrivAer variants with hybrid RANS-LES at 160M cells, open licence; high-fidelity reference data for surrogate validation.",
+   "why_th": "DrivAer 500 แบบด้วย hybrid RANS-LES ที่ 160 ล้าน cell สัญญาอนุญาตเปิด เป็นข้อมูลอ้างอิง fidelity สูงสำหรับตรวจสอบ surrogate"
+  },
+  {
+   "id": "AE-009",
+   "title": "AhmedML: High-Fidelity Computational Fluid Dynamics Dataset for Incompressible, Low-Speed Bluff Body Aerodynamics",
+   "arxiv": "2407.20801",
+   "year": 2024,
+   "relation": "data",
+   "why_en": "500 Ahmed-body variants with hybrid RANS-LES; a simpler bluff-body benchmark for testing aero pipelines.",
+   "why_th": "Ahmed body 500 แบบด้วย hybrid RANS-LES เป็น benchmark วัตถุทื่อที่ง่ายกว่าสำหรับทดสอบไปป์ไลน์ aero"
+  },
+  {
+   "id": "AE-010",
+   "title": "WindsorML: High-Fidelity Computational Fluid Dynamics Dataset For Automotive Aerodynamics",
+   "arxiv": "2407.19320",
+   "year": 2024,
+   "relation": "data",
+   "why_en": "Wall-modelled LES of Windsor-body variants (CC-BY-SA); open high-fidelity data including ground proximity.",
+   "why_th": "LES แบบ wall-modelled ของ Windsor body หลายแบบ (CC-BY-SA) เป็นข้อมูล fidelity สูงแบบเปิดที่รวมผลใกล้พื้น"
+  },
+  {
+   "id": "AE-011",
+   "title": "Ground Effect Aerodynamics of Race Cars",
+   "year": 2006,
+   "relation": "direct",
+   "why_en": "Review of wings, diffusers and wheels in ground effect with experimental data; the physics of ride-height-dependent downforce.",
+   "why_th": "ทบทวนปีก diffuser และล้อใน ground effect พร้อมข้อมูลการทดลอง เป็นฟิสิกส์ของ downforce ที่ขึ้นกับความสูงตัวถัง"
+  },
+  {
+   "id": "AE-012",
+   "title": "Aerodynamics of a single element wing in ground effect",
+   "year": 2000,
+   "relation": "data",
+   "why_en": "Wind-tunnel measurements of an inverted wing versus ground height, including force reduction close to the ground; validation data for ground-effect models.",
+   "why_th": "ผลวัดในอุโมงค์ลมของปีกกลับหัวตามระยะจากพื้น รวมถึงแรงที่ลดลงเมื่อใกล้พื้นมาก เป็นข้อมูลตรวจสอบแบบจำลอง ground effect"
+  },
+  {
+   "id": "AE-013",
+   "title": "A Computational Study of the Flow Around an Isolated Wheel in Contact With the Ground",
+   "year": 2006,
+   "relation": "indirect",
+   "why_en": "CFD of a rotating wheel on the ground compared with experiment; relevant to exposed ground-contact endpoints.",
+   "why_th": "CFD ของล้อหมุนบนพื้นเทียบกับการทดลอง เกี่ยวข้องกับจุดสัมผัสพื้นที่เปิดโล่ง"
+  },
+  {
+   "id": "AE-014",
+   "title": "The effects of simplifications on isolated wheel aerodynamics",
+   "year": 2015,
+   "relation": "indirect",
+   "why_en": "Quantifies how geometric simplifications change wheel aero; guidance on which details a geometry-to-aero route must keep.",
+   "why_th": "วัดว่าการลดรายละเอียดเรขาคณิตเปลี่ยน aero ของล้ออย่างไร เป็นแนวทางว่าเส้นทางเรขาคณิตสู่ aero ต้องเก็บรายละเอียดใด"
+  },
+  {
+   "id": "AE-015",
+   "title": "CFD Investigation of the Effect of the Salient Flow Features in the Wake of a Generic Open-Wheel Race Car",
+   "year": 2017,
+   "relation": "indirect",
+   "why_en": "Wake structures of an open-wheel car and their effect on a following car; relevant later if traffic and wake enter the race environment.",
+   "why_th": "โครงสร้าง wake ของรถล้อเปิดและผลต่อรถที่ตามหลัง เกี่ยวข้องในภายหลังหากการจราจรและ wake เข้ามาในสภาพการแข่ง"
+  },
+  {
+   "id": "AE-016",
+   "title": "AB-UPT: Scaling Neural CFD Surrogates for High-Fidelity Automotive Aerodynamics Simulations via Anchored-Branched Universal Physics Transformers",
+   "arxiv": "2502.09692",
+   "year": 2025,
+   "relation": "indirect",
+   "why_en": "Scales neural surrogates to full high-fidelity car fields; a candidate surrogate architecture, with OOD caveats.",
+   "why_th": "ขยาย neural surrogate ไปยัง field รถ fidelity สูงเต็มคัน เป็นสถาปัตยกรรม surrogate ตัวเลือก พร้อมข้อควรระวังนอกการกระจายข้อมูล"
+  },
+  {
+   "id": "AE-017",
+   "title": "Transolver: A Fast Transformer Solver for PDEs on General Geometries",
+   "arxiv": "2402.02366",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "Physics-attention transformer for PDEs on arbitrary meshes including car aerodynamics; a general-geometry surrogate candidate.",
+   "why_th": "transformer แบบ physics-attention สำหรับ PDE บน mesh ใดก็ได้รวมถึงอากาศพลศาสตร์รถ เป็นผู้สมัคร surrogate สำหรับเรขาคณิตทั่วไป"
+  },
+  {
+   "id": "AE-018",
+   "title": "Geometry-Informed Neural Operator for Large-Scale 3D PDEs",
+   "arxiv": "2309.00583",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "GINO predicts car surface pressure from geometry; an early neural-operator car-aero result to reproduce.",
+   "why_th": "GINO ทำนายความดันบนผิวรถจากเรขาคณิต เป็นผล neural operator ด้าน aero รถยุคแรกที่ควรทำซ้ำ"
+  },
+  {
+   "id": "AE-019",
+   "title": "Learning Mesh-Based Simulation with Graph Networks",
+   "arxiv": "2010.03409",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "MeshGraphNets learns mesh-based physics including aerodynamics; the base of many geometry-general surrogates.",
+   "why_th": "MeshGraphNets เรียนรู้ฟิสิกส์บน mesh รวมถึงอากาศพลศาสตร์ เป็นฐานของ surrogate เรขาคณิตทั่วไปหลายตัว"
+  },
+  {
+   "id": "AE-020",
+   "title": "Learning Three-dimensional Flow for Interactive Aerodynamic Design",
+   "year": 2018,
+   "relation": "indirect",
+   "why_en": "Learned 3D flow and drag prediction for interactive car shape design; an early surrogate-in-the-loop design example.",
+   "why_th": "การทำนายการไหล 3 มิติและแรงต้านที่เรียนรู้สำหรับออกแบบรูปทรงรถแบบโต้ตอบ เป็นตัวอย่างยุคแรกของ surrogate ในวงการออกแบบ"
+  },
+  {
+   "id": "AE-021",
+   "title": "Surrogate Modeling of Car Drag Coefficient with Depth and Normal Renderings",
+   "arxiv": "2306.06110",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Image-based drag surrogate with a large car CFD dataset; a cheap screening surrogate to compare against field surrogates.",
+   "why_th": "surrogate แรงต้านจากภาพพร้อมชุดข้อมูล CFD รถขนาดใหญ่ เป็น surrogate คัดกรองราคาถูกสำหรับเทียบกับ surrogate แบบ field"
+  },
+  {
+   "id": "AE-022",
+   "title": "Faster by Design: Interactive Aerodynamics via Neural Surrogates Trained on Expert-Validated CFD",
+   "arxiv": "2604.18491",
+   "year": 2026,
+   "relation": "direct",
+   "why_en": "Neural surrogates trained on expert-validated race-car CFD (including an LMP2 car); the closest race-car surrogate study.",
+   "why_th": "neural surrogate ที่ฝึกบน CFD รถแข่งที่ผู้เชี่ยวชาญตรวจแล้ว (รวมถึงรถ LMP2) เป็นการศึกษา surrogate รถแข่งที่ใกล้ที่สุด"
+  },
+  {
+   "id": "AE-023",
+   "title": "Multi-Granularity Conformal Prediction for Reliable Neural-Operator Automotive Aerodynamic Surrogates",
+   "arxiv": "2607.17297",
+   "year": 2026,
+   "relation": "direct",
+   "why_en": "Conformal uncertainty bounds for aero surrogates; a way to attach calibrated error bars to surrogate-based promotion.",
+   "why_th": "ขอบเขตความไม่แน่นอนแบบ conformal สำหรับ surrogate aero เป็นวิธีแนบ error bar ที่สอบเทียบแล้วให้การเลื่อนระดับที่ใช้ surrogate"
+  },
+  {
+   "id": "AE-024",
+   "title": "Adapting Automotive Aerodynamics Surrogates to New Vehicle Families via Transfer Learning",
+   "arxiv": "2605.27968",
+   "year": 2026,
+   "relation": "direct",
+   "why_en": "Measures surrogate failure and adaptation on new vehicle families; directly relevant because novel architectures are out of distribution.",
+   "why_th": "วัดความล้มเหลวและการปรับตัวของ surrogate กับตระกูลรถใหม่ เกี่ยวข้องโดยตรงเพราะสถาปัตยกรรมใหม่อยู่นอกการกระจายข้อมูล"
+  },
+  {
+   "id": "AE-025",
+   "title": "Towards a Foundation-Model Paradigm for Aerodynamic Prediction in Three-dimensional Design",
+   "arxiv": "2604.18062",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "Foundation-model approach to 3D aero prediction; context for general-geometry surrogates.",
+   "why_th": "แนวทาง foundation model สำหรับการทำนาย aero 3 มิติ เป็นบริบทของ surrogate เรขาคณิตทั่วไป"
+  },
+  {
+   "id": "AE-026",
+   "title": "SMART: Scalable Mesh-free Aerodynamic Simulations from Raw Geometries using a Transformer-based Surrogate Model",
+   "arxiv": "2601.18707",
+   "year": 2026,
+   "relation": "indirect",
+   "why_en": "Mesh-free surrogate from raw geometry; avoids a meshing step for early screening.",
+   "why_th": "surrogate ที่ไม่ต้องใช้ mesh จากเรขาคณิตดิบ ข้ามขั้น meshing สำหรับการคัดกรองขั้นแรก"
+  },
+  {
+   "id": "AE-027",
+   "title": "AirfRANS: High Fidelity Computational Fluid Dynamics Dataset for Approximating Reynolds-Averaged Navier-Stokes Solutions",
+   "arxiv": "2212.07564",
+   "year": 2022,
+   "relation": "data",
+   "why_en": "Airfoil RANS dataset with physics-consistency metrics; relevant to wing-element surrogates and evaluation of physical consistency.",
+   "why_th": "ชุดข้อมูล RANS ของ airfoil พร้อมตัวชี้วัดความสอดคล้องทางฟิสิกส์ เกี่ยวข้องกับ surrogate ของชิ้นปีกและการประเมินความสอดคล้องทางฟิสิกส์"
+  },
+  {
+   "id": "AE-028",
+   "title": "Adjoint methods for car aerodynamics",
+   "doi": "10.1186/2190-5983-4-6",
+   "year": 2014,
+   "relation": "direct",
+   "why_en": "Industrial adjoint shape and topology optimisation of car aerodynamics; the method for local aero improvement of admitted bodies.",
+   "why_th": "การ optimize รูปทรงและ topology ด้าน aero ของรถแบบ adjoint ในอุตสาหกรรม เป็นวิธีปรับ aero เฉพาะที่ของตัวถังที่ผ่านแล้ว"
+  },
+  {
+   "id": "AE-029",
+   "title": "Introduction of a New Realistic Generic Car Model for Aerodynamic Investigations",
+   "year": 2012,
+   "relation": "data",
+   "why_en": "The DrivAer reference geometry and its experimental data; the basis of DrivAerNet/DrivAerML.",
+   "why_th": "เรขาคณิตอ้างอิง DrivAer และข้อมูลการทดลอง เป็นฐานของ DrivAerNet/DrivAerML"
+  },
+  {
+   "id": "AE-030",
+   "title": "Some Salient Features Of The Time-Averaged Ground Vehicle Wake",
+   "year": 1984,
+   "relation": "data",
+   "why_en": "Ahmed-body experiments with drag versus slant angle; the classic validation case for vehicle wake CFD.",
+   "why_th": "การทดลอง Ahmed body พร้อมแรงต้านตามมุมลาด เป็นกรณีตรวจสอบคลาสสิกของ CFD wake ยานพาหนะ"
+  },
+  {
+   "id": "AE-031",
+   "title": "Improved two-equation k-omega turbulence models for aerodynamic flows",
+   "year": 1992,
+   "relation": "indirect",
+   "why_en": "Menter's SST model report; the turbulence model most race-car RANS uses, with its known limits in separation.",
+   "why_th": "รายงานแบบจำลอง SST ของ Menter เป็นแบบจำลองความปั่นป่วนที่ RANS รถแข่งส่วนใหญ่ใช้ พร้อมข้อจำกัดที่ทราบในการแยกตัวของการไหล"
+  },
+  {
+   "id": "AE-032",
+   "title": "Experimental study of the vortex system generated by a Formula 1 front wing",
+   "year": 2006,
+   "landing_url": "https://spiral.imperial.ac.uk/entities/publication/001dea4e-b1e9-490a-8daf-cc80fd398e38",
+   "relation": "data",
+   "why_en": "Thesis with detailed measurements of F1 front-wing vortices; experimental data for validating wing wake predictions.",
+   "why_th": "วิทยานิพนธ์ที่วัด vortex ของปีกหน้า F1 อย่างละเอียด เป็นข้อมูลการทดลองสำหรับตรวจสอบการทำนาย wake ของปีก"
+  },
+  {
+   "id": "AE-033",
+   "title": "Fourier Neural Operator for Parametric Partial Differential Equations",
+   "arxiv": "2010.08895",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "Neural operator learning solution maps of PDEs; the base architecture of many flow surrogates.",
+   "why_th": "neural operator ที่เรียนรู้การแปลงคำตอบของ PDE เป็นสถาปัตยกรรมฐานของ surrogate การไหลหลายตัว"
+  }
+ ]
+}

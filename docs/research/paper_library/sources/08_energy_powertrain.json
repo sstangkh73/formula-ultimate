@@ -1,0 +1,280 @@
+{
+ "category": {
+  "key": "EN",
+  "folder": "08_energy_powertrain",
+  "title_en": "Race energy management, powertrain architecture and energy storage",
+  "title_th": "การจัดการพลังงานในการแข่ง สถาปัตยกรรม powertrain และแหล่งเก็บพลังงาน",
+  "scope_en": "Energy-limited racing strategy, hybrid and electric powertrain control, powertrain topology synthesis, and the models and measured data for batteries, flywheels and supercapacitors. Supports the carried-energy race contract, the typed energy graph and onboard energy realisation (Work 120).",
+  "scope_th": "กลยุทธ์การแข่งที่พลังงานจำกัด การควบคุม powertrain ไฮบริดและไฟฟ้า การสังเคราะห์ topology ของ powertrain และแบบจำลองกับข้อมูลวัดของแบตเตอรี่ flywheel และ supercapacitor สนับสนุนสัญญาการแข่งที่พลังงานต้องพกไป typed energy graph และ onboard energy realization (Work 120)"
+ },
+ "papers": [
+  {
+   "id": "EN-001",
+   "prior_catalog_id": "P36",
+   "title": "Optimal control of Formula One car energy recovery systems",
+   "year": 2014,
+   "pdf_url": "https://www.anilvrao.com/Publications/JournalPublications/F-1-Optimal-Control-Energy-Recovery.pdf",
+   "relation": "direct",
+   "why_en": "Joint minimum-time driving and ERS scheduling; the formulation for energy-limited racing with recovery.",
+   "why_th": "การขับเวลาต่ำสุดร่วมกับการจัดตาราง ERS เป็นสูตรของการแข่งที่พลังงานจำกัดและมีการกู้คืนพลังงาน"
+  },
+  {
+   "id": "EN-002",
+   "prior_catalog_id": "P37",
+   "title": "Optimal energy management for formula-E cars with regulatory limits and thermal constraints",
+   "year": 2020,
+   "pdf_url": "https://dspace.lib.cranfield.ac.uk/bitstream/1826/15797/1/Optimal_energy_management_for_formula-E_cars_with_regulatory_limits_and_thermal_constraints-2020.pdf",
+   "relation": "direct",
+   "why_en": "Battery energy and temperature limits shaping race-long control; a full-stint coupling of energy and heat.",
+   "why_th": "ขีดจำกัดพลังงานและอุณหภูมิแบตเตอรี่ที่กำหนดการควบคุมตลอดการแข่ง เป็นการเชื่อมพลังงานกับความร้อนตลอด stint"
+  },
+  {
+   "id": "EN-003",
+   "title": "Time-optimal Control Strategies for a Hybrid Electric Race Car",
+   "year": 2018,
+   "relation": "direct",
+   "why_en": "Convex time-optimal energy management of an F1-style hybrid; the core method family for fuel-plus-electric strategies.",
+   "why_th": "การจัดการพลังงานเวลาต่ำสุดแบบ convex ของไฮบริดแบบ F1 เป็นตระกูลวิธีหลักของกลยุทธ์เชื้อเพลิงร่วมไฟฟ้า"
+  },
+  {
+   "id": "EN-004",
+   "title": "Time-Optimal Control Policy for a Hybrid Electric Race Car",
+   "year": 2017,
+   "relation": "direct",
+   "why_en": "Derives the structure of time-optimal hybrid energy policies; useful for sanity-checking learned or searched strategies.",
+   "why_th": "หาโครงสร้างของนโยบายพลังงานไฮบริดเวลาต่ำสุด ใช้ตรวจความสมเหตุสมผลของกลยุทธ์ที่เรียนรู้หรือค้นหามา"
+  },
+  {
+   "id": "EN-005",
+   "title": "Time-optimal gearshift and energy management strategies for a hybrid electric race car",
+   "year": 2021,
+   "relation": "direct",
+   "why_en": "Adds gear selection to hybrid energy management; mixed-integer structure similar to discrete architecture choices.",
+   "why_th": "เพิ่มการเลือกเกียร์ในการจัดการพลังงานไฮบริด มีโครงสร้าง mixed-integer คล้ายการเลือกสถาปัตยกรรมแบบไม่ต่อเนื่อง"
+  },
+  {
+   "id": "EN-006",
+   "title": "Time-optimal low-level control and gearshift strategies for the formula 1 hybrid electric powertrain",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "Low-level F1 power-unit control including turbocharger and MGU-H; detail for a conventional hybrid baseline.",
+   "why_th": "การควบคุมระดับล่างของ power unit F1 รวมถึง turbocharger และ MGU-H เป็นรายละเอียดสำหรับ baseline ไฮบริดแบบเดิม"
+  },
+  {
+   "id": "EN-007",
+   "title": "Low-level Online Control of the Formula 1 Power Unit with Feedforward Cylinder Deactivation",
+   "arxiv": "2303.00372",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Online F1 power-unit control; shows real-time constraints on energy strategies.",
+   "why_th": "การควบคุม power unit F1 แบบออนไลน์ แสดงข้อจำกัดเวลาจริงของกลยุทธ์พลังงาน"
+  },
+  {
+   "id": "EN-008",
+   "title": "Time-optimal Energy Management of the Formula 1 Power Unit with Active Battery Path Constraints",
+   "year": 2021,
+   "relation": "direct",
+   "why_en": "Enforces battery path constraints in time-optimal F1 energy management; relevant to state-of-charge limits in the race contract.",
+   "why_th": "บังคับข้อจำกัดเส้นทางแบตเตอรี่ในการจัดการพลังงาน F1 เวลาต่ำสุด เกี่ยวข้องกับขีดจำกัด state of charge ในสัญญาการแข่ง"
+  },
+  {
+   "id": "EN-009",
+   "title": "Maximum-distance Race Strategies for a Fully Electric Endurance Race Car",
+   "arxiv": "2111.05784",
+   "year": 2022,
+   "relation": "direct",
+   "why_en": "Endurance strategy under fixed energy with pit decisions; relevant to race-long energy budgeting.",
+   "why_th": "กลยุทธ์ endurance ภายใต้พลังงานคงที่พร้อมการตัดสินใจเข้าพิท เกี่ยวข้องกับการจัดงบพลังงานตลอดการแข่ง"
+  },
+  {
+   "id": "EN-010",
+   "title": "Optimal Endurance Race Strategies for a Fully Electric Race Car under Thermal Constraints",
+   "arxiv": "2301.08060",
+   "year": 2023,
+   "relation": "direct",
+   "why_en": "Adds battery and motor thermal limits to endurance strategy; a direct coupling of our thermal and energy gates.",
+   "why_th": "เพิ่มขีดจำกัดความร้อนของแบตเตอรี่และมอเตอร์ในกลยุทธ์ endurance เป็นการเชื่อม gate ความร้อนกับพลังงานของเราโดยตรง"
+  },
+  {
+   "id": "EN-011",
+   "title": "Human-in-the-loop Energy and Thermal Management for Electric Racing Cars through Optimization-based Control",
+   "arxiv": "2412.15379",
+   "year": 2024,
+   "relation": "indirect",
+   "why_en": "Optimisation-based energy and thermal guidance delivered to a human driver; relevant to realistic driver execution of optimal strategies.",
+   "why_th": "คำแนะนำด้านพลังงานและความร้อนจากการ optimize ส่งให้ผู้ขับมนุษย์ เกี่ยวข้องกับการที่ผู้ขับจริงทำตามกลยุทธ์ที่เหมาะที่สุด"
+  },
+  {
+   "id": "EN-012",
+   "title": "Battery model impact on time-optimal co-design for electric racing cars: review and application",
+   "arxiv": "2312.17003",
+   "year": 2023,
+   "relation": "direct",
+   "why_en": "Shows that the battery model choice changes co-design results; direct evidence that energy-store fidelity can flip architecture rankings (H4).",
+   "why_th": "แสดงว่าการเลือกแบบจำลองแบตเตอรี่เปลี่ยนผล co-design เป็นหลักฐานโดยตรงว่า fidelity ของแหล่งเก็บพลังงานพลิกอันดับสถาปัตยกรรมได้ (H4)"
+  },
+  {
+   "id": "EN-013",
+   "title": "Minimum Race-Time Planning-Strategy for an Autonomous Electric Racecar",
+   "arxiv": "2005.07127",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "Race-long energy and thermal planning for an electric racecar with open tooling; a public reference implementation.",
+   "why_th": "การวางแผนพลังงานและความร้อนตลอดการแข่งของรถแข่งไฟฟ้าพร้อมเครื่องมือเปิด เป็นการ implement อ้างอิงสาธารณะ"
+  },
+  {
+   "id": "EN-014",
+   "title": "Review of Optimization Strategies for System-Level Design in Hybrid Electric Vehicles",
+   "year": 2017,
+   "relation": "direct",
+   "why_en": "Classifies topology, technology, sizing and control co-design for hybrids; the vocabulary for our powertrain topology search.",
+   "why_th": "จำแนก co-design ของ topology เทคโนโลยี ขนาด และการควบคุมของไฮบริด เป็นศัพท์สำหรับการค้นหา topology ของ powertrain ของเรา"
+  },
+  {
+   "id": "EN-015",
+   "title": "Topology Generation for Hybrid Electric Vehicle Architecture Design",
+   "year": 2016,
+   "relation": "direct",
+   "why_en": "Enumerates feasible hybrid powertrain topologies from components and connection rules; directly comparable to typed-graph topology generation.",
+   "why_th": "แจกแจง topology ของ powertrain ไฮบริดที่เป็นไปได้จากชิ้นส่วนและกฎการเชื่อม เทียบได้โดยตรงกับการสร้าง topology แบบ typed graph"
+  },
+  {
+   "id": "EN-016",
+   "title": "Joint Design and Control of Electric Vehicle Propulsion Systems",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "Co-design of electric propulsion components and control; method for sizing components within a chosen topology.",
+   "why_th": "co-design ของชิ้นส่วนขับเคลื่อนไฟฟ้าและการควบคุม เป็นวิธีกำหนดขนาดชิ้นส่วนภายใน topology ที่เลือก"
+  },
+  {
+   "id": "EN-017",
+   "title": "Python Battery Mathematical Modelling (PyBaMM)",
+   "doi": "10.5334/jors.309",
+   "year": 2021,
+   "relation": "data",
+   "why_en": "The battery modelling package already mirrored in private/materials/sources; the citation for its models and parameter sets.",
+   "why_th": "แพ็กเกจแบบจำลองแบตเตอรี่ที่มีสำเนาอยู่แล้วใน private/materials/sources เป็นเอกสารอ้างอิงของแบบจำลองและชุดพารามิเตอร์"
+  },
+  {
+   "id": "EN-018",
+   "title": "Review of parameterisation and a novel database (LiionDB) for continuum Li-ion battery models",
+   "year": 2022,
+   "doi": "10.1088/2516-1083/ac692c",
+   "relation": "data",
+   "why_en": "Curated literature parameters for physics-based cell models; the paper behind the private liiondb source and its provenance fields.",
+   "why_th": "พารามิเตอร์จากงานวิจัยที่คัดสรรสำหรับแบบจำลองเซลล์เชิงฟิสิกส์ เป็น paper เบื้องหลังแหล่ง liiondb ส่วนตัวและฟิลด์ที่มา"
+  },
+  {
+   "id": "EN-019",
+   "title": "Development of Experimental Techniques for Parameterization of Multi-scale Lithium-ion Battery Models",
+   "doi": "10.1149/1945-7111/ab9050",
+   "year": 2020,
+   "relation": "data",
+   "why_en": "Measured parameter set for an LG M50 cell (PyBaMM Chen2020); real cell data usable for an onboard battery model.",
+   "why_th": "ชุดพารามิเตอร์ที่วัดจากเซลล์ LG M50 (PyBaMM Chen2020) เป็นข้อมูลเซลล์จริงที่ใช้กับแบบจำลองแบตเตอรี่บนรถได้"
+  },
+  {
+   "id": "EN-020",
+   "title": "An asymptotic derivation of a single particle model with electrolyte",
+   "arxiv": "1905.12553",
+   "year": 2019,
+   "relation": "indirect",
+   "why_en": "Derives SPMe as a controlled reduction of the DFN model; a principled low-fidelity battery rung.",
+   "why_th": "หา SPMe เป็นการลดรูปแบบควบคุมได้ของแบบจำลอง DFN เป็นขั้นแบตเตอรี่ fidelity ต่ำที่มีหลักการ"
+  },
+  {
+   "id": "EN-021",
+   "title": "Lithium-ion battery degradation: how to model it",
+   "arxiv": "2112.02037",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Coupled degradation mechanisms in PyBaMM; relevant if race energy stores degrade over a stint or season.",
+   "why_th": "กลไกการเสื่อมที่เชื่อมกันใน PyBaMM เกี่ยวข้องหากแหล่งพลังงานเสื่อมตลอด stint หรือฤดูกาล"
+  },
+  {
+   "id": "EN-022",
+   "title": "A continuum of physics-based lithium-ion battery models reviewed",
+   "arxiv": "2203.16091",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Reviews the hierarchy of physics-based cell models; a map for choosing battery fidelity per gate.",
+   "why_th": "ทบทวนลำดับชั้นของแบบจำลองเซลล์เชิงฟิสิกส์ เป็นแผนที่การเลือก fidelity ของแบตเตอรี่ต่อ gate"
+  },
+  {
+   "id": "EN-023",
+   "title": "Parameterization of a Physico-Chemical Model of a Lithium-Ion Battery: I. Determination of Parameters",
+   "year": 2015,
+   "relation": "data",
+   "why_en": "Measured Kokam cell parameters (PyBaMM Ecker2015); a second measured data set for cross-checking battery models.",
+   "why_th": "พารามิเตอร์ที่วัดจากเซลล์ Kokam (PyBaMM Ecker2015) เป็นชุดข้อมูลวัดชุดที่สองสำหรับตรวจทานแบบจำลองแบตเตอรี่"
+  },
+  {
+   "id": "EN-024",
+   "title": "Modeling of Galvanostatic Charge and Discharge of the Lithium/Polymer/Insertion Cell",
+   "year": 1993,
+   "relation": "indirect",
+   "why_en": "The Doyle-Fuller-Newman model, the reference physics-based cell model all reduced models are compared against.",
+   "why_th": "แบบจำลอง Doyle-Fuller-Newman เป็นแบบจำลองเซลล์เชิงฟิสิกส์อ้างอิงที่แบบลดรูปทั้งหมดถูกเทียบด้วย"
+  },
+  {
+   "id": "EN-025",
+   "title": "A non-academic perspective on the future of lithium-based batteries",
+   "doi": "10.1038/s41467-023-35933-2",
+   "year": 2023,
+   "relation": "data",
+   "why_en": "Industry-grounded figures on achievable cell energy density and cost; realistic bounds for energy-store candidates.",
+   "why_th": "ตัวเลขจากภาคอุตสาหกรรมเรื่องความหนาแน่นพลังงานเซลล์และต้นทุนที่ทำได้ เป็นขอบเขตที่สมจริงของผู้สมัครแหล่งเก็บพลังงาน"
+  },
+  {
+   "id": "EN-026",
+   "title": "Overview of current development in electrical energy storage technologies and the application potential in power system operation",
+   "year": 2015,
+   "relation": "data",
+   "why_en": "Tabulated energy and power density, efficiency and lifetime across storage technologies; inputs for a technology-neutral energy profile.",
+   "why_th": "ตารางความหนาแน่นพลังงานและกำลัง ประสิทธิภาพ และอายุใช้งานข้ามเทคโนโลยีการเก็บพลังงาน เป็นข้อมูลเข้าของโปรไฟล์พลังงานที่เป็นกลางทางเทคโนโลยี"
+  },
+  {
+   "id": "EN-027",
+   "title": "Theory of Ragone plots",
+   "year": 2000,
+   "relation": "direct",
+   "why_en": "Derives energy-versus-power trade-off curves for storage devices; the right comparison frame for batteries, flywheels and supercapacitors under one energy budget.",
+   "why_th": "หาเส้นแลกเปลี่ยนพลังงานกับกำลังของอุปกรณ์เก็บพลังงาน เป็นกรอบเปรียบเทียบที่ถูกต้องของแบตเตอรี่ flywheel และ supercapacitor ภายใต้งบพลังงานเดียว"
+  },
+  {
+   "id": "EN-028",
+   "title": "A Review of Flywheel Energy Storage System Technologies and Their Applications",
+   "doi": "10.3390/app7030286",
+   "year": 2017,
+   "relation": "data",
+   "why_en": "Flywheel energy, power and loss data including motorsport KERS; inputs for a mechanical energy-store candidate.",
+   "why_th": "ข้อมูลพลังงาน กำลัง และการสูญเสียของ flywheel รวมถึง KERS ในมอเตอร์สปอร์ต เป็นข้อมูลเข้าของผู้สมัครแหล่งเก็บพลังงานเชิงกล"
+  },
+  {
+   "id": "EN-029",
+   "title": "A Comprehensive Review on Supercapacitor Applications and Developments",
+   "doi": "10.3390/en15030674",
+   "year": 2022,
+   "relation": "data",
+   "why_en": "Supercapacitor performance data and applications; inputs for a high-power, low-energy storage candidate.",
+   "why_th": "ข้อมูลสมรรถนะและการใช้งาน supercapacitor เป็นข้อมูลเข้าของผู้สมัครแหล่งเก็บที่กำลังสูงแต่พลังงานต่ำ"
+  },
+  {
+   "id": "EN-030",
+   "title": "Competitors-Aware Stochastic Lap Strategy Optimisation for Race Hybrid Vehicles",
+   "arxiv": "2203.00084",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Stochastic hybrid energy strategy accounting for competitors; relevant if race time depends on interaction, not only on the lone vehicle.",
+   "why_th": "กลยุทธ์พลังงานไฮบริดเชิงสุ่มที่คำนึงถึงคู่แข่ง เกี่ยวข้องหากเวลาแข่งขึ้นกับปฏิสัมพันธ์ ไม่ใช่รถคันเดียว"
+  },
+  {
+   "id": "EN-031",
+   "title": "Modern Electrical Machine Design Optimization: Techniques, Trends, and Best Practices",
+   "year": 2018,
+   "relation": "indirect",
+   "why_en": "Review of electric machine design optimisation practice; guidance for sizing or generating motors as components.",
+   "why_th": "ทบทวนแนวปฏิบัติการ optimize การออกแบบเครื่องจักรไฟฟ้า เป็นแนวทางการกำหนดขนาดหรือสร้างมอเตอร์เป็นชิ้นส่วน"
+  }
+ ]
+}

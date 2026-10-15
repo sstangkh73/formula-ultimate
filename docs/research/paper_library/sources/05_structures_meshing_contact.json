@@ -1,0 +1,218 @@
+{
+ "category": {
+  "key": "ST",
+  "folder": "05_structures_meshing_contact",
+  "title_en": "Topology optimisation, meshing, finite elements, contact and failure numerics",
+  "title_th": "Topology optimization, meshing, finite element, contact และตัวเลขของการพัง",
+  "scope_en": "Methods that turn admitted geometry into solved fields and failure states: structural topology optimisation, robust tetrahedral meshing, element verification problems, frictional contact, fracture and fatigue damage models. The Work 102 review ranks independent geometry-to-field evaluation as the top gap.",
+  "scope_th": "วิธีที่เปลี่ยนเรขาคณิตที่ผ่านแล้วเป็น field ที่แก้แล้วและสถานะการพัง: structural topology optimization, meshing ทรงสี่หน้าที่ทนทาน ปัญหาตรวจสอบ element, contact แบบมีแรงเสียดทาน แบบจำลองการแตกและความล้า การทบทวนของ Work 102 จัดให้การประเมินจากเรขาคณิตสู่ field แบบอิสระเป็นช่องว่างอันดับแรก"
+ },
+ "papers": [
+  {
+   "id": "ST-001",
+   "prior_catalog_id": "P26",
+   "title": "Generating optimal topologies in structural design using a homogenization method",
+   "year": 1988,
+   "doi": "10.1016/0045-7825(88)90086-2",
+   "relation": "direct",
+   "why_en": "Founding structural topology optimisation paper; the physics-constrained precedent for letting load paths emerge.",
+   "why_th": "paper ต้นกำเนิดของ structural topology optimization เป็นงานก่อนหน้าที่มีข้อจำกัดทางฟิสิกส์ของการปล่อยให้ทางเดินแรงเกิดขึ้นเอง"
+  },
+  {
+   "id": "ST-002",
+   "prior_catalog_id": "P27",
+   "title": "A 99 line topology optimization code written in Matlab",
+   "year": 2001,
+   "relation": "indirect",
+   "why_en": "Compact SIMP compliance baseline; a strong, simple method any free-form structural search should beat or match.",
+   "why_th": "baseline compliance แบบ SIMP ที่กระชับ เป็นวิธีง่ายแต่แข็งที่การค้นหาโครงสร้างอิสระใด ๆ ควรทำได้ดีกว่าหรือเท่ากัน"
+  },
+  {
+   "id": "ST-003",
+   "title": "Efficient topology optimization in MATLAB using 88 lines of code",
+   "year": 2011,
+   "relation": "indirect",
+   "why_en": "Faster, filtered successor to the 99-line code; the practical reference implementation for a 2D structural baseline.",
+   "why_th": "รุ่นต่อจากโค้ด 99 บรรทัดที่เร็วกว่าและมี filter เป็นการ implement อ้างอิงที่ใช้ได้จริงสำหรับ baseline โครงสร้าง 2 มิติ"
+  },
+  {
+   "id": "ST-004",
+   "title": "Giga-voxel computational morphogenesis for structural design",
+   "year": 2017,
+   "doi": "10.1038/nature23911",
+   "relation": "direct",
+   "why_en": "Topology optimisation of a full aircraft wing at billion-voxel resolution discovered non-conventional internal structure; closest structural analogue to whole-part discovery.",
+   "why_th": "topology optimization ของปีกเครื่องบินทั้งปีกที่ความละเอียดพันล้าน voxel ค้นพบโครงสร้างภายในที่ไม่ธรรมดา ใกล้ที่สุดกับการค้นพบทั้งชิ้นส่วนด้านโครงสร้าง"
+  },
+  {
+   "id": "ST-005",
+   "title": "Topology optimization approaches: A comparative review",
+   "year": 2013,
+   "relation": "indirect",
+   "why_en": "Compares density, level-set, phase-field and evolutionary topology optimisation; clarifies which is appropriate for which gate.",
+   "why_th": "เปรียบเทียบ topology optimization แบบ density, level-set, phase-field และเชิงวิวัฒนาการ ช่วยตัดสินว่าแบบใดเหมาะกับ gate ใด"
+  },
+  {
+   "id": "ST-006",
+   "title": "Material interpolation schemes in topology optimization",
+   "year": 1999,
+   "relation": "indirect",
+   "why_en": "Justifies SIMP penalisation physically; relevant to spatial material-void fields (Work 108).",
+   "why_th": "ให้เหตุผลทางฟิสิกส์ของการลงโทษแบบ SIMP เกี่ยวข้องกับ spatial material-void field (Work 108)"
+  },
+  {
+   "id": "ST-007",
+   "title": "Level-set methods for structural topology optimization: a review",
+   "year": 2013,
+   "relation": "indirect",
+   "why_en": "Level-set boundaries give crisp geometry convertible to CAD; relevant to converting optimised fields into B-rep.",
+   "why_th": "ขอบเขตแบบ level-set ให้เรขาคณิตคมที่แปลงเป็น CAD ได้ เกี่ยวข้องกับการแปลง field ที่ optimize แล้วเป็น B-rep"
+  },
+  {
+   "id": "ST-008",
+   "title": "An efficient 3D topology optimization code written in Matlab",
+   "year": 2014,
+   "relation": "indirect",
+   "why_en": "Compact 3D topology optimisation reference; a 3D structural baseline for part-level comparisons.",
+   "why_th": "โค้ด topology optimization 3 มิติที่กระชับ เป็น baseline โครงสร้าง 3 มิติสำหรับเทียบระดับชิ้นส่วน"
+  },
+  {
+   "id": "ST-009",
+   "title": "Current and future trends in topology optimization for additive manufacturing",
+   "year": 2018,
+   "doi": "10.1007/s00158-018-1994-3",
+   "relation": "indirect",
+   "why_en": "Reviews manufacturing constraints (overhang, minimum feature, support) in topology optimisation; inputs for the manufacturing language.",
+   "why_th": "ทบทวนข้อจำกัดการผลิต (overhang ขนาด feature ต่ำสุด support) ใน topology optimization เป็นข้อมูลเข้าของภาษาการผลิต"
+  },
+  {
+   "id": "ST-010",
+   "title": "A Review of Topology Optimisation for Fluid-Based Problems",
+   "doi": "10.3390/fluids5010029",
+   "year": 2020,
+   "relation": "indirect",
+   "why_en": "Reviews topology optimisation of flow and conjugate heat transfer; relevant to ducts and heat exchangers (Work 121).",
+   "why_th": "ทบทวน topology optimization ของการไหลและการถ่ายเทความร้อนร่วม เกี่ยวข้องกับท่อและตัวแลกเปลี่ยนความร้อน (Work 121)"
+  },
+  {
+   "id": "ST-011",
+   "prior_catalog_id": "P28",
+   "title": "Gmsh: A 3-D finite element mesh generator with built-in pre- and post-processing facilities",
+   "year": 2009,
+   "pdf_url": "https://gmsh.info/doc/preprints/gmsh_paper_preprint.pdf",
+   "relation": "direct",
+   "why_en": "The mesher of the geometry-mesh bridge (Work 110); read with its documentation before trusting mesh quality settings.",
+   "why_th": "ตัวสร้าง mesh ของ geometry-mesh bridge (Work 110) ควรอ่านคู่กับเอกสารก่อนเชื่อการตั้งค่าคุณภาพ mesh"
+  },
+  {
+   "id": "ST-012",
+   "title": "Fast Tetrahedral Meshing in the Wild",
+   "arxiv": "1908.03581",
+   "year": 2020,
+   "relation": "direct",
+   "why_en": "fTetWild meshes arbitrary, imperfect triangle soups robustly; a fallback when generated CAD is not clean enough for CAD-based meshing.",
+   "why_th": "fTetWild สร้าง mesh จาก triangle soup ที่ไม่สมบูรณ์ได้อย่างทนทาน เป็นทางสำรองเมื่อ CAD ที่สร้างไม่สะอาดพอสำหรับ meshing จาก CAD"
+  },
+  {
+   "id": "ST-013",
+   "title": "Tetrahedral Meshing in the Wild",
+   "year": 2018,
+   "relation": "indirect",
+   "why_en": "TetWild: envelope-based robust tetrahedralisation; the method behind ST-012 with its guarantees.",
+   "why_th": "TetWild: การสร้างทรงสี่หน้าที่ทนทานด้วย envelope เป็นวิธีเบื้องหลัง ST-012 พร้อมการรับประกัน"
+  },
+  {
+   "id": "ST-014",
+   "title": "TetGen, a Delaunay-Based Quality Tetrahedral Mesh Generator",
+   "year": 2015,
+   "relation": "indirect",
+   "why_en": "Constrained Delaunay tetrahedral meshing with quality bounds; an independent mesher for cross-checking mesh sensitivity.",
+   "why_th": "การสร้าง mesh ทรงสี่หน้าแบบ constrained Delaunay พร้อมขอบเขตคุณภาพ เป็นตัวสร้าง mesh อิสระสำหรับตรวจความไวต่อ mesh"
+  },
+  {
+   "id": "ST-015",
+   "prior_catalog_id": "P29",
+   "title": "Incremental Potential Contact: Intersection- and Inversion-free, Large-Deformation Dynamics",
+   "year": 2020,
+   "pdf_url": "https://ipc-sim.github.io/file/IPC-paper-350ppi.pdf",
+   "relation": "direct",
+   "why_en": "Guaranteed non-penetrating frictional contact for large deformation; candidate method for moving contact assemblies (Work 114).",
+   "why_th": "contact แบบมีแรงเสียดทานที่รับประกันการไม่ทะลุสำหรับการเสียรูปมาก เป็นวิธีตัวเลือกสำหรับ moving contact assembly (Work 114)"
+  },
+  {
+   "id": "ST-016",
+   "prior_catalog_id": "P30",
+   "title": "High-Order Incremental Potential Contact for Elastodynamic Simulation on Curved Meshes",
+   "arxiv": "2205.13727",
+   "year": 2023,
+   "relation": "indirect",
+   "why_en": "Extends IPC to curved high-order meshes; relevant once CAD-conforming meshes are used.",
+   "why_th": "ขยาย IPC ไปยัง mesh โค้งอันดับสูง เกี่ยวข้องเมื่อใช้ mesh ที่ตรงกับ CAD"
+  },
+  {
+   "id": "ST-017",
+   "title": "Intersection-free Rigid Body Dynamics",
+   "year": 2021,
+   "relation": "indirect",
+   "why_en": "Rigid-body IPC with curved trajectories; relevant to rigid joint and fastener contact without penetration.",
+   "why_th": "IPC สำหรับวัตถุแข็งพร้อมวิถีโค้ง เกี่ยวข้องกับ contact ของข้อต่อแข็งและตัวยึดโดยไม่ทะลุ"
+  },
+  {
+   "id": "ST-018",
+   "title": "Affine Body Dynamics: Fast, Stable & Intersection-free Simulation of Stiff Materials",
+   "arxiv": "2201.10022",
+   "year": 2022,
+   "relation": "indirect",
+   "why_en": "Stiff bodies as affine deformations with IPC contact; a fast option for many-part assemblies.",
+   "why_th": "วัตถุแข็งเกร็งแบบ affine deformation พร้อม contact แบบ IPC เป็นทางเลือกที่เร็วสำหรับการประกอบหลายชิ้น"
+  },
+  {
+   "id": "ST-019",
+   "title": "A proposed standard set of problems to test finite element accuracy",
+   "year": 1985,
+   "relation": "direct",
+   "why_en": "MacNeal-Harder element patch and distortion tests; standard verification problems for any element we implement (Work 041).",
+   "why_th": "การทดสอบ patch และการบิดเบี้ยวของ element ของ MacNeal-Harder เป็นปัญหาตรวจสอบมาตรฐานสำหรับ element ที่เรา implement (Work 041)"
+  },
+  {
+   "id": "ST-020",
+   "title": "A review on phase-field models of brittle fracture and a new fast hybrid formulation",
+   "year": 2015,
+   "relation": "indirect",
+   "why_en": "Phase-field fracture review with a fast hybrid formulation; a route from fracture initiation (Work 043) to propagation.",
+   "why_th": "ทบทวนแบบจำลองการแตกแบบ phase-field พร้อมสูตรผสมที่เร็ว เป็นเส้นทางจากการเริ่มแตก (Work 043) สู่การลามของรอยแตก"
+  },
+  {
+   "id": "ST-021",
+   "title": "Cumulative fatigue damage and life prediction theories: a survey of the state of the art for homogeneous materials",
+   "year": 1998,
+   "relation": "direct",
+   "why_en": "Surveys Miner-rule alternatives and their errors under variable amplitude; directly bounds the fatigue-life gate (Work 044).",
+   "why_th": "สำรวจทางเลือกของกฎ Miner และความคลาดเคลื่อนภายใต้แอมพลิจูดแปรผัน กำหนดขอบเขตของ gate อายุความล้า (Work 044) โดยตรง"
+  },
+  {
+   "id": "ST-022",
+   "title": "Cumulative Damage in Fatigue",
+   "year": 1945,
+   "relation": "indirect",
+   "why_en": "Miner's linear damage rule, the assumption behind simple fatigue accounting; cite with its known non-conservatism.",
+   "why_th": "กฎความเสียหายเชิงเส้นของ Miner เป็นสมมติฐานเบื้องหลังการคิดความล้าแบบง่าย ควรอ้างพร้อมข้อจำกัดที่ทราบว่าไม่ปลอดภัยเสมอ"
+  },
+  {
+   "id": "ST-023",
+   "title": "A Critical Analysis of Crack Propagation Laws",
+   "year": 1963,
+   "relation": "indirect",
+   "why_en": "Paris-Erdogan crack-growth law; the basis for damage-tolerance rather than safe-life fatigue claims.",
+   "why_th": "กฎการโตของรอยแตกของ Paris-Erdogan เป็นฐานของแนวทาง damage tolerance แทน safe-life"
+  },
+  {
+   "id": "ST-024",
+   "title": "An implicit time-stepping scheme for rigid body dynamics with inelastic collisions and coulomb friction",
+   "year": 1996,
+   "relation": "indirect",
+   "why_en": "Stewart-Trinkle complementarity time stepping for frictional contact; the classic formulation behind many rigid contact solvers.",
+   "why_th": "การก้าวเวลาแบบ complementarity ของ Stewart-Trinkle สำหรับ contact ที่มีแรงเสียดทาน เป็นสูตรคลาสสิกเบื้องหลัง solver contact แข็งหลายตัว"
+  }
+ ]
+}
