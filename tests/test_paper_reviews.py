@@ -12,12 +12,17 @@ sys.path.insert(0, str(ROOT / "scripts" / "research"))
 
 from extract_paper_corpus import normalize_authors  # noqa: E402
 
+# papers/ is git-ignored (most PDFs are not redistributable), so a clean
+# checkout, including CI, has no PDFs to compare against the manifest.
+HAS_LOCAL_PDFS = any((ROOT / "papers").rglob("*.pdf"))
+
 
 class PaperReviewTests(unittest.TestCase):
     def setUp(self) -> None:
         self.payload = json.loads(MANIFEST.read_text(encoding="utf-8"))
         self.records = self.payload["papers"]
 
+    @unittest.skipUnless(HAS_LOCAL_PDFS, "downloaded papers are not in the repository (papers/ is git-ignored)")
     def test_manifest_matches_local_pdf_inventory(self) -> None:
         actual = {path.relative_to(ROOT).as_posix() for path in (ROOT / "papers").rglob("*.pdf")}
         recorded = {item["source_pdf"] for item in self.records}
