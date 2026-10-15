@@ -10,8 +10,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-from pypdf import PdfReader
-
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE_DIR = ROOT / "docs" / "research" / "paper_library" / "sources"
@@ -193,6 +191,9 @@ def extract_one(paper: Paper) -> dict:
     actual_hash = sha256_file(paper.local_path)
     if actual_hash != paper.expected_sha256:
         raise ValueError(f"{paper.paper_id}: SHA-256 mismatch")
+
+    # Imported here so tests that only use the manifest helpers run without pypdf.
+    from pypdf import PdfReader
 
     reader = PdfReader(str(paper.local_path), strict=False)
     if reader.is_encrypted:
